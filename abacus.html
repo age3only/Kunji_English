@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="referrer" content="no-referrer">
 <title>Kungi's Super Abacus 💥🟢</title>
 <style>
   :root {
@@ -2123,6 +2124,16 @@ function playSound(type) {
 let speechDebounceTimer = null;
 let currentTtsAudio = null;
 
+function sanitizeSpeechText(str) {
+  if (!str) return '';
+  return str
+    .replace(/[\u{1F300}-\u{1F9FF}]/gu, ' ')
+    .replace(/[✨🚗👑⭐🖐️🏁▶️🧹🏎️🏍️🚀🐹🚲]/g, ' ')
+    .replace(/[!?:;,."`~()\[\]{}—\-_\\/#%&*+<>]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
 // Helper to play high-fidelity, native Malayalam human speech
 function playNaturalMalayalamAudio(text, onEnded = null) {
   try {
@@ -2131,7 +2142,7 @@ function playNaturalMalayalamAudio(text, onEnded = null) {
       currentTtsAudio.currentTime = 0;
       currentTtsAudio = null;
     }
-    const cleanText = text.replace(/[\u{1F300}-\u{1F9FF}]/gu, '').replace(/[✨🚗👑⭐🖐️🏁▶️🧹🏎️🏍️🚀🐹🚲]/g, '').trim();
+    const cleanText = sanitizeSpeechText(text);
     if (!cleanText) return;
 
     const url = 'https://translate.google.com/translate_tts?ie=UTF-8&q=' + encodeURIComponent(cleanText) + '&tl=ml&client=tw-ob';
@@ -2167,7 +2178,10 @@ function playNaturalMalayalamAudio(text, onEnded = null) {
 function speakMalayalamWebSpeechFallback(text) {
   if (!('speechSynthesis' in window)) return;
   window.speechSynthesis.cancel();
-  const utter = new SpeechSynthesisUtterance(text);
+  const cleanText = sanitizeSpeechText(text);
+  if (!cleanText) return;
+
+  const utter = new SpeechSynthesisUtterance(cleanText);
   utter.rate = 0.88;
   utter.pitch = 1.0;
   utter.lang = 'ml-IN';
@@ -2196,7 +2210,8 @@ function speakValueSweetly(val, force = false) {
       playNaturalMalayalamAudio(words);
     } else {
       if (!('speechSynthesis' in window)) return;
-      const utter = new SpeechSynthesisUtterance(words);
+      const cleanWords = sanitizeSpeechText(words);
+      const utter = new SpeechSynthesisUtterance(cleanWords);
       utter.rate = 0.94;
       utter.pitch = 1.1;
       const voices = window.speechSynthesis.getVoices();
@@ -2221,11 +2236,14 @@ function speakPraiseCustom(text) {
   }
   if ('speechSynthesis' in window) window.speechSynthesis.cancel();
 
+  const cleanText = sanitizeSpeechText(text);
+  if (!cleanText) return;
+
   if (currentLang === 'ml' || currentLang === 'id') {
-    playNaturalMalayalamAudio(text);
+    playNaturalMalayalamAudio(cleanText);
   } else {
     if (!('speechSynthesis' in window)) return;
-    const utter = new SpeechSynthesisUtterance(text);
+    const utter = new SpeechSynthesisUtterance(cleanText);
     utter.rate = 1.0;
     utter.pitch = 1.1;
     const voices = window.speechSynthesis.getVoices();
@@ -3757,8 +3775,8 @@ document.addEventListener('DOMContentLoaded', () => {
     this.style.opacity = '1';
     const isMl = (currentLang === 'ml' || currentLang === 'id');
     const welcomeVoiceMsg = isMl
-      ? "ഹലോ കുഞ്ഞീ! നിങ്ങളുടെ സൂപ്പർ അബാക്കസിലേക്ക് സ്വാഗതം! നമുക്ക് ഒരുമിച്ച് കണക്ക് പഠിക്കാം!"
-      : "Hello Kungi! Welcome to your Super Abacus! Voice is active, let's learn together!";
+      ? "ഹലോ കുഞ്ഞീ നിങ്ങളുടെ സൂപ്പർ അബാക്കസിലേക്ക് സ്വാഗതം നമുക്ക് ഒരുമിച്ച് കണക്ക് പഠിക്കാം"
+      : "Hello Kungi Welcome to your Super Abacus Voice is active lets learn together";
     speakPraiseCustom(welcomeVoiceMsg);
   });
 
