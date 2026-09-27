@@ -3,37 +3,29 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kungi's Super Abacus 💥🟢</title>
+<title>Freya's Magical Abacus ✨</title>
 <style>
   :root {
-    --bg-page-top: #142816;
-    --bg-page-bottom: #09150a;
-    --card-bg: #1c2e1f;
-    --primary-blue: #22c55e;
-    --primary-pink: #22c55e;
-    --primary-dark: #15803d;
-    --primary-light: #233d26;
-    --banner-gradient-start: #15803d;
-    --banner-gradient-end: #4ade80;
-    --hulk-purple: #7e22ce;
-    --hulk-purple-light: #a855f7;
-    --hulk-purple-dark: #581c87;
-    --hulk-green: #22c55e;
-    --hulk-neon: #4ade80;
-    --border-blue: #4ade80;
-    --border-pink: #22c55e;
-    --border-card: #2e5333;
-    --stat-gradient-start: #7e22ce;
-    --stat-gradient-end: #a855f7;
+    --bg-page-top: #ffd3e2;
+    --bg-page-bottom: #ffaec9;
+    --card-bg: #ffffff;
+    --primary-pink: #ff5e97;
+    --primary-dark: #d81b60;
+    --primary-light: #fff0f5;
+    --banner-gradient-start: #ff85ad;
+    --banner-gradient-end: #ffb6ce;
+    --border-pink: #ff85ad;
+    --border-card: #ffccd9;
+    --stat-gradient-start: #ffb3cb;
+    --stat-gradient-end: #ffcadc;
     --text-white: #ffffff;
-    --text-pink-title: #4ade80;
-    --text-blue-title: #4ade80;
-    --text-dark: #e2fbe8;
+    --text-pink-title: #d81b60;
+    --text-dark: #2d3436;
     --radius-xl: 32px;
     --radius-lg: 22px;
     --radius-md: 16px;
     --radius-sm: 10px;
-    --shadow-soft: 0 15px 40px rgba(34, 197, 94, 0.28);
+    --shadow-soft: 0 15px 40px rgba(255, 117, 160, 0.22);
   }
 
   * {
@@ -45,7 +37,7 @@
   }
 
   body {
-    background: radial-gradient(circle at 50% 20%, #1e3d21 0%, #122614 60%, var(--bg-page-bottom) 100%);
+    background: linear-gradient(180deg, var(--bg-page-top) 0%, #ffc0d6 50%, var(--bg-page-bottom) 100%);
     min-height: 100vh;
     padding: 20px 16px 40px 16px;
     display: flex;
@@ -74,15 +66,15 @@
   }
 
   .icon-toggle-btn {
-    background: #1c2e1f;
+    background: white;
     border: 2px solid var(--border-pink);
     border-radius: 50px;
     padding: 6px 14px;
-    color: #86efac;
+    color: var(--primary-dark);
     font-weight: 700;
     font-size: 0.88rem;
     cursor: pointer;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 4px 10px rgba(255, 107, 139, 0.15);
     display: inline-flex;
     align-items: center;
     gap: 6px;
@@ -91,18 +83,17 @@
 
   .icon-toggle-btn:hover {
     transform: translateY(-2px);
-    background: #27422b;
-    border-color: #4ade80;
+    background: #fff5f8;
   }
 
   .lang-switcher-box {
     display: flex;
     gap: 8px;
-    background: rgba(18, 38, 20, 0.85);
+    background: rgba(255, 255, 255, 0.5);
     padding: 4px;
     border-radius: 50px;
-    border: 2px solid #2e5333;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 4px 15px rgba(216, 27, 96, 0.12);
   }
 
   .lang-btn {
@@ -120,20 +111,20 @@
   }
 
   .lang-btn.active {
-    background: linear-gradient(135deg, #22c55e 0%, #15803d 100%);
+    background: linear-gradient(135deg, #ff4081 0%, #ff6b9d 100%);
     color: white;
-    box-shadow: 0 4px 12px rgba(34, 197, 94, 0.5);
+    box-shadow: 0 4px 12px rgba(255, 64, 129, 0.4);
     transform: scale(1.03);
   }
 
   .lang-btn:not(.active) {
-    background: #162a19;
-    color: #86efac;
-    border: 2px solid #2e5333;
+    background: white;
+    color: #ff4081;
+    border: 2px solid #ffccd9;
   }
 
   .lang-btn:not(.active):hover {
-    background: #213c24;
+    background: #fff0f5;
   }
 
   /* Main Magical App Container */
@@ -142,8 +133,8 @@
     width: 100%;
     background: var(--card-bg);
     border-radius: var(--radius-xl);
-    border: 4px solid #2e5333;
-    box-shadow: var(--shadow-soft), 0 0 25px rgba(34, 197, 94, 0.15);
+    border: 4px solid #ffccd9;
+    box-shadow: var(--shadow-soft);
     padding: 24px;
     display: flex;
     flex-direction: column;
@@ -152,49 +143,43 @@
 
   /* Header Banner (Click 5 times to manually reset scores) */
   .hero-banner {
-    background: linear-gradient(135deg, #15803d 0%, #16a34a 45%, #7e22ce 100%);
-    border: 3px solid #4ade80;
+    background: linear-gradient(135deg, var(--banner-gradient-start) 0%, var(--banner-gradient-end) 100%);
+    border: 3px solid var(--border-pink);
     border-radius: var(--radius-lg);
     padding: 22px 28px;
     text-align: center;
     color: var(--text-white);
     position: relative;
-    box-shadow: 0 8px 30px rgba(34, 197, 94, 0.4), 0 0 15px rgba(126, 34, 206, 0.35);
+    box-shadow: 0 8px 24px rgba(255, 117, 160, 0.25);
     overflow: hidden;
     cursor: pointer;
     user-select: none;
     transition: transform 0.15s;
-    animation: hulkBreathing 4s infinite ease-in-out;
-  }
-
-  @keyframes hulkBreathing {
-    0%, 100% { box-shadow: 0 8px 30px rgba(34, 197, 94, 0.35), 0 0 15px rgba(126, 34, 206, 0.3); }
-    50% { box-shadow: 0 8px 40px rgba(74, 222, 128, 0.6), 0 0 30px rgba(168, 85, 247, 0.5); }
   }
 
   .hero-banner:active {
-    transform: scale(0.98);
+    transform: scale(0.99);
   }
 
-  .corner-vehicle {
+  .corner-unicorn {
     font-size: 2.2rem;
     position: absolute;
     top: 14px;
-    animation: hulkFlex 2s infinite ease-in-out;
+    animation: bounce 2s infinite ease-in-out;
   }
-  .corner-vehicle.left { left: 18px; }
-  .corner-vehicle.right { right: 18px; bottom: 12px; top: auto; animation-delay: 1s; }
+  .corner-unicorn.left { left: 18px; }
+  .corner-unicorn.right { right: 18px; bottom: 12px; top: auto; animation-delay: 1s; }
 
-  @keyframes hulkFlex {
-    0%, 100% { transform: translateY(0) scale(1); }
-    50% { transform: translateY(-7px) scale(1.18); filter: drop-shadow(0 0 8px #4ade80); }
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
   }
 
   .hero-title {
     font-size: 1.85rem;
     font-weight: 900;
     letter-spacing: 1.5px;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7), 0 0 12px rgba(74, 222, 128, 0.6);
+    text-shadow: 0 2px 8px rgba(216, 27, 96, 0.35);
     margin-bottom: 6px;
     display: flex;
     align-items: center;
@@ -206,11 +191,10 @@
     font-size: 1.15rem;
     font-weight: 700;
     opacity: 0.96;
-    text-shadow: 0 1px 4px rgba(0,0,0,0.6);
-    color: #dcfce7;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.15);
   }
 
-  /* 4 Stat Cards: Hulk Purple & Green Muscle Glow */
+  /* 4 Stat Cards: Correct, Total, Stars, Crowns */
   .stats-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -218,63 +202,57 @@
   }
 
   .stat-card {
-    background: linear-gradient(135deg, #581c87 0%, #7e22ce 60%, #9333ea 100%);
-    border: 2.5px solid #22c55e;
+    background: linear-gradient(135deg, var(--stat-gradient-start) 0%, var(--stat-gradient-end) 100%);
+    border: 2px solid var(--border-pink);
     border-radius: var(--radius-md);
     padding: 14px 10px;
     text-align: center;
     color: white;
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.45), 0 0 12px rgba(34, 197, 94, 0.25);
-    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 6px 16px rgba(255, 117, 160, 0.15);
+    transition: transform 0.2s;
   }
 
   .stat-card:hover {
-    transform: translateY(-4px) scale(1.03);
-    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.55), 0 0 20px rgba(74, 222, 128, 0.5);
-    border-color: #4ade80;
+    transform: translateY(-3px);
   }
 
   .stat-label {
     font-size: 0.88rem;
     font-weight: 800;
     margin-bottom: 4px;
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+    text-shadow: 0 1px 2px rgba(216, 27, 96, 0.2);
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 6px;
-    color: #e9d5ff;
   }
 
   .stat-number {
     font-size: 2.3rem;
     font-weight: 900;
     line-height: 1;
-    color: #4ade80;
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6), 0 0 10px rgba(74, 222, 128, 0.4);
+    text-shadow: 0 2px 6px rgba(216, 27, 96, 0.25);
   }
 
   /* Choose Your Lesson Container */
   .lessons-box {
-    background: #142817;
-    border: 2px solid #2e5333;
+    background: #fff8fa;
+    border: 2px solid var(--border-card);
     border-radius: var(--radius-lg);
     padding: 22px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.3);
   }
 
   .section-heading {
     font-size: 1.5rem;
     font-weight: 900;
-    color: #4ade80;
+    color: var(--text-pink-title);
     margin-bottom: 18px;
     display: flex;
     align-items: center;
     gap: 10px;
-    text-shadow: 0 0 10px rgba(74, 222, 128, 0.35);
   }
 
   /* Lesson Cards Grid */
@@ -286,14 +264,14 @@
   }
 
   .lesson-card-item {
-    background: linear-gradient(135deg, #15803d 0%, #16a34a 65%, #22c55e 100%);
-    border: 2px solid #22c55e;
+    background: linear-gradient(135deg, #ffb3cb 0%, #ffcadc 100%);
+    border: 2px solid #ff759d;
     border-radius: var(--radius-md);
     padding: 16px 10px;
     text-align: center;
     color: white;
     cursor: pointer;
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+    box-shadow: 0 6px 16px rgba(255, 117, 160, 0.18);
     transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     display: flex;
     flex-direction: column;
@@ -304,37 +282,36 @@
   }
 
   .lesson-card-item:hover {
-    transform: translateY(-5px) scale(1.03);
-    box-shadow: 0 12px 26px rgba(0, 0, 0, 0.45), 0 0 18px rgba(74, 222, 128, 0.5);
-    border-color: #4ade80;
-    background: linear-gradient(135deg, #16a34a 0%, #22c55e 100%);
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 12px 24px rgba(255, 117, 160, 0.3);
+    border-color: #ff3377;
+    background: linear-gradient(135deg, #ffa8c3 0%, #ffc0d5 100%);
   }
 
   .lesson-card-item.active {
-    border: 3px solid #a855f7;
-    background: linear-gradient(135deg, #581c87 0%, #15803d 100%);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5), 0 0 20px rgba(168, 85, 247, 0.6);
+    border: 3px solid #d81b60;
+    background: linear-gradient(135deg, #ff759d 0%, #ffa8c3 100%);
+    box-shadow: 0 8px 20px rgba(216, 27, 96, 0.35);
   }
 
   .lesson-card-icon {
     font-size: 2.2rem;
     margin-bottom: 6px;
-    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
   }
 
   .lesson-card-title {
     font-size: 1.02rem;
     font-weight: 900;
     margin-bottom: 4px;
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+    text-shadow: 0 1px 3px rgba(216, 27, 96, 0.3);
   }
 
   .lesson-card-sub {
     font-size: 0.82rem;
     font-weight: 700;
     opacity: 0.95;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.5);
-    color: #bbf7d0;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.15);
   }
 
   /* Sub Navigation Tabs */
@@ -348,24 +325,23 @@
   }
 
   .extra-tab-btn {
-    background: #1c2e1f;
-    border: 2px solid #2e5333;
+    background: white;
+    border: 2px solid var(--border-pink);
     border-radius: 50px;
     padding: 7px 16px;
     font-size: 0.86rem;
     font-weight: 800;
-    color: #86efac;
+    color: var(--primary-dark);
     cursor: pointer;
     transition: all 0.2s;
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 3px 8px rgba(255, 107, 139, 0.1);
   }
 
   .extra-tab-btn:hover, .extra-tab-btn.active {
-    background: linear-gradient(135deg, #15803d 0%, #22c55e 100%);
+    background: linear-gradient(135deg, #ff4081 0%, #ff759d 100%);
     color: white;
-    border-color: #4ade80;
+    border-color: #ff4081;
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(34, 197, 94, 0.4);
   }
 
   /* SIDE-BY-SIDE CHALLENGE ARENA */
@@ -388,11 +364,11 @@
 
   /* Left Box: Active Challenge Focus Card */
   .challenge-focus-card {
-    background: #142817;
-    border: 3px solid #2e5333;
+    background: #fffafc;
+    border: 3px solid var(--border-pink);
     border-radius: var(--radius-lg);
     padding: 22px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45), 0 0 15px rgba(34, 197, 94, 0.15);
+    box-shadow: 0 8px 24px rgba(255, 117, 160, 0.15);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -411,20 +387,20 @@
   }
 
   .q-progress-badge {
-    background: linear-gradient(135deg, #15803d 0%, #22c55e 100%);
+    background: linear-gradient(135deg, #ff4081 0%, #ff759d 100%);
     color: white;
     padding: 5px 14px;
     border-radius: 50px;
     font-weight: 900;
     font-size: 0.92rem;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35);
+    box-shadow: 0 4px 10px rgba(255, 64, 129, 0.3);
   }
 
   /* 10-Second Timer Badge */
   .speed-bonus-badge {
-    background: #1c2e1f;
-    border: 2px solid #22c55e;
-    color: #4ade80;
+    background: #fff0f5;
+    border: 2px solid #ff4081;
+    color: #d81b60;
     padding: 4px 12px;
     border-radius: 50px;
     font-weight: 900;
@@ -432,20 +408,20 @@
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+    box-shadow: 0 2px 6px rgba(255, 64, 129, 0.15);
     transition: background 0.3s;
   }
 
   .speed-bonus-badge.fast {
-    animation: hulkSmashPulse 0.9s infinite alternate;
+    animation: pulseBadge 1s infinite alternate;
   }
 
-  @keyframes hulkSmashPulse {
-    from { transform: scale(1); filter: drop-shadow(0 0 2px #4ade80); }
-    to { transform: scale(1.08); filter: drop-shadow(0 0 10px #22c55e); }
+  @keyframes pulseBadge {
+    from { transform: scale(1); }
+    to { transform: scale(1.06); }
   }
 
-  /* Star Trail Dots (Hulk Green dots that turn into golden stars ⭐ when solved) */
+  /* Star Trail Dots (Pink dots that turn into golden stars ⭐ when solved) */
   .star-trail-dots {
     display: flex;
     gap: 6px;
@@ -457,7 +433,7 @@
 
   .star-trail-item {
     font-size: 1.15rem;
-    color: #274e2d;
+    color: #ffccd9;
     line-height: 1;
     transition: all 0.25s;
     user-select: none;
@@ -465,16 +441,16 @@
   }
 
   .star-trail-item.current {
-    color: #4ade80;
+    color: #ff4081;
     transform: scale(1.35);
     font-weight: bold;
-    text-shadow: 0 0 8px rgba(74, 222, 128, 0.8);
+    text-shadow: 0 0 6px rgba(255, 64, 129, 0.5);
   }
 
   .star-trail-item.solved {
     color: #ffbe0b;
     font-size: 1.25rem;
-    filter: drop-shadow(0 0 5px #ffbe0b);
+    filter: drop-shadow(0 0 4px #ffbe0b);
     animation: popStar 0.35s ease;
   }
 
@@ -486,12 +462,12 @@
 
   /* Giant Sum Numbers Stack */
   .giant-sum-box {
-    background: #182e1b;
-    border: 3px solid #2e5333;
+    background: white;
+    border: 3px solid #ffccd9;
     border-radius: 20px;
     padding: 18px 28px;
     margin: 6px 0 14px 0;
-    box-shadow: inset 0 2px 6px rgba(0,0,0,0.3);
+    box-shadow: inset 0 2px 6px rgba(0,0,0,0.04);
     min-width: 180px;
   }
 
@@ -501,21 +477,20 @@
     align-items: flex-end;
     font-size: 2.2rem;
     font-weight: 900;
-    color: #e2fbe8;
+    color: #2d3748;
     line-height: 1.25;
   }
 
   .giant-nums-list span.minus {
-    color: #f87171;
+    color: #e53e3e;
   }
 
   .giant-sum-divider {
     width: 100%;
     height: 4px;
-    background: linear-gradient(90deg, #15803d 0%, #4ade80 50%, #7e22ce 100%);
+    background: #ff4081;
     border-radius: 2px;
     margin: 8px 0 12px 0;
-    box-shadow: 0 0 8px rgba(74, 222, 128, 0.4);
   }
 
   .giant-answer-input {
@@ -524,47 +499,24 @@
     text-align: center;
     font-size: 2rem;
     font-weight: 900;
-    border: 3px solid #22c55e;
+    border: 3px solid #ff85ad;
     border-radius: 14px;
-    color: #4ade80;
+    color: #d81b60;
     outline: none;
-    background: #112213;
+    background: #fff8fa;
     transition: all 0.2s;
   }
 
-  .giant-answer-input::placeholder {
-    color: #4ade80;
-    opacity: 0.65;
-  }
-
-  /* Count up and count down buttons: vibrant Hulk neon green */
-  .giant-answer-input::-webkit-inner-spin-button,
-  .giant-answer-input::-webkit-outer-spin-button {
-    opacity: 1 !important;
-    cursor: pointer;
-    height: 38px;
-    margin-right: 6px;
-    filter: invert(65%) sepia(85%) saturate(550%) hue-rotate(85deg) brightness(120%) drop-shadow(0 0 3px rgba(74, 222, 128, 0.85));
-    transition: filter 0.2s, transform 0.15s;
-  }
-
-  .giant-answer-input::-webkit-inner-spin-button:hover,
-  .giant-answer-input::-webkit-outer-spin-button:hover {
-    filter: invert(75%) sepia(90%) saturate(700%) hue-rotate(85deg) brightness(135%) drop-shadow(0 0 5px #4ade80);
-    transform: scale(1.12);
-  }
-
   .giant-answer-input:focus {
-    border-color: #4ade80;
-    box-shadow: 0 0 0 4px rgba(74, 222, 128, 0.35);
-    background: #142a17;
+    border-color: #d81b60;
+    box-shadow: 0 0 0 4px rgba(216, 27, 96, 0.25);
+    background: white;
   }
 
   .giant-answer-input.correct {
-    background: #064e3b;
-    border-color: #34d399;
-    color: #a7f3d0;
-    box-shadow: 0 0 15px rgba(52, 211, 153, 0.5);
+    background: #c6f6d5;
+    border-color: #38a169;
+    color: #22543d;
   }
 
   /* Actions underneath sum */
@@ -578,7 +530,7 @@
   }
 
   .btn-submit-arena {
-    background: linear-gradient(135deg, #15803d 0%, #22c55e 100%);
+    background: linear-gradient(135deg, #ff4081 0%, #ff6b9d 100%);
     color: white;
     padding: 12px 24px;
     border-radius: 50px;
@@ -586,7 +538,7 @@
     font-weight: 900;
     border: none;
     cursor: pointer;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4), 0 0 12px rgba(34, 197, 94, 0.3);
+    box-shadow: 0 6px 18px rgba(255, 64, 129, 0.35);
     transition: all 0.2s;
     display: flex;
     align-items: center;
@@ -596,14 +548,13 @@
 
   .btn-submit-arena:hover {
     transform: scale(1.03);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), 0 0 20px rgba(74, 222, 128, 0.5);
-    background: linear-gradient(135deg, #16a34a 0%, #4ade80 100%);
+    box-shadow: 0 8px 24px rgba(255, 64, 129, 0.45);
   }
 
   .btn-use-abacus {
-    background: #1c2e1f;
-    border: 2px solid #22c55e;
-    color: #86efac;
+    background: #fff0f5;
+    border: 2px solid #ff85ad;
+    color: #d81b60;
     padding: 9px 16px;
     border-radius: 50px;
     font-size: 0.95rem;
@@ -617,24 +568,19 @@
   }
 
   .btn-use-abacus:hover {
-    background: #27442b;
-    border-color: #4ade80;
+    background: #ffe0eb;
     transform: translateY(-2px);
   }
 
   .btn-demo-abacus-lg {
-    background: #1c2e1f;
-    border: 2px dashed #7e22ce;
-    color: #d8b4fe;
+    background: #fdf2f4;
+    border: 2px dashed #ff85ad;
+    color: #880e4f;
     padding: 8px 16px;
     border-radius: 50px;
     font-size: 0.88rem;
     font-weight: 800;
     cursor: pointer;
-  }
-  .btn-demo-abacus-lg:hover {
-    background: #2e1065;
-    border-color: #a855f7;
   }
 
   .challenge-prev-next {
@@ -643,31 +589,31 @@
     width: 100%;
     margin-top: 14px;
     padding-top: 10px;
-    border-top: 2px solid #2e5333;
+    border-top: 2px solid #ffd3e2;
   }
 
   .btn-nav-mini {
-    background: #1c2e1f;
-    border: 2px solid #2e5333;
+    background: white;
+    border: 2px solid #ffccd9;
     padding: 6px 16px;
     border-radius: 50px;
     font-weight: 800;
-    color: #86efac;
+    color: #d81b60;
     cursor: pointer;
     font-size: 0.85rem;
     transition: 0.2s;
   }
   .btn-nav-mini:hover {
-    background: #27442b;
-    border-color: #22c55e;
+    background: #fff0f5;
+    border-color: #ff85ad;
   }
 
   /* Right Box: The Graphical Abacus in Arena */
   .abacus-stage-box {
-    background: #142817;
-    border: 3px solid #2e5333;
+    background: #ffffff;
+    border: 3px solid var(--border-pink);
     border-radius: var(--radius-lg);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45), 0 0 15px rgba(34, 197, 94, 0.15);
+    box-shadow: 0 8px 24px rgba(255, 117, 160, 0.15);
     padding: 18px 20px;
     display: flex;
     flex-direction: column;
@@ -687,21 +633,20 @@
   .abacus-headline {
     font-size: 1.15rem;
     font-weight: 900;
-    color: #4ade80;
+    color: var(--primary-dark);
     display: flex;
     align-items: center;
     gap: 8px;
-    text-shadow: 0 0 8px rgba(74, 222, 128, 0.35);
   }
 
   .rod-selector-wrap {
     display: flex;
     gap: 6px;
     align-items: center;
-    background: #1c2e1f;
+    background: #fff0f5;
     padding: 4px 8px;
     border-radius: 50px;
-    border: 1px solid #2e5333;
+    border: 1px solid #ffccd9;
   }
 
   .rod-sel-btn {
@@ -711,15 +656,14 @@
     border-radius: 50px;
     font-size: 0.8rem;
     font-weight: 800;
-    color: #86efac;
+    color: var(--primary-dark);
     cursor: pointer;
     transition: all 0.2s;
   }
 
   .rod-sel-btn.active {
-    background: #22c55e;
-    color: #052e16;
-    font-weight: 900;
+    background: var(--primary-dark);
+    color: white;
   }
 
   .btn-pink-pill {
@@ -736,22 +680,20 @@
   }
 
   .btn-pink-reset {
-    background: #dc2626;
+    background: #ff4757;
     color: white;
   }
   .btn-pink-reset:hover {
-    background: #b91c1c;
+    background: #d63031;
     transform: scale(1.04);
   }
 
   .btn-pink-hint {
-    background: #581c87;
-    color: #e9d5ff;
-    border: 1.5px solid #a855f7;
+    background: #ffb8d1;
+    color: #880e4f;
   }
   .btn-pink-hint:hover {
-    background: #7e22ce;
-    color: white;
+    background: #ff9ebb;
   }
 
   /* Authentic Soroban Frame matched to Photo */
@@ -961,21 +903,21 @@
   .rod-val-tag {
     width: 48px;
     text-align: center;
-    background: #1c2e1f;
+    background: #ffffff;
     border-radius: 8px;
     padding: 3px 0;
     font-size: 1.15rem;
     font-weight: 800;
-    color: #4ade80;
-    border: 2px solid #2e5333;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+    color: #2f3542;
+    border: 2px solid #ffccd9;
+    box-shadow: 0 2px 5px rgba(255, 107, 139, 0.1);
   }
 
   .rod-name-tag {
     font-size: 0.68rem;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    color: #86efac;
+    color: #a04060;
     margin-top: 2px;
     text-align: center;
     font-weight: bold;
@@ -984,13 +926,13 @@
 
   .soroban-total-display {
     margin-top: 10px;
-    background: linear-gradient(135deg, #15803d 0%, #16a34a 45%, #7e22ce 100%);
+    background: linear-gradient(135deg, #d81b60 0%, #ff4081 100%);
     color: white;
     padding: 8px 20px;
     border-radius: 50px;
     font-size: 1.25rem;
     font-weight: 800;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4), 0 0 14px rgba(34, 197, 94, 0.35);
+    box-shadow: 0 6px 18px rgba(216, 27, 96, 0.25);
     display: flex;
     align-items: center;
     gap: 12px;
@@ -999,14 +941,13 @@
   }
 
   .spelled-words-badge {
-    background: #112213;
-    color: #4ade80;
-    border: 1.5px solid #2e5333;
+    background: #ffffff;
+    color: #d81b60;
     padding: 5px 16px;
     border-radius: 50px;
     font-size: 1.05rem;
     font-weight: 900;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     animation: popWord 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     display: inline-flex;
     align-items: center;
@@ -1019,11 +960,11 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%) scale(0);
-    background: rgba(18, 38, 20, 0.98);
-    border: 5px solid #4ade80;
+    background: rgba(255, 255, 255, 0.98);
+    border: 5px solid #ffbe0b;
     border-radius: 28px;
     padding: 28px 36px;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 35px rgba(74, 222, 128, 0.5);
+    box-shadow: 0 20px 50px rgba(255, 190, 11, 0.5);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -1036,19 +977,12 @@
 
   .celebration-overlay.show {
     transform: translate(-50%, -50%) scale(1);
-    animation: hulkSmashCelebration 0.45s ease-out;
-  }
-
-  @keyframes hulkSmashCelebration {
-    0% { transform: translate(-50%, -50%) scale(0.2); }
-    50% { transform: translate(-50%, -50%) scale(1.15); }
-    100% { transform: translate(-50%, -50%) scale(1); }
   }
 
   .crown-icon-animated {
     font-size: 4.8rem;
     animation: crownBounce 1.2s ease-in-out infinite alternate;
-    filter: drop-shadow(0 4px 8px rgba(74, 222, 128, 0.6));
+    filter: drop-shadow(0 4px 8px rgba(255, 190, 11, 0.6));
   }
 
   @keyframes crownBounce {
@@ -1059,15 +993,13 @@
   .celebration-praise-text {
     font-size: 1.7rem;
     font-weight: 900;
-    color: #4ade80;
-    text-shadow: 0 0 12px rgba(74, 222, 128, 0.6);
+    color: #d81b60;
   }
 
   .celebration-sub-text {
     font-size: 1.15rem;
     font-weight: 800;
-    color: #c084fc;
-    text-shadow: 0 0 8px rgba(192, 132, 252, 0.5);
+    color: #ffbe0b;
   }
 
   /* DIGITAL WRITING PAD FOR APPLE PENCIL / STYLUS */
@@ -1080,39 +1012,39 @@
   }
 
   .hand-indicator-banner {
-    background: linear-gradient(135deg, #15803d 0%, #22c55e 100%);
+    background: linear-gradient(135deg, #ff4081 0%, #ff759d 100%);
     color: white;
     padding: 10px 24px;
     border-radius: 50px;
     font-size: 1.25rem;
     font-weight: 900;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4), 0 0 15px rgba(34, 197, 94, 0.4);
-    animation: hulkFlex 2s infinite ease-in-out;
+    box-shadow: 0 4px 14px rgba(255, 64, 129, 0.3);
+    animation: bounce 2s infinite ease-in-out;
   }
 
   .timer-16s-ring {
     font-size: 1.8rem;
     font-weight: 900;
-    color: #4ade80;
-    background: #112213;
-    border: 3px solid #22c55e;
+    color: #d81b60;
+    background: #fff0f5;
+    border: 3px solid #ff4081;
     width: 76px;
     height: 76px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4), 0 0 10px rgba(34, 197, 94, 0.3);
+    box-shadow: 0 4px 12px rgba(255, 64, 129, 0.2);
   }
 
   .canvas-sheet-wrap {
     width: 100%;
     max-width: 520px;
-    background: #182e1b;
-    border: 3px solid #2e5333;
+    background: white;
+    border: 3px solid #ffccd9;
     border-radius: 20px;
     padding: 10px;
-    box-shadow: inset 0 2px 6px rgba(0,0,0,0.3), 0 8px 24px rgba(0, 0, 0, 0.45);
+    box-shadow: inset 0 2px 6px rgba(0,0,0,0.05), 0 8px 24px rgba(255, 117, 160, 0.18);
     touch-action: none;
     position: relative;
     user-select: none;
@@ -1129,9 +1061,9 @@
   }
 
   .dotted-digit-box {
-    border: 2.5px dashed #22c55e;
+    border: 2.5px dashed #ff85ad;
     border-radius: 14px;
-    background: #112213;
+    background: #fffbfe;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -1139,24 +1071,24 @@
     padding: 6px 4px 6px 4px;
     height: 98px;
     position: relative;
-    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
+    box-shadow: inset 0 1px 3px rgba(255, 94, 151, 0.08);
   }
 
   .box-digit-watermark {
     font-size: 1.15rem;
     font-weight: 900;
-    color: #86efac;
+    color: #d81b60;
     line-height: 1;
-    background: #1c2e1f;
+    background: #fff0f5;
     padding: 2px 8px;
     border-radius: 8px;
-    border: 1.5px solid #2e5333;
+    border: 1.5px solid #ffccd9;
   }
 
   .box-guide-line {
     width: 75%;
     height: 1px;
-    border-bottom: 1.5px dotted #2e5333;
+    border-bottom: 1.5px dotted #ffccd9;
     margin-bottom: 10px;
   }
 
@@ -1184,8 +1116,8 @@
   }
 
   .problem-card {
-    background: #1c2e1f;
-    border: 2px solid #2e5333;
+    background: #fff8fa;
+    border: 2px solid #ffccd9;
     border-radius: var(--radius-md);
     padding: 12px;
     display: flex;
@@ -1197,14 +1129,13 @@
   }
 
   .problem-card:hover {
-    border-color: #4ade80;
+    border-color: #ff4081;
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
   }
 
   .problem-card.solved {
-    background: #0d2818;
-    border-color: #22c55e;
+    background: #f0fff4;
+    border-color: #38a169;
   }
 
   .q-number {
@@ -1213,11 +1144,10 @@
     left: 8px;
     font-size: 0.72rem;
     font-weight: 800;
-    color: #4ade80;
-    background: #112213;
+    color: #b83280;
+    background: #ffe5ec;
     padding: 2px 6px;
     border-radius: 8px;
-    border: 1px solid #2e5333;
   }
 
   .q-nums-stack {
@@ -1226,11 +1156,11 @@
     align-items: flex-end;
     font-size: 1.25rem;
     font-weight: 800;
-    color: #e2fbe8;
+    color: #2d3748;
     margin: 18px 0 10px 0;
     width: 65px;
     padding-bottom: 4px;
-    border-bottom: 2px solid #2e5333;
+    border-bottom: 2px solid #ffb3cb;
   }
 
   .q-nums-stack span {
@@ -1313,10 +1243,10 @@
   }
 
   .anatomy-card {
-    background: #142817;
+    background: #fff8fa;
     border-radius: var(--radius-md);
     padding: 16px;
-    border: 2px solid #2e5333;
+    border: 2px solid #ffccd9;
     text-align: center;
   }
 
@@ -1327,13 +1257,13 @@
 
   .anatomy-card h3 {
     font-size: 1.1rem;
-    color: #4ade80;
+    color: var(--primary-dark);
     margin-bottom: 6px;
   }
 
   .anatomy-card p {
     font-size: 0.88rem;
-    color: #bbf7d0;
+    color: #4a5568;
     line-height: 1.4;
   }
 
@@ -1355,8 +1285,8 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: rgba(0, 0, 0, 0.8);
-    backdrop-filter: blur(6px);
+    background: rgba(0, 0, 0, 0.65);
+    backdrop-filter: blur(5px);
     display: none;
     justify-content: center;
     align-items: center;
@@ -1368,23 +1298,23 @@
   }
 
   .modal-box {
-    background: #142817;
+    background: white;
     border-radius: var(--radius-xl);
     padding: 32px;
     max-width: 620px;
     width: 90%;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.8), 0 0 30px rgba(34, 197, 94, 0.4);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.35);
     text-align: center;
-    border: 5px solid #22c55e;
+    border: 5px solid #ffbe0b;
     position: relative;
     animation: popWord 0.3s ease;
   }
 
   .cert-container {
-    border: 6px double #22c55e;
+    border: 6px double #ff4081;
     padding: 24px;
     border-radius: 20px;
-    background: #112213;
+    background: #fffdfd;
     position: relative;
   }
 </style>
@@ -1403,7 +1333,7 @@
 
   <div class="lang-switcher-box">
     <button class="lang-btn active" id="lang-btn-en" onclick="setLanguage('en')">🇬🇧 ENGLISH</button>
-    <button class="lang-btn" id="lang-btn-ml" onclick="setLanguage('ml')">🇮🇳 മലയാളം</button>
+    <button class="lang-btn" id="lang-btn-id" onclick="setLanguage('id')">🇮🇩 BAHASA</button>
   </div>
 </div>
 
@@ -1412,10 +1342,10 @@
 
   <!-- Header Banner (Click 5 times to manually reset all scores!) -->
   <div class="hero-banner" id="main-hero-banner" title="Click 5 times to reset scores">
-    <span class="corner-vehicle left">🚗</span>
-    <span class="corner-vehicle right">🏍️</span>
-    <h1 class="hero-title">✨ <span id="t-app-title">KUNGI'S SUPER ABACUS</span> ✨</h1>
-    <p class="hero-subtitle" id="t-app-subtitle">Welcome, Kungi! Let's learn Abacus together! 🚗💨</p>
+    <span class="corner-unicorn left">🦄</span>
+    <span class="corner-unicorn right">🦄</span>
+    <h1 class="hero-title">✨ <span id="t-app-title">FREYA'S MAGICAL ABACUS</span> ✨</h1>
+    <p class="hero-subtitle" id="t-app-subtitle">Welcome, Freya! Let's learn Abacus together! 🎀</p>
   </div>
 
   <!-- 4 Stats Cards: Correct, Total, Stars, Crowns -->
@@ -1449,42 +1379,42 @@
     <div class="lesson-cards-grid">
       <!-- Lesson 1 -->
       <div class="lesson-card-item active" onclick="loadLesson('sec-bead-count-1')">
-        <div class="lesson-card-icon">🚗</div>
+        <div class="lesson-card-icon">🎀</div>
         <div class="lesson-card-title" id="t-l1-title">Lesson 1: Bead Counting</div>
         <div class="lesson-card-sub" id="t-l1-sub">Count 1-30 & 31-50</div>
       </div>
 
       <!-- Lesson 2 -->
       <div class="lesson-card-item" onclick="loadLesson('sec-lesson-2')">
-        <div class="lesson-card-icon">🐹</div>
+        <div class="lesson-card-icon">💖</div>
         <div class="lesson-card-title" id="t-l2-title">Lesson 2: Addition +1 to +5</div>
         <div class="lesson-card-sub" id="t-l2-sub">Adding 1-5</div>
       </div>
 
       <!-- Lesson 3 -->
       <div class="lesson-card-item" onclick="loadLesson('sec-practice-6')">
-        <div class="lesson-card-icon">🚲</div>
+        <div class="lesson-card-icon">✨</div>
         <div class="lesson-card-title" id="t-l3-title">Lesson 3: Addition +6 to +9</div>
         <div class="lesson-card-sub" id="t-l3-sub">Adding 6-9</div>
       </div>
 
       <!-- Lesson 4 -->
       <div class="lesson-card-item" onclick="loadLesson('sec-practice-sub6')">
-        <div class="lesson-card-icon">🏎️</div>
+        <div class="lesson-card-icon">🌸</div>
         <div class="lesson-card-title" id="t-l4-title">Lesson 4: Subtraction -1 to -5</div>
         <div class="lesson-card-sub" id="t-l4-sub">Subtracting 1-5</div>
       </div>
 
       <!-- Lesson 5 -->
       <div class="lesson-card-item" onclick="loadLesson('sec-practice-sub7')">
-        <div class="lesson-card-icon">🏍️</div>
+        <div class="lesson-card-icon">🌺</div>
         <div class="lesson-card-title" id="t-l5-title">Lesson 5: Subtraction -6 to -9</div>
         <div class="lesson-card-sub" id="t-l5-sub">Subtracting 6-9</div>
       </div>
 
       <!-- Lesson 6 -->
       <div class="lesson-card-item" onclick="loadLesson('sec-friends-1')">
-        <div class="lesson-card-icon">🚀</div>
+        <div class="lesson-card-icon">🎯</div>
         <div class="lesson-card-title" id="t-l6-title">Lesson 6: Small Friends</div>
         <div class="lesson-card-sub" id="t-l6-sub">Formulas (+1, +2, +3, +4)</div>
       </div>
@@ -1509,11 +1439,11 @@
       <button class="extra-tab-btn" onclick="loadLesson('sec-tool-intro')" id="t-tab-basics">🧮 Abacus Basics</button>
       <button class="extra-tab-btn" onclick="loadLesson('sec-finger-tech')" id="t-tab-fingers">🖐️ Finger Tech</button>
       <button class="extra-tab-btn" onclick="loadLesson('sec-bead-draw')" id="t-tab-draw">✏️ Bead Drawing (30 Qs)</button>
-      <button class="extra-tab-btn" onclick="loadLesson('sec-practice-8')" id="t-tab-p8">🏎️ Practice +8 (4-Rows)</button>
+      <button class="extra-tab-btn" onclick="loadLesson('sec-practice-8')" id="t-tab-p8">🪄 Practice +8 (4-Rows)</button>
       <button class="extra-tab-btn" onclick="loadLesson('sec-practice-sub89')" id="t-tab-p89">🔥 Practice -8, -9</button>
-      <button class="extra-tab-btn" onclick="loadLesson('sec-friends-2')" id="t-tab-f2">🚗 Friend +2</button>
-      <button class="extra-tab-btn" onclick="loadLesson('sec-friends-3')" id="t-tab-f3">🐹 Friend +3</button>
-      <button class="extra-tab-btn" onclick="loadLesson('sec-friends-4')" id="t-tab-f4">🚲 Friend +4</button>
+      <button class="extra-tab-btn" onclick="loadLesson('sec-friends-2')" id="t-tab-f2">💛 Friend +2</button>
+      <button class="extra-tab-btn" onclick="loadLesson('sec-friends-3')" id="t-tab-f3">💚 Friend +3</button>
+      <button class="extra-tab-btn" onclick="loadLesson('sec-friends-4')" id="t-tab-f4">💙 Friend +4</button>
       <button class="extra-tab-btn" onclick="loadLesson('sec-revision')" id="t-tab-rev">📚 8-Min Revision</button>
     </div>
   </div>
@@ -1531,11 +1461,11 @@
       <div class="abacus-header-row">
         <div class="abacus-headline">
           <span>🧮</span>
-          <span id="t-abacus-title">Kungi's Soroban Abacus</span>
+          <span id="t-abacus-title">Freya's Soroban Abacus</span>
         </div>
 
         <div class="rod-selector-wrap">
-          <span style="font-size: 0.75rem; font-weight: bold; color: var(--primary-dark);" id="t-rods-lbl">Rods:</span>
+          <span style="font-size: 0.75rem; font-weight: bold; color: #a04060;" id="t-rods-lbl">Rods:</span>
           <button class="rod-sel-btn" onclick="switchRodCount(3)">3</button>
           <button class="rod-sel-btn active" onclick="switchRodCount(5)">5</button>
           <button class="rod-sel-btn" onclick="switchRodCount(7)">7</button>
@@ -1566,9 +1496,9 @@
           <span id="soroban-val-text" style="color: #fffa65; font-size: 1.6rem; min-width: 32px;">0</span>
         </div>
         <div class="spelled-words-badge" id="soroban-val-words">
-          <span>🚗</span>
+          <span>🌸</span>
           <span id="soroban-spelled-text">Zero</span>
-          <span>🏁</span>
+          <span>✨</span>
         </div>
         <button class="icon-toggle-btn" style="padding: 4px 10px; font-size: 0.85rem;" onclick="speakCurrentValue(true)" title="Speak sweet pronunciation">🔊</button>
       </div>
@@ -1581,10 +1511,10 @@
 
 </div>
 
-<!-- CROWN ANIMATION & OUTSTANDING KUNGI CELEBRATION POPUP -->
+<!-- CROWN ANIMATION & OUTSTANDING FREYA CELEBRATION POPUP -->
 <div class="celebration-overlay" id="celebration-popup">
   <div class="crown-icon-animated" id="celebration-crown">👑</div>
-  <div class="celebration-praise-text" id="celebration-msg">Outstanding Kungi!</div>
+  <div class="celebration-praise-text" id="celebration-msg">Outstanding Freya!</div>
   <div class="celebration-sub-text" id="celebration-sub">✨ Golden Crown & Star Won! ✨</div>
 </div>
 
@@ -1594,43 +1524,42 @@
     <div class="cert-container">
       <div style="font-size: 4.5rem; margin-bottom: 4px;" class="crown-icon-animated">👑</div>
       <div style="font-size: 1.3rem; margin-bottom: 8px;">🌟🏅🌟</div>
-      <h2 style="font-size: 1.85rem; font-weight: 900; color: #4ade80; margin-bottom: 6px; text-shadow: 0 0 10px rgba(74, 222, 128, 0.4);" id="t-cert-title">Certificate of Excellence</h2>
-      <p style="color: #a7f3d0; font-size: 0.95rem;" id="t-cert-sub">This certifies that our brilliant math explorer</p>
-      <div style="font-size: 2.6rem; font-weight: 900; color: #4ade80; margin: 10px 0; text-decoration: underline wavy #a855f7;">Kungi</div>
-      <p style="font-size: 1.1rem; color: #dcfce7; line-height: 1.5; margin-bottom: 14px; font-weight: 700;" id="t-cert-desc">
+      <h2 style="font-size: 1.85rem; font-weight: 900; color: #d81b60; margin-bottom: 6px;" id="t-cert-title">Certificate of Excellence</h2>
+      <p style="color: #718096; font-size: 0.95rem;" id="t-cert-sub">This certifies that our brilliant math explorer</p>
+      <div style="font-size: 2.6rem; font-weight: 900; color: #ff4081; margin: 10px 0; text-decoration: underline wavy #ffbe0b;">Freya</div>
+      <p style="font-size: 1.1rem; color: #4a5568; line-height: 1.5; margin-bottom: 14px; font-weight: 700;" id="t-cert-desc">
         has successfully graduated <strong>Abacus Level 1A</strong> with extraordinary speed, dedication, and golden crown mastery!
       </p>
       <div style="display: flex; justify-content: center; gap: 16px; margin: 15px 0;">
-        <div style="background: #1c2e1f; border: 2px solid #2e5333; padding: 10px 18px; border-radius: 14px;">
-          <div style="font-size: 0.8rem; color: #86efac;" id="t-cert-stars">Total Stars</div>
-          <div style="font-size: 1.6rem; font-weight: 900; color: #ffbe0b;" id="modal-star-count">0 ⭐</div>
+        <div style="background: #fff0f5; border: 2px solid #ffccd9; padding: 10px 18px; border-radius: 14px;">
+          <div style="font-size: 0.8rem; color: #b83280;" id="t-cert-stars">Total Stars</div>
+          <div style="font-size: 1.6rem; font-weight: 900; color: #d81b60;" id="modal-star-count">0 ⭐</div>
         </div>
-        <div style="background: #1c2e1f; border: 2px solid #2e5333; padding: 10px 18px; border-radius: 14px;">
-          <div style="font-size: 0.8rem; color: #86efac;" id="t-cert-crowns">Golden Crowns</div>
+        <div style="background: #fff0f5; border: 2px solid #ffccd9; padding: 10px 18px; border-radius: 14px;">
+          <div style="font-size: 0.8rem; color: #b83280;" id="t-cert-crowns">Golden Crowns</div>
           <div style="font-size: 1.6rem; font-weight: 900; color: #ffbe0b;" id="modal-crown-count">0 👑</div>
         </div>
-        <div style="background: #1c2e1f; border: 2px solid #2e5333; padding: 10px 18px; border-radius: 14px;">
-          <div style="font-size: 0.8rem; color: #86efac;" id="t-cert-rank">Status</div>
-          <div style="font-size: 1.25rem; font-weight: 900; color: #4ade80;" id="t-cert-level">Graduated! 🎓</div>
+        <div style="background: #fff0f5; border: 2px solid #ffccd9; padding: 10px 18px; border-radius: 14px;">
+          <div style="font-size: 0.8rem; color: #b83280;" id="t-cert-rank">Status</div>
+          <div style="font-size: 1.25rem; font-weight: 900; color: #ff4081;" id="t-cert-level">Graduated! 🎓</div>
         </div>
       </div>
-      <button class="btn-submit-arena" onclick="closeCertModal()" style="margin: 12px auto 0 auto; width: auto;" id="t-cert-btn">Keep Shining, Kungi! 🚀</button>
+      <button class="btn-submit-arena" onclick="closeCertModal()" style="margin: 12px auto 0 auto; width: auto;" id="t-cert-btn">Keep Shining, Freya! 🚀</button>
     </div>
   </div>
 </div>
 
 <script>
 /* =========================================================================
-   I18N LANGUAGE DICTIONARIES (ENGLISH & MALAYALAM)
+   I18N LANGUAGE DICTIONARIES (ENGLISH & BAHASA)
    ========================================================================= */
 
-let currentLang = localStorage.getItem('kungi_abacus_lang') || localStorage.getItem('freya_abacus_lang') || 'en';
-if (currentLang === 'id') currentLang = 'ml';
+let currentLang = localStorage.getItem('freya_abacus_lang') || 'en';
 
 const I18N = {
   en: {
-    appTitle: "KUNGI'S SUPER ABACUS",
-    welcomeSub: "Welcome, Kungi! Let's learn Abacus together! 🚗💨",
+    appTitle: "FREYA'S MAGICAL ABACUS",
+    welcomeSub: "Welcome, Freya! Let's learn Abacus together! 🎀",
     correctAnswers: "Correct Answers",
     totalQuestions: "Total Questions",
     starsEarned: "Stars Earned",
@@ -1648,11 +1577,14 @@ const I18N = {
     l5Sub: "Subtracting 6-9",
     l6Title: "Lesson 6: Small Friends",
     l6Sub: "Formulas (+1, +2, +3, +4)",
+    lblVoice: "Voice",
+    lblSound: "Sound",
+    lblTrophy: "Trophy",
     speedTitle: "Speed Writing Lab",
     speedSub: "Left & Right Hand (Apple Pencil)",
     testTitle: "Final Test Paper",
     testSub: "200 Marks & Certificate",
-    abacusTitle: "Kungi's Soroban Abacus",
+    abacusTitle: "Freya's Soroban Abacus",
     rodsLbl: "Rods:",
     clearBtn: "Clear (0)",
     howBeadsWork: "How Beads Work",
@@ -1664,10 +1596,10 @@ const I18N = {
     prevChallenge: "⬅️ Prev",
     viewAllGrid: "📋 View All Questions",
     hideAllGrid: "✖️ Hide All Questions",
-    outstanding: "Outstanding Kungi!",
-    wellDone: "Well done Kungi! Excellent!",
-    goodJob: "Good job Kungi! Outstanding!",
-    howBeadsMsg: "🌟 How Beads Work:\n\n1. Upper bead = 5 (pull down to beam to add)\n2. Lower beads = 1 each (push up to beam to add)\n3. Clear button resets all beads back to 0!\n\nTry it now Kungi!",
+    outstanding: "Outstanding Freya!",
+    wellDone: "Well done Freya! Excellent!",
+    goodJob: "Good job Freya! Outstanding!",
+    howBeadsMsg: "🌟 How Beads Work:\n\n1. Upper bead = 5 (pull down to beam to add)\n2. Lower beads = 1 each (push up to beam to add)\n3. Clear button resets all beads back to 0!\n\nTry it now Freya!",
     certTitle: "Certificate of Excellence",
     certSub: "This certifies that our brilliant math explorer",
     certDesc: "has successfully graduated Abacus Level 1A with extraordinary speed, dedication, and golden crown mastery!",
@@ -1675,208 +1607,162 @@ const I18N = {
     certCrowns: "Golden Crowns",
     certRank: "Status",
     certLevel: "Graduated! 🎓",
-    certBtn: "Keep Shining, Kungi! 🚀",
-    voiceLbl: "Voice",
-    soundLbl: "Sound",
-    trophyLbl: "Trophy",
-    tabBasics: "🧮 Abacus Basics",
-    tabFingers: "🖐️ Finger Tech",
-    tabDraw: "✏️ Bead Drawing (30 Qs)",
-    tabP8: "🏎️ Practice +8 (4-Rows)",
-    tabP89: "🔥 Practice -8, -9",
-    tabF2: "🚗 Friend +2",
-    tabF3: "🐹 Friend +3",
-    tabF4: "🚲 Friend +4",
-    tabRev: "📚 8-Min Revision"
+    certBtn: "Keep Shining, Freya! 🚀"
   },
-  ml: {
-    appTitle: "കുഞ്ഞിയുടെ സൂപ്പർ അബാക്കസ്",
-    welcomeSub: "സ്വാഗതം കുഞ്ഞീ! നമുക്ക് ഒരുമിച്ച് അബാക്കസ് പഠിക്കാം! 🚗💨",
-    correctAnswers: "ശരിയായ ഉത്തരങ്ങൾ",
-    totalQuestions: "ആകെ ചോദ്യങ്ങൾ",
-    starsEarned: "നേടിയ നക്ഷത്രങ്ങൾ",
-    crownsEarned: "നേടിയ കിരീടങ്ങൾ",
-    chooseLesson: "നിങ്ങളുടെ പാഠം തിരഞ്ഞെടുക്കൂ",
-    l1Title: "പാഠം 1: മണികൾ എണ്ണാം",
-    l1Sub: "1-30 & 31-50 എണ്ണൽ",
-    l2Title: "പാഠം 2: സങ്കലനം +1 മുതൽ +5 വരെ",
-    l2Sub: "1-5 കൂട്ടാം",
-    l3Title: "പാഠം 3: സങ്കലനം +6 മുതൽ +9 വരെ",
-    l3Sub: "6-9 കൂട്ടാം",
-    l4Title: "പാഠം 4: വ്യവകലനം -1 മുതൽ -5 വരെ",
-    l4Sub: "1-5 കുറയ്ക്കാം",
-    l5Title: "പാഠം 5: വ്യവകലനം -6 മുതൽ -9 വരെ",
-    l5Sub: "6-9 കുറയ്ക്കാം",
-    l6Title: "പാഠം 6: സ്മോൾ ഫ്രണ്ട്സ് (കൂട്ടുകാർ)",
-    l6Sub: "സൂത്രവാക്യങ്ങൾ (+1, +2, +3, +4)",
-    speedTitle: "സ്പീഡ് റൈറ്റിംഗ് ലാബ്",
-    speedSub: "ഇടത് & വലത് കൈ പരിശീലനം",
-    testTitle: "ഫൈനൽ പരീക്ഷ പേപ്പർ",
-    testSub: "200 മാർക്ക് & സർട്ടിഫിക്കറ്റ്",
-    abacusTitle: "കുഞ്ഞിയുടെ സൊറോബൻ അബാക്കസ്",
-    rodsLbl: "കമ്പികൾ:",
-    clearBtn: "തുടയ്ക്കുക (0)",
-    howBeadsWork: "മണികൾ പ്രവർത്തിക്കുന്ന വിധം",
-    valLbl: "മൂല്യം:",
-    demoAbacus: "ഡെമോ അബാക്കസ്",
-    checkAnswer: "ഉത്തരം പരിശോധിക്കൂ ⭐",
-    useAbacusAns: "അബാക്കസ് മൂല്യം ഉപയോഗിക്കൂ",
-    nextChallenge: "അടുത്ത ചോദ്യം ➡️",
-    prevChallenge: "⬅️ മുൻപത്തെ ചോദ്യം",
-    viewAllGrid: "📋 എല്ലാ ചോദ്യങ്ങളും കാണുക",
-    hideAllGrid: "✖️ ചോദ്യങ്ങൾ മറയ്ക്കുക",
-    outstanding: "അത്യുജ്ജ്വലം കുഞ്ഞീ!",
-    wellDone: "മിടുക്കൻ കുഞ്ഞീ! കൊള്ളാം!",
-    goodJob: "നല്ല ശ്രമം കുഞ്ഞീ! ഉഷാർ!",
-    howBeadsMsg: "🌟 മണികൾ എങ്ങനെ പ്രവർത്തിക്കുന്നു:\n\n1. മുകളിലെ മണി = 5 (ചേർക്കാൻ താഴോട്ട് നീക്കുക)\n2. താഴത്തെ മണികൾ = ഓരോന്നിനും 1 (ചേർക്കാൻ മുകളിലോട്ട് നീക്കുക)\n3. 'തുടയ്ക്കുക' ബട്ടൺ എല്ലാം 0 ആക്കും!\n\nഇപ്പോൾ ചെയ്തു നോക്കൂ കുഞ്ഞീ!",
-    certTitle: "മികവിനുള്ള സർട്ടിഫിക്കറ്റ്",
-    certSub: "ഞങ്ങളുടെ മിടുക്കനായ കൊച്ചു ഗണിത പ്രതിഭയ്ക്ക് നൽകുന്നത്",
-    certDesc: "മികച്ച വേഗതയോടും അർപ്പണബോധത്തോടും കൂടി അബാക്കസ് ലെവൽ 1A വിജയകരമായി പൂർത്തിയാക്കി സ്വർണ്ണ കിരീടം സ്വന്തമാക്കിയിരിക്കുന്നു!",
-    certStars: "ആകെ നക്ഷത്രങ്ങൾ",
-    certCrowns: "സ്വർണ്ണ കിരീടങ്ങൾ",
-    certRank: "പദവി",
-    certLevel: "പാസ്സായി! 🎓",
-    certBtn: "മിടുക്കനായി തിളങ്ങൂ, കുഞ്ഞീ! 🚀",
-    voiceLbl: "ശബ്ദം",
-    soundLbl: "സംഗീതം",
-    trophyLbl: "ട്രോഫി",
-    tabBasics: "🧮 അബാക്കസ് അടിസ്ഥാനങ്ങൾ",
-    tabFingers: "🖐️ വിരൽ സാങ്കേതികത",
-    tabDraw: "✏️ മണി വരയ്ക്കൽ (30)",
-    tabP8: "🏎️ പരിശീലനം +8 (4-വരികൾ)",
-    tabP89: "🔥 പരിശീലനം -8, -9",
-    tabF2: "🚗 കൂട്ടുകാരൻ +2",
-    tabF3: "🐹 കൂട്ടുകാരൻ +3",
-    tabF4: "🚲 കൂട്ടുകാരൻ +4",
-    tabRev: "📚 8-മിനിറ്റ് റിവിഷൻ"
+  id: {
+    appTitle: "SEMPOA AJAIB FREYA",
+    welcomeSub: "Selamat datang, Freya! Ayo belajar Sempoa bersama! 🎀",
+    correctAnswers: "Jawaban Benar",
+    totalQuestions: "Total Soal",
+    starsEarned: "Bintang Didapat",
+    crownsEarned: "Mahkota Emas",
+    chooseLesson: "Pilih Pelajaranmu",
+    l1Title: "Pelajaran 1: Hitung Manik",
+    l1Sub: "Hitung 1-30 & 31-50",
+    l2Title: "Pelajaran 2: Tambah +1 sd +5",
+    l2Sub: "Penjumlahan 1-5",
+    l3Title: "Pelajaran 3: Tambah +6 sd +9",
+    l3Sub: "Penjumlahan 6-9",
+    l4Title: "Pelajaran 4: Kurang -1 sd -5",
+    l4Sub: "Pengurangan 1-5",
+    l5Title: "Pelajaran 5: Kurang -6 sd -9",
+    l5Sub: "Pengurangan 6-9",
+    l6Title: "Pelajaran 6: Kawan Kecil",
+    l6Sub: "Rumus (+1, +2, +3, +4)",
+    lblVoice: "Suara",
+    lblSound: "Musik",
+    lblTrophy: "Piala",
+    speedTitle: "Tulis Cepat Angka",
+    speedSub: "Tangan Kiri & Kanan (Apple Pencil)",
+    testTitle: "Ujian Akhir Level-1",
+    testSub: "200 Nilai & Sertifikat",
+    abacusTitle: "Sempoa Ajaib Freya",
+    rodsLbl: "Tiang:",
+    clearBtn: "Bersihkan (0)",
+    howBeadsWork: "Cara Kerja Manik",
+    valLbl: "Nilai:",
+    demoAbacus: "Peragakan",
+    checkAnswer: "Periksa Jawaban ⭐",
+    useAbacusAns: "Gunakan Nilai Sempoa",
+    nextChallenge: "Tantangan Berikutnya ➡️",
+    prevChallenge: "⬅️ Sebelumnya",
+    viewAllGrid: "📋 Lihat Semua Soal",
+    hideAllGrid: "✖️ Tutup Semua Soal",
+    outstanding: "Luar biasa Freya!",
+    wellDone: "Bagus sekali Freya! Hebat!",
+    goodJob: "Kerja bagus Freya! Luar biasa!",
+    howBeadsMsg: "🌟 Cara Kerja Manik Sempoa:\n\n1. Manik Atas = 5 (tarik turun ke tiang pemisah untuk menambah)\n2. Manik Bawah = 1 per manik (dorong naik ke tiang pemisah)\n3. Tombol bersihkan mengatur ulang ke 0!\n\nAyo coba Freya!",
+    certTitle: "Sertifikat Kelulusan Terbaik",
+    certSub: "Diberikan kepada penjelajah matematika hebat kami",
+    certDesc: "telah berhasil lulus Sempoa Level 1A dengan kecepatan luar biasa dan mahkota emas kehormatan!",
+    certStars: "Total Bintang",
+    certCrowns: "Mahkota Emas",
+    certRank: "Status",
+    certLevel: "Lulus! 🎓",
+    certBtn: "Terus Bersinar, Freya! 🚀"
   }
 };
-I18N.id = I18N.ml;
 
-function getRodNameByPower(power) {
-  if (power === 0) return (currentLang === 'ml' || currentLang === 'id') ? 'ഒറ്റകൾ' : '1s (Unit)';
-  if (power === 1) return (currentLang === 'ml' || currentLang === 'id') ? 'പത്തുകൾ' : '10s';
-  if (power === 2) return (currentLang === 'ml' || currentLang === 'id') ? 'നൂറുകൾ' : '100s';
-  if (power === 3) return (currentLang === 'ml' || currentLang === 'id') ? 'ആയിരങ്ങൾ' : '1,000s';
-  if (power === 4) return (currentLang === 'ml' || currentLang === 'id') ? 'പതിനായിരം' : '10,000s';
-  return `10^${power}`;
-}
+function setLanguage(lang) {
+  currentLang = lang;
+  localStorage.setItem('freya_abacus_lang', lang);
 
-function updateRodNames() {
-  if (typeof rods === 'undefined' || !rods || !rods.length) return;
-  rods.forEach(rod => {
-    rod.name = getRodNameByPower(rod.power);
-  });
-}
+  document.getElementById('lang-btn-en').classList.toggle('active', lang === 'en');
+  document.getElementById('lang-btn-id').classList.toggle('active', lang === 'id');
 
-function refreshCurrentActiveLesson() {
-  if (activeLessonKey === 'sec-tool-intro' || activeLessonKey === 'sec-finger-tech') {
-    renderStaticLesson(activeLessonKey);
+  const dict = I18N[lang];
+
+  // Top Bar buttons
+  const vEl = document.getElementById('lbl-voice');
+  if (vEl) vEl.innerText = dict.lblVoice || (lang === 'id' ? 'Suara' : 'Voice');
+  const sEl = document.getElementById('lbl-sound');
+  if (sEl) sEl.innerText = dict.lblSound || (lang === 'id' ? 'Musik' : 'Sound');
+  const tEl = document.getElementById('lbl-trophy');
+  if (tEl) tEl.innerText = dict.lblTrophy || (lang === 'id' ? 'Piala' : 'Trophy');
+
+  // Hero & stats
+  document.getElementById('t-app-title').innerText = dict.appTitle;
+  document.getElementById('t-app-subtitle').innerText = dict.welcomeSub;
+  document.getElementById('t-correct-answers').innerText = dict.correctAnswers;
+  document.getElementById('t-total-questions').innerText = dict.totalQuestions;
+  document.getElementById('t-stars-earned').innerText = dict.starsEarned;
+  document.getElementById('t-crowns-earned').innerText = dict.crownsEarned;
+  document.getElementById('t-choose-lesson').innerText = dict.chooseLesson;
+
+  // Lesson cards
+  document.getElementById('t-l1-title').innerText = dict.l1Title;
+  document.getElementById('t-l1-sub').innerText = dict.l1Sub;
+  document.getElementById('t-l2-title').innerText = dict.l2Title;
+  document.getElementById('t-l2-sub').innerText = dict.l2Sub;
+  document.getElementById('t-l3-title').innerText = dict.l3Title;
+  document.getElementById('t-l3-sub').innerText = dict.l3Sub;
+  document.getElementById('t-l4-title').innerText = dict.l4Title;
+  document.getElementById('t-l4-sub').innerText = dict.l4Sub;
+  document.getElementById('t-l5-title').innerText = dict.l5Title;
+  document.getElementById('t-l5-sub').innerText = dict.l5Sub;
+  document.getElementById('t-l6-title').innerText = dict.l6Title;
+  document.getElementById('t-l6-sub').innerText = dict.l6Sub;
+  document.getElementById('t-speed-title').innerText = dict.speedTitle;
+  document.getElementById('t-speed-sub').innerText = dict.speedSub;
+  document.getElementById('t-test-title').innerText = dict.testTitle;
+  document.getElementById('t-test-sub').innerText = dict.testSub;
+
+  // Right block: Soroban Abacus card text & buttons
+  document.getElementById('t-abacus-title').innerText = dict.abacusTitle;
+  document.getElementById('t-rods-lbl').innerText = dict.rodsLbl;
+  document.getElementById('t-clear-btn').innerText = dict.clearBtn;
+  document.getElementById('t-how-works').innerText = dict.howBeadsWork;
+  document.getElementById('t-val-lbl').innerText = dict.valLbl;
+
+  // Certificate Modal
+  document.getElementById('t-cert-title').innerText = dict.certTitle;
+  document.getElementById('t-cert-sub').innerText = dict.certSub;
+  document.getElementById('t-cert-desc').innerText = dict.certDesc;
+  document.getElementById('t-cert-stars').innerText = dict.certStars;
+  document.getElementById('t-cert-crowns').innerText = dict.certCrowns;
+  document.getElementById('t-cert-rank').innerText = dict.certRank;
+  document.getElementById('t-cert-level').innerText = dict.certLevel;
+  document.getElementById('t-cert-btn').innerText = dict.certBtn;
+
+  // Update Right block: Update rod names (Satuan / Puluhan / Ratusan vs 1s / 10s / 100s) and re-render Soroban
+  if (rods && rods.length > 0) {
+    rods.forEach(rod => {
+      const power = rod.power;
+      if (power === 0) rod.name = currentLang === 'id' ? 'Satuan' : '1s (Unit)';
+      else if (power === 1) rod.name = currentLang === 'id' ? 'Puluhan' : '10s';
+      else if (power === 2) rod.name = currentLang === 'id' ? 'Ratusan' : '100s';
+      else if (power === 3) rod.name = currentLang === 'id' ? 'Ribuan' : '1,000s';
+      else if (power === 4) rod.name = currentLang === 'id' ? '10 Ribu' : '10,000s';
+      else rod.name = `10^${power}`;
+    });
+    renderSoroban();
+  }
+
+  // Update Right block: Spelled number in selected language
+  updateDisplayAndSpeech(false);
+
+  // Left block: Re-render the active challenge arena INSTANTLY in the new language!
+  if (activeLessonKey === 'sec-bead-count-1' || activeLessonKey === 'sec-bead-count-2') {
+    renderBeadLessonArena(activeLessonKey);
   } else if (activeLessonKey === 'sec-speed-writing') {
     renderSpeedWritingArena();
-  } else if (activeLessonKey === 'sec-bead-count-1' || activeLessonKey === 'sec-bead-count-2' || activeLessonKey === 'sec-bead-draw') {
+  } else if (activeLessonKey === 'sec-bead-draw') {
     renderBeadLessonArena(activeLessonKey);
   } else {
     renderActiveChallenge();
   }
 
+  // If All Questions grid is currently open, refresh it instantly too!
   const gridView = document.getElementById('all-questions-grid-view');
-  if (gridView && gridView.style.display !== 'none') {
-    if (typeof renderAllQuestionsGrid === 'function') {
-      renderAllQuestionsGrid();
-    }
+  if (gridView && gridView.style.display === 'block') {
+    gridView.style.display = 'none';
+    toggleAllQuestionsGrid();
   }
 }
 
-function setLanguage(lang) {
-  if (lang === 'id') lang = 'ml';
-  currentLang = lang;
-  localStorage.setItem('kungi_abacus_lang', lang);
-
-  const btnEn = document.getElementById('lang-btn-en');
-  const btnMl = document.getElementById('lang-btn-ml') || document.getElementById('lang-btn-id');
-  if (btnEn) btnEn.classList.toggle('active', lang === 'en');
-  if (btnMl) btnMl.classList.toggle('active', lang === 'ml');
-
-  const dict = I18N[lang] || I18N.en;
-
-  const setTxt = (id, val) => {
-    const el = document.getElementById(id);
-    if (el && val !== undefined) el.innerText = val;
-  };
-
-  // Top header button labels
-  setTxt('lbl-voice', dict.voiceLbl);
-  setTxt('lbl-sound', dict.soundLbl);
-  setTxt('lbl-trophy', dict.trophyLbl);
-
-  // Hero & Stats
-  setTxt('t-app-title', dict.appTitle);
-  setTxt('t-app-subtitle', dict.welcomeSub);
-  setTxt('t-correct-answers', dict.correctAnswers);
-  setTxt('t-total-questions', dict.totalQuestions);
-  setTxt('t-stars-earned', dict.starsEarned);
-  setTxt('t-crowns-earned', dict.crownsEarned);
-  setTxt('t-choose-lesson', dict.chooseLesson);
-
-  // 8 Main Lesson Cards
-  setTxt('t-l1-title', dict.l1Title);
-  setTxt('t-l1-sub', dict.l1Sub);
-  setTxt('t-l2-title', dict.l2Title);
-  setTxt('t-l2-sub', dict.l2Sub);
-  setTxt('t-l3-title', dict.l3Title);
-  setTxt('t-l3-sub', dict.l3Sub);
-  setTxt('t-l4-title', dict.l4Title);
-  setTxt('t-l4-sub', dict.l4Sub);
-  setTxt('t-l5-title', dict.l5Title);
-  setTxt('t-l5-sub', dict.l5Sub);
-  setTxt('t-l6-title', dict.l6Title);
-  setTxt('t-l6-sub', dict.l6Sub);
-  setTxt('t-speed-title', dict.speedTitle);
-  setTxt('t-speed-sub', dict.speedSub);
-  setTxt('t-test-title', dict.testTitle);
-  setTxt('t-test-sub', dict.testSub);
-
-  // 9 Sub-Tabs
-  setTxt('t-tab-basics', dict.tabBasics);
-  setTxt('t-tab-fingers', dict.tabFingers);
-  setTxt('t-tab-draw', dict.tabDraw);
-  setTxt('t-tab-p8', dict.tabP8);
-  setTxt('t-tab-p89', dict.tabP89);
-  setTxt('t-tab-f2', dict.tabF2);
-  setTxt('t-tab-f3', dict.tabF3);
-  setTxt('t-tab-f4', dict.tabF4);
-  setTxt('t-tab-rev', dict.tabRev);
-
-  // Right Block: Abacus Stage
-  setTxt('t-abacus-title', dict.abacusTitle);
-  setTxt('t-rods-lbl', dict.rodsLbl);
-  setTxt('t-clear-btn', dict.clearBtn);
-  setTxt('t-how-works', dict.howBeadsWork);
-  setTxt('t-val-lbl', dict.valLbl);
-
-  // Certificate Modal
-  setTxt('t-cert-title', dict.certTitle);
-  setTxt('t-cert-sub', dict.certSub);
-  setTxt('t-cert-desc', dict.certDesc);
-  setTxt('t-cert-stars', dict.certStars);
-  setTxt('t-cert-crowns', dict.certCrowns);
-  setTxt('t-cert-rank', dict.certRank);
-  setTxt('t-cert-level', dict.certLevel);
-  setTxt('t-cert-btn', dict.certBtn);
-
-  // Instantly update Right Block (Abacus Rods & Tags)
-  updateRodNames();
-  if (typeof renderSoroban === 'function') renderSoroban();
-  if (typeof updateDisplayAndSpeech === 'function') updateDisplayAndSpeech(false);
-
-  // Instantly update Left Block (Active Challenge / Lesson Arena)
-  refreshCurrentActiveLesson();
-}
-
 function numberToWords(num) {
-  if (currentLang === 'ml' || currentLang === 'id') {
-    return numberToWordsMalayalam(num);
+  if (currentLang === 'id') {
+    return numberToWordsBahasa(num);
   } else {
     return numberToWordsEnglish(num);
   }
@@ -1920,69 +1806,18 @@ function numberToWordsEnglish(num) {
   return convertChunk(num);
 }
 
-function numberToWordsMalayalam(num) {
-  if (num === 0) return "പൂജ്യം";
-  const ones = ["", "ഒന്ന്", "രണ്ട്", "മൂന്ന്", "നാല്", "അഞ്ച്", "ആറ്", "ഏഴ്", "എട്ട്", "ഒൻപത്"];
-  const teens = ["പത്ത്", "പതിനൊന്ന്", "പന്ത്രണ്ട്", "പതിമൂന്ന്", "പതിനാല്", "പതിനഞ്ച്", "പതിനാറ്", "പതിനേഴ്", "പതിനെട്ട്", "പത്തൊൻപത്"];
-  const tens = ["", "", "ഇരുപത്", "മുപ്പത്", "നാൽപ്പത്", "അൻപത്", "അറുപത്", "എഴുപത്", "എൺപത്", "തൊണ്ണൂറ്"];
-  const tensPrefix = ["", "", "ഇരുപത്തി", "മുപ്പത്തി", "നാൽപത്തി", "അൻപത്തി", "അറുപത്തി", "എഴുപത്തി", "എൺപത്തി", "തൊണ്ണൂറ്റി"];
-
-  function convertTwoDigits(n) {
-    if (n === 0) return "";
-    if (n < 10) return ones[n];
-    if (n < 20) return teens[n - 10];
-    const t = Math.floor(n / 10);
-    const r = n % 10;
-    if (r === 0) return tens[t];
-    return tensPrefix[t] + ones[r];
-  }
-
-  function convertHundreds(n) {
-    let str = "";
-    const h = Math.floor(n / 100);
-    const rem = n % 100;
-    if (h > 0) {
-      if (h === 1) str += (rem > 0 ? "നൂറ്റി " : "നൂറ്");
-      else if (h === 2) str += (rem > 0 ? "ഇരുനൂറ്റി " : "ഇരുനൂറ്");
-      else if (h === 3) str += (rem > 0 ? "മുനൂറ്റി " : "മുനൂറ്");
-      else if (h === 4) str += (rem > 0 ? "നാനൂറ്റി " : "നാനൂറ്");
-      else if (h === 5) str += (rem > 0 ? "അഞ്ഞൂറ്റി " : "അഞ്ഞൂറ്");
-      else if (h === 6) str += (rem > 0 ? "അറുനൂറ്റി " : "അറുനൂറ്");
-      else if (h === 7) str += (rem > 0 ? "എഴുനൂറ്റി " : "എഴുനൂറ്");
-      else if (h === 8) str += (rem > 0 ? "എണ്ണൂറ്റി " : "എണ്ണൂറ്");
-      else if (h === 9) str += (rem > 0 ? "തൊള്ളായിരത്തി " : "തൊള്ളായിരം");
-    }
-    if (rem > 0) {
-      str += convertTwoDigits(rem);
-    }
-    return str.trim();
-  }
-
-  if (num < 1000) {
-    return convertHundreds(num);
-  }
-
-  if (num < 100000) {
-    const th = Math.floor(num / 1000);
-    const rem = num % 1000;
-    let thStr = "";
-    if (th === 1) thStr = "ആയിരത്തി ";
-    else thStr = convertHundreds(th) + " ആയിരത്തി ";
-    if (rem === 0) {
-      if (th === 1) return "ആയിരം";
-      return convertHundreds(th) + " ആയിരം";
-    }
-    return (thStr + convertHundreds(rem)).trim();
-  }
-
-  if (num < 10000000) {
-    const lk = Math.floor(num / 100000);
-    const rem = num % 100000;
-    let lkStr = convertHundreds(lk) + " ലക്ഷം ";
-    if (rem === 0) return lkStr.trim();
-    return (lkStr + numberToWordsMalayalam(rem)).trim();
-  }
-
+function numberToWordsBahasa(num) {
+  if (num === 0) return "Nol";
+  const satuan = ["", "Satu", "Dua", "Tiga", "Empat", "Lima", "Enam", "Tujuh", "Delapan", "Sembilan", "Sepuluh", "Sebelas"];
+  
+  if (num < 12) return satuan[num];
+  if (num < 20) return satuan[num - 10] + " Belas";
+  if (num < 100) return satuan[Math.floor(num / 10)] + " Puluh" + (num % 10 > 0 ? " " + satuan[num % 10] : "");
+  if (num < 200) return "Seratus" + (num % 100 > 0 ? " " + numberToWordsBahasa(num % 100) : "");
+  if (num < 1000) return satuan[Math.floor(num / 100)] + " Ratus" + (num % 100 > 0 ? " " + numberToWordsBahasa(num % 100) : "");
+  if (num < 2000) return "Seribu" + (num % 1000 > 0 ? " " + numberToWordsBahasa(num % 1000) : "");
+  if (num < 1000000) return numberToWordsBahasa(Math.floor(num / 1000)) + " Ribu" + (num % 1000 > 0 ? " " + numberToWordsBahasa(num % 1000) : "");
+  if (num < 1000000000) return numberToWordsBahasa(Math.floor(num / 1000000)) + " Juta" + (num % 1000000 > 0 ? " " + numberToWordsBahasa(num % 1000000) : "");
   return num.toString();
 }
 
@@ -2121,85 +1956,21 @@ function playSound(type) {
 }
 
 let speechDebounceTimer = null;
-let currentTtsAudio = null;
-
-// Helper to play high-fidelity, native Malayalam human speech
-function playNaturalMalayalamAudio(text, onEnded = null) {
-  try {
-    if (currentTtsAudio) {
-      currentTtsAudio.pause();
-      currentTtsAudio.currentTime = 0;
-      currentTtsAudio = null;
-    }
-    const cleanText = text.replace(/[\u{1F300}-\u{1F9FF}]/gu, '').replace(/[✨🚗👑⭐🖐️🏁▶️🧹🏎️🏍️🚀🐹🚲]/g, '').trim();
-    if (!cleanText) return;
-
-    const url = 'https://translate.google.com/translate_tts?ie=UTF-8&q=' + encodeURIComponent(cleanText) + '&tl=ml&client=tw-ob';
-    const audio = new Audio(url);
-    currentTtsAudio = audio;
-    audio.playbackRate = 1.0;
-    
-    let fallbackTriggered = false;
-    audio.onerror = () => {
-      if (!fallbackTriggered) {
-        fallbackTriggered = true;
-        speakMalayalamWebSpeechFallback(cleanText);
-      }
-    };
-    if (onEnded) {
-      audio.onended = onEnded;
-    }
-    const playPromise = audio.play();
-    if (playPromise !== undefined) {
-      playPromise.catch(() => {
-        if (!fallbackTriggered) {
-          fallbackTriggered = true;
-          speakMalayalamWebSpeechFallback(cleanText);
-        }
-      });
-    }
-  } catch(e) {
-    speakMalayalamWebSpeechFallback(text);
-  }
-}
-
-// Fallback to Web Speech API if offline or network blocked
-function speakMalayalamWebSpeechFallback(text) {
-  if (!('speechSynthesis' in window)) return;
-  window.speechSynthesis.cancel();
-  const utter = new SpeechSynthesisUtterance(text);
-  utter.rate = 0.88;
-  utter.pitch = 1.0;
-  utter.lang = 'ml-IN';
-
-  const voices = window.speechSynthesis.getVoices();
-  const mlVoice = voices.find(v => v.lang && (v.lang.toLowerCase().startsWith('ml') || v.lang.toLowerCase().includes('malayalam')))
-               || voices.find(v => v.lang && (v.lang.startsWith('hi') || v.lang.startsWith('ta') || v.lang.startsWith('kn') || v.lang.includes('IN')));
-  if (mlVoice) utter.voice = mlVoice;
-  window.speechSynthesis.speak(utter);
-}
-
 function speakValueSweetly(val, force = false) {
-  if (!voiceEnabled) return;
+  if (!voiceEnabled || !('speechSynthesis' in window)) return;
   clearTimeout(speechDebounceTimer);
   speechDebounceTimer = setTimeout(() => {
-    if (currentTtsAudio) {
-      currentTtsAudio.pause();
-      currentTtsAudio.currentTime = 0;
-      currentTtsAudio = null;
-    }
-    if ('speechSynthesis' in window) window.speechSynthesis.cancel();
-
+    window.speechSynthesis.cancel();
     const words = numberToWords(val);
+    const utter = new SpeechSynthesisUtterance(words);
+    utter.rate = 0.94;
+    utter.pitch = 1.35;
 
-    if (currentLang === 'ml' || currentLang === 'id') {
-      playNaturalMalayalamAudio(words);
+    const voices = window.speechSynthesis.getVoices();
+    if (currentLang === 'id') {
+      const idVoice = voices.find(v => v.lang && (v.lang.startsWith('id') || v.lang.startsWith('ms')));
+      if (idVoice) utter.voice = idVoice;
     } else {
-      if (!('speechSynthesis' in window)) return;
-      const utter = new SpeechSynthesisUtterance(words);
-      utter.rate = 0.94;
-      utter.pitch = 1.1;
-      const voices = window.speechSynthesis.getVoices();
       const enVoice = voices.find(v =>
         v.name.includes('Samantha') ||
         v.name.includes('Victoria') ||
@@ -2207,50 +1978,38 @@ function speakValueSweetly(val, force = false) {
         (v.lang && v.lang.startsWith('en') && v.name.toLowerCase().includes('female'))
       ) || voices.find(v => v.lang && v.lang.startsWith('en'));
       if (enVoice) utter.voice = enVoice;
-      window.speechSynthesis.speak(utter);
     }
+
+    window.speechSynthesis.speak(utter);
   }, force ? 10 : 200);
 }
 
 function speakPraiseCustom(text) {
-  if (!voiceEnabled) return;
-  if (currentTtsAudio) {
-    currentTtsAudio.pause();
-    currentTtsAudio.currentTime = 0;
-    currentTtsAudio = null;
-  }
-  if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+  if (!voiceEnabled || !('speechSynthesis' in window)) return;
+  window.speechSynthesis.cancel();
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.rate = 1.0;
+  utter.pitch = 1.35;
 
-  if (currentLang === 'ml' || currentLang === 'id') {
-    playNaturalMalayalamAudio(text);
-  } else {
-    if (!('speechSynthesis' in window)) return;
-    const utter = new SpeechSynthesisUtterance(text);
-    utter.rate = 1.0;
-    utter.pitch = 1.1;
-    const voices = window.speechSynthesis.getVoices();
-    const enVoice = voices.find(v =>
-      v.name.includes('Samantha') ||
-      v.name.includes('Victoria') ||
-      v.name.includes('Karen') ||
-      (v.lang && v.lang.startsWith('en') && v.name.toLowerCase().includes('female'))
-    ) || voices.find(v => v.lang && v.lang.startsWith('en'));
-    if (enVoice) utter.voice = enVoice;
-    window.speechSynthesis.speak(utter);
+  const voices = window.speechSynthesis.getVoices();
+  if (currentLang === 'id') {
+    const idVoice = voices.find(v => v.lang && (v.lang.startsWith('id') || v.lang.startsWith('ms')));
+    if (idVoice) utter.voice = idVoice;
   }
+  window.speechSynthesis.speak(utter);
 }
 
 /* =========================================================================
    PERSISTENT SCORES & MANUAL 5-CLICK RESET ENGINE
    ========================================================================= */
 
-let totalCorrect = parseInt(localStorage.getItem('kungi_correct_ans') || localStorage.getItem('freya_correct_ans') || '0', 10);
-let totalQuestions = parseInt(localStorage.getItem('kungi_total_qs') || localStorage.getItem('freya_total_qs') || '0', 10);
-let totalStars = parseInt(localStorage.getItem('kungi_stars') || localStorage.getItem('freya_stars') || '0', 10);
-let totalCrowns = parseInt(localStorage.getItem('kungi_crowns') || localStorage.getItem('freya_crowns') || '0', 10);
+let totalCorrect = parseInt(localStorage.getItem('freya_correct_ans') || '0', 10);
+let totalQuestions = parseInt(localStorage.getItem('freya_total_qs') || '0', 10);
+let totalStars = parseInt(localStorage.getItem('freya_stars') || '0', 10);
+let totalCrowns = parseInt(localStorage.getItem('freya_crowns') || '0', 10);
 let lessonSolvedMap = {};
 try {
-  lessonSolvedMap = JSON.parse(localStorage.getItem('kungi_solved_map') || localStorage.getItem('freya_solved_map') || '{}');
+  lessonSolvedMap = JSON.parse(localStorage.getItem('freya_solved_map') || '{}');
 } catch(e) {
   lessonSolvedMap = {};
 }
@@ -2265,11 +2024,11 @@ function updateStatsUI() {
 }
 
 function savePersistentStats() {
-  localStorage.setItem('kungi_correct_ans', totalCorrect);
-  localStorage.setItem('kungi_total_qs', totalQuestions);
-  localStorage.setItem('kungi_stars', totalStars);
-  localStorage.setItem('kungi_crowns', totalCrowns);
-  localStorage.setItem('kungi_solved_map', JSON.stringify(lessonSolvedMap));
+  localStorage.setItem('freya_correct_ans', totalCorrect);
+  localStorage.setItem('freya_total_qs', totalQuestions);
+  localStorage.setItem('freya_stars', totalStars);
+  localStorage.setItem('freya_crowns', totalCrowns);
+  localStorage.setItem('freya_solved_map', JSON.stringify(lessonSolvedMap));
 }
 
 // 5-Clicks on Heading Manual Reset
@@ -2299,8 +2058,8 @@ function resetAllScoresManually() {
   updateStatsUI();
   playSound('clear');
   clearSoroban();
-  refreshCurrentActiveLesson();
-  alert("🔄 All scores and stars have been manually reset for Kungi! Fresh start!");
+  renderActiveChallenge();
+  alert("🔄 All scores and stars have been manually reset for Freya! Fresh start!");
 }
 
 /* =========================================================================
@@ -2398,9 +2157,17 @@ function initRods(count = 5) {
     const colorClass = BEAD_COLOR_CLASSES[i % BEAD_COLOR_CLASSES.length];
     const isUnitDot = (power === 0) || (power === 3) || (power === 6);
 
+    let name = 'Rod';
+    if (power === 0) name = currentLang === 'id' ? 'Satuan' : '1s (Unit)';
+    else if (power === 1) name = currentLang === 'id' ? 'Puluhan' : '10s';
+    else if (power === 2) name = currentLang === 'id' ? 'Ratusan' : '100s';
+    else if (power === 3) name = currentLang === 'id' ? 'Ribuan' : '1,000s';
+    else if (power === 4) name = currentLang === 'id' ? '10 Ribu' : '10,000s';
+    else name = `10^${power}`;
+
     rods.push({
       index: i,
-      name: getRodNameByPower(power),
+      name: name,
       power: power,
       weight: weight,
       upper: 0,
@@ -2500,7 +2267,7 @@ function renderSoroban() {
 
     const valTag = document.createElement('div');
     valTag.className = 'rod-val-tag';
-    valTag.style.borderColor = rod.value > 0 ? '#22c55e' : '#2d4d32';
+    valTag.style.borderColor = rod.value > 0 ? '#ff4081' : '#ffccd9';
     valTag.innerText = rod.value;
 
     const nameTag = document.createElement('div');
@@ -2530,11 +2297,6 @@ function updateDisplayAndSpeech(triggerVoice = true) {
     const words = numberToWords(total);
     spelledEl.innerText = words;
   }
-
-  const peek = document.getElementById('btn-abacus-val-peek');
-  if (peek) peek.innerText = total;
-  const peekBead = document.getElementById('btn-abacus-val-peek-bead');
-  if (peekBead) peekBead.innerText = total;
 
   // Requirement 2: Never speak "zero" automatically on clear or transition!
   // Only speak if triggerVoice is explicitly true AND total > 0.
@@ -2633,7 +2395,7 @@ function launchConfetti() {
 
 const LESSON_PROBLEMS = {
   'sec-lesson-2': {
-    title: { en: 'Lesson 2: Direct Addition / Subtraction +/- 5 - Page 9', ml: 'പാഠം 2: നേരിട്ടുള്ള സങ്കലനം / വ്യവകലനം +/- 5 - പേജ് 9', id: 'പാഠം 2: നേരിട്ടുള്ള സങ്കലനം / വ്യവകലനം +/- 5 - പേജ് 9' },
+    title: { en: 'Lesson 2: Direct Addition / Subtraction +/- 5 - Page 9', id: 'Pelajaran 2: Penjumlahan & Pengurangan Langsung +/- 5 - Halaman 9' },
     formula: '+5 / -5 Direct',
     questions: [
       [2, 5, 1], [3, 5, 1], [1, 5, -1], [5, 3, -5], [4, 5, -2],
@@ -2645,7 +2407,7 @@ const LESSON_PROBLEMS = {
     ]
   },
   'sec-practice-6': {
-    title: { en: 'Practice Page: Addition +6 - Page 11', ml: 'പരിശീലന പേജ്: സങ്കലനം +6 - പേജ് 11', id: 'പരിശീലന പേജ്: സങ്കലനം +6 - പേജ് 11' },
+    title: { en: 'Practice Page: Addition +6 - Page 11', id: 'Halaman Latihan: Penjumlahan +6 - Halaman 11' },
     formula: 'Pinch +6 (+5 and +1)',
     questions: [
       [6, 2, -5], [3, 6, -2], [1, 2, 6], [4, -3, 6], [2, 6, -1],
@@ -2657,7 +2419,7 @@ const LESSON_PROBLEMS = {
     ]
   },
   'sec-practice-7': {
-    title: { en: 'Practice Page: Addition +7 - Page 12', ml: 'പരിശീലന പേജ്: സങ്കലനം +7 - പേജ് 12', id: 'പരിശീലന പേജ്: സങ്കലനം +7 - പേജ് 12' },
+    title: { en: 'Practice Page: Addition +7 - Page 12', id: 'Halaman Latihan: Penjumlahan +7 - Halaman 12' },
     formula: 'Pinch +7 (+5 and +2)',
     questions: [
       [7, 2, -5], [3, -2, 7], [2, -1, 7], [4, -3, 7], [2, 7, -1],
@@ -2669,7 +2431,7 @@ const LESSON_PROBLEMS = {
     ]
   },
   'sec-practice-8': {
-    title: { en: 'Practice Page: Addition +8 (4-Rows) - Page 14', ml: 'പരിശീലന പേജ്: സങ്കലനം +8 (4 വരികൾ) - പേജ് 14', id: 'പരിശീലന പേജ്: സങ്കലനം +8 (4 വരികൾ) - പേജ് 14' },
+    title: { en: 'Practice Page: Addition +8 (4-Rows) - Page 14', id: 'Halaman Latihan: Penjumlahan +8 (4 Baris) - Halaman 14' },
     formula: 'Pinch +8 (+5 and +3)',
     questions: [
       [1, 8, -3], [2, -1, 8], [3, -2, 8], [4, -3, 8], [1, 8, -5],
@@ -2681,7 +2443,7 @@ const LESSON_PROBLEMS = {
     ]
   },
   'sec-practice-sub6': {
-    title: { en: 'Practice Page: Subtraction -6 - Page 16', ml: 'പരിശീലന പേജ്: വ്യവകലനം -6 - പേജ് 16', id: 'പരിശീലന പേജ്: വ്യവകലനം -6 - പേജ് 16' },
+    title: { en: 'Practice Page: Subtraction -6 - Page 16', id: 'Halaman Latihan: Pengurangan -6 - Halaman 16' },
     formula: 'Spread -6 (-5 and -1)',
     questions: [
       [8, -6, 5], [7, 2, -6], [5, 4, -6], [6, 2, -6], [9, -6, 1],
@@ -2693,7 +2455,7 @@ const LESSON_PROBLEMS = {
     ]
   },
   'sec-practice-sub7': {
-    title: { en: 'Practice Page: Subtraction -7 - Page 17', ml: 'പരിശീലന പേജ്: വ്യവകലനം -7 - പേജ് 17', id: 'പരിശീലന പേജ്: വ്യവകലനം -7 - പേജ് 17' },
+    title: { en: 'Practice Page: Subtraction -7 - Page 17', id: 'Halaman Latihan: Pengurangan -7 - Halaman 17' },
     formula: 'Spread -7 (-5 and -2)',
     questions: [
       [8, -7, 5], [6, 2, -7], [5, 4, -7], [7, 2, -7], [9, -7, 1],
@@ -2705,7 +2467,7 @@ const LESSON_PROBLEMS = {
     ]
   },
   'sec-practice-sub89': {
-    title: { en: 'Practice Page: Subtraction -8, -9 - Page 19', ml: 'പരിശീലന പേജ്: വ്യവകലനം -8, -9 - പേജ് 19', id: 'പരിശീലന പേജ്: വ്യവകലനം -8, -9 - പേജ് 19' },
+    title: { en: 'Practice Page: Subtraction -8, -9 - Page 19', id: 'Halaman Latihan: Pengurangan -8, -9 - Halaman 19' },
     formula: 'Spread -8 / -9',
     questions: [
       [9, -8, 7], [8, -8, 6], [4, 5, -8], [3, 6, -8], [5, 4, -9],
@@ -2717,7 +2479,7 @@ const LESSON_PROBLEMS = {
     ]
   },
   'sec-friends-1': {
-    title: { en: 'Lesson 6: Small Friend +1 = +5 - 4 - Page 20', ml: 'പാഠം 6: സ്മോൾ ഫ്രണ്ട് +1 = +5 - 4 - പേജ് 20', id: 'പാഠം 6: സ്മോൾ ഫ്രണ്ട് +1 = +5 - 4 - പേജ് 20' },
+    title: { en: 'Lesson 6: Small Friend +1 = +5 - 4 - Page 20', id: 'Pelajaran 6: Kawan Kecil +1 = +5 - 4 - Halaman 20' },
     formula: '+1 = +5 - 4  |  +10 = +50 - 40',
     questions: [
       [2, 2, 1], [3, 1, 1], [4, 1, 3], [1, 3, 1], [9, -5, 1],
@@ -2729,7 +2491,7 @@ const LESSON_PROBLEMS = {
     ]
   },
   'sec-friends-2': {
-    title: { en: 'Lesson 6: Small Friend +2 = +5 - 3 - Page 21', ml: 'പാഠം 6: സ്മോൾ ഫ്രണ്ട് +2 = +5 - 3 - പേജ് 21', id: 'പാഠം 6: സ്മോൾ ഫ്രണ്ട് +2 = +5 - 3 - പേജ് 21' },
+    title: { en: 'Lesson 6: Small Friend +2 = +5 - 3 - Page 21', id: 'Pelajaran 6: Kawan Kecil +2 = +5 - 3 - Halaman 21' },
     formula: '+2 = +5 - 3  |  +20 = +50 - 30',
     questions: [
       [3, 2, 4], [3, 1, 2], [4, 2, 3], [2, 2, 2], [3, 2, 2],
@@ -2741,7 +2503,7 @@ const LESSON_PROBLEMS = {
     ]
   },
   'sec-friends-3': {
-    title: { en: 'Practice Page: Small Friend +3 = +5 - 2 - Page 23', ml: 'പരിശീലന പേജ്: സ്മോൾ ഫ്രണ്ട് +3 = +5 - 2 - പേജ് 23', id: 'പരിശീലന പേജ്: സ്മോൾ ഫ്രണ്ട് +3 = +5 - 2 - പേജ് 23' },
+    title: { en: 'Practice Page: Small Friend +3 = +5 - 2 - Page 23', id: 'Halaman Latihan: Kawan Kecil +3 = +5 - 2 - Halaman 23' },
     formula: '+3 = +5 - 2',
     questions: [
       [1, 1, 3], [2, 1, 3], [3, 1, 3], [2, 2, 3], [1, 3, 3],
@@ -2753,7 +2515,7 @@ const LESSON_PROBLEMS = {
     ]
   },
   'sec-friends-4': {
-    title: { en: 'Practice Page: Small Friend +4 = +5 - 1 - Page 24', ml: 'പരിശീലന പേജ്: സ്മോൾ ഫ്രണ്ട് +4 = +5 - 1 - പേജ് 24', id: 'പരിശീലന പേജ്: സ്മോൾ ഫ്രണ്ട് +4 = +5 - 1 - പേജ് 24' },
+    title: { en: 'Practice Page: Small Friend +4 = +5 - 1 - Page 24', id: 'Halaman Latihan: Kawan Kecil +4 = +5 - 1 - Halaman 24' },
     formula: '+4 = +5 - 1',
     questions: [
       [2, 4, 2], [1, 4, 1], [4, 4, 1], [3, 4, 2], [7, -5, 4],
@@ -2765,7 +2527,7 @@ const LESSON_PROBLEMS = {
     ]
   },
   'sec-revision': {
-    title: { en: 'Master Revision (8 Minutes) - Page 25', ml: 'മാസ്റ്റർ റിവിഷൻ (8 മിനിറ്റ്) - പേജ് 25', id: 'മാസ്റ്റർ റിവിഷൻ (8 മിനിറ്റ്) - പേജ് 25' },
+    title: { en: 'Master Revision (8 Minutes) - Page 25', id: 'Pengulangan Utama (8 Menit) - Halaman 25' },
     formula: 'All Rules Revision',
     questions: [
       [2, 2, 2, -1], [3, 1, 4, -5], [2, 3, 2, 1], [6, -5, 1, 3], [8, -5, 2, 2],
@@ -2777,7 +2539,7 @@ const LESSON_PROBLEMS = {
     ]
   },
   'sec-test-paper': {
-    title: { en: 'Level-1 Final Test Paper (200 MM) - Page 26', ml: 'ലെവൽ-1 ഫൈനൽ ടെസ്റ്റ് പേപ്പർ (200 മാർക്ക്) - പേജ് 26', id: 'ലെവൽ-1 ഫൈനൽ ടെസ്റ്റ് പേപ്പർ (200 മാർക്ക്) - പേജ് 26' },
+    title: { en: 'Level-1 Final Test Paper (200 MM) - Page 26', id: 'Ujian Akhir Level-1 (200 Nilai) - Halaman 26' },
     formula: 'Final Exam (12 Min)',
     questions: [
       [1, 2, 1], [3, 3, 2], [8, 1, -9], [9, -7, 6], [4, 5, -8],
@@ -2856,12 +2618,12 @@ function updateTimerDisplay() {
   if (badge) {
     if (challengeTimerSeconds > 0) {
       badge.classList.add('fast');
-      badge.style.borderColor = '#22c55e';
-      badge.style.color = '#4ade80';
+      badge.style.borderColor = '#ff4081';
+      badge.style.color = '#d81b60';
     } else {
       badge.classList.remove('fast');
-      badge.style.borderColor = '#2d4d32';
-      badge.style.color = '#86efac';
+      badge.style.borderColor = '#ffccd9';
+      badge.style.color = '#a0aec0';
     }
   }
 }
@@ -2883,7 +2645,7 @@ function renderActiveChallenge() {
   const currentNums = lessonData.questions[activeQuestionIndex];
   const correctSum = currentNums.reduce((a, b) => a + b, 0);
 
-  // Star trail items: Golden Star ⭐ if solved, blue dot ● otherwise
+  // Star trail items: Golden Star ⭐ if solved, pink dot ● otherwise
   let dotsHtml = '';
   for (let i = 0; i < totalQs; i++) {
     const isSolved = lessonSolvedMap[`${activeLessonKey}_${i}`];
@@ -2897,11 +2659,10 @@ function renderActiveChallenge() {
     }
   }
 
-  const qWord = (currentLang === 'ml' || currentLang === 'id') ? 'ചോദ്യം' : 'Question';
   cardContainer.innerHTML = `
     <div class="challenge-nav-bar">
       <span class="q-progress-badge">
-        🚗 ${qWord} ${activeQuestionIndex + 1} / ${totalQs} ⚡
+        ✨ ${currentLang === 'id' ? 'Soal' : 'Question'} ${activeQuestionIndex + 1} / ${totalQs} ✨
       </span>
 
       <span class="speed-bonus-badge fast" id="challenge-speed-badge" title="Answer within 10s for Golden Crown!">
@@ -2909,7 +2670,7 @@ function renderActiveChallenge() {
       </span>
     </div>
 
-    <!-- Blue dots that turn into golden stars when solved! -->
+    <!-- Pink dots that turn into golden stars when solved! -->
     <div class="star-trail-dots">
       ${dotsHtml}
     </div>
@@ -3002,38 +2763,28 @@ function checkCurrentArenaAnswer(correctSum) {
 
     // Requirement 2: Cancel pending bead speech immediately so ONLY praise message is heard!
     clearTimeout(speechDebounceTimer);
-    if (currentTtsAudio) {
-      currentTtsAudio.pause();
-      currentTtsAudio.currentTime = 0;
-      currentTtsAudio = null;
-    }
-    if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+    window.speechSynthesis.cancel();
 
-    // Requirement 5: If answered within 10s timer, show Crown Animation and say "Outstanding Kungi!"
+    // Requirement 5: If answered within 10s timer, show Crown Animation and say "Outstanding Freya!"
     const within10Sec = (challengeTimerSeconds > 0);
-    const isMl = (currentLang === 'ml' || currentLang === 'id');
     if (within10Sec) {
       totalCrowns++;
       playSound('crown');
       showCelebrationOverlay(
         '👑',
-        isMl ? 'അത്യുജ്ജ്വലം കുഞ്ഞീ!' : 'Outstanding Kungi!',
-        isMl ? '✨ സ്വർണ്ണ കിരീടവും നക്ഷത്രവും നേടി! ✨' : '✨ Golden Crown & Star Won! ✨'
+        currentLang === 'id' ? 'Luar biasa Freya!' : 'Outstanding Freya!',
+        currentLang === 'id' ? '✨ Mahkota Emas & Bintang! ✨' : '✨ Golden Crown & Star Won! ✨'
       );
-      speakPraiseCustom(isMl ? "അത്യുജ്ജ്വലം കുഞ്ഞീ!" : "Outstanding Kungi!");
+      speakPraiseCustom(currentLang === 'id' ? "Luar biasa Freya!" : "Outstanding Freya!");
     } else {
       playSound('star');
-      const praisesList = isMl ? [
-        "മിടുക്കൻ കുഞ്ഞീ!",
-        "നല്ല ശ്രമം കുഞ്ഞീ!",
-        "അതിഗംഭീരം കുഞ്ഞീ!"
-      ] : [
-        "Well done Kungi!",
-        "Good job Kungi!",
-        "Excellent Kungi!"
+      const praisesList = [
+        currentLang === 'id' ? "Bagus sekali Freya!" : "Well done Freya!",
+        currentLang === 'id' ? "Kerja bagus Freya!" : "Good job Freya!",
+        currentLang === 'id' ? "Pintar sekali Freya!" : "Excellent Freya!"
       ];
       const p = praisesList[Math.floor(Math.random() * praisesList.length)];
-      showCelebrationOverlay('⭐', p, isMl ? '+1 സ്വർണ്ണ നക്ഷത്രം!' : '+1 Golden Star!');
+      showCelebrationOverlay('⭐', p, '+1 Golden Star!');
       speakPraiseCustom(p);
     }
 
@@ -3059,8 +2810,8 @@ function checkCurrentArenaAnswer(correctSum) {
     inp.style.borderColor = '#e53e3e';
     playSound('bead');
     setTimeout(() => {
-      inp.style.background = '#142817';
-      inp.style.borderColor = '#22c55e';
+      inp.style.background = '#fff8fa';
+      inp.style.borderColor = '#ff85ad';
     }, 600);
   }
 }
@@ -3086,10 +2837,9 @@ function showCelebrationOverlay(icon, title, sub) {
 function triggerGraduationCeremony() {
   launchConfetti();
   playSound('fanfare');
-  const isMl = (currentLang === 'ml' || currentLang === 'id');
-  const gradSpeech = isMl
-    ? "അഭിനന്ദനങ്ങൾ കുഞ്ഞീ! നീ വിജയകരമായി അബാക്കസ് ലെവൽ 1A സ്വർണ്ണ കിരീടത്തോടെ പാസ്സായിരിക്കുന്നു!"
-    : "Congratulations Kungi! You have successfully graduated Level 1A with a golden crown!";
+  const gradSpeech = currentLang === 'id'
+    ? "Selamat Freya! Kamu telah berhasil lulus Sempoa Level 1A dengan mahkota emas!"
+    : "Congratulations Freya! You have successfully graduated Level 1A with a golden crown!";
   speakPraiseCustom(gradSpeech);
   totalStars += 15;
   totalCrowns += 2;
@@ -3109,68 +2859,60 @@ function navigateChallenge(delta) {
   }
 }
 
-function renderAllQuestionsGrid() {
-  const gridView = document.getElementById('all-questions-grid-view');
-  if (!gridView) return;
-
-  let cardsHtml = '';
-  const isBeadLesson = (activeLessonKey === 'sec-bead-count-1' || activeLessonKey === 'sec-bead-count-2');
-  const isMl = (currentLang === 'ml' || currentLang === 'id');
-
-  if (isBeadLesson) {
-    const start = activeLessonKey === 'sec-bead-count-2' ? 31 : 1;
-    const end = activeLessonKey === 'sec-bead-count-2' ? 50 : 30;
-    let cardItems = [];
-    for (let n = start; n <= end; n++) {
-      const isSolved = lessonSolvedMap[`${activeLessonKey}_${n}`];
-      cardItems.push(`
-        <div class="problem-card ${isSolved ? 'solved' : ''}" onclick="jumpToBeadCard(${n}); toggleAllQuestionsGrid();" style="cursor: pointer; text-align: center;">
-          <span class="q-number">${isMl ? 'കാർഡ്' : 'Card'} #${n}</span>
-          <div style="font-size: 1.8rem; font-weight: 900; color: #4ade80; margin: 8px 0; text-shadow: 0 0 8px rgba(74,222,128,0.4);">
-            ${n}
-          </div>
-          <button class="btn-step-abacus" style="font-size: 0.72rem;">${isSolved ? (isMl ? '✓ പൂർത്തിയായി ⭐' : '✓ Solved ⭐') : (isMl ? 'പോകൂ' : 'Jump')}</button>
-        </div>
-      `);
-    }
-    cardsHtml = cardItems.join('');
-  } else {
-    const lessonData = LESSON_PROBLEMS[activeLessonKey];
-    if (!lessonData) return;
-
-    cardsHtml = lessonData.questions.map((nums, idx) => {
-      const isSolved = lessonSolvedMap[`${activeLessonKey}_${idx}`];
-      return `
-        <div class="problem-card ${isSolved ? 'solved' : ''}" onclick="jumpToChallenge(${idx})">
-          <span class="q-number">${isMl ? 'ചോ' : 'Q'}${idx+1}</span>
-          <div class="q-nums-stack">
-            ${nums.map((n, i) => `<span>${i > 0 && n > 0 ? '+' + n : n}</span>`).join('')}
-          </div>
-          <button class="btn-step-abacus" style="font-size: 0.72rem;">${isSolved ? (isMl ? '✓ പൂർത്തിയായി ⭐' : '✓ Solved ⭐') : (isMl ? 'പോകൂ' : 'Jump')}</button>
-        </div>
-      `;
-    }).join('');
-  }
-
-  gridView.innerHTML = `
-    <div style="background: #142817; border: 3px solid #2e5333; border-radius: 20px; padding: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-        <h3 style="color: #4ade80; text-shadow: 0 0 10px rgba(74,222,128,0.4);">📋 ${isMl ? 'ഈ പാഠത്തിലെ എല്ലാ ചോദ്യങ്ങളും' : 'All Questions in this Lesson'}</h3>
-        <button class="btn-pink-pill btn-pink-hint" onclick="toggleAllQuestionsGrid()">✖️ ${I18N[currentLang].hideAllGrid}</button>
-      </div>
-      <div class="grid-problems">
-        ${cardsHtml}
-      </div>
-    </div>
-  `;
-}
-
 function toggleAllQuestionsGrid() {
   const gridView = document.getElementById('all-questions-grid-view');
   if (!gridView) return;
 
   if (gridView.style.display === 'none' || gridView.style.display === '') {
-    renderAllQuestionsGrid();
+    let cardsHtml = '';
+    const isBeadLesson = (activeLessonKey === 'sec-bead-count-1' || activeLessonKey === 'sec-bead-count-2');
+
+    if (isBeadLesson) {
+      const start = activeLessonKey === 'sec-bead-count-2' ? 31 : 1;
+      const end = activeLessonKey === 'sec-bead-count-2' ? 50 : 30;
+      let cardItems = [];
+      for (let n = start; n <= end; n++) {
+        const isSolved = lessonSolvedMap[`${activeLessonKey}_${n}`];
+        cardItems.push(`
+          <div class="problem-card ${isSolved ? 'solved' : ''}" onclick="jumpToBeadCard(${n}); toggleAllQuestionsGrid();" style="cursor: pointer; text-align: center;">
+            <span class="q-number">Card #${n}</span>
+            <div style="font-size: 1.8rem; font-weight: 900; color: #ff4081; margin: 8px 0;">
+              ${n}
+            </div>
+            <button class="btn-step-abacus" style="font-size: 0.72rem;">${isSolved ? '✓ Solved ⭐' : 'Jump'}</button>
+          </div>
+        `);
+      }
+      cardsHtml = cardItems.join('');
+    } else {
+      const lessonData = LESSON_PROBLEMS[activeLessonKey];
+      if (!lessonData) return;
+
+      cardsHtml = lessonData.questions.map((nums, idx) => {
+        const isSolved = lessonSolvedMap[`${activeLessonKey}_${idx}`];
+        return `
+          <div class="problem-card ${isSolved ? 'solved' : ''}" onclick="jumpToChallenge(${idx})">
+            <span class="q-number">Q${idx+1}</span>
+            <div class="q-nums-stack">
+              ${nums.map((n, i) => `<span>${i > 0 && n > 0 ? '+' + n : n}</span>`).join('')}
+            </div>
+            <button class="btn-step-abacus" style="font-size: 0.72rem;">${isSolved ? '✓ Solved ⭐' : 'Jump'}</button>
+          </div>
+        `;
+      }).join('');
+    }
+
+    gridView.innerHTML = `
+      <div style="background: white; border: 3px solid var(--border-pink); border-radius: 20px; padding: 20px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+          <h3 style="color: #d81b60;">📋 ${currentLang === 'id' ? 'Semua Soal di Pelajaran Ini' : 'All Questions in this Lesson'}</h3>
+          <button class="btn-pink-pill btn-pink-hint" onclick="toggleAllQuestionsGrid()">✖️ ${I18N[currentLang].hideAllGrid}</button>
+        </div>
+        <div class="grid-problems">
+          ${cardsHtml}
+        </div>
+      </div>
+    `;
     gridView.style.display = 'block';
     gridView.scrollIntoView({ behavior: 'smooth' });
   } else {
@@ -3192,8 +2934,7 @@ function animateAbacusSteps(nums) {
 
   function doNext() {
     if (step >= nums.length) {
-      const isMl = (currentLang === 'ml' || currentLang === 'id');
-      speakPraiseCustom(isMl ? "ഡെമോ പൂർത്തിയായി!" : "Step solution complete!");
+      speakPraiseCustom(currentLang === 'id' ? "Selesai diperagakan!" : "Step solution complete!");
       return;
     }
     running += nums[step];
@@ -3220,10 +2961,9 @@ function renderSpeedWritingArena() {
   const cardContainer = document.getElementById('active-challenge-card');
   if (!cardContainer) return;
 
-  const isMl = (currentLang === 'ml' || currentLang === 'id');
   const handTitle = speedHandMode === 'left'
-    ? (isMl ? '🖐️ ഇടത് കൈ പരിശീലനം (16 സെക്കൻഡ്)' : '🖐️ LEFT HAND TURN (16s Timer)')
-    : (isMl ? '🖐️ വലത് കൈ പരിശീലനം (16 സെക്കൻഡ്)' : '🖐️ RIGHT HAND TURN (16s Timer)');
+    ? (currentLang === 'id' ? '🖐️ Latihan Tangan KIRI (16 Detik)' : '🖐️ LEFT HAND TURN (16s Timer)')
+    : (currentLang === 'id' ? '🖐️ Latihan Tangan KANAN (16 Detik)' : '🖐️ RIGHT HAND TURN (16s Timer)');
 
   cardContainer.innerHTML = `
     <div class="writing-pad-container">
@@ -3234,17 +2974,17 @@ function renderSpeedWritingArena() {
       <div style="display: flex; align-items: center; gap: 20px;">
         <div class="timer-16s-ring" id="speed-16s-display">16</div>
         <div style="text-align: left;">
-          <div style="font-weight: 900; color: #4ade80; font-size: 1.1rem;">
-            ${isMl ? 'ആപ്പിൾ പെൻസിൽ അല്ലെങ്കിൽ വിരൽ ഉപയോഗിക്കുക' : 'Use Apple Pencil or Finger'}
+          <div style="font-weight: 900; color: #d81b60; font-size: 1.1rem;">
+            ${currentLang === 'id' ? 'Gunakan Apple Pencil / Stylus' : 'Use Apple Pencil or Finger'}
           </div>
-          <div style="font-size: 0.85rem; color: #86efac;">
-            ${isMl ? 'താഴെയുള്ള പാഡിൽ 1 2 3 4 5 6 7 8 9 0 എന്ന് എഴുതുക!' : 'Write 1 2 3 4 5 6 7 8 9 0 on the pad below!'}
+          <div style="font-size: 0.85rem; color: #718096;">
+            ${currentLang === 'id' ? 'Tulis angka 1 2 3 4 5 6 7 8 9 0 di pad bawah!' : 'Write 1 2 3 4 5 6 7 8 9 0 on the pad below!'}
           </div>
         </div>
       </div>
 
       <!-- Digits Reference Bar -->
-      <div style="display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; font-size: 1.3rem; font-weight: 900; color: #4ade80; background: #112213; padding: 6px 14px; border-radius: 14px; border: 2px solid #2e5333;">
+      <div style="display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; font-size: 1.3rem; font-weight: 900; color: #ff4081; background: #fff0f5; padding: 6px 14px; border-radius: 14px; border: 2px solid #ffccd9;">
         <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>0</span>
       </div>
 
@@ -3263,19 +3003,19 @@ function renderSpeedWritingArena() {
 
       <div style="display: flex; gap: 10px; width: 100%; max-width: 480px; justify-content: center; flex-wrap: wrap;">
         <button class="btn-pink-pill btn-pink-reset" onclick="clearStylusCanvas()">
-          🧹 ${isMl ? 'തുടയ്ക്കുക' : 'Clear Pad'}
+          🧹 ${currentLang === 'id' ? 'Hapus Tulisan' : 'Clear Pad'}
         </button>
         <button class="btn-submit-arena" id="btn-start-speed-session" onclick="start16SecSpeedSession()" style="padding: 10px 16px; font-size: 0.95rem;">
-          ▶️ ${isMl ? '16 സെക്കൻഡ് തുടങ്ങൂ!' : 'Start 16s Timer & Music!'}
+          ▶️ ${currentLang === 'id' ? 'Mulai 16 Detik!' : 'Start 16s Timer & Music!'}
         </button>
-        <button class="btn-submit-arena" id="btn-finish-speed-tab" onclick="finishSpeedWritingSession()" style="padding: 10px 18px; font-size: 1rem; background: linear-gradient(135deg, #15803d 0%, #22c55e 100%); box-shadow: 0 4px 14px rgba(34, 197, 94, 0.4);">
-          🏁 ${isMl ? 'എഴുതിക്കഴിഞ്ഞു!' : 'Finish Writing!'}
+        <button class="btn-submit-arena" id="btn-finish-speed-tab" onclick="finishSpeedWritingSession()" style="padding: 10px 18px; font-size: 1rem; background: linear-gradient(135deg, #ff4081 0%, #d81b60 100%); box-shadow: 0 4px 14px rgba(216, 27, 96, 0.4);">
+          🏁 ${currentLang === 'id' ? 'Selesai Menulis!' : 'Finish Writing!'}
         </button>
         <button class="btn-nav-mini" onclick="toggleSpeedHand()" style="font-size: 0.9rem;">
-          🔄 ${speedHandMode === 'left' ? (isMl ? 'വലത് കൈ' : 'Switch Right') : (isMl ? 'ഇടത് കൈ' : 'Switch Left')}
+          🔄 ${speedHandMode === 'left' ? 'Switch Right' : 'Switch Left'}
         </button>
       </div>
-      <div id="speed-writing-status" style="font-size: 0.9rem; font-weight: 700; color: #4ade80; margin-top: 6px; min-height: 22px;"></div>
+      <div id="speed-writing-status" style="font-size: 0.9rem; font-weight: 700; color: #b83280; margin-top: 6px; min-height: 22px;"></div>
     </div>
   `;
 
@@ -3286,7 +3026,7 @@ function finishSpeedWritingSession() {
   if (speedTimerInterval) clearInterval(speedTimerInterval);
   if (speedMusicInterval) clearInterval(speedMusicInterval);
 
-  // Requirement 3: ONLY when pressing Finish tab does the Outstanding Kungi message and crown appear!
+  // Requirement 3: ONLY when pressing Finish tab does the Outstanding Freya message and crown appear!
   totalStars += 3;
   totalCrowns += 1;
   savePersistentStats();
@@ -3294,13 +3034,12 @@ function finishSpeedWritingSession() {
   playSound('crown');
   launchConfetti();
 
-  const isMl = (currentLang === 'ml' || currentLang === 'id');
   const nextHand = speedHandMode === 'left' ? 'right' : 'left';
-  const msg = isMl
-    ? `അത്യുജ്ജ്വലം കുഞ്ഞീ! ഇനി അടുത്ത കൈയിലേക്ക് മാറ്റാം!`
-    : `Outstanding Kungi! Great ${speedHandMode} hand practice! Now get ready for ${nextHand} hand!`;
+  const msg = currentLang === 'id'
+    ? `Luar biasa Freya! Sekarang ganti ke tangan ${nextHand === 'right' ? 'KANAN' : 'KIRI'}!`
+    : `Outstanding Freya! Great ${speedHandMode} hand practice! Now get ready for ${nextHand} hand!`;
 
-  showCelebrationOverlay('👑', isMl ? 'അത്യുജ്ജ്വലം കുഞ്ഞീ!' : 'Outstanding Kungi!', isMl ? 'പരിശീലനം പൂർത്തിയായി! അടുത്ത കൈ!' : `Practice Completed! Switched to ${nextHand.toUpperCase()} Hand!`);
+  showCelebrationOverlay('👑', 'Outstanding Freya!', `Practice Completed! Switched to ${nextHand.toUpperCase()} Hand!`);
   speakPraiseCustom(msg);
 
   setTimeout(() => {
@@ -3324,7 +3063,7 @@ function initStylusCanvas() {
   canvasCtx = canvas.getContext('2d');
   canvasCtx.lineCap = 'round';
   canvasCtx.lineJoin = 'round';
-  canvasCtx.strokeStyle = '#22c55e';
+  canvasCtx.strokeStyle = '#ff4081';
   canvasCtx.lineWidth = 4;
 
   let lastX = 0, lastY = 0;
@@ -3418,9 +3157,8 @@ function start16SecSpeedSession() {
     }
   }, 400);
 
-  const isMl = (currentLang === 'ml' || currentLang === 'id');
   const statusEl = document.getElementById('speed-writing-status');
-  if (statusEl) statusEl.innerText = isMl ? '⏳ ഇപ്പോൾ എഴുതൂ! പൂർത്തിയായാൽ "🏁 എഴുതിക്കഴിഞ്ഞു!" ബട്ടൺ അമർത്തൂ!' : '⏳ Writing in progress! When finished, press "🏁 Finish Writing" tab!';
+  if (statusEl) statusEl.innerText = currentLang === 'id' ? '⏳ Menulis sekarang! Setelah selesai, tekan tombol "🏁 Selesai Menulis"!' : '⏳ Writing in progress! When finished, press "🏁 Finish Writing" tab!';
 
   speedTimerInterval = setInterval(() => {
     speedTimer16--;
@@ -3431,9 +3169,9 @@ function start16SecSpeedSession() {
       clearInterval(speedTimerInterval);
       clearInterval(speedMusicInterval);
 
-      // Timer completed: Prompt Kungi to press Finish Writing tab!
+      // Timer completed: Prompt Freya to press Finish Writing tab!
       if (statusEl) {
-        statusEl.innerHTML = `⏰ <strong>${isMl ? 'സമയം കഴിഞ്ഞു! "🏁 എഴുതിക്കഴിഞ്ഞു!" ബട്ടൺ അമർത്തൂ!' : "Time's up! Press '🏁 Finish Writing' tab now!"}</strong>`;
+        statusEl.innerHTML = `⏰ <strong>${currentLang === 'id' ? 'Waktu habis! Tekan tombol "🏁 Selesai Menulis" sekarang!' : "Time's up! Press '🏁 Finish Writing' tab now!"}</strong>`;
       }
       const finishBtn = document.getElementById('btn-finish-speed-tab');
       if (finishBtn) {
@@ -3458,17 +3196,16 @@ function renderBeadLessonArena(lessonKey) {
   const end = lessonKey === 'sec-bead-count-2' ? 50 : 30;
 
   if (lessonKey === 'sec-bead-draw') {
-    const isMl = (currentLang === 'ml' || currentLang === 'id');
     cardContainer.innerHTML = `
       <div style="width: 100%;">
-        <h3 style="color: #4ade80; margin-bottom: 8px;">✏️ ${isMl ? 'അബാക്കസിൽ മണികൾ വെക്കൂ!' : 'Build Beads on the Abacus!'}</h3>
-        <p style="font-size: 0.95rem; color: #86efac; margin-bottom: 14px;">
-          ${isMl ? 'അബാക്കസിൽ കാണിക്കാൻ താഴെ പറയുന്ന നമ്പറുകളിൽ ക്ലിക്ക് ചെയ്യുക!' : 'Click any number below to set it directly on the abacus beside!'}
+        <h3 style="color: #d81b60; margin-bottom: 8px;">✏️ ${currentLang === 'id' ? 'Pasang Manik di Sempoa!' : 'Build Beads on the Abacus!'}</h3>
+        <p style="font-size: 0.95rem; color: #4a5568; margin-bottom: 14px;">
+          ${currentLang === 'id' ? 'Klik angka untuk memasangnya langsung di sempoa sebelah!' : 'Click any number below to set it directly on the abacus beside!'}
         </p>
         <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(70px, 1fr)); gap: 8px; max-height: 380px; overflow-y: auto;">
           ${[27, 45, 81, 66, 39, 13, 22, 74, 92, 53, 71, 80, 29, 50, 55, 78, 63, 47, 36, 99, 84, 57, 11, 10, 35, 80, 76, 44, 22, 19].map((n, i) => `
-            <button style="background: #112213; border: 2px solid #2e5333; border-radius: 12px; padding: 10px 4px; font-size: 1.25rem; font-weight: 900; color: #4ade80; cursor: pointer;"
-              onclick="setSorobanNumber(${n}); totalStars++; savePersistentStats(); updateStatsUI(); showCelebrationOverlay('⭐', '${isMl ? 'നല്ല ശ്രമം കുഞ്ഞീ!' : 'Good job Kungi!'}', '+1 Golden Star'); speakPraiseCustom('${isMl ? 'നല്ല ശ്രമം കുഞ്ഞീ!' : 'Good job Kungi!'}');">
+            <button style="background: white; border: 2px solid #ffccd9; border-radius: 12px; padding: 10px 4px; font-size: 1.25rem; font-weight: 900; color: #ff4081; cursor: pointer;"
+              onclick="setSorobanNumber(${n}); totalStars++; savePersistentStats(); updateStatsUI(); showCelebrationOverlay('⭐', 'Good job Freya!', '+1 Golden Star'); speakPraiseCustom('Good job Freya!');">
               ${n}
             </button>
           `).join('')}
@@ -3483,7 +3220,7 @@ function renderBeadLessonArena(lessonKey) {
   const tens = Math.floor(beadCountCurrentNum / 10);
   const ones = beadCountCurrentNum % 10;
 
-  // Requirement 1: Build Star Trail Dots (Hulk Green dots transitioning to Golden Stars for Lesson 1!)
+  // Requirement 1: Build Star Trail Dots (Pink dots transitioning to Golden Stars for Lesson 1!)
   let dotsHtml = '';
   for (let num = start; num <= end; num++) {
     const isSolved = lessonSolvedMap[`${lessonKey}_${num}`];
@@ -3498,11 +3235,10 @@ function renderBeadLessonArena(lessonKey) {
 
   start10SecChallengeTimer();
 
-  const isMl = (currentLang === 'ml' || currentLang === 'id');
   cardContainer.innerHTML = `
     <div class="challenge-nav-bar">
       <span class="q-progress-badge">
-        🚗 ${isMl ? 'മണി കാർഡ്' : 'Bead Card'} #${beadCountCurrentNum} (${start} - ${end})
+        🎀 Bead Card #${beadCountCurrentNum} (${start} - ${end})
       </span>
       <div class="timer-speed-badge" id="challenge-speed-badge" title="Solve within 10s for Crown!">
         ⏱️ <span id="challenge-timer-sec">${challengeTimerSeconds}</span>s
@@ -3515,7 +3251,7 @@ function renderBeadLessonArena(lessonKey) {
     </div>
 
     <div style="margin: 12px 0; display: flex; flex-direction: column; align-items: center;">
-      <!-- Authentic Kungi's Soroban Abacus Frame for Lesson 1 Graphic -->
+      <!-- Authentic Freya's Soroban Abacus Frame for Lesson 1 Graphic -->
       <div class="soroban-frame" style="padding: 6px 14px; border-width: 8px; box-shadow: inset 0 2px 6px rgba(255,255,255,0.1), 0 8px 24px rgba(0,0,0,0.35); border-radius: 14px; user-select: none;">
         <div class="soroban-inner" style="gap: 14px; padding: 4px 10px;">
           <!-- Left Rod: 10s (Tens - Green Cadbury Gems) -->
@@ -3547,14 +3283,14 @@ function renderBeadLessonArena(lessonKey) {
 
         <!-- Matching Rod Label Tags underneath (Left Green, Right Yellow) -->
         <div style="display: flex; justify-content: center; gap: 14px; margin-top: 6px;">
-          <div class="rod-name-tag" style="width: 48px; text-align: center; color: #00c853; font-weight: 900;">${isMl ? 'പത്തുകൾ' : '10s'}</div>
-          <div class="rod-name-tag" style="width: 48px; text-align: center; color: #ffd600; font-weight: 900;">${isMl ? 'ഒറ്റകൾ •' : '1s •'}</div>
+          <div class="rod-name-tag" style="width: 48px; text-align: center; color: #00c853; font-weight: 900;">10s</div>
+          <div class="rod-name-tag" style="width: 48px; text-align: center; color: #ffd600; font-weight: 900;">1s •</div>
         </div>
       </div>
     </div>
 
-    <div style="font-size: 1.15rem; font-weight: 800; color: #4ade80; margin-bottom: 10px;">
-      ${isMl ? 'ഈ മണികളുടെ മൂല്യം എത്രയാണ്?' : 'What is the value of these beads?'}
+    <div style="font-size: 1.15rem; font-weight: 800; color: #d81b60; margin-bottom: 10px;">
+      ${currentLang === 'id' ? 'Berapa nilai manik ini?' : 'What is the value of these beads?'}
     </div>
 
     <input type="number" id="bead-answer-input" class="giant-answer-input" placeholder="?"
@@ -3598,8 +3334,7 @@ function demoBeadCardAbacus(num) {
   setTimeout(() => {
     setSorobanNumber(num);
     playSound('crown');
-    const isMl = (currentLang === 'ml' || currentLang === 'id');
-    speakPraiseCustom(isMl ? `ഇതാണ് അബാക്കസിലെ ${num}!` : `Here is number ${num} matching on the abacus!`);
+    speakPraiseCustom(currentLang === 'id' ? `Ini adalah nilai ${num} di sempoa!` : `Here is number ${num} matching on the abacus!`);
   }, 250);
 }
 
@@ -3632,38 +3367,28 @@ function checkBeadCountAnswer(target, start, end) {
 
     // Requirement 2: Cancel pending bead speech immediately so ONLY praise message is heard!
     clearTimeout(speechDebounceTimer);
-    if (currentTtsAudio) {
-      currentTtsAudio.pause();
-      currentTtsAudio.currentTime = 0;
-      currentTtsAudio = null;
-    }
-    if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+    window.speechSynthesis.cancel();
 
     // Requirement 5: Check 10-second timer for crown
     const within10Sec = (challengeTimerSeconds > 0);
-    const isMl = (currentLang === 'ml' || currentLang === 'id');
     if (within10Sec) {
       totalCrowns++;
       playSound('crown');
       showCelebrationOverlay(
         '👑',
-        isMl ? 'അത്യുജ്ജ്വലം കുഞ്ഞീ!' : 'Outstanding Kungi!',
-        isMl ? '✨ സ്വർണ്ണ കിരീടവും നക്ഷത്രവും നേടി! ✨' : '✨ Golden Crown & Star Won! ✨'
+        currentLang === 'id' ? 'Luar biasa Freya!' : 'Outstanding Freya!',
+        currentLang === 'id' ? '✨ Mahkota Emas & Bintang! ✨' : '✨ Golden Crown & Star Won! ✨'
       );
-      speakPraiseCustom(isMl ? "അത്യുജ്ജ്വലം കുഞ്ഞീ!" : "Outstanding Kungi!");
+      speakPraiseCustom(currentLang === 'id' ? "Luar biasa Freya!" : "Outstanding Freya!");
     } else {
       playSound('star');
-      const praisesList = isMl ? [
-        "മിടുക്കൻ കുഞ്ഞീ!",
-        "നല്ല ശ്രമം കുഞ്ഞീ!",
-        "അതിഗംഭീരം കുഞ്ഞീ!"
-      ] : [
-        "Well done Kungi!",
-        "Good job Kungi!",
-        "Excellent Kungi!"
+      const praisesList = [
+        currentLang === 'id' ? "Bagus sekali Freya!" : "Well done Freya!",
+        currentLang === 'id' ? "Kerja bagus Freya!" : "Good job Freya!",
+        currentLang === 'id' ? "Pintar sekali Freya!" : "Excellent Freya!"
       ];
       const p = praisesList[Math.floor(Math.random() * praisesList.length)];
-      showCelebrationOverlay('⭐', p, isMl ? '+1 സ്വർണ്ണ നക്ഷത്രം!' : '+1 Golden Star!');
+      showCelebrationOverlay('⭐', p, '+1 Golden Star!');
       speakPraiseCustom(p);
     }
 
@@ -3681,12 +3406,12 @@ function checkBeadCountAnswer(target, start, end) {
       }
     }, 1400);
   } else {
-    inp.style.background = '#3b1212';
-    inp.style.borderColor = '#ef4444';
+    inp.style.background = '#fed7d7';
+    inp.style.borderColor = '#e53e3e';
     playSound('bead');
     setTimeout(() => {
-      inp.style.background = '#112213';
-      inp.style.borderColor = '#22c55e';
+      inp.style.background = '#fff8fa';
+      inp.style.borderColor = '#ff85ad';
     }, 600);
   }
 }
@@ -3695,28 +3420,29 @@ function renderStaticLesson(lessonKey) {
   const cardContainer = document.getElementById('active-challenge-card');
   if (!cardContainer) return;
 
-  const isMl = (currentLang === 'ml' || currentLang === 'id');
   if (lessonKey === 'sec-tool-intro') {
     cardContainer.innerHTML = `
       <div style="text-align: left; width: 100%;">
-        <h2 style="color: #4ade80; margin-bottom: 12px; text-shadow: 0 0 10px rgba(74,222,128,0.4);">🧮 ${isMl ? 'അബാക്കസിനെ പരിചയപ്പെടാം!' : 'Meet Your Soroban!'}</h2>
-        <p style="line-height: 1.5; color: #bbf7d0; margin-bottom: 14px;">
-          ${isMl ? 'വലതുവശത്ത് കുഞ്ഞിയുടെ സൂപ്പർ അബാക്കസ് കാണാം! മുകളിലെ മണി = 5, താഴത്തെ മണികൾ = 1.' : 'On your right is Kungi\'s super Soroban! Upper beads = 5, lower beads = 1.'}
+        <h2 style="color: #d81b60; margin-bottom: 12px;">🧮 ${currentLang === 'id' ? 'Kenali Sempoamu!' : 'Meet Your Soroban!'}</h2>
+        <p style="line-height: 1.5; color: #4a5568; margin-bottom: 14px;">
+          ${currentLang === 'id' ? 'Di sebelah kanan ada sempoa pelangi Freya! Manik atas bernilai 5, manik bawah bernilai 1.' : 'On your right is Freya\'s rainbow Soroban! Upper beads = 5, lower beads = 1.'}
         </p>
-        <button class="btn-submit-arena" onclick="setSorobanNumber(5); totalStars++; savePersistentStats(); updateStatsUI(); showCelebrationOverlay('⭐', '${isMl ? 'അതിഗംഭീരം കുഞ്ഞീ!' : 'Awesome Kungi!'}', '+1 Star'); speakPraiseCustom('${isMl ? 'അതിഗംഭീരം കുഞ്ഞീ!' : 'Awesome Kungi!'}');">
-          ✨ ${isMl ? 'അബാക്കസിൽ 5 വെച്ചുനോക്കൂ!' : 'Try Setting 5 on the Abacus!'}
+        <button class="btn-submit-arena" onclick="setSorobanNumber(5); totalStars++; savePersistentStats(); updateStatsUI(); showCelebrationOverlay('⭐', 'Awesome Freya!', '+1 Star'); speakPraiseCustom('Awesome Freya!');">
+          ✨ Try Setting 5 on the Abacus!
         </button>
       </div>
     `;
   } else if (lessonKey === 'sec-finger-tech') {
     cardContainer.innerHTML = `
       <div style="text-align: left; width: 100%;">
-        <h2 style="color: #4ade80; margin-bottom: 12px; text-shadow: 0 0 10px rgba(74,222,128,0.4);">🖐️ ${isMl ? 'വിരലുകളുടെ ചലനങ്ങൾ' : 'Finger Moves'}</h2>
-        <p style="line-height: 1.5; color: #bbf7d0; margin-bottom: 14px;">
-          ${isMl ? '• വലതു തള്ളവിരൽ: താഴത്തെ മണികൾ കൂട്ടാൻ (+1, +2, +3, +4)<br>• വലതു ചൂണ്ടുവിരൽ: മുകളിലെ മണി (+5 / -5) കൂടാതെ താഴത്തെ കുറയ്ക്കൽ (-1)<br>• പിഞ്ച് മൂവ്: 6, 7, 8, 9 എന്നിവയ്ക്ക് 5-ഉം താഴത്തെ മണികളും ഒരുമിച്ച്!' : '• Right Thumb: Lower bead addition (+1, +2, +3, +4)<br>• Right Index: Upper bead (+5 / -5) & lower subtraction (-1)<br>• Pinch Move: 5 and lower beads together for 6, 7, 8, 9!'}
+        <h2 style="color: #d81b60; margin-bottom: 12px;">🖐️ Finger Moves</h2>
+        <p style="line-height: 1.5; color: #4a5568; margin-bottom: 14px;">
+          • Right Thumb: Lower bead addition (+1, +2, +3, +4)<br>
+          • Right Index: Upper bead (+5 / -5) & lower subtraction (-1)<br>
+          • Pinch Move: 5 and lower beads together for 6, 7, 8, 9!
         </p>
-        <button class="btn-submit-arena" onclick="setSorobanNumber(8); totalStars++; savePersistentStats(); updateStatsUI(); showCelebrationOverlay('⭐', '${isMl ? 'മിടുക്കൻ കുഞ്ഞീ!' : 'Brilliant Kungi!'}', '+1 Star'); speakPraiseCustom('${isMl ? 'മിടുക്കൻ കുഞ്ഞീ!' : 'Brilliant Kungi!'}');">
-          ✨ ${isMl ? '8 (5 + 3) പിഞ്ച് ചെയ്തുനോക്കൂ!' : 'Try Pinching 8 (5 + 3)!'}
+        <button class="btn-submit-arena" onclick="setSorobanNumber(8); totalStars++; savePersistentStats(); updateStatsUI(); showCelebrationOverlay('⭐', 'Brilliant Freya!', '+1 Star'); speakPraiseCustom('Brilliant Freya!');">
+          ✨ Try Pinching 8 (5 + 3)!
         </button>
       </div>
     `;
@@ -3755,10 +3481,9 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('btn-toggle-voice').addEventListener('click', function() {
     voiceEnabled = true;
     this.style.opacity = '1';
-    const isMl = (currentLang === 'ml' || currentLang === 'id');
-    const welcomeVoiceMsg = isMl
-      ? "ഹലോ കുഞ്ഞീ! നിങ്ങളുടെ സൂപ്പർ അബാക്കസിലേക്ക് സ്വാഗതം! നമുക്ക് ഒരുമിച്ച് കണക്ക് പഠിക്കാം!"
-      : "Hello Kungi! Welcome to your Super Abacus! Voice is active, let's learn together!";
+    const welcomeVoiceMsg = currentLang === 'id'
+      ? "Halo Freya! Selamat datang di Sempoa Ajaib! Suara aktif, ayo kita mulai belajar!"
+      : "Hello Freya! Welcome to your Magical Abacus! Voice is active, let's learn together!";
     speakPraiseCustom(welcomeVoiceMsg);
   });
 
