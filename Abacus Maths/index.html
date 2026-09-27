@@ -1,0 +1,3370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Freya's Magical Abacus ✨</title>
+<style>
+  :root {
+    --bg-page-top: #ffd3e2;
+    --bg-page-bottom: #ffaec9;
+    --card-bg: #ffffff;
+    --primary-pink: #ff5e97;
+    --primary-dark: #d81b60;
+    --primary-light: #fff0f5;
+    --banner-gradient-start: #ff85ad;
+    --banner-gradient-end: #ffb6ce;
+    --border-pink: #ff85ad;
+    --border-card: #ffccd9;
+    --stat-gradient-start: #ffb3cb;
+    --stat-gradient-end: #ffcadc;
+    --text-white: #ffffff;
+    --text-pink-title: #d81b60;
+    --text-dark: #2d3436;
+    --radius-xl: 32px;
+    --radius-lg: 22px;
+    --radius-md: 16px;
+    --radius-sm: 10px;
+    --shadow-soft: 0 15px 40px rgba(255, 117, 160, 0.22);
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Comic Sans MS', 'Chalkboard SE', 'Fredoka', 'Quicksand', 'Nunito', -apple-system, sans-serif;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    background: linear-gradient(180deg, var(--bg-page-top) 0%, #ffc0d6 50%, var(--bg-page-bottom) 100%);
+    min-height: 100vh;
+    padding: 20px 16px 40px 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--text-dark);
+  }
+
+  /* Top Bar with Language Selector and Sound Controls */
+  .top-bar {
+    max-width: 1120px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+    padding: 0 8px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .top-left-controls {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .icon-toggle-btn {
+    background: white;
+    border: 2px solid var(--border-pink);
+    border-radius: 50px;
+    padding: 6px 14px;
+    color: var(--primary-dark);
+    font-weight: 700;
+    font-size: 0.88rem;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(255, 107, 139, 0.15);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s;
+  }
+
+  .icon-toggle-btn:hover {
+    transform: translateY(-2px);
+    background: #fff5f8;
+  }
+
+  .lang-switcher-box {
+    display: flex;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.5);
+    padding: 4px;
+    border-radius: 50px;
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 4px 15px rgba(216, 27, 96, 0.12);
+  }
+
+  .lang-btn {
+    padding: 8px 18px;
+    border-radius: 50px;
+    font-size: 0.92rem;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .lang-btn.active {
+    background: linear-gradient(135deg, #ff4081 0%, #ff6b9d 100%);
+    color: white;
+    box-shadow: 0 4px 12px rgba(255, 64, 129, 0.4);
+    transform: scale(1.03);
+  }
+
+  .lang-btn:not(.active) {
+    background: white;
+    color: #ff4081;
+    border: 2px solid #ffccd9;
+  }
+
+  .lang-btn:not(.active):hover {
+    background: #fff0f5;
+  }
+
+  /* Main Magical App Container */
+  .main-app-card {
+    max-width: 1120px;
+    width: 100%;
+    background: var(--card-bg);
+    border-radius: var(--radius-xl);
+    border: 4px solid #ffccd9;
+    box-shadow: var(--shadow-soft);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  /* Header Banner (Click 5 times to manually reset scores) */
+  .hero-banner {
+    background: linear-gradient(135deg, var(--banner-gradient-start) 0%, var(--banner-gradient-end) 100%);
+    border: 3px solid var(--border-pink);
+    border-radius: var(--radius-lg);
+    padding: 22px 28px;
+    text-align: center;
+    color: var(--text-white);
+    position: relative;
+    box-shadow: 0 8px 24px rgba(255, 117, 160, 0.25);
+    overflow: hidden;
+    cursor: pointer;
+    user-select: none;
+    transition: transform 0.15s;
+  }
+
+  .hero-banner:active {
+    transform: scale(0.99);
+  }
+
+  .corner-unicorn {
+    font-size: 2.2rem;
+    position: absolute;
+    top: 14px;
+    animation: bounce 2s infinite ease-in-out;
+  }
+  .corner-unicorn.left { left: 18px; }
+  .corner-unicorn.right { right: 18px; bottom: 12px; top: auto; animation-delay: 1s; }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+
+  .hero-title {
+    font-size: 1.85rem;
+    font-weight: 900;
+    letter-spacing: 1.5px;
+    text-shadow: 0 2px 8px rgba(216, 27, 96, 0.35);
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+  }
+
+  .hero-subtitle {
+    font-size: 1.15rem;
+    font-weight: 700;
+    opacity: 0.96;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.15);
+  }
+
+  /* 4 Stat Cards: Correct, Total, Stars, Crowns */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+  }
+
+  .stat-card {
+    background: linear-gradient(135deg, var(--stat-gradient-start) 0%, var(--stat-gradient-end) 100%);
+    border: 2px solid var(--border-pink);
+    border-radius: var(--radius-md);
+    padding: 14px 10px;
+    text-align: center;
+    color: white;
+    box-shadow: 0 6px 16px rgba(255, 117, 160, 0.15);
+    transition: transform 0.2s;
+  }
+
+  .stat-card:hover {
+    transform: translateY(-3px);
+  }
+
+  .stat-label {
+    font-size: 0.88rem;
+    font-weight: 800;
+    margin-bottom: 4px;
+    text-shadow: 0 1px 2px rgba(216, 27, 96, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+
+  .stat-number {
+    font-size: 2.3rem;
+    font-weight: 900;
+    line-height: 1;
+    text-shadow: 0 2px 6px rgba(216, 27, 96, 0.25);
+  }
+
+  /* Choose Your Lesson Container */
+  .lessons-box {
+    background: #fff8fa;
+    border: 2px solid var(--border-card);
+    border-radius: var(--radius-lg);
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .section-heading {
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: var(--text-pink-title);
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  /* Lesson Cards Grid */
+  .lesson-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    width: 100%;
+  }
+
+  .lesson-card-item {
+    background: linear-gradient(135deg, #ffb3cb 0%, #ffcadc 100%);
+    border: 2px solid #ff759d;
+    border-radius: var(--radius-md);
+    padding: 16px 10px;
+    text-align: center;
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 6px 16px rgba(255, 117, 160, 0.18);
+    transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 135px;
+    user-select: none;
+  }
+
+  .lesson-card-item:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 12px 24px rgba(255, 117, 160, 0.3);
+    border-color: #ff3377;
+    background: linear-gradient(135deg, #ffa8c3 0%, #ffc0d5 100%);
+  }
+
+  .lesson-card-item.active {
+    border: 3px solid #d81b60;
+    background: linear-gradient(135deg, #ff759d 0%, #ffa8c3 100%);
+    box-shadow: 0 8px 20px rgba(216, 27, 96, 0.35);
+  }
+
+  .lesson-card-icon {
+    font-size: 2.2rem;
+    margin-bottom: 6px;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+  }
+
+  .lesson-card-title {
+    font-size: 1.02rem;
+    font-weight: 900;
+    margin-bottom: 4px;
+    text-shadow: 0 1px 3px rgba(216, 27, 96, 0.3);
+  }
+
+  .lesson-card-sub {
+    font-size: 0.82rem;
+    font-weight: 700;
+    opacity: 0.95;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.15);
+  }
+
+  /* Sub Navigation Tabs */
+  .extra-tabs-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 16px;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .extra-tab-btn {
+    background: white;
+    border: 2px solid var(--border-pink);
+    border-radius: 50px;
+    padding: 7px 16px;
+    font-size: 0.86rem;
+    font-weight: 800;
+    color: var(--primary-dark);
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 3px 8px rgba(255, 107, 139, 0.1);
+  }
+
+  .extra-tab-btn:hover, .extra-tab-btn.active {
+    background: linear-gradient(135deg, #ff4081 0%, #ff759d 100%);
+    color: white;
+    border-color: #ff4081;
+    transform: translateY(-2px);
+  }
+
+  /* SIDE-BY-SIDE CHALLENGE ARENA */
+  .arena-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1.15fr;
+    gap: 20px;
+    align-items: start;
+    width: 100%;
+  }
+
+  @media (max-width: 950px) {
+    .arena-wrapper {
+      grid-template-columns: 1fr;
+    }
+    .stats-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  /* Left Box: Active Challenge Focus Card */
+  .challenge-focus-card {
+    background: #fffafc;
+    border: 3px solid var(--border-pink);
+    border-radius: var(--radius-lg);
+    padding: 22px;
+    box-shadow: 0 8px 24px rgba(255, 117, 160, 0.15);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    text-align: center;
+  }
+
+  .challenge-nav-bar {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .q-progress-badge {
+    background: linear-gradient(135deg, #ff4081 0%, #ff759d 100%);
+    color: white;
+    padding: 5px 14px;
+    border-radius: 50px;
+    font-weight: 900;
+    font-size: 0.92rem;
+    box-shadow: 0 4px 10px rgba(255, 64, 129, 0.3);
+  }
+
+  /* 10-Second Timer Badge */
+  .speed-bonus-badge {
+    background: #fff0f5;
+    border: 2px solid #ff4081;
+    color: #d81b60;
+    padding: 4px 12px;
+    border-radius: 50px;
+    font-weight: 900;
+    font-size: 0.88rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 2px 6px rgba(255, 64, 129, 0.15);
+    transition: background 0.3s;
+  }
+
+  .speed-bonus-badge.fast {
+    animation: pulseBadge 1s infinite alternate;
+  }
+
+  @keyframes pulseBadge {
+    from { transform: scale(1); }
+    to { transform: scale(1.06); }
+  }
+
+  /* Star Trail Dots (Pink dots that turn into golden stars ⭐ when solved) */
+  .star-trail-dots {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 6px 0 14px 0;
+    max-width: 320px;
+  }
+
+  .star-trail-item {
+    font-size: 1.15rem;
+    color: #ffccd9;
+    line-height: 1;
+    transition: all 0.25s;
+    user-select: none;
+    cursor: pointer;
+  }
+
+  .star-trail-item.current {
+    color: #ff4081;
+    transform: scale(1.35);
+    font-weight: bold;
+    text-shadow: 0 0 6px rgba(255, 64, 129, 0.5);
+  }
+
+  .star-trail-item.solved {
+    color: #ffbe0b;
+    font-size: 1.25rem;
+    filter: drop-shadow(0 0 4px #ffbe0b);
+    animation: popStar 0.35s ease;
+  }
+
+  @keyframes popStar {
+    0% { transform: scale(0.6); opacity: 0.4; }
+    50% { transform: scale(1.4); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+
+  /* Giant Sum Numbers Stack */
+  .giant-sum-box {
+    background: white;
+    border: 3px solid #ffccd9;
+    border-radius: 20px;
+    padding: 18px 28px;
+    margin: 6px 0 14px 0;
+    box-shadow: inset 0 2px 6px rgba(0,0,0,0.04);
+    min-width: 180px;
+  }
+
+  .giant-nums-list {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    font-size: 2.2rem;
+    font-weight: 900;
+    color: #2d3748;
+    line-height: 1.25;
+  }
+
+  .giant-nums-list span.minus {
+    color: #e53e3e;
+  }
+
+  .giant-sum-divider {
+    width: 100%;
+    height: 4px;
+    background: #ff4081;
+    border-radius: 2px;
+    margin: 8px 0 12px 0;
+  }
+
+  .giant-answer-input {
+    width: 130px;
+    height: 54px;
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 900;
+    border: 3px solid #ff85ad;
+    border-radius: 14px;
+    color: #d81b60;
+    outline: none;
+    background: #fff8fa;
+    transition: all 0.2s;
+  }
+
+  .giant-answer-input:focus {
+    border-color: #d81b60;
+    box-shadow: 0 0 0 4px rgba(216, 27, 96, 0.25);
+    background: white;
+  }
+
+  .giant-answer-input.correct {
+    background: #c6f6d5;
+    border-color: #38a169;
+    color: #22543d;
+  }
+
+  /* Actions underneath sum */
+  .challenge-action-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+    max-width: 320px;
+    margin-top: 8px;
+  }
+
+  .btn-submit-arena {
+    background: linear-gradient(135deg, #ff4081 0%, #ff6b9d 100%);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 50px;
+    font-size: 1.15rem;
+    font-weight: 900;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 6px 18px rgba(255, 64, 129, 0.35);
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .btn-submit-arena:hover {
+    transform: scale(1.03);
+    box-shadow: 0 8px 24px rgba(255, 64, 129, 0.45);
+  }
+
+  .btn-use-abacus {
+    background: #fff0f5;
+    border: 2px solid #ff85ad;
+    color: #d81b60;
+    padding: 9px 16px;
+    border-radius: 50px;
+    font-size: 0.95rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+
+  .btn-use-abacus:hover {
+    background: #ffe0eb;
+    transform: translateY(-2px);
+  }
+
+  .btn-demo-abacus-lg {
+    background: #fdf2f4;
+    border: 2px dashed #ff85ad;
+    color: #880e4f;
+    padding: 8px 16px;
+    border-radius: 50px;
+    font-size: 0.88rem;
+    font-weight: 800;
+    cursor: pointer;
+  }
+
+  .challenge-prev-next {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 14px;
+    padding-top: 10px;
+    border-top: 2px solid #ffd3e2;
+  }
+
+  .btn-nav-mini {
+    background: white;
+    border: 2px solid #ffccd9;
+    padding: 6px 16px;
+    border-radius: 50px;
+    font-weight: 800;
+    color: #d81b60;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: 0.2s;
+  }
+  .btn-nav-mini:hover {
+    background: #fff0f5;
+    border-color: #ff85ad;
+  }
+
+  /* Right Box: The Graphical Abacus in Arena */
+  .abacus-stage-box {
+    background: #ffffff;
+    border: 3px solid var(--border-pink);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 8px 24px rgba(255, 117, 160, 0.15);
+    padding: 18px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .abacus-header-row {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .abacus-headline {
+    font-size: 1.15rem;
+    font-weight: 900;
+    color: var(--primary-dark);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .rod-selector-wrap {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    background: #fff0f5;
+    padding: 4px 8px;
+    border-radius: 50px;
+    border: 1px solid #ffccd9;
+  }
+
+  .rod-sel-btn {
+    background: transparent;
+    border: none;
+    padding: 4px 10px;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 800;
+    color: var(--primary-dark);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .rod-sel-btn.active {
+    background: var(--primary-dark);
+    color: white;
+  }
+
+  .btn-pink-pill {
+    padding: 7px 16px;
+    border-radius: 50px;
+    border: none;
+    font-size: 0.88rem;
+    font-weight: 800;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s;
+  }
+
+  .btn-pink-reset {
+    background: #ff4757;
+    color: white;
+  }
+  .btn-pink-reset:hover {
+    background: #d63031;
+    transform: scale(1.04);
+  }
+
+  .btn-pink-hint {
+    background: #ffb8d1;
+    color: #880e4f;
+  }
+  .btn-pink-hint:hover {
+    background: #ff9ebb;
+  }
+
+  /* Authentic Soroban Frame matched to Photo */
+  .soroban-frame {
+    background: #14171a;
+    border: 10px solid #0d0f11;
+    border-radius: 14px;
+    box-shadow: inset 0 3px 6px rgba(255,255,255,0.1), inset 0 -4px 8px rgba(0,0,0,0.8), 0 12px 30px rgba(0,0,0,0.35);
+    padding: 8px 12px;
+    display: inline-flex;
+    flex-direction: column;
+    user-select: none;
+    touch-action: none;
+    position: relative;
+    max-width: 100%;
+    overflow-x: auto;
+  }
+
+  .soroban-inner {
+    display: flex;
+    gap: 10px;
+    background: #191c20;
+    padding: 6px 12px;
+    border-radius: 8px;
+    border: 3px solid #0a0b0d;
+    position: relative;
+    box-shadow: inset 0 2px 10px rgba(0,0,0,0.6);
+  }
+
+  .soroban-rod-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    width: 48px;
+    transition: width 0.2s;
+  }
+
+  .rod-wire {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 7px;
+    background: linear-gradient(90deg, #41464c 0%, #15171a 50%, #4a5057 100%);
+    border-radius: 3px;
+    z-index: 1;
+    box-shadow: 0 0 3px rgba(0,0,0,0.7);
+  }
+
+  .soroban-beam {
+    height: 14px;
+    background: #0d0e10;
+    width: calc(100% + 24px);
+    margin-left: -12px;
+    position: relative;
+    z-index: 5;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.7), inset 0 1px 1px rgba(255,255,255,0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-top: 1px solid #2a2e33;
+    border-bottom: 1px solid #000;
+  }
+
+  .beam-dot {
+    width: 8px;
+    height: 8px;
+    background: #ffffff;
+    border-radius: 50%;
+    box-shadow: 0 0 3px rgba(255,255,255,0.9), 0 1px 2px rgba(0,0,0,0.6);
+    margin: 0 auto;
+  }
+
+  .upper-deck {
+    height: 58px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    z-index: 2;
+    position: relative;
+  }
+
+  .lower-deck {
+    height: 148px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    z-index: 2;
+    position: relative;
+  }
+
+  .bead {
+    width: 44px;
+    height: 25px;
+    clip-path: polygon(18% 0%, 82% 0%, 100% 50%, 82% 100%, 18% 100%, 0% 50%);
+    margin: 1px 0;
+    cursor: pointer;
+    /* Realistic 3D polygonal drop shadow contouring the bead shape */
+    filter: drop-shadow(0 2.5px 2px rgba(0, 0, 0, 0.42)) drop-shadow(0 4.5px 4px rgba(0, 0, 0, 0.22));
+    transition: transform 0.16s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.12s;
+    position: relative;
+    z-index: 3;
+  }
+
+  /* 3D Curved Top Specular Dome */
+  .bead::before {
+    content: '';
+    position: absolute;
+    top: 1px;
+    left: 12%;
+    right: 12%;
+    height: 44%;
+    background: radial-gradient(ellipse 70% 60% at 50% 20%, rgba(255, 255, 255, 0.88) 0%, rgba(255, 255, 255, 0.32) 50%, transparent 85%);
+    border-radius: 50% / 35%;
+    pointer-events: none;
+    z-index: 4;
+  }
+
+  /* Sharp 3D Equatorial Ridge with Horizontal Specular Sheen & Micro-Crease */
+  .bead::after {
+    content: '';
+    position: absolute;
+    top: 48%;
+    left: 2%;
+    right: 2%;
+    height: 1.5px;
+    background: linear-gradient(90deg, 
+      rgba(255, 255, 255, 0) 0%, 
+      rgba(255, 255, 255, 0.9) 20%, 
+      rgba(255, 255, 255, 1) 50%, 
+      rgba(255, 255, 255, 0.9) 80%, 
+      rgba(255, 255, 255, 0) 100%
+    );
+    box-shadow: 0 1px 1.5px rgba(0, 0, 0, 0.55);
+    pointer-events: none;
+    z-index: 5;
+  }
+
+  .bead:hover {
+    filter: brightness(1.15) drop-shadow(0 2px 3px rgba(0, 0, 0, 0.55)) drop-shadow(0 0 6px rgba(255, 255, 255, 0.6));
+    transform: scale(1.045);
+  }
+
+  /* Requirement 2: Bright Cadbury Gems Colors with ONLY light & dark shades + crisp white ridge */
+  .bead-blue {
+    background: linear-gradient(180deg, #29b6f6 0%, #29b6f6 48%, #ffffff 49%, #ffffff 51%, #0277bd 52%, #0277bd 100%);
+  }
+  .bead-blue.active {
+    background: linear-gradient(180deg, #4fc3f7 0%, #4fc3f7 48%, #ffffff 49%, #ffffff 51%, #0288d1 52%, #0288d1 100%);
+    filter: drop-shadow(0 2px 2.5px rgba(0,0,0,0.45)) drop-shadow(0 0 8px rgba(41, 182, 246, 0.85));
+  }
+
+  .bead-green {
+    background: linear-gradient(180deg, #00e676 0%, #00e676 48%, #ffffff 49%, #ffffff 51%, #008a30 52%, #008a30 100%);
+  }
+  .bead-green.active {
+    background: linear-gradient(180deg, #33eb8b 0%, #33eb8b 48%, #ffffff 49%, #ffffff 51%, #00a63a 52%, #00a63a 100%);
+    filter: drop-shadow(0 2px 2.5px rgba(0,0,0,0.45)) drop-shadow(0 0 8px rgba(0, 230, 118, 0.85));
+  }
+
+  .bead-yellow, .bead-gem-yellow {
+    background: linear-gradient(180deg, #ffea00 0%, #ffea00 48%, #ffffff 49%, #ffffff 51%, #e69500 52%, #e69500 100%);
+  }
+  .bead-yellow.active, .bead-gem-yellow.active {
+    background: linear-gradient(180deg, #ffff55 0%, #ffff55 48%, #ffffff 49%, #ffffff 51%, #ffaa00 52%, #ffaa00 100%);
+    filter: drop-shadow(0 2px 2.5px rgba(0,0,0,0.45)) drop-shadow(0 0 8px rgba(255, 234, 0, 0.85));
+  }
+
+  .bead-orange {
+    background: linear-gradient(180deg, #ff9100 0%, #ff9100 48%, #ffffff 49%, #ffffff 51%, #d84315 52%, #d84315 100%);
+  }
+  .bead-orange.active {
+    background: linear-gradient(180deg, #ffa726 0%, #ffa726 48%, #ffffff 49%, #ffffff 51%, #e65100 52%, #e65100 100%);
+    filter: drop-shadow(0 2px 2.5px rgba(0,0,0,0.45)) drop-shadow(0 0 8px rgba(255, 145, 0, 0.85));
+  }
+
+  .bead-red, .bead-gem-red {
+    background: linear-gradient(180deg, #ff3b69 0%, #ff3b69 48%, #ffffff 49%, #ffffff 51%, #b80033 52%, #b80033 100%);
+  }
+  .bead-red.active, .bead-gem-red.active {
+    background: linear-gradient(180deg, #ff5c85 0%, #ff5c85 48%, #ffffff 49%, #ffffff 51%, #d6003b 52%, #d6003b 100%);
+    filter: drop-shadow(0 2px 2.5px rgba(0,0,0,0.45)) drop-shadow(0 0 8px rgba(255, 59, 105, 0.85));
+  }
+
+  .upper-deck .bead.active {
+    transform: translateY(30px);
+  }
+
+  .lower-deck .bead.active {
+    transform: translateY(-27px);
+  }
+
+  .rod-readouts {
+    display: flex;
+    gap: 10px;
+    margin-top: 8px;
+    padding: 0 12px;
+    width: 100%;
+    justify-content: center;
+    overflow-x: auto;
+  }
+
+  .rod-val-tag {
+    width: 48px;
+    text-align: center;
+    background: #ffffff;
+    border-radius: 8px;
+    padding: 3px 0;
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #2f3542;
+    border: 2px solid #ffccd9;
+    box-shadow: 0 2px 5px rgba(255, 107, 139, 0.1);
+  }
+
+  .rod-name-tag {
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #a04060;
+    margin-top: 2px;
+    text-align: center;
+    font-weight: bold;
+    white-space: nowrap;
+  }
+
+  .soroban-total-display {
+    margin-top: 10px;
+    background: linear-gradient(135deg, #d81b60 0%, #ff4081 100%);
+    color: white;
+    padding: 8px 20px;
+    border-radius: 50px;
+    font-size: 1.25rem;
+    font-weight: 800;
+    box-shadow: 0 6px 18px rgba(216, 27, 96, 0.25);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .spelled-words-badge {
+    background: #ffffff;
+    color: #d81b60;
+    padding: 5px 16px;
+    border-radius: 50px;
+    font-size: 1.05rem;
+    font-weight: 900;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    animation: popWord 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  /* CROWN & GOLDEN STAR ANIMATION OVERLAY */
+  .celebration-overlay {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    background: rgba(255, 255, 255, 0.98);
+    border: 5px solid #ffbe0b;
+    border-radius: 28px;
+    padding: 28px 36px;
+    box-shadow: 0 20px 50px rgba(255, 190, 11, 0.5);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    z-index: 1000;
+    pointer-events: none;
+    transition: transform 0.38s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    text-align: center;
+  }
+
+  .celebration-overlay.show {
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  .crown-icon-animated {
+    font-size: 4.8rem;
+    animation: crownBounce 1.2s ease-in-out infinite alternate;
+    filter: drop-shadow(0 4px 8px rgba(255, 190, 11, 0.6));
+  }
+
+  @keyframes crownBounce {
+    0% { transform: translateY(0) rotate(-6deg) scale(0.95); }
+    100% { transform: translateY(-10px) rotate(6deg) scale(1.15); }
+  }
+
+  .celebration-praise-text {
+    font-size: 1.7rem;
+    font-weight: 900;
+    color: #d81b60;
+  }
+
+  .celebration-sub-text {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #ffbe0b;
+  }
+
+  /* DIGITAL WRITING PAD FOR APPLE PENCIL / STYLUS */
+  .writing-pad-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .hand-indicator-banner {
+    background: linear-gradient(135deg, #ff4081 0%, #ff759d 100%);
+    color: white;
+    padding: 10px 24px;
+    border-radius: 50px;
+    font-size: 1.25rem;
+    font-weight: 900;
+    box-shadow: 0 4px 14px rgba(255, 64, 129, 0.3);
+    animation: bounce 2s infinite ease-in-out;
+  }
+
+  .timer-16s-ring {
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: #d81b60;
+    background: #fff0f5;
+    border: 3px solid #ff4081;
+    width: 76px;
+    height: 76px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(255, 64, 129, 0.2);
+  }
+
+  .canvas-sheet-wrap {
+    width: 100%;
+    max-width: 520px;
+    background: white;
+    border: 3px solid #ffccd9;
+    border-radius: 20px;
+    padding: 10px;
+    box-shadow: inset 0 2px 6px rgba(0,0,0,0.05), 0 8px 24px rgba(255, 117, 160, 0.18);
+    touch-action: none;
+    position: relative;
+    user-select: none;
+  }
+
+  /* Dotted Line Rectangles for Writing Digits 1 to 0 */
+  .dotted-boxes-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-gap: 8px;
+    width: 100%;
+    min-height: 204px;
+    pointer-events: none;
+  }
+
+  .dotted-digit-box {
+    border: 2.5px dashed #ff85ad;
+    border-radius: 14px;
+    background: #fffbfe;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 4px 6px 4px;
+    height: 98px;
+    position: relative;
+    box-shadow: inset 0 1px 3px rgba(255, 94, 151, 0.08);
+  }
+
+  .box-digit-watermark {
+    font-size: 1.15rem;
+    font-weight: 900;
+    color: #d81b60;
+    line-height: 1;
+    background: #fff0f5;
+    padding: 2px 8px;
+    border-radius: 8px;
+    border: 1.5px solid #ffccd9;
+  }
+
+  .box-guide-line {
+    width: 75%;
+    height: 1px;
+    border-bottom: 1.5px dotted #ffccd9;
+    margin-bottom: 10px;
+  }
+
+  canvas#stylus-canvas {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    width: calc(100% - 20px);
+    height: calc(100% - 20px);
+    background: transparent;
+    border-radius: 14px;
+    display: block;
+    cursor: crosshair;
+    z-index: 5;
+  }
+
+  /* Grid problems list */
+  .grid-problems {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 14px;
+    margin-top: 18px;
+  }
+
+  .problem-card {
+    background: #fff8fa;
+    border: 2px solid #ffccd9;
+    border-radius: var(--radius-md);
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: all 0.2s;
+    position: relative;
+    cursor: pointer;
+  }
+
+  .problem-card:hover {
+    border-color: #ff4081;
+    transform: translateY(-2px);
+  }
+
+  .problem-card.solved {
+    background: #f0fff4;
+    border-color: #38a169;
+  }
+
+  .q-number {
+    position: absolute;
+    top: 6px;
+    left: 8px;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: #b83280;
+    background: #ffe5ec;
+    padding: 2px 6px;
+    border-radius: 8px;
+  }
+
+  .q-nums-stack {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: #2d3748;
+    margin: 18px 0 10px 0;
+    width: 65px;
+    padding-bottom: 4px;
+    border-bottom: 2px solid #ffb3cb;
+  }
+
+  .q-nums-stack span {
+    line-height: 1.25;
+  }
+
+  /* Mini Abacus Graphic (Bead counting cards) */
+  .mini-abacus-graphic {
+    background: #191c20;
+    border: 3px solid #0d0f11;
+    border-radius: 6px;
+    padding: 6px 10px;
+    display: flex;
+    gap: 8px;
+  }
+
+  .mini-rod {
+    width: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+  }
+
+  .mini-rod-wire {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 3px;
+    background: #41464c;
+    z-index: 1;
+  }
+
+  .mini-beam {
+    width: 100%;
+    height: 5px;
+    background: #0d0e10;
+    margin: 3px 0;
+    z-index: 4;
+  }
+
+  .mini-bead {
+    width: 26px;
+    height: 14px;
+    clip-path: polygon(18% 0%, 82% 0%, 100% 50%, 82% 100%, 18% 100%, 0% 50%);
+    margin: 1.5px 0;
+    z-index: 3;
+    filter: drop-shadow(0 1.5px 2px rgba(0,0,0,0.45));
+    transition: transform 0.18s cubic-bezier(0.2, 0.8, 0.2, 1);
+    position: relative;
+  }
+
+  /* Cadbury Gems Orange for Tens rod (matches Lesson 2) */
+  .mini-bead.mini-bead-orange {
+    background: linear-gradient(180deg, #ff9100 0%, #ff9100 48%, #ffffff 49%, #ffffff 51%, #d84315 52%, #d84315 100%);
+  }
+
+  /* Cadbury Gems Red for Ones rod (matches Lesson 2) */
+  .mini-bead.mini-bead-red {
+    background: linear-gradient(180deg, #ff3b69 0%, #ff3b69 48%, #ffffff 49%, #ffffff 51%, #b80033 52%, #b80033 100%);
+  }
+
+  .mini-bead.active-up {
+    transform: translateY(-8px);
+    filter: drop-shadow(0 2px 3px rgba(0,0,0,0.5)) drop-shadow(0 0 6px rgba(255, 255, 255, 0.7));
+  }
+  .mini-bead.active-down {
+    transform: translateY(8px);
+    filter: drop-shadow(0 2px 3px rgba(0,0,0,0.5)) drop-shadow(0 0 6px rgba(255, 255, 255, 0.7));
+  }
+
+  /* Anatomy & Finger tech */
+  .anatomy-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+    margin-top: 14px;
+  }
+
+  .anatomy-card {
+    background: #fff8fa;
+    border-radius: var(--radius-md);
+    padding: 16px;
+    border: 2px solid #ffccd9;
+    text-align: center;
+  }
+
+  .anatomy-card .emoji-icon {
+    font-size: 2.3rem;
+    margin-bottom: 8px;
+  }
+
+  .anatomy-card h3 {
+    font-size: 1.1rem;
+    color: var(--primary-dark);
+    margin-bottom: 6px;
+  }
+
+  .anatomy-card p {
+    font-size: 0.88rem;
+    color: #4a5568;
+    line-height: 1.4;
+  }
+
+  /* Confetti Canvas */
+  #confetti-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  /* Certificate Modal */
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.65);
+    backdrop-filter: blur(5px);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+  }
+
+  .modal-overlay.open {
+    display: flex;
+  }
+
+  .modal-box {
+    background: white;
+    border-radius: var(--radius-xl);
+    padding: 32px;
+    max-width: 620px;
+    width: 90%;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.35);
+    text-align: center;
+    border: 5px solid #ffbe0b;
+    position: relative;
+    animation: popWord 0.3s ease;
+  }
+
+  .cert-container {
+    border: 6px double #ff4081;
+    padding: 24px;
+    border-radius: 20px;
+    background: #fffdfd;
+    position: relative;
+  }
+</style>
+</head>
+<body>
+
+<canvas id="confetti-canvas"></canvas>
+
+<!-- Top Bar with Sound/Voice and Language Switcher -->
+<div class="top-bar">
+  <div class="top-left-controls">
+    <button class="icon-toggle-btn" id="btn-toggle-voice" title="Voice Appreciation (On/Off)">🗣️ <span id="lbl-voice">Voice</span></button>
+    <button class="icon-toggle-btn" id="btn-toggle-sound" title="Sound Effects (On/Off)">🔊 <span id="lbl-sound">Sound</span></button>
+    <button class="icon-toggle-btn" id="btn-open-cert" title="Certificate & Trophy">🏆 <span id="lbl-trophy">Trophy</span></button>
+  </div>
+
+  <div class="lang-switcher-box">
+    <button class="lang-btn active" id="lang-btn-en" onclick="setLanguage('en')">🇬🇧 ENGLISH</button>
+    <button class="lang-btn" id="lang-btn-id" onclick="setLanguage('id')">🇮🇩 BAHASA</button>
+  </div>
+</div>
+
+<!-- Main App White Card Container -->
+<div class="main-app-card">
+
+  <!-- Header Banner (Click 5 times to manually reset all scores!) -->
+  <div class="hero-banner" id="main-hero-banner" title="Click 5 times to reset scores">
+    <span class="corner-unicorn left">🦄</span>
+    <span class="corner-unicorn right">🦄</span>
+    <h1 class="hero-title">✨ <span id="t-app-title">FREYA'S MAGICAL ABACUS</span> ✨</h1>
+    <p class="hero-subtitle" id="t-app-subtitle">Welcome, Freya! Let's learn Abacus together! 🎀</p>
+  </div>
+
+  <!-- 4 Stats Cards: Correct, Total, Stars, Crowns -->
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-label">💯 <span id="t-correct-answers">Correct Answers</span></div>
+      <div class="stat-number" id="stat-correct">0</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">📊 <span id="t-total-questions">Total Questions</span></div>
+      <div class="stat-number" id="stat-total">0</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">⭐ <span id="t-stars-earned">Stars Earned</span></div>
+      <div class="stat-number" id="stat-stars">0</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">👑 <span id="t-crowns-earned">Crowns Won</span></div>
+      <div class="stat-number" id="stat-crowns">0</div>
+    </div>
+  </div>
+
+  <!-- Choose Your Lesson Section -->
+  <div class="lessons-box">
+    <div class="section-heading">
+      <span>🎓</span>
+      <span id="t-choose-lesson">Choose Your Lesson</span>
+      <span>🎓</span>
+    </div>
+
+    <div class="lesson-cards-grid">
+      <!-- Lesson 1 -->
+      <div class="lesson-card-item active" onclick="loadLesson('sec-bead-count-1')">
+        <div class="lesson-card-icon">🎀</div>
+        <div class="lesson-card-title" id="t-l1-title">Lesson 1: Bead Counting</div>
+        <div class="lesson-card-sub" id="t-l1-sub">Count 1-30 & 31-50</div>
+      </div>
+
+      <!-- Lesson 2 -->
+      <div class="lesson-card-item" onclick="loadLesson('sec-lesson-2')">
+        <div class="lesson-card-icon">💖</div>
+        <div class="lesson-card-title" id="t-l2-title">Lesson 2: Addition +1 to +5</div>
+        <div class="lesson-card-sub" id="t-l2-sub">Adding 1-5</div>
+      </div>
+
+      <!-- Lesson 3 -->
+      <div class="lesson-card-item" onclick="loadLesson('sec-practice-6')">
+        <div class="lesson-card-icon">✨</div>
+        <div class="lesson-card-title" id="t-l3-title">Lesson 3: Addition +6 to +9</div>
+        <div class="lesson-card-sub" id="t-l3-sub">Adding 6-9</div>
+      </div>
+
+      <!-- Lesson 4 -->
+      <div class="lesson-card-item" onclick="loadLesson('sec-practice-sub6')">
+        <div class="lesson-card-icon">🌸</div>
+        <div class="lesson-card-title" id="t-l4-title">Lesson 4: Subtraction -1 to -5</div>
+        <div class="lesson-card-sub" id="t-l4-sub">Subtracting 1-5</div>
+      </div>
+
+      <!-- Lesson 5 -->
+      <div class="lesson-card-item" onclick="loadLesson('sec-practice-sub7')">
+        <div class="lesson-card-icon">🌺</div>
+        <div class="lesson-card-title" id="t-l5-title">Lesson 5: Subtraction -6 to -9</div>
+        <div class="lesson-card-sub" id="t-l5-sub">Subtracting 6-9</div>
+      </div>
+
+      <!-- Lesson 6 -->
+      <div class="lesson-card-item" onclick="loadLesson('sec-friends-1')">
+        <div class="lesson-card-icon">🎯</div>
+        <div class="lesson-card-title" id="t-l6-title">Lesson 6: Small Friends</div>
+        <div class="lesson-card-sub" id="t-l6-sub">Formulas (+1, +2, +3, +4)</div>
+      </div>
+
+      <!-- Speed Writing -->
+      <div class="lesson-card-item" onclick="loadLesson('sec-speed-writing')">
+        <div class="lesson-card-icon">✍️</div>
+        <div class="lesson-card-title" id="t-speed-title">Speed Writing Lab</div>
+        <div class="lesson-card-sub" id="t-speed-sub">Left & Right Hand (Apple Pencil)</div>
+      </div>
+
+      <!-- Final Test & Revision -->
+      <div class="lesson-card-item" onclick="loadLesson('sec-test-paper')">
+        <div class="lesson-card-icon">🏆</div>
+        <div class="lesson-card-title" id="t-test-title">Final Test Paper</div>
+        <div class="lesson-card-sub" id="t-test-sub">200 Marks & Certificate</div>
+      </div>
+    </div>
+
+    <!-- Extra Worksheets Pill Selectors -->
+    <div class="extra-tabs-row">
+      <button class="extra-tab-btn" onclick="loadLesson('sec-tool-intro')" id="t-tab-basics">🧮 Abacus Basics</button>
+      <button class="extra-tab-btn" onclick="loadLesson('sec-finger-tech')" id="t-tab-fingers">🖐️ Finger Tech</button>
+      <button class="extra-tab-btn" onclick="loadLesson('sec-bead-draw')" id="t-tab-draw">✏️ Bead Drawing (30 Qs)</button>
+      <button class="extra-tab-btn" onclick="loadLesson('sec-practice-8')" id="t-tab-p8">🪄 Practice +8 (4-Rows)</button>
+      <button class="extra-tab-btn" onclick="loadLesson('sec-practice-sub89')" id="t-tab-p89">🔥 Practice -8, -9</button>
+      <button class="extra-tab-btn" onclick="loadLesson('sec-friends-2')" id="t-tab-f2">💛 Friend +2</button>
+      <button class="extra-tab-btn" onclick="loadLesson('sec-friends-3')" id="t-tab-f3">💚 Friend +3</button>
+      <button class="extra-tab-btn" onclick="loadLesson('sec-friends-4')" id="t-tab-f4">💙 Friend +4</button>
+      <button class="extra-tab-btn" onclick="loadLesson('sec-revision')" id="t-tab-rev">📚 8-Min Revision</button>
+    </div>
+  </div>
+
+  <!-- THE INTERACTIVE SIDE-BY-SIDE ARENA: ONE CHALLENGE WITH ABACUS BESIDE -->
+  <div class="arena-wrapper" id="arena-main-wrapper">
+    
+    <!-- LEFT SIDE: ACTIVE CHALLENGE FOCUS CARD -->
+    <div class="challenge-focus-card" id="active-challenge-card">
+      <!-- Injected dynamically -->
+    </div>
+
+    <!-- RIGHT SIDE: GRAPHICAL RAINBOW SOROBAN ABACUS BESIDE IT -->
+    <div class="abacus-stage-box" id="side-abacus-box">
+      <div class="abacus-header-row">
+        <div class="abacus-headline">
+          <span>🧮</span>
+          <span id="t-abacus-title">Freya's Soroban Abacus</span>
+        </div>
+
+        <div class="rod-selector-wrap">
+          <span style="font-size: 0.75rem; font-weight: bold; color: #a04060;" id="t-rods-lbl">Rods:</span>
+          <button class="rod-sel-btn" onclick="switchRodCount(3)">3</button>
+          <button class="rod-sel-btn active" onclick="switchRodCount(5)">5</button>
+          <button class="rod-sel-btn" onclick="switchRodCount(7)">7</button>
+          <button class="rod-sel-btn" onclick="switchRodCount(13)">13 (Photo)</button>
+        </div>
+
+        <div class="abacus-tool-actions">
+          <button class="btn-pink-pill btn-pink-reset" id="btn-clear-abacus">🧹 <span id="t-clear-btn">Clear (0)</span></button>
+          <button class="btn-pink-pill btn-pink-hint" id="btn-explain-move">💡 <span id="t-how-works">How Beads Work</span></button>
+        </div>
+      </div>
+
+      <!-- Authentic Soroban Frame with Rainbow Beads -->
+      <div class="soroban-frame" id="main-soroban">
+        <div class="soroban-inner" id="soroban-rods-container">
+          <!-- Rods injected dynamically -->
+        </div>
+      </div>
+
+      <!-- Rod Place Value Readouts -->
+      <div class="rod-readouts" id="rod-readouts-container">
+        <!-- Injected -->
+      </div>
+
+      <div class="soroban-total-display">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span id="t-val-lbl">Value:</span>
+          <span id="soroban-val-text" style="color: #fffa65; font-size: 1.6rem; min-width: 32px;">0</span>
+        </div>
+        <div class="spelled-words-badge" id="soroban-val-words">
+          <span>🌸</span>
+          <span id="soroban-spelled-text">Zero</span>
+          <span>✨</span>
+        </div>
+        <button class="icon-toggle-btn" style="padding: 4px 10px; font-size: 0.85rem;" onclick="speakCurrentValue(true)" title="Speak sweet pronunciation">🔊</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Optional All-Questions Grid View -->
+  <div id="all-questions-grid-view" style="display: none; margin-top: 15px;"></div>
+
+</div>
+
+<!-- CROWN ANIMATION & OUTSTANDING FREYA CELEBRATION POPUP -->
+<div class="celebration-overlay" id="celebration-popup">
+  <div class="crown-icon-animated" id="celebration-crown">👑</div>
+  <div class="celebration-praise-text" id="celebration-msg">Outstanding Freya!</div>
+  <div class="celebration-sub-text" id="celebration-sub">✨ Golden Crown & Star Won! ✨</div>
+</div>
+
+<!-- Certificate Modal with Successfully Graduated & Crown -->
+<div class="modal-overlay" id="cert-modal">
+  <div class="modal-box">
+    <div class="cert-container">
+      <div style="font-size: 4.5rem; margin-bottom: 4px;" class="crown-icon-animated">👑</div>
+      <div style="font-size: 1.3rem; margin-bottom: 8px;">🌟🏅🌟</div>
+      <h2 style="font-size: 1.85rem; font-weight: 900; color: #d81b60; margin-bottom: 6px;" id="t-cert-title">Certificate of Excellence</h2>
+      <p style="color: #718096; font-size: 0.95rem;" id="t-cert-sub">This certifies that our brilliant math explorer</p>
+      <div style="font-size: 2.6rem; font-weight: 900; color: #ff4081; margin: 10px 0; text-decoration: underline wavy #ffbe0b;">Freya</div>
+      <p style="font-size: 1.1rem; color: #4a5568; line-height: 1.5; margin-bottom: 14px; font-weight: 700;" id="t-cert-desc">
+        has successfully graduated <strong>Abacus Level 1A</strong> with extraordinary speed, dedication, and golden crown mastery!
+      </p>
+      <div style="display: flex; justify-content: center; gap: 16px; margin: 15px 0;">
+        <div style="background: #fff0f5; border: 2px solid #ffccd9; padding: 10px 18px; border-radius: 14px;">
+          <div style="font-size: 0.8rem; color: #b83280;" id="t-cert-stars">Total Stars</div>
+          <div style="font-size: 1.6rem; font-weight: 900; color: #d81b60;" id="modal-star-count">0 ⭐</div>
+        </div>
+        <div style="background: #fff0f5; border: 2px solid #ffccd9; padding: 10px 18px; border-radius: 14px;">
+          <div style="font-size: 0.8rem; color: #b83280;" id="t-cert-crowns">Golden Crowns</div>
+          <div style="font-size: 1.6rem; font-weight: 900; color: #ffbe0b;" id="modal-crown-count">0 👑</div>
+        </div>
+        <div style="background: #fff0f5; border: 2px solid #ffccd9; padding: 10px 18px; border-radius: 14px;">
+          <div style="font-size: 0.8rem; color: #b83280;" id="t-cert-rank">Status</div>
+          <div style="font-size: 1.25rem; font-weight: 900; color: #ff4081;" id="t-cert-level">Graduated! 🎓</div>
+        </div>
+      </div>
+      <button class="btn-submit-arena" onclick="closeCertModal()" style="margin: 12px auto 0 auto; width: auto;" id="t-cert-btn">Keep Shining, Freya! 🚀</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* =========================================================================
+   I18N LANGUAGE DICTIONARIES (ENGLISH & BAHASA)
+   ========================================================================= */
+
+let currentLang = localStorage.getItem('freya_abacus_lang') || 'en';
+
+const I18N = {
+  en: {
+    appTitle: "FREYA'S MAGICAL ABACUS",
+    welcomeSub: "Welcome, Freya! Let's learn Abacus together! 🎀",
+    correctAnswers: "Correct Answers",
+    totalQuestions: "Total Questions",
+    starsEarned: "Stars Earned",
+    crownsEarned: "Crowns Won",
+    chooseLesson: "Choose Your Lesson",
+    l1Title: "Lesson 1: Bead Counting",
+    l1Sub: "Count 1-30 & 31-50",
+    l2Title: "Lesson 2: Addition +1 to +5",
+    l2Sub: "Adding 1-5",
+    l3Title: "Lesson 3: Addition +6 to +9",
+    l3Sub: "Adding 6-9",
+    l4Title: "Lesson 4: Subtraction -1 to -5",
+    l4Sub: "Subtracting 1-5",
+    l5Title: "Lesson 5: Subtraction -6 to -9",
+    l5Sub: "Subtracting 6-9",
+    l6Title: "Lesson 6: Small Friends",
+    l6Sub: "Formulas (+1, +2, +3, +4)",
+    speedTitle: "Speed Writing Lab",
+    speedSub: "Left & Right Hand (Apple Pencil)",
+    testTitle: "Final Test Paper",
+    testSub: "200 Marks & Certificate",
+    abacusTitle: "Freya's Soroban Abacus",
+    rodsLbl: "Rods:",
+    clearBtn: "Clear (0)",
+    howBeadsWork: "How Beads Work",
+    valLbl: "Value:",
+    demoAbacus: "Demo Abacus",
+    checkAnswer: "Check Answer ⭐",
+    useAbacusAns: "Use Abacus Value",
+    nextChallenge: "Next Challenge ➡️",
+    prevChallenge: "⬅️ Prev",
+    viewAllGrid: "📋 View All Questions",
+    hideAllGrid: "✖️ Hide All Questions",
+    outstanding: "Outstanding Freya!",
+    wellDone: "Well done Freya! Excellent!",
+    goodJob: "Good job Freya! Outstanding!",
+    howBeadsMsg: "🌟 How Beads Work:\n\n1. Upper bead = 5 (pull down to beam to add)\n2. Lower beads = 1 each (push up to beam to add)\n3. Clear button resets all beads back to 0!\n\nTry it now Freya!",
+    certTitle: "Certificate of Excellence",
+    certSub: "This certifies that our brilliant math explorer",
+    certDesc: "has successfully graduated Abacus Level 1A with extraordinary speed, dedication, and golden crown mastery!",
+    certStars: "Total Stars",
+    certCrowns: "Golden Crowns",
+    certRank: "Status",
+    certLevel: "Graduated! 🎓",
+    certBtn: "Keep Shining, Freya! 🚀"
+  },
+  id: {
+    appTitle: "SEMPOA AJAIB FREYA",
+    welcomeSub: "Selamat datang, Freya! Ayo belajar Sempoa bersama! 🎀",
+    correctAnswers: "Jawaban Benar",
+    totalQuestions: "Total Soal",
+    starsEarned: "Bintang Didapat",
+    crownsEarned: "Mahkota Emas",
+    chooseLesson: "Pilih Pelajaranmu",
+    l1Title: "Pelajaran 1: Hitung Manik",
+    l1Sub: "Hitung 1-30 & 31-50",
+    l2Title: "Pelajaran 2: Tambah +1 sd +5",
+    l2Sub: "Penjumlahan 1-5",
+    l3Title: "Pelajaran 3: Tambah +6 sd +9",
+    l3Sub: "Penjumlahan 6-9",
+    l4Title: "Pelajaran 4: Kurang -1 sd -5",
+    l4Sub: "Pengurangan 1-5",
+    l5Title: "Pelajaran 5: Kurang -6 sd -9",
+    l5Sub: "Pengurangan 6-9",
+    l6Title: "Pelajaran 6: Kawan Kecil",
+    l6Sub: "Rumus (+1, +2, +3, +4)",
+    speedTitle: "Tulis Cepat Angka",
+    speedSub: "Tangan Kiri & Kanan (Apple Pencil)",
+    testTitle: "Ujian Akhir Level-1",
+    testSub: "200 Nilai & Sertifikat",
+    abacusTitle: "Sempoa Ajaib Freya",
+    rodsLbl: "Tiang:",
+    clearBtn: "Bersihkan (0)",
+    howBeadsWork: "Cara Kerja Manik",
+    valLbl: "Nilai:",
+    demoAbacus: "Peragakan",
+    checkAnswer: "Periksa Jawaban ⭐",
+    useAbacusAns: "Gunakan Nilai Sempoa",
+    nextChallenge: "Tantangan Berikutnya ➡️",
+    prevChallenge: "⬅️ Sebelumnya",
+    viewAllGrid: "📋 Lihat Semua Soal",
+    hideAllGrid: "✖️ Tutup Semua Soal",
+    outstanding: "Luar biasa Freya!",
+    wellDone: "Bagus sekali Freya! Hebat!",
+    goodJob: "Kerja bagus Freya! Luar biasa!",
+    howBeadsMsg: "🌟 Cara Kerja Manik Sempoa:\n\n1. Manik Atas = 5 (tarik turun ke tiang pemisah untuk menambah)\n2. Manik Bawah = 1 per manik (dorong naik ke tiang pemisah)\n3. Tombol bersihkan mengatur ulang ke 0!\n\nAyo coba Freya!",
+    certTitle: "Sertifikat Kelulusan Terbaik",
+    certSub: "Diberikan kepada penjelajah matematika hebat kami",
+    certDesc: "telah berhasil lulus Sempoa Level 1A dengan kecepatan luar biasa dan mahkota emas kehormatan!",
+    certStars: "Total Bintang",
+    certCrowns: "Mahkota Emas",
+    certRank: "Status",
+    certLevel: "Lulus! 🎓",
+    certBtn: "Terus Bersinar, Freya! 🚀"
+  }
+};
+
+function setLanguage(lang) {
+  currentLang = lang;
+  localStorage.setItem('freya_abacus_lang', lang);
+
+  document.getElementById('lang-btn-en').classList.toggle('active', lang === 'en');
+  document.getElementById('lang-btn-id').classList.toggle('active', lang === 'id');
+
+  const dict = I18N[lang];
+  document.getElementById('t-app-title').innerText = dict.appTitle;
+  document.getElementById('t-app-subtitle').innerText = dict.welcomeSub;
+  document.getElementById('t-correct-answers').innerText = dict.correctAnswers;
+  document.getElementById('t-total-questions').innerText = dict.totalQuestions;
+  document.getElementById('t-stars-earned').innerText = dict.starsEarned;
+  document.getElementById('t-crowns-earned').innerText = dict.crownsEarned;
+  document.getElementById('t-choose-lesson').innerText = dict.chooseLesson;
+
+  document.getElementById('t-l1-title').innerText = dict.l1Title;
+  document.getElementById('t-l1-sub').innerText = dict.l1Sub;
+  document.getElementById('t-l2-title').innerText = dict.l2Title;
+  document.getElementById('t-l2-sub').innerText = dict.l2Sub;
+  document.getElementById('t-l3-title').innerText = dict.l3Title;
+  document.getElementById('t-l3-sub').innerText = dict.l3Sub;
+  document.getElementById('t-l4-title').innerText = dict.l4Title;
+  document.getElementById('t-l4-sub').innerText = dict.l4Sub;
+  document.getElementById('t-l5-title').innerText = dict.l5Title;
+  document.getElementById('t-l5-sub').innerText = dict.l5Sub;
+  document.getElementById('t-l6-title').innerText = dict.l6Title;
+  document.getElementById('t-l6-sub').innerText = dict.l6Sub;
+  document.getElementById('t-speed-title').innerText = dict.speedTitle;
+  document.getElementById('t-speed-sub').innerText = dict.speedSub;
+  document.getElementById('t-test-title').innerText = dict.testTitle;
+  document.getElementById('t-test-sub').innerText = dict.testSub;
+
+  document.getElementById('t-abacus-title').innerText = dict.abacusTitle;
+  document.getElementById('t-rods-lbl').innerText = dict.rodsLbl;
+  document.getElementById('t-clear-btn').innerText = dict.clearBtn;
+  document.getElementById('t-how-works').innerText = dict.howBeadsWork;
+  document.getElementById('t-val-lbl').innerText = dict.valLbl;
+
+  document.getElementById('t-cert-title').innerText = dict.certTitle;
+  document.getElementById('t-cert-sub').innerText = dict.certSub;
+  document.getElementById('t-cert-desc').innerText = dict.certDesc;
+  document.getElementById('t-cert-stars').innerText = dict.certStars;
+  document.getElementById('t-cert-crowns').innerText = dict.certCrowns;
+  document.getElementById('t-cert-rank').innerText = dict.certRank;
+  document.getElementById('t-cert-level').innerText = dict.certLevel;
+  document.getElementById('t-cert-btn').innerText = dict.certBtn;
+
+  updateDisplayAndSpeech(false);
+  renderActiveChallenge();
+}
+
+function numberToWords(num) {
+  if (currentLang === 'id') {
+    return numberToWordsBahasa(num);
+  } else {
+    return numberToWordsEnglish(num);
+  }
+}
+
+function numberToWordsEnglish(num) {
+  if (num === 0) return "Zero";
+  const ones = ["", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine",
+                "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen",
+                "Seventeen", "Eighteen", "Nineteen"];
+  const tens = ["", "", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"];
+
+  function convertChunk(n) {
+    let str = "";
+    if (n >= 100) {
+      str += ones[Math.floor(n / 100)] + " Hundred";
+      n %= 100;
+      if (n > 0) str += " and ";
+    }
+    if (n > 0) {
+      if (n < 20) {
+        str += ones[n];
+      } else {
+        str += tens[Math.floor(n / 10)];
+        if (n % 10 > 0) str += "-" + ones[n % 10];
+      }
+    }
+    return str;
+  }
+
+  if (num >= 1000000) {
+    const m = Math.floor(num / 1000000);
+    const rem = num % 1000000;
+    return convertChunk(m) + " Million" + (rem > 0 ? " " + numberToWordsEnglish(rem) : "");
+  }
+  if (num >= 1000) {
+    const k = Math.floor(num / 1000);
+    const rem = num % 1000;
+    return convertChunk(k) + " Thousand" + (rem > 0 ? " " + convertChunk(rem) : "");
+  }
+  return convertChunk(num);
+}
+
+function numberToWordsBahasa(num) {
+  if (num === 0) return "Nol";
+  const satuan = ["", "Satu", "Dua", "Tiga", "Empat", "Lima", "Enam", "Tujuh", "Delapan", "Sembilan", "Sepuluh", "Sebelas"];
+  
+  if (num < 12) return satuan[num];
+  if (num < 20) return satuan[num - 10] + " Belas";
+  if (num < 100) return satuan[Math.floor(num / 10)] + " Puluh" + (num % 10 > 0 ? " " + satuan[num % 10] : "");
+  if (num < 200) return "Seratus" + (num % 100 > 0 ? " " + numberToWordsBahasa(num % 100) : "");
+  if (num < 1000) return satuan[Math.floor(num / 100)] + " Ratus" + (num % 100 > 0 ? " " + numberToWordsBahasa(num % 100) : "");
+  if (num < 2000) return "Seribu" + (num % 1000 > 0 ? " " + numberToWordsBahasa(num % 1000) : "");
+  if (num < 1000000) return numberToWordsBahasa(Math.floor(num / 1000)) + " Ribu" + (num % 1000 > 0 ? " " + numberToWordsBahasa(num % 1000) : "");
+  if (num < 1000000000) return numberToWordsBahasa(Math.floor(num / 1000000)) + " Juta" + (num % 1000000 > 0 ? " " + numberToWordsBahasa(num % 1000000) : "");
+  return num.toString();
+}
+
+/* =========================================================================
+   AUDIO & SYNTHESIZER
+   ========================================================================= */
+
+let voiceEnabled = true;
+let soundEnabled = true;
+let audioCtx = null;
+
+function initAudio() {
+  if (!audioCtx) {
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  }
+}
+
+function playSweetTone(noteIndex = 0) {
+  if (!soundEnabled) return;
+  try {
+    initAudio();
+    const now = audioCtx.currentTime;
+    const scale = [523.25, 587.33, 659.25, 783.99, 880.00, 1046.50, 1174.66, 1318.51, 1567.98];
+    const freq = scale[Math.abs(noteIndex) % scale.length];
+
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(freq, now);
+
+    const overtone = audioCtx.createOscillator();
+    const overGain = audioCtx.createGain();
+    overtone.type = 'sine';
+    overtone.frequency.setValueAtTime(freq * 2.756, now);
+
+    gain.gain.setValueAtTime(0, now);
+    gain.gain.linearRampToValueAtTime(0.24, now + 0.012);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.38);
+
+    overGain.gain.setValueAtTime(0, now);
+    overGain.gain.linearRampToValueAtTime(0.09, now + 0.01);
+    overGain.gain.exponentialRampToValueAtTime(0.001, now + 0.22);
+
+    osc.connect(gain);
+    overtone.connect(overGain);
+    gain.connect(audioCtx.destination);
+    overGain.connect(audioCtx.destination);
+
+    osc.start(now);
+    overtone.start(now);
+    osc.stop(now + 0.38);
+    overtone.stop(now + 0.22);
+  } catch(e) {
+    console.warn(e);
+  }
+}
+
+function playSound(type) {
+  if (!soundEnabled) return;
+  try {
+    initAudio();
+    const now = audioCtx.currentTime;
+
+    if (type === 'bead') {
+      playSweetTone(Math.floor(Math.random() * 5));
+    } else if (type === 'correct' || type === 'star') {
+      // Golden star chime
+      [523.25, 659.25, 783.99, 1046.50].forEach((freq, i) => {
+        const o = audioCtx.createOscillator();
+        const g = audioCtx.createGain();
+        o.type = 'triangle';
+        o.frequency.value = freq;
+        g.gain.setValueAtTime(0, now + i * 0.08);
+        g.gain.linearRampToValueAtTime(0.22, now + i * 0.08 + 0.02);
+        g.gain.exponentialRampToValueAtTime(0.001, now + i * 0.08 + 0.45);
+        o.connect(g);
+        g.connect(audioCtx.destination);
+        o.start(now + i * 0.08);
+        o.stop(now + i * 0.08 + 0.45);
+      });
+    } else if (type === 'crown') {
+      // Royal crown fanfare
+      [523.25, 659.25, 783.99, 1046.50, 1318.51, 1567.98].forEach((freq, idx) => {
+        const o = audioCtx.createOscillator();
+        const g = audioCtx.createGain();
+        o.type = 'triangle';
+        o.frequency.value = freq;
+        g.gain.setValueAtTime(0, now + idx * 0.07);
+        g.gain.linearRampToValueAtTime(0.25, now + idx * 0.07 + 0.03);
+        g.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.07 + 0.55);
+        o.connect(g);
+        g.connect(audioCtx.destination);
+        o.start(now + idx * 0.07);
+        o.stop(now + idx * 0.07 + 0.55);
+      });
+    } else if (type === 'tick') {
+      const o = audioCtx.createOscillator();
+      const g = audioCtx.createGain();
+      o.type = 'sine';
+      o.frequency.setValueAtTime(800, now);
+      g.gain.setValueAtTime(0.08, now);
+      g.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
+      o.connect(g);
+      g.connect(audioCtx.destination);
+      o.start(now);
+      o.stop(now + 0.04);
+    } else if (type === 'clear') {
+      const o = audioCtx.createOscillator();
+      const g = audioCtx.createGain();
+      o.type = 'sine';
+      o.frequency.setValueAtTime(600, now);
+      o.frequency.exponentialRampToValueAtTime(260, now + 0.12);
+      g.gain.setValueAtTime(0.2, now);
+      g.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
+      o.connect(g);
+      g.connect(audioCtx.destination);
+      o.start(now);
+      o.stop(now + 0.12);
+    } else if (type === 'fanfare') {
+      [523.25, 659.25, 783.99, 1046.50, 1318.51].forEach((freq, idx) => {
+        const o = audioCtx.createOscillator();
+        const g = audioCtx.createGain();
+        o.type = 'triangle';
+        o.frequency.value = freq;
+        g.gain.setValueAtTime(0.22, now + idx * 0.09);
+        g.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.09 + 0.5);
+        o.connect(g);
+        g.connect(audioCtx.destination);
+        o.start(now + idx * 0.09);
+        o.stop(now + idx * 0.09 + 0.5);
+      });
+    }
+  } catch(e) {
+    console.warn(e);
+  }
+}
+
+let speechDebounceTimer = null;
+function speakValueSweetly(val, force = false) {
+  if (!voiceEnabled || !('speechSynthesis' in window)) return;
+  clearTimeout(speechDebounceTimer);
+  speechDebounceTimer = setTimeout(() => {
+    window.speechSynthesis.cancel();
+    const words = numberToWords(val);
+    const utter = new SpeechSynthesisUtterance(words);
+    utter.rate = 0.94;
+    utter.pitch = 1.35;
+
+    const voices = window.speechSynthesis.getVoices();
+    if (currentLang === 'id') {
+      const idVoice = voices.find(v => v.lang && (v.lang.startsWith('id') || v.lang.startsWith('ms')));
+      if (idVoice) utter.voice = idVoice;
+    } else {
+      const enVoice = voices.find(v =>
+        v.name.includes('Samantha') ||
+        v.name.includes('Victoria') ||
+        v.name.includes('Karen') ||
+        (v.lang && v.lang.startsWith('en') && v.name.toLowerCase().includes('female'))
+      ) || voices.find(v => v.lang && v.lang.startsWith('en'));
+      if (enVoice) utter.voice = enVoice;
+    }
+
+    window.speechSynthesis.speak(utter);
+  }, force ? 10 : 200);
+}
+
+function speakPraiseCustom(text) {
+  if (!voiceEnabled || !('speechSynthesis' in window)) return;
+  window.speechSynthesis.cancel();
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.rate = 1.0;
+  utter.pitch = 1.35;
+
+  const voices = window.speechSynthesis.getVoices();
+  if (currentLang === 'id') {
+    const idVoice = voices.find(v => v.lang && (v.lang.startsWith('id') || v.lang.startsWith('ms')));
+    if (idVoice) utter.voice = idVoice;
+  }
+  window.speechSynthesis.speak(utter);
+}
+
+/* =========================================================================
+   PERSISTENT SCORES & MANUAL 5-CLICK RESET ENGINE
+   ========================================================================= */
+
+let totalCorrect = parseInt(localStorage.getItem('freya_correct_ans') || '0', 10);
+let totalQuestions = parseInt(localStorage.getItem('freya_total_qs') || '0', 10);
+let totalStars = parseInt(localStorage.getItem('freya_stars') || '0', 10);
+let totalCrowns = parseInt(localStorage.getItem('freya_crowns') || '0', 10);
+let lessonSolvedMap = {};
+try {
+  lessonSolvedMap = JSON.parse(localStorage.getItem('freya_solved_map') || '{}');
+} catch(e) {
+  lessonSolvedMap = {};
+}
+
+function updateStatsUI() {
+  document.getElementById('stat-correct').innerText = totalCorrect;
+  document.getElementById('stat-total').innerText = totalQuestions;
+  document.getElementById('stat-stars').innerText = totalStars;
+  document.getElementById('stat-crowns').innerText = totalCrowns;
+  document.getElementById('modal-star-count').innerText = totalStars + ' ⭐';
+  document.getElementById('modal-crown-count').innerText = totalCrowns + ' 👑';
+}
+
+function savePersistentStats() {
+  localStorage.setItem('freya_correct_ans', totalCorrect);
+  localStorage.setItem('freya_total_qs', totalQuestions);
+  localStorage.setItem('freya_stars', totalStars);
+  localStorage.setItem('freya_crowns', totalCrowns);
+  localStorage.setItem('freya_solved_map', JSON.stringify(lessonSolvedMap));
+}
+
+// 5-Clicks on Heading Manual Reset
+let headingClickCount = 0;
+let headingClickTimer = null;
+
+function handleHeadingClick() {
+  headingClickCount++;
+  clearTimeout(headingClickTimer);
+  headingClickTimer = setTimeout(() => {
+    headingClickCount = 0;
+  }, 3000);
+
+  if (headingClickCount >= 5) {
+    headingClickCount = 0;
+    resetAllScoresManually();
+  }
+}
+
+function resetAllScoresManually() {
+  totalCorrect = 0;
+  totalQuestions = 0;
+  totalStars = 0;
+  totalCrowns = 0;
+  lessonSolvedMap = {};
+  savePersistentStats();
+  updateStatsUI();
+  playSound('clear');
+  clearSoroban();
+  renderActiveChallenge();
+  alert("🔄 All scores and stars have been manually reset for Freya! Fresh start!");
+}
+
+/* =========================================================================
+   SOROBAN ABACUS MODEL - Matched to 5-Color Rainbow Photo
+   ========================================================================= */
+
+const BEAD_COLOR_CLASSES = ['bead-blue', 'bead-green', 'bead-yellow', 'bead-orange', 'bead-red'];
+let currentRodCount = 5;
+let rods = [];
+
+function initRods(count = 5) {
+  currentRodCount = count;
+  rods = [];
+
+  for (let i = 0; i < count; i++) {
+    const power = count - 1 - i;
+    const weight = Math.pow(10, power);
+    const colorClass = BEAD_COLOR_CLASSES[i % BEAD_COLOR_CLASSES.length];
+    const isUnitDot = (power === 0) || (power === 3) || (power === 6);
+
+    let name = 'Rod';
+    if (power === 0) name = currentLang === 'id' ? 'Satuan' : '1s (Unit)';
+    else if (power === 1) name = currentLang === 'id' ? 'Puluhan' : '10s';
+    else if (power === 2) name = currentLang === 'id' ? 'Ratusan' : '100s';
+    else if (power === 3) name = currentLang === 'id' ? 'Ribuan' : '1,000s';
+    else if (power === 4) name = currentLang === 'id' ? '10 Ribu' : '10,000s';
+    else name = `10^${power}`;
+
+    rods.push({
+      index: i,
+      name: name,
+      power: power,
+      weight: weight,
+      upper: 0,
+      lower: 0,
+      value: 0,
+      colorClass: colorClass,
+      dot: isUnitDot
+    });
+  }
+
+  renderSoroban();
+}
+
+function switchRodCount(count) {
+  document.querySelectorAll('.rod-sel-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.innerText.includes(count.toString()));
+  });
+  initRods(count);
+}
+
+function getCurrentSorobanTotal() {
+  return rods.reduce((acc, r) => acc + (r.value * r.weight), 0);
+}
+
+function renderSoroban() {
+  const container = document.getElementById('soroban-rods-container');
+  const readoutsContainer = document.getElementById('rod-readouts-container');
+  if (!container || !readoutsContainer) return;
+
+  container.innerHTML = '';
+  readoutsContainer.innerHTML = '';
+
+  rods.forEach((rod, rIdx) => {
+    const col = document.createElement('div');
+    col.className = 'soroban-rod-col';
+    col.style.width = currentRodCount > 7 ? '36px' : '48px';
+
+    const wire = document.createElement('div');
+    wire.className = 'rod-wire';
+    col.appendChild(wire);
+
+    const upperDeck = document.createElement('div');
+    upperDeck.className = 'upper-deck';
+    const upperBead = document.createElement('div');
+    upperBead.className = `bead ${rod.colorClass}` + (rod.upper === 1 ? ' active' : '');
+    upperBead.title = `${rod.name}: Upper bead (+${5 * rod.weight})`;
+    upperBead.onclick = (e) => {
+      e.stopPropagation();
+      rod.upper = rod.upper === 1 ? 0 : 1;
+      updateRodValue(rIdx);
+      playSweetTone(rod.power + (rod.upper ? 4 : 0));
+      updateDisplayAndSpeech();
+      renderSoroban();
+    };
+    upperDeck.appendChild(upperBead);
+    col.appendChild(upperDeck);
+
+    const beam = document.createElement('div');
+    beam.className = 'soroban-beam';
+    if (rod.dot) {
+      const dot = document.createElement('div');
+      dot.className = 'beam-dot';
+      beam.appendChild(dot);
+    }
+    col.appendChild(beam);
+
+    const lowerDeck = document.createElement('div');
+    lowerDeck.className = 'lower-deck';
+    for (let b = 1; b <= 4; b++) {
+      const bead = document.createElement('div');
+      const isActive = b <= rod.lower;
+      bead.className = `bead ${rod.colorClass}` + (isActive ? ' active' : '');
+      bead.title = `${rod.name}: Lower bead #${b} (+${rod.weight})`;
+      bead.onclick = (e) => {
+        e.stopPropagation();
+        if (rod.lower === b) {
+          rod.lower = b - 1;
+        } else {
+          rod.lower = b;
+        }
+        updateRodValue(rIdx);
+        playSweetTone(rod.power + rod.lower);
+        updateDisplayAndSpeech();
+        renderSoroban();
+      };
+      lowerDeck.appendChild(bead);
+    }
+    col.appendChild(lowerDeck);
+
+    container.appendChild(col);
+
+    const readoutBox = document.createElement('div');
+    readoutBox.style.display = 'flex';
+    readoutBox.style.flexDirection = 'column';
+    readoutBox.style.alignItems = 'center';
+    readoutBox.style.width = currentRodCount > 7 ? '36px' : '48px';
+
+    const valTag = document.createElement('div');
+    valTag.className = 'rod-val-tag';
+    valTag.style.borderColor = rod.value > 0 ? '#ff4081' : '#ffccd9';
+    valTag.innerText = rod.value;
+
+    const nameTag = document.createElement('div');
+    nameTag.className = 'rod-name-tag';
+    nameTag.innerText = rod.name;
+
+    readoutBox.appendChild(valTag);
+    readoutBox.appendChild(nameTag);
+    readoutsContainer.appendChild(readoutBox);
+  });
+
+  updateDisplayAndSpeech(false);
+}
+
+function updateRodValue(rIdx) {
+  const rod = rods[rIdx];
+  rod.value = (rod.upper * 5) + rod.lower;
+}
+
+function updateDisplayAndSpeech(triggerVoice = true) {
+  const total = getCurrentSorobanTotal();
+  const valEl = document.getElementById('soroban-val-text');
+  const spelledEl = document.getElementById('soroban-spelled-text');
+
+  if (valEl) valEl.innerText = total.toLocaleString();
+  if (spelledEl) {
+    const words = numberToWords(total);
+    spelledEl.innerText = words;
+  }
+
+  // Requirement 2: Never speak "zero" automatically on clear or transition!
+  // Only speak if triggerVoice is explicitly true AND total > 0.
+  if (triggerVoice && total > 0) {
+    speakValueSweetly(total);
+  }
+}
+
+function speakCurrentValue(force = true) {
+  const total = getCurrentSorobanTotal();
+  playSweetTone(3);
+  speakValueSweetly(total, force);
+}
+
+function clearSoroban(triggerVoice = false) {
+  rods.forEach(r => {
+    r.upper = 0;
+    r.lower = 0;
+    r.value = 0;
+  });
+  playSound('clear');
+  updateDisplayAndSpeech(triggerVoice);
+  renderSoroban();
+}
+
+function setSorobanNumber(num) {
+  const maxVal = Math.pow(10, currentRodCount) - 1;
+  const clamped = Math.max(0, Math.min(maxVal, num));
+
+  rods.forEach(rod => {
+    const digit = Math.floor(clamped / rod.weight) % 10;
+    rod.upper = digit >= 5 ? 1 : 0;
+    rod.lower = digit % 5;
+    rod.value = digit;
+  });
+
+  playSweetTone(4);
+  updateDisplayAndSpeech(true);
+  renderSoroban();
+}
+
+function launchConfetti() {
+  const canvas = document.getElementById('confetti-canvas');
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  const pieces = [];
+  const colors = ['#ff4081', '#ff759d', '#ffbe0b', '#00b894', '#0984e3', '#fd79a8'];
+  for (let i = 0; i < 90; i++) {
+    pieces.push({
+      x: canvas.width / 2,
+      y: canvas.height / 2,
+      vx: (Math.random() - 0.5) * 16,
+      vy: (Math.random() - 0.8) * 16,
+      size: Math.random() * 8 + 5,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      alpha: 1,
+      rotation: Math.random() * 360,
+      vRot: (Math.random() - 0.5) * 10
+    });
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    let alive = false;
+    pieces.forEach(p => {
+      p.x += p.vx;
+      p.y += p.vy;
+      p.vy += 0.35;
+      p.alpha -= 0.012;
+      p.rotation += p.vRot;
+      if (p.alpha > 0) {
+        alive = true;
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate((p.rotation * Math.PI) / 180);
+        ctx.fillStyle = p.color;
+        ctx.globalAlpha = Math.max(0, p.alpha);
+        ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
+        ctx.restore();
+      }
+    });
+    if (alive) {
+      requestAnimationFrame(animate);
+    } else {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+  }
+  requestAnimationFrame(animate);
+}
+
+/* =========================================================================
+   CURRICULUM LESSONS & DATA (ALL 300+ PROBLEMS)
+   ========================================================================= */
+
+const LESSON_PROBLEMS = {
+  'sec-lesson-2': {
+    title: { en: 'Lesson 2: Direct Addition / Subtraction +/- 5 - Page 9', id: 'Pelajaran 2: Penjumlahan & Pengurangan Langsung +/- 5 - Halaman 9' },
+    formula: '+5 / -5 Direct',
+    questions: [
+      [2, 5, 1], [3, 5, 1], [1, 5, -1], [5, 3, -5], [4, 5, -2],
+      [5, 1, -5], [2, 5, -1], [5, 3, -2], [4, -3, 5], [2, 2, 5],
+      [3, -1, 5], [2, -1, 5], [5, 4, -5], [5, 2, -5], [3, -2, 5],
+      [4, -1, 5], [2, -2, 5], [3, 5, -2], [4, 5, -2], [5, 4, -1],
+      [3, 50, 1], [1, 50, 2], [50, 4, -1], [2, 50, 2], [50, 4, -2],
+      [10, 50, 10], [50, 40, -30], [10, 20, 50], [30, 50, 10], [20, 50, -10]
+    ]
+  },
+  'sec-practice-6': {
+    title: { en: 'Practice Page: Addition +6 - Page 11', id: 'Halaman Latihan: Penjumlahan +6 - Halaman 11' },
+    formula: 'Pinch +6 (+5 and +1)',
+    questions: [
+      [6, 2, -5], [3, 6, -2], [1, 2, 6], [4, -3, 6], [2, 6, -1],
+      [3, 6, -5], [6, 2, -3], [6, 3, -4], [4, -4, 6], [3, -1, 6],
+      [20, 10, 60], [10, 10, 60], [20, -20, 60], [60, 30, -30], [20, 60, -50],
+      [30, 60, -40], [10, 60, -20], [60, -50, 10], [60, 30, -40], [60, -10, 40],
+      [6, 22, -1], [5, 34, -2], [62, 2, 5], [5, 64, -2], [13, 6, -5],
+      [12, 6, -2], [15, -5, 6], [22, 1, 6], [4, -2, 66], [2, 31, 6]
+    ]
+  },
+  'sec-practice-7': {
+    title: { en: 'Practice Page: Addition +7 - Page 12', id: 'Halaman Latihan: Penjumlahan +7 - Halaman 12' },
+    formula: 'Pinch +7 (+5 and +2)',
+    questions: [
+      [7, 2, -5], [3, -2, 7], [2, -1, 7], [4, -3, 7], [2, 7, -1],
+      [2, 7, -5], [7, 2, -3], [7, -2, -5], [4, -4, 7], [3, -1, 7],
+      [20, -10, 70], [10, 10, 70], [20, -20, 70], [20, 70, -30], [20, 70, -50],
+      [10, 70, -30], [10, 70, -20], [70, -50, 10], [70, 20, -40], [70, -20, 40],
+      [7, 22, -1], [5, 34, -2], [72, 2, 5], [5, 74, -2], [12, 7, -5],
+      [12, 7, -2], [15, -5, 7], [22, -1, 7], [4, -2, 77], [2, 30, 7]
+    ]
+  },
+  'sec-practice-8': {
+    title: { en: 'Practice Page: Addition +8 (4-Rows) - Page 14', id: 'Halaman Latihan: Penjumlahan +8 (4 Baris) - Halaman 14' },
+    formula: 'Pinch +8 (+5 and +3)',
+    questions: [
+      [1, 8, -3], [2, -1, 8], [3, -2, 8], [4, -3, 8], [1, 8, -5],
+      [9, -5, -1], [9, -3, -1], [8, -5, -3], [9, -2, -1], [9, -1, 1],
+      [10, 80, -40], [20, -10, 80], [30, -20, 80], [10, -10, 80], [40, -30, 80],
+      [90, -40, 20], [90, -30, 20], [90, -50, -10], [90, -30, -50], [90, -50, -20],
+      [11, 8, -4, 3], [24, -3, 8, -4], [16, -5, 8, -2], [41, 8, -4, 3], [35, -5, 8, -2],
+      [10, 9, -4, 1], [20, 9, -3, 2], [33, -3, 9, -2], [45, -5, 9, -4], [62, -2, 9, -3]
+    ]
+  },
+  'sec-practice-sub6': {
+    title: { en: 'Practice Page: Subtraction -6 - Page 16', id: 'Halaman Latihan: Pengurangan -6 - Halaman 16' },
+    formula: 'Spread -6 (-5 and -1)',
+    questions: [
+      [8, -6, 5], [7, 2, -6], [5, 4, -6], [6, 2, -6], [9, -6, 1],
+      [8, -6, 2], [6, -5, 7], [2, 5, -6], [7, -6, 3], [8, -1, -6],
+      [50, 30, -60], [20, 50, -60], [80, -10, -60], [70, -60, 10], [10, 80, -60],
+      [90, -60, 50], [90, -10, -60], [70, -60, 50], [70, -60, 30], [50, 10, -60],
+      [29, -6, 1], [18, -6, 2], [37, -6, 2], [48, -6, 5], [7, 11, -6],
+      [33, 5, -6], [96, 1, -6], [31, 8, -6], [9, -6, 55], [7, -6, 75]
+    ]
+  },
+  'sec-practice-sub7': {
+    title: { en: 'Practice Page: Subtraction -7 - Page 17', id: 'Halaman Latihan: Pengurangan -7 - Halaman 17' },
+    formula: 'Spread -7 (-5 and -2)',
+    questions: [
+      [8, -7, 5], [6, 2, -7], [5, 4, -7], [7, 2, -7], [9, -7, 1],
+      [8, -7, 2], [7, -5, 7], [2, 5, -7], [7, -7, 3], [8, -1, -7],
+      [50, 30, -70], [20, 50, -70], [80, -10, -70], [70, -70, 10], [10, 80, -70],
+      [90, -70, 50], [90, -10, -70], [70, -70, 50], [70, -70, 30], [50, 20, -70],
+      [29, -7, 1], [18, -7, 2], [37, -7, 2], [48, -7, 5], [7, 11, -7],
+      [33, 5, -7], [97, 1, -7], [31, 8, -7], [9, -7, 55], [7, -7, 75]
+    ]
+  },
+  'sec-practice-sub89': {
+    title: { en: 'Practice Page: Subtraction -8, -9 - Page 19', id: 'Halaman Latihan: Pengurangan -8, -9 - Halaman 19' },
+    formula: 'Spread -8 / -9',
+    questions: [
+      [9, -8, 7], [8, -8, 6], [4, 5, -8], [3, 6, -8], [5, 4, -9],
+      [6, 2, -8], [7, 2, -9], [5, 3, -8], [1, 8, -9], [9, -8, 3],
+      [90, -80, 50], [90, -80, 30], [60, 20, -80], [40, 50, -90], [60, 30, -80],
+      [10, 80, -90], [50, 30, -80], [50, 40, -90], [90, -80, 30], [60, 30, -90],
+      [22, 7, -8, 3], [34, 5, -9, 1], [11, 8, -9, 7], [43, 5, -8, 2], [36, 3, -9, 4],
+      [3, 6, -8, 43], [4, 5, -8, 62], [27, 2, -9, 5], [12, 6, -8, 3], [39, -9, 5, 2]
+    ]
+  },
+  'sec-friends-1': {
+    title: { en: 'Lesson 6: Small Friend +1 = +5 - 4 - Page 20', id: 'Pelajaran 6: Kawan Kecil +1 = +5 - 4 - Halaman 20' },
+    formula: '+1 = +5 - 4  |  +10 = +50 - 40',
+    questions: [
+      [2, 2, 1], [3, 1, 1], [4, 1, 3], [1, 3, 1], [9, -5, 1],
+      [4, 1, 2], [4, 1, 4], [4, 1, -5], [4, 1, 1], [4, 1, 3],
+      [40, 10, 30, -20], [30, 10, 10, 20], [20, 20, 10, 40], [80, -50, 10, 10], [90, -50, 10, 30],
+      [70, -50, 20, 10], [60, -50, 30, 10], [80, -60, 20, 10], [90, -60, 10, 10], [40, 10, 10, 20],
+      [14, 1, 3, -6], [27, -5, 2, 1], [33, 1, 1, 4], [19, -5, 1, 3], [26, -5, 3, 1],
+      [64, 1, 3, -2], [73, 1, 1, -5], [62, 2, 1, 3], [49, -5, 1, 1], [58, -5, 1, 1]
+    ]
+  },
+  'sec-friends-2': {
+    title: { en: 'Lesson 6: Small Friend +2 = +5 - 3 - Page 21', id: 'Pelajaran 6: Kawan Kecil +2 = +5 - 3 - Halaman 21' },
+    formula: '+2 = +5 - 3  |  +20 = +50 - 30',
+    questions: [
+      [3, 2, 4], [3, 1, 2], [4, 2, 3], [2, 2, 2], [3, 2, 2],
+      [8, -5, 2], [4, 2, 2], [3, 2, 1], [4, -3, 2], [4, 2, -1],
+      [30, 20, 20, -10], [20, 20, 20, 30], [40, -10, 20, 20], [80, -50, 20, 40], [90, -50, 20, 10],
+      [30, 20, -50, 40], [60, -50, 30, 20], [40, 20, -50, 20], [50, 30, -50, 20], [30, 20, 40, -30],
+      [24, 2, -5, 3], [32, 2, 2, -5], [13, 2, 3, -6], [40, 3, 2, 3], [63, 2, 2, -5],
+      [21, 2, 2, 4], [54, 2, -5, 3], [28, -6, 2, 2], [38, -5, 2, 4], [44, 2, -5, 3]
+    ]
+  },
+  'sec-friends-3': {
+    title: { en: 'Practice Page: Small Friend +3 = +5 - 2 - Page 23', id: 'Halaman Latihan: Kawan Kecil +3 = +5 - 2 - Halaman 23' },
+    formula: '+3 = +5 - 2',
+    questions: [
+      [1, 1, 3], [2, 1, 3], [3, 1, 3], [2, 2, 3], [1, 3, 3],
+      [9, -7, 3], [8, -5, 3], [8, -6, 3], [9, -6, 3], [9, -5, 3],
+      [40, 30, -70], [20, 30, 10], [40, 30, 20], [40, 30, -60], [70, -50, 30],
+      [30, 30, 10], [40, 30, -60], [30, 30, -50], [40, 30, -50], [30, 30, 30],
+      [5, 23, 1, -3], [8, -6, 63, 2], [15, -5, 3, 3], [4, 33, -6, 4], [8, -5, 13, 2],
+      [21, 3, 3, -7], [6, -5, 22, 3], [74, 3, -5, 3], [88, -6, 3, -5], [4, 3, 72, -9]
+    ]
+  },
+  'sec-friends-4': {
+    title: { en: 'Practice Page: Small Friend +4 = +5 - 1 - Page 24', id: 'Halaman Latihan: Kawan Kecil +4 = +5 - 1 - Halaman 24' },
+    formula: '+4 = +5 - 1',
+    questions: [
+      [2, 4, 2], [1, 4, 1], [4, 4, 1], [3, 4, 2], [7, -5, 4],
+      [6, -5, 4], [8, -5, 4], [9, -5, 4], [1, 4, 3], [4, -3, 4],
+      [2, -1, 4], [9, -6, 4], [2, 2, 4], [4, 4, -6], [2, 4, 1],
+      [9, -8, 4], [4, 4, -5], [2, 4, -1], [1, 4, -5], [2, 3, 4],
+      [21, 4, 3, -7], [4, 4, -5, 16], [29, -6, 4, 2], [32, 4, -1, 4], [45, 3, -6, 4],
+      [2, 4, 63, -6], [59, -6, 4, -2], [18, -5, 4, -2], [22, 4, -1, 3], [34, 4, -7, 1]
+    ]
+  },
+  'sec-revision': {
+    title: { en: 'Master Revision (8 Minutes) - Page 25', id: 'Pengulangan Utama (8 Menit) - Halaman 25' },
+    formula: 'All Rules Revision',
+    questions: [
+      [2, 2, 2, -1], [3, 1, 4, -5], [2, 3, 2, 1], [6, -5, 1, 3], [8, -5, 2, 2],
+      [1, 6, -5, 3], [3, 3, 3, -4], [4, -2, 3, 1], [3, -1, 3, 4], [4, -1, 2, 2],
+      [20, 30, 20, -60], [70, -50, 30, 10], [10, 10, 30, 40], [80, -50, 20, 20], [20, 20, 20, -10],
+      [40, -20, 30, 30], [90, -50, 30, 10], [20, 10, 30, -10], [20, 20, 30, 20], [40, 20, -50, 30],
+      [12, 3, 4, -1], [44, 3, -5, 3], [42, 2, 2, -1], [32, 3, 4, -7], [26, -5, 3, 3],
+      [64, 2, -1, 3], [27, -5, 3, -5], [53, 2, 1, 2], [77, -5, 3, 1], [94, 3, -2, 1]
+    ]
+  },
+  'sec-test-paper': {
+    title: { en: 'Level-1 Final Test Paper (200 MM) - Page 26', id: 'Ujian Akhir Level-1 (200 Nilai) - Halaman 26' },
+    formula: 'Final Exam (12 Min)',
+    questions: [
+      [1, 2, 1], [3, 3, 2], [8, 1, -9], [9, -7, 6], [4, 5, -8],
+      [6, 3, -7], [8, -7, 1], [3, 6, -5], [4, 5, -8], [2, 7, -8],
+      [70, 20, -80], [70, -50, 70], [90, -70, 60], [70, -60, 50], [90, -30, -10],
+      [20, 70, -60], [30, 30, -20], [40, 10, 30], [30, 20, -50], [30, 40, -60],
+      [19, -6, 4, 2], [4, -3, 14, 3], [26, -5, 4, 2], [9, -7, 24, 3], [36, -5, 7, -2],
+      [2, 14, 1, -5], [9, -6, 13, 2], [28, -7, 4, 2], [3, -1, 14, 2], [14, 2, 3, -7]
+    ]
+  }
+};
+
+/* =========================================================================
+   1-BY-1 CHALLENGE ENGINE (SIDE-BY-SIDE WITH 10s TIMER & CROWN ANIMATION)
+   ========================================================================= */
+
+let activeLessonKey = 'sec-bead-count-1';
+let activeQuestionIndex = 0;
+let challengeTimerInterval = null;
+let challengeTimerSeconds = 10;
+
+function loadLesson(lessonKey) {
+  activeLessonKey = lessonKey;
+  activeQuestionIndex = 0;
+
+  document.querySelectorAll('.lesson-card-item').forEach(card => {
+    card.classList.remove('active');
+  });
+  document.querySelectorAll('.extra-tab-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.getAttribute('onclick').includes(lessonKey));
+  });
+
+  if (lessonKey === 'sec-tool-intro' || lessonKey === 'sec-finger-tech') {
+    renderStaticLesson(lessonKey);
+    return;
+  }
+
+  if (lessonKey === 'sec-speed-writing') {
+    renderSpeedWritingArena();
+    return;
+  }
+
+  if (lessonKey === 'sec-bead-count-1' || lessonKey === 'sec-bead-count-2') {
+    renderBeadLessonArena(lessonKey);
+    return;
+  }
+
+  if (lessonKey === 'sec-bead-draw') {
+    renderBeadLessonArena(lessonKey);
+    return;
+  }
+
+  renderActiveChallenge();
+}
+
+function start10SecChallengeTimer() {
+  if (challengeTimerInterval) clearInterval(challengeTimerInterval);
+  challengeTimerSeconds = 10;
+  updateTimerDisplay();
+
+  challengeTimerInterval = setInterval(() => {
+    challengeTimerSeconds--;
+    if (challengeTimerSeconds <= 0) {
+      challengeTimerSeconds = 0;
+      clearInterval(challengeTimerInterval);
+    }
+    updateTimerDisplay();
+  }, 1000);
+}
+
+function updateTimerDisplay() {
+  const badge = document.getElementById('challenge-speed-badge');
+  const secEl = document.getElementById('challenge-timer-sec');
+  if (secEl) secEl.innerText = challengeTimerSeconds;
+
+  if (badge) {
+    if (challengeTimerSeconds > 0) {
+      badge.classList.add('fast');
+      badge.style.borderColor = '#ff4081';
+      badge.style.color = '#d81b60';
+    } else {
+      badge.classList.remove('fast');
+      badge.style.borderColor = '#ffccd9';
+      badge.style.color = '#a0aec0';
+    }
+  }
+}
+
+function renderActiveChallenge() {
+  const arena = document.getElementById('arena-main-wrapper');
+  if (arena) arena.style.display = 'grid';
+
+  const gridView = document.getElementById('all-questions-grid-view');
+  if (gridView) gridView.style.display = 'none';
+
+  const cardContainer = document.getElementById('active-challenge-card');
+  if (!cardContainer) return;
+
+  const lessonData = LESSON_PROBLEMS[activeLessonKey];
+  if (!lessonData) return;
+
+  const totalQs = lessonData.questions.length;
+  const currentNums = lessonData.questions[activeQuestionIndex];
+  const correctSum = currentNums.reduce((a, b) => a + b, 0);
+
+  // Star trail items: Golden Star ⭐ if solved, pink dot ● otherwise
+  let dotsHtml = '';
+  for (let i = 0; i < totalQs; i++) {
+    const isSolved = lessonSolvedMap[`${activeLessonKey}_${i}`];
+    const isCurrent = i === activeQuestionIndex;
+    if (isSolved) {
+      dotsHtml += `<span class="star-trail-item solved" title="Question ${i+1}: Solved">⭐</span>`;
+    } else if (isCurrent) {
+      dotsHtml += `<span class="star-trail-item current" title="Question ${i+1}: Current">●</span>`;
+    } else {
+      dotsHtml += `<span class="star-trail-item" title="Question ${i+1}">●</span>`;
+    }
+  }
+
+  cardContainer.innerHTML = `
+    <div class="challenge-nav-bar">
+      <span class="q-progress-badge">
+        ✨ ${currentLang === 'id' ? 'Soal' : 'Question'} ${activeQuestionIndex + 1} / ${totalQs} ✨
+      </span>
+
+      <span class="speed-bonus-badge fast" id="challenge-speed-badge" title="Answer within 10s for Golden Crown!">
+        ⏱️ 👑 <span id="challenge-timer-sec">10</span>s
+      </span>
+    </div>
+
+    <!-- Pink dots that turn into golden stars when solved! -->
+    <div class="star-trail-dots">
+      ${dotsHtml}
+    </div>
+
+    <!-- Giant Sum Stack -->
+    <div class="giant-sum-box">
+      <div class="giant-nums-list">
+        ${currentNums.map((n, i) => `
+          <span class="${n < 0 ? 'minus' : ''}">${i > 0 && n > 0 ? '+' + n : n}</span>
+        `).join('')}
+      </div>
+      <div class="giant-sum-divider"></div>
+      <input type="number" id="arena-answer-input" class="giant-answer-input" placeholder="?"
+        onkeydown="handleAnswerEnter(event, ${correctSum})">
+    </div>
+
+    <!-- Actions -->
+    <div class="challenge-action-buttons">
+      <button class="btn-submit-arena" onclick="checkCurrentArenaAnswer(${correctSum})">
+        ⭐ ${I18N[currentLang].checkAnswer}
+      </button>
+
+      <button class="btn-use-abacus" onclick="useCurrentAbacusValue(${correctSum})">
+        🧮 ${I18N[currentLang].useAbacusAns} (<span id="btn-abacus-val-peek">0</span>)
+      </button>
+
+      <button class="btn-demo-abacus-lg" onclick="animateAbacusSteps([${currentNums.join(',')}])">
+        🪄 ${I18N[currentLang].demoAbacus}
+      </button>
+    </div>
+
+    <div class="challenge-prev-next">
+      <button class="btn-nav-mini" onclick="navigateChallenge(-1)" ${activeQuestionIndex === 0 ? 'disabled style="opacity:0.4"' : ''}>
+        ${I18N[currentLang].prevChallenge}
+      </button>
+      <button class="btn-nav-mini" onclick="toggleAllQuestionsGrid()">
+        ${I18N[currentLang].viewAllGrid}
+      </button>
+      <button class="btn-nav-mini" onclick="navigateChallenge(1)" ${activeQuestionIndex === totalQs - 1 ? 'disabled style="opacity:0.4"' : ''}>
+        ${I18N[currentLang].nextChallenge}
+      </button>
+    </div>
+  `;
+
+  // Start 10s countdown for every challenge!
+  start10SecChallengeTimer();
+
+  // Focus answer input
+  setTimeout(() => {
+    const inp = document.getElementById('arena-answer-input');
+    if (inp) inp.focus();
+  }, 100);
+
+  updateAbacusPeekButton();
+}
+
+function handleAnswerEnter(e, correctSum) {
+  if (e.key === 'Enter') {
+    checkCurrentArenaAnswer(correctSum);
+  }
+}
+
+function updateAbacusPeekButton() {
+  const peek = document.getElementById('btn-abacus-val-peek');
+  if (peek) {
+    peek.innerText = getCurrentSorobanTotal();
+  }
+}
+
+function useCurrentAbacusValue(correctSum) {
+  const abacusVal = getCurrentSorobanTotal();
+  const inp = document.getElementById('arena-answer-input');
+  if (inp) {
+    inp.value = abacusVal;
+    checkCurrentArenaAnswer(correctSum);
+  }
+}
+
+function checkCurrentArenaAnswer(correctSum) {
+  const inp = document.getElementById('arena-answer-input');
+  if (!inp) return;
+
+  const userVal = parseInt(inp.value, 10);
+  if (userVal === correctSum) {
+    inp.classList.add('correct');
+    lessonSolvedMap[`${activeLessonKey}_${activeQuestionIndex}`] = true;
+    totalCorrect++;
+    totalQuestions++;
+    totalStars += 1;
+
+    // Requirement 2: Cancel pending bead speech immediately so ONLY praise message is heard!
+    clearTimeout(speechDebounceTimer);
+    window.speechSynthesis.cancel();
+
+    // Requirement 5: If answered within 10s timer, show Crown Animation and say "Outstanding Freya!"
+    const within10Sec = (challengeTimerSeconds > 0);
+    if (within10Sec) {
+      totalCrowns++;
+      playSound('crown');
+      showCelebrationOverlay(
+        '👑',
+        currentLang === 'id' ? 'Luar biasa Freya!' : 'Outstanding Freya!',
+        currentLang === 'id' ? '✨ Mahkota Emas & Bintang! ✨' : '✨ Golden Crown & Star Won! ✨'
+      );
+      speakPraiseCustom(currentLang === 'id' ? "Luar biasa Freya!" : "Outstanding Freya!");
+    } else {
+      playSound('star');
+      const praisesList = [
+        currentLang === 'id' ? "Bagus sekali Freya!" : "Well done Freya!",
+        currentLang === 'id' ? "Kerja bagus Freya!" : "Good job Freya!",
+        currentLang === 'id' ? "Pintar sekali Freya!" : "Excellent Freya!"
+      ];
+      const p = praisesList[Math.floor(Math.random() * praisesList.length)];
+      showCelebrationOverlay('⭐', p, '+1 Golden Star!');
+      speakPraiseCustom(p);
+    }
+
+    savePersistentStats();
+    updateStatsUI();
+    launchConfetti();
+
+    // Auto-advance to next challenge after celebration pause
+    setTimeout(() => {
+      const lessonData = LESSON_PROBLEMS[activeLessonKey];
+      if (activeQuestionIndex < lessonData.questions.length - 1) {
+        activeQuestionIndex++;
+        clearSoroban(false); // Do NOT speak "zero"
+        renderActiveChallenge();
+      } else {
+        // Requirement 6: Successive completion of all answers shows graduation certificate with crown & music!
+        triggerGraduationCeremony();
+      }
+    }, 1400);
+
+  } else {
+    inp.style.background = '#fed7d7';
+    inp.style.borderColor = '#e53e3e';
+    playSound('bead');
+    setTimeout(() => {
+      inp.style.background = '#fff8fa';
+      inp.style.borderColor = '#ff85ad';
+    }, 600);
+  }
+}
+
+function showCelebrationOverlay(icon, title, sub) {
+  const popup = document.getElementById('celebration-popup');
+  const crownEl = document.getElementById('celebration-crown');
+  const msgEl = document.getElementById('celebration-msg');
+  const subEl = document.getElementById('celebration-sub');
+
+  if (popup && crownEl && msgEl && subEl) {
+    crownEl.innerText = icon;
+    msgEl.innerText = title;
+    subEl.innerText = sub;
+    popup.classList.add('show');
+    setTimeout(() => {
+      popup.classList.remove('show');
+    }, 1250);
+  }
+}
+
+// Requirement 6: Graduation Ceremony with crown and victory music
+function triggerGraduationCeremony() {
+  launchConfetti();
+  playSound('fanfare');
+  const gradSpeech = currentLang === 'id'
+    ? "Selamat Freya! Kamu telah berhasil lulus Sempoa Level 1A dengan mahkota emas!"
+    : "Congratulations Freya! You have successfully graduated Level 1A with a golden crown!";
+  speakPraiseCustom(gradSpeech);
+  totalStars += 15;
+  totalCrowns += 2;
+  savePersistentStats();
+  updateStatsUI();
+
+  setTimeout(openCertModal, 1000);
+}
+
+function navigateChallenge(delta) {
+  const lessonData = LESSON_PROBLEMS[activeLessonKey];
+  if (!lessonData) return;
+  const newIdx = activeQuestionIndex + delta;
+  if (newIdx >= 0 && newIdx < lessonData.questions.length) {
+    activeQuestionIndex = newIdx;
+    renderActiveChallenge();
+  }
+}
+
+function toggleAllQuestionsGrid() {
+  const gridView = document.getElementById('all-questions-grid-view');
+  if (!gridView) return;
+
+  if (gridView.style.display === 'none' || gridView.style.display === '') {
+    let cardsHtml = '';
+    const isBeadLesson = (activeLessonKey === 'sec-bead-count-1' || activeLessonKey === 'sec-bead-count-2');
+
+    if (isBeadLesson) {
+      const start = activeLessonKey === 'sec-bead-count-2' ? 31 : 1;
+      const end = activeLessonKey === 'sec-bead-count-2' ? 50 : 30;
+      let cardItems = [];
+      for (let n = start; n <= end; n++) {
+        const isSolved = lessonSolvedMap[`${activeLessonKey}_${n}`];
+        cardItems.push(`
+          <div class="problem-card ${isSolved ? 'solved' : ''}" onclick="jumpToBeadCard(${n}); toggleAllQuestionsGrid();" style="cursor: pointer; text-align: center;">
+            <span class="q-number">Card #${n}</span>
+            <div style="font-size: 1.8rem; font-weight: 900; color: #ff4081; margin: 8px 0;">
+              ${n}
+            </div>
+            <button class="btn-step-abacus" style="font-size: 0.72rem;">${isSolved ? '✓ Solved ⭐' : 'Jump'}</button>
+          </div>
+        `);
+      }
+      cardsHtml = cardItems.join('');
+    } else {
+      const lessonData = LESSON_PROBLEMS[activeLessonKey];
+      if (!lessonData) return;
+
+      cardsHtml = lessonData.questions.map((nums, idx) => {
+        const isSolved = lessonSolvedMap[`${activeLessonKey}_${idx}`];
+        return `
+          <div class="problem-card ${isSolved ? 'solved' : ''}" onclick="jumpToChallenge(${idx})">
+            <span class="q-number">Q${idx+1}</span>
+            <div class="q-nums-stack">
+              ${nums.map((n, i) => `<span>${i > 0 && n > 0 ? '+' + n : n}</span>`).join('')}
+            </div>
+            <button class="btn-step-abacus" style="font-size: 0.72rem;">${isSolved ? '✓ Solved ⭐' : 'Jump'}</button>
+          </div>
+        `;
+      }).join('');
+    }
+
+    gridView.innerHTML = `
+      <div style="background: white; border: 3px solid var(--border-pink); border-radius: 20px; padding: 20px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+          <h3 style="color: #d81b60;">📋 ${currentLang === 'id' ? 'Semua Soal di Pelajaran Ini' : 'All Questions in this Lesson'}</h3>
+          <button class="btn-pink-pill btn-pink-hint" onclick="toggleAllQuestionsGrid()">✖️ ${I18N[currentLang].hideAllGrid}</button>
+        </div>
+        <div class="grid-problems">
+          ${cardsHtml}
+        </div>
+      </div>
+    `;
+    gridView.style.display = 'block';
+    gridView.scrollIntoView({ behavior: 'smooth' });
+  } else {
+    gridView.style.display = 'none';
+  }
+}
+
+function jumpToChallenge(idx) {
+  activeQuestionIndex = idx;
+  const gridView = document.getElementById('all-questions-grid-view');
+  if (gridView) gridView.style.display = 'none';
+  renderActiveChallenge();
+}
+
+function animateAbacusSteps(nums) {
+  clearSoroban();
+  let step = 0;
+  let running = 0;
+
+  function doNext() {
+    if (step >= nums.length) {
+      speakPraiseCustom(currentLang === 'id' ? "Selesai diperagakan!" : "Step solution complete!");
+      return;
+    }
+    running += nums[step];
+    setSorobanNumber(running);
+    step++;
+    setTimeout(doNext, 700);
+  }
+  doNext();
+}
+
+/* =========================================================================
+   REQUIREMENT 4: SPEED WRITING WITH LEFT & RIGHT HAND ALTERNATING,
+   16-SECOND COUNTDOWN TIMER, RHYTHMIC MUSIC, AND APPLE PENCIL DRAWING PAD!
+   ========================================================================= */
+
+let speedHandMode = 'left'; // 'left' or 'right'
+let speedTimer16 = 16;
+let speedTimerInterval = null;
+let speedMusicInterval = null;
+let isDrawing = false;
+let canvasCtx = null;
+
+function renderSpeedWritingArena() {
+  const cardContainer = document.getElementById('active-challenge-card');
+  if (!cardContainer) return;
+
+  const handTitle = speedHandMode === 'left'
+    ? (currentLang === 'id' ? '🖐️ Latihan Tangan KIRI (16 Detik)' : '🖐️ LEFT HAND TURN (16s Timer)')
+    : (currentLang === 'id' ? '🖐️ Latihan Tangan KANAN (16 Detik)' : '🖐️ RIGHT HAND TURN (16s Timer)');
+
+  cardContainer.innerHTML = `
+    <div class="writing-pad-container">
+      <div class="hand-indicator-banner">
+        ${handTitle}
+      </div>
+
+      <div style="display: flex; align-items: center; gap: 20px;">
+        <div class="timer-16s-ring" id="speed-16s-display">16</div>
+        <div style="text-align: left;">
+          <div style="font-weight: 900; color: #d81b60; font-size: 1.1rem;">
+            ${currentLang === 'id' ? 'Gunakan Apple Pencil / Stylus' : 'Use Apple Pencil or Finger'}
+          </div>
+          <div style="font-size: 0.85rem; color: #718096;">
+            ${currentLang === 'id' ? 'Tulis angka 1 2 3 4 5 6 7 8 9 0 di pad bawah!' : 'Write 1 2 3 4 5 6 7 8 9 0 on the pad below!'}
+          </div>
+        </div>
+      </div>
+
+      <!-- Digits Reference Bar -->
+      <div style="display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; font-size: 1.3rem; font-weight: 900; color: #ff4081; background: #fff0f5; padding: 6px 14px; border-radius: 14px; border: 2px solid #ffccd9;">
+        <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>0</span>
+      </div>
+
+      <!-- Stylus / Apple Pencil Canvas with Dotted Line Rectangles for 1 to 0 -->
+      <div class="canvas-sheet-wrap" id="canvas-sheet-wrap">
+        <div class="dotted-boxes-grid">
+          ${[1, 2, 3, 4, 5, 6, 7, 8, 9, 0].map(d => `
+            <div class="dotted-digit-box">
+              <span class="box-digit-watermark">${d}</span>
+              <div class="box-guide-line"></div>
+            </div>
+          `).join('')}
+        </div>
+        <canvas id="stylus-canvas"></canvas>
+      </div>
+
+      <div style="display: flex; gap: 10px; width: 100%; max-width: 480px; justify-content: center; flex-wrap: wrap;">
+        <button class="btn-pink-pill btn-pink-reset" onclick="clearStylusCanvas()">
+          🧹 ${currentLang === 'id' ? 'Hapus Tulisan' : 'Clear Pad'}
+        </button>
+        <button class="btn-submit-arena" id="btn-start-speed-session" onclick="start16SecSpeedSession()" style="padding: 10px 16px; font-size: 0.95rem;">
+          ▶️ ${currentLang === 'id' ? 'Mulai 16 Detik!' : 'Start 16s Timer & Music!'}
+        </button>
+        <button class="btn-submit-arena" id="btn-finish-speed-tab" onclick="finishSpeedWritingSession()" style="padding: 10px 18px; font-size: 1rem; background: linear-gradient(135deg, #ff4081 0%, #d81b60 100%); box-shadow: 0 4px 14px rgba(216, 27, 96, 0.4);">
+          🏁 ${currentLang === 'id' ? 'Selesai Menulis!' : 'Finish Writing!'}
+        </button>
+        <button class="btn-nav-mini" onclick="toggleSpeedHand()" style="font-size: 0.9rem;">
+          🔄 ${speedHandMode === 'left' ? 'Switch Right' : 'Switch Left'}
+        </button>
+      </div>
+      <div id="speed-writing-status" style="font-size: 0.9rem; font-weight: 700; color: #b83280; margin-top: 6px; min-height: 22px;"></div>
+    </div>
+  `;
+
+  initStylusCanvas();
+}
+
+function finishSpeedWritingSession() {
+  if (speedTimerInterval) clearInterval(speedTimerInterval);
+  if (speedMusicInterval) clearInterval(speedMusicInterval);
+
+  // Requirement 3: ONLY when pressing Finish tab does the Outstanding Freya message and crown appear!
+  totalStars += 3;
+  totalCrowns += 1;
+  savePersistentStats();
+  updateStatsUI();
+  playSound('crown');
+  launchConfetti();
+
+  const nextHand = speedHandMode === 'left' ? 'right' : 'left';
+  const msg = currentLang === 'id'
+    ? `Luar biasa Freya! Sekarang ganti ke tangan ${nextHand === 'right' ? 'KANAN' : 'KIRI'}!`
+    : `Outstanding Freya! Great ${speedHandMode} hand practice! Now get ready for ${nextHand} hand!`;
+
+  showCelebrationOverlay('👑', 'Outstanding Freya!', `Practice Completed! Switched to ${nextHand.toUpperCase()} Hand!`);
+  speakPraiseCustom(msg);
+
+  setTimeout(() => {
+    speedHandMode = nextHand;
+    renderSpeedWritingArena();
+  }, 1800);
+}
+
+function toggleSpeedHand() {
+  speedHandMode = speedHandMode === 'left' ? 'right' : 'left';
+  renderSpeedWritingArena();
+}
+
+function initStylusCanvas() {
+  const canvas = document.getElementById('stylus-canvas');
+  if (!canvas) return;
+
+  const wrap = canvas.parentElement;
+  canvas.width = wrap.clientWidth - 20;
+  canvas.height = Math.max(204, wrap.clientHeight - 20);
+  canvasCtx = canvas.getContext('2d');
+  canvasCtx.lineCap = 'round';
+  canvasCtx.lineJoin = 'round';
+  canvasCtx.strokeStyle = '#ff4081';
+  canvasCtx.lineWidth = 4;
+
+  let lastX = 0, lastY = 0;
+
+  function getPos(e) {
+    const rect = canvas.getBoundingClientRect();
+    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+    return {
+      x: clientX - rect.left,
+      y: clientY - rect.top
+    };
+  }
+
+  function startDraw(e) {
+    e.preventDefault();
+    isDrawing = true;
+    const pos = getPos(e);
+    lastX = pos.x;
+    lastY = pos.y;
+    // Pressure sensitivity for Apple Pencil
+    if (e.pressure && e.pressure > 0) {
+      canvasCtx.lineWidth = Math.max(2, e.pressure * 8);
+    }
+  }
+
+  function drawMove(e) {
+    if (!isDrawing) return;
+    e.preventDefault();
+    const pos = getPos(e);
+    canvasCtx.beginPath();
+    canvasCtx.moveTo(lastX, lastY);
+    canvasCtx.lineTo(pos.x, pos.y);
+    if (e.pressure && e.pressure > 0) {
+      canvasCtx.lineWidth = Math.max(2, e.pressure * 8);
+    }
+    canvasCtx.stroke();
+    lastX = pos.x;
+    lastY = pos.y;
+  }
+
+  function stopDraw(e) {
+    isDrawing = false;
+  }
+
+  // Pointer events (optimal for Apple Pencil & stylus)
+  canvas.addEventListener('pointerdown', startDraw);
+  canvas.addEventListener('pointermove', drawMove);
+  canvas.addEventListener('pointerup', stopDraw);
+  canvas.addEventListener('pointercancel', stopDraw);
+
+  // Touch fallbacks
+  canvas.addEventListener('touchstart', startDraw);
+  canvas.addEventListener('touchmove', drawMove);
+  canvas.addEventListener('touchend', stopDraw);
+}
+
+function clearStylusCanvas() {
+  const canvas = document.getElementById('stylus-canvas');
+  if (canvas && canvasCtx) {
+    canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
+  }
+}
+
+// 16s Countdown timer with rhythmic background music
+function start16SecSpeedSession() {
+  if (speedTimerInterval) clearInterval(speedTimerInterval);
+  if (speedMusicInterval) clearInterval(speedMusicInterval);
+
+  speedTimer16 = 16;
+  const disp = document.getElementById('speed-16s-display');
+  if (disp) disp.innerText = speedTimer16;
+
+  // Background rhythmic music notes during the 16 seconds
+  const rhythmNotes = [523.25, 659.25, 783.99, 659.25];
+  let noteIdx = 0;
+  speedMusicInterval = setInterval(() => {
+    if (soundEnabled && audioCtx) {
+      const now = audioCtx.currentTime;
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(rhythmNotes[noteIdx % rhythmNotes.length], now);
+      gain.gain.setValueAtTime(0.09, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start(now);
+      osc.stop(now + 0.15);
+      noteIdx++;
+    }
+  }, 400);
+
+  const statusEl = document.getElementById('speed-writing-status');
+  if (statusEl) statusEl.innerText = currentLang === 'id' ? '⏳ Menulis sekarang! Setelah selesai, tekan tombol "🏁 Selesai Menulis"!' : '⏳ Writing in progress! When finished, press "🏁 Finish Writing" tab!';
+
+  speedTimerInterval = setInterval(() => {
+    speedTimer16--;
+    if (disp) disp.innerText = speedTimer16;
+    playSound('tick');
+
+    if (speedTimer16 <= 0) {
+      clearInterval(speedTimerInterval);
+      clearInterval(speedMusicInterval);
+
+      // Timer completed: Prompt Freya to press Finish Writing tab!
+      if (statusEl) {
+        statusEl.innerHTML = `⏰ <strong>${currentLang === 'id' ? 'Waktu habis! Tekan tombol "🏁 Selesai Menulis" sekarang!' : "Time's up! Press '🏁 Finish Writing' tab now!"}</strong>`;
+      }
+      const finishBtn = document.getElementById('btn-finish-speed-tab');
+      if (finishBtn) {
+        finishBtn.style.animation = 'pulse 1s infinite alternate';
+        finishBtn.focus();
+      }
+    }
+  }, 1000);
+}
+
+/* =========================================================================
+   BEAD LESSONS & STATIC SECTIONS
+   ========================================================================= */
+
+let beadCountCurrentNum = 1;
+
+function renderBeadLessonArena(lessonKey) {
+  const cardContainer = document.getElementById('active-challenge-card');
+  if (!cardContainer) return;
+
+  const start = lessonKey === 'sec-bead-count-2' ? 31 : 1;
+  const end = lessonKey === 'sec-bead-count-2' ? 50 : 30;
+
+  if (lessonKey === 'sec-bead-draw') {
+    cardContainer.innerHTML = `
+      <div style="width: 100%;">
+        <h3 style="color: #d81b60; margin-bottom: 8px;">✏️ ${currentLang === 'id' ? 'Pasang Manik di Sempoa!' : 'Build Beads on the Abacus!'}</h3>
+        <p style="font-size: 0.95rem; color: #4a5568; margin-bottom: 14px;">
+          ${currentLang === 'id' ? 'Klik angka untuk memasangnya langsung di sempoa sebelah!' : 'Click any number below to set it directly on the abacus beside!'}
+        </p>
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(70px, 1fr)); gap: 8px; max-height: 380px; overflow-y: auto;">
+          ${[27, 45, 81, 66, 39, 13, 22, 74, 92, 53, 71, 80, 29, 50, 55, 78, 63, 47, 36, 99, 84, 57, 11, 10, 35, 80, 76, 44, 22, 19].map((n, i) => `
+            <button style="background: white; border: 2px solid #ffccd9; border-radius: 12px; padding: 10px 4px; font-size: 1.25rem; font-weight: 900; color: #ff4081; cursor: pointer;"
+              onclick="setSorobanNumber(${n}); totalStars++; savePersistentStats(); updateStatsUI(); showCelebrationOverlay('⭐', 'Good job Freya!', '+1 Golden Star'); speakPraiseCustom('Good job Freya!');">
+              ${n}
+            </button>
+          `).join('')}
+        </div>
+      </div>
+    `;
+    return;
+  }
+
+  if (beadCountCurrentNum < start || beadCountCurrentNum > end) beadCountCurrentNum = start;
+
+  const tens = Math.floor(beadCountCurrentNum / 10);
+  const ones = beadCountCurrentNum % 10;
+
+  // Requirement 1: Build Star Trail Dots (Pink dots transitioning to Golden Stars for Lesson 1!)
+  let dotsHtml = '';
+  for (let num = start; num <= end; num++) {
+    const isSolved = lessonSolvedMap[`${lessonKey}_${num}`];
+    if (isSolved) {
+      dotsHtml += `<span class="star-trail-item solved" title="Card ${num}: Solved" onclick="jumpToBeadCard(${num})">⭐</span>`;
+    } else if (num === beadCountCurrentNum) {
+      dotsHtml += `<span class="star-trail-item current" title="Card ${num}: Current" onclick="jumpToBeadCard(${num})">●</span>`;
+    } else {
+      dotsHtml += `<span class="star-trail-item" title="Card ${num}" onclick="jumpToBeadCard(${num})">●</span>`;
+    }
+  }
+
+  start10SecChallengeTimer();
+
+  cardContainer.innerHTML = `
+    <div class="challenge-nav-bar">
+      <span class="q-progress-badge">
+        🎀 Bead Card #${beadCountCurrentNum} (${start} - ${end})
+      </span>
+      <div class="timer-speed-badge" id="challenge-speed-badge" title="Solve within 10s for Crown!">
+        ⏱️ <span id="challenge-timer-sec">${challengeTimerSeconds}</span>s
+      </div>
+    </div>
+
+    <!-- Requirement 1: Star Trail Dots in Lesson 1 -->
+    <div class="star-trail-dots" style="max-width: 340px;">
+      ${dotsHtml}
+    </div>
+
+    <div style="margin: 12px 0; display: flex; flex-direction: column; align-items: center;">
+      <!-- Authentic Freya's Soroban Abacus Frame for Lesson 1 Graphic -->
+      <div class="soroban-frame" style="padding: 6px 14px; border-width: 8px; box-shadow: inset 0 2px 6px rgba(255,255,255,0.1), 0 8px 24px rgba(0,0,0,0.35); border-radius: 14px; user-select: none;">
+        <div class="soroban-inner" style="gap: 14px; padding: 4px 10px;">
+          <!-- Left Rod: 10s (Tens - Green Cadbury Gems) -->
+          <div class="soroban-rod-col" style="width: 48px;">
+            <div class="rod-wire"></div>
+            <div class="upper-deck">
+              <div class="bead bead-green ${tens >= 5 ? 'active' : ''}" style="cursor: default;" title="Tens upper bead (${tens >= 5 ? '50 active' : '0'})"></div>
+            </div>
+            <div class="soroban-beam"></div>
+            <div class="lower-deck">
+              ${[1, 2, 3, 4].map(b => `<div class="bead bead-green ${b <= (tens % 5) ? 'active' : ''}" style="cursor: default;" title="Tens lower #${b}"></div>`).join('')}
+            </div>
+          </div>
+
+          <!-- Right Rod: 1s (Unit - Yellow Cadbury Gems with Authentic Beam Unit Dot) -->
+          <div class="soroban-rod-col" style="width: 48px;">
+            <div class="rod-wire"></div>
+            <div class="upper-deck">
+              <div class="bead bead-yellow ${ones >= 5 ? 'active' : ''}" style="cursor: default;" title="Ones upper bead (${ones >= 5 ? '5 active' : '0'})"></div>
+            </div>
+            <div class="soroban-beam">
+              <div class="beam-dot"></div>
+            </div>
+            <div class="lower-deck">
+              ${[1, 2, 3, 4].map(b => `<div class="bead bead-yellow ${b <= (ones % 5) ? 'active' : ''}" style="cursor: default;" title="Ones lower #${b}"></div>`).join('')}
+            </div>
+          </div>
+        </div>
+
+        <!-- Matching Rod Label Tags underneath (Left Green, Right Yellow) -->
+        <div style="display: flex; justify-content: center; gap: 14px; margin-top: 6px;">
+          <div class="rod-name-tag" style="width: 48px; text-align: center; color: #00c853; font-weight: 900;">10s</div>
+          <div class="rod-name-tag" style="width: 48px; text-align: center; color: #ffd600; font-weight: 900;">1s •</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="font-size: 1.15rem; font-weight: 800; color: #d81b60; margin-bottom: 10px;">
+      ${currentLang === 'id' ? 'Berapa nilai manik ini?' : 'What is the value of these beads?'}
+    </div>
+
+    <input type="number" id="bead-answer-input" class="giant-answer-input" placeholder="?"
+      onkeydown="if(event.key === 'Enter') checkBeadCountAnswer(${beadCountCurrentNum}, ${start}, ${end})">
+
+    <div class="challenge-action-buttons" style="margin-top: 14px;">
+      <button class="btn-submit-arena" onclick="checkBeadCountAnswer(${beadCountCurrentNum}, ${start}, ${end})">
+        ⭐ ${I18N[currentLang].checkAnswer}
+      </button>
+      <button class="btn-demo-abacus-lg" onclick="demoBeadCardAbacus(${beadCountCurrentNum})">
+        🪄 ${I18N[currentLang].demoAbacus}
+      </button>
+      <button class="btn-use-abacus" onclick="useCurrentAbacusValueForBead(${beadCountCurrentNum}, ${start}, ${end})">
+        🧮 ${I18N[currentLang].useAbacusAns} (<span id="btn-abacus-val-peek-bead">0</span>)
+      </button>
+    </div>
+
+    <div class="challenge-prev-next">
+      <button class="btn-nav-mini" onclick="beadCountCurrentNum = Math.max(${start}, beadCountCurrentNum - 1); renderBeadLessonArena('${lessonKey}')" ${beadCountCurrentNum === start ? 'disabled style="opacity:0.4"' : ''}>
+        ${I18N[currentLang].prevChallenge}
+      </button>
+      <button class="btn-nav-mini" onclick="toggleAllQuestionsGrid()">
+        ${I18N[currentLang].viewAllGrid}
+      </button>
+      <button class="btn-nav-mini" onclick="beadCountCurrentNum = Math.min(${end}, beadCountCurrentNum + 1); renderBeadLessonArena('${lessonKey}')" ${beadCountCurrentNum === end ? 'disabled style="opacity:0.4"' : ''}>
+        ${I18N[currentLang].nextChallenge}
+      </button>
+    </div>
+  `;
+
+  setTimeout(() => {
+    const peek = document.getElementById('btn-abacus-val-peek-bead');
+    if (peek) peek.innerText = getCurrentSorobanTotal();
+    const inp = document.getElementById('bead-answer-input');
+    if (inp) inp.focus();
+  }, 100);
+}
+
+function demoBeadCardAbacus(num) {
+  clearSoroban(false);
+  setTimeout(() => {
+    setSorobanNumber(num);
+    playSound('crown');
+    speakPraiseCustom(currentLang === 'id' ? `Ini adalah nilai ${num} di sempoa!` : `Here is number ${num} matching on the abacus!`);
+  }, 250);
+}
+
+function jumpToBeadCard(num) {
+  beadCountCurrentNum = num;
+  clearSoroban(false);
+  renderBeadLessonArena(activeLessonKey);
+}
+
+function useCurrentAbacusValueForBead(target, start, end) {
+  const abacusVal = getCurrentSorobanTotal();
+  const inp = document.getElementById('bead-answer-input');
+  if (inp) {
+    inp.value = abacusVal;
+    checkBeadCountAnswer(target, start, end);
+  }
+}
+
+function checkBeadCountAnswer(target, start, end) {
+  const inp = document.getElementById('bead-answer-input');
+  if (!inp) return;
+  const userVal = parseInt(inp.value, 10);
+  if (userVal === target) {
+    inp.classList.add('correct');
+    // Requirement 1: Mark this card solved in persistent lessonSolvedMap
+    lessonSolvedMap[`${activeLessonKey}_${beadCountCurrentNum}`] = true;
+    totalCorrect++;
+    totalQuestions++;
+    totalStars += 1;
+
+    // Requirement 2: Cancel pending bead speech immediately so ONLY praise message is heard!
+    clearTimeout(speechDebounceTimer);
+    window.speechSynthesis.cancel();
+
+    // Requirement 5: Check 10-second timer for crown
+    const within10Sec = (challengeTimerSeconds > 0);
+    if (within10Sec) {
+      totalCrowns++;
+      playSound('crown');
+      showCelebrationOverlay(
+        '👑',
+        currentLang === 'id' ? 'Luar biasa Freya!' : 'Outstanding Freya!',
+        currentLang === 'id' ? '✨ Mahkota Emas & Bintang! ✨' : '✨ Golden Crown & Star Won! ✨'
+      );
+      speakPraiseCustom(currentLang === 'id' ? "Luar biasa Freya!" : "Outstanding Freya!");
+    } else {
+      playSound('star');
+      const praisesList = [
+        currentLang === 'id' ? "Bagus sekali Freya!" : "Well done Freya!",
+        currentLang === 'id' ? "Kerja bagus Freya!" : "Good job Freya!",
+        currentLang === 'id' ? "Pintar sekali Freya!" : "Excellent Freya!"
+      ];
+      const p = praisesList[Math.floor(Math.random() * praisesList.length)];
+      showCelebrationOverlay('⭐', p, '+1 Golden Star!');
+      speakPraiseCustom(p);
+    }
+
+    savePersistentStats();
+    updateStatsUI();
+    launchConfetti();
+
+    setTimeout(() => {
+      if (beadCountCurrentNum < end) {
+        beadCountCurrentNum++;
+        clearSoroban(false); // Do NOT speak "zero"
+        renderBeadLessonArena(activeLessonKey);
+      } else {
+        triggerGraduationCeremony();
+      }
+    }, 1400);
+  } else {
+    inp.style.background = '#fed7d7';
+    inp.style.borderColor = '#e53e3e';
+    playSound('bead');
+    setTimeout(() => {
+      inp.style.background = '#fff8fa';
+      inp.style.borderColor = '#ff85ad';
+    }, 600);
+  }
+}
+
+function renderStaticLesson(lessonKey) {
+  const cardContainer = document.getElementById('active-challenge-card');
+  if (!cardContainer) return;
+
+  if (lessonKey === 'sec-tool-intro') {
+    cardContainer.innerHTML = `
+      <div style="text-align: left; width: 100%;">
+        <h2 style="color: #d81b60; margin-bottom: 12px;">🧮 ${currentLang === 'id' ? 'Kenali Sempoamu!' : 'Meet Your Soroban!'}</h2>
+        <p style="line-height: 1.5; color: #4a5568; margin-bottom: 14px;">
+          ${currentLang === 'id' ? 'Di sebelah kanan ada sempoa pelangi Freya! Manik atas bernilai 5, manik bawah bernilai 1.' : 'On your right is Freya\'s rainbow Soroban! Upper beads = 5, lower beads = 1.'}
+        </p>
+        <button class="btn-submit-arena" onclick="setSorobanNumber(5); totalStars++; savePersistentStats(); updateStatsUI(); showCelebrationOverlay('⭐', 'Awesome Freya!', '+1 Star'); speakPraiseCustom('Awesome Freya!');">
+          ✨ Try Setting 5 on the Abacus!
+        </button>
+      </div>
+    `;
+  } else if (lessonKey === 'sec-finger-tech') {
+    cardContainer.innerHTML = `
+      <div style="text-align: left; width: 100%;">
+        <h2 style="color: #d81b60; margin-bottom: 12px;">🖐️ Finger Moves</h2>
+        <p style="line-height: 1.5; color: #4a5568; margin-bottom: 14px;">
+          • Right Thumb: Lower bead addition (+1, +2, +3, +4)<br>
+          • Right Index: Upper bead (+5 / -5) & lower subtraction (-1)<br>
+          • Pinch Move: 5 and lower beads together for 6, 7, 8, 9!
+        </p>
+        <button class="btn-submit-arena" onclick="setSorobanNumber(8); totalStars++; savePersistentStats(); updateStatsUI(); showCelebrationOverlay('⭐', 'Brilliant Freya!', '+1 Star'); speakPraiseCustom('Brilliant Freya!');">
+          ✨ Try Pinching 8 (5 + 3)!
+        </button>
+      </div>
+    `;
+  }
+}
+
+function openCertModal() {
+  document.getElementById('cert-modal').classList.add('open');
+}
+
+function closeCertModal() {
+  document.getElementById('cert-modal').classList.remove('open');
+}
+
+/* =========================================================================
+   INITIALIZATION
+   ========================================================================= */
+
+document.addEventListener('DOMContentLoaded', () => {
+  setLanguage(currentLang);
+  initRods(5);
+  updateStatsUI();
+
+  // Requirement 1: Click heading 5 times to manually reset all scores
+  const heroBanner = document.getElementById('main-hero-banner');
+  if (heroBanner) {
+    heroBanner.addEventListener('click', handleHeadingClick);
+  }
+
+  document.getElementById('btn-clear-abacus').addEventListener('click', clearSoroban);
+  document.getElementById('btn-explain-move').addEventListener('click', () => {
+    alert(I18N[currentLang].howBeadsMsg);
+  });
+
+  document.getElementById('btn-toggle-voice').addEventListener('click', function() {
+    voiceEnabled = !voiceEnabled;
+    this.style.opacity = voiceEnabled ? '1' : '0.6';
+  });
+
+  document.getElementById('btn-toggle-sound').addEventListener('click', function() {
+    soundEnabled = !soundEnabled;
+    this.style.opacity = soundEnabled ? '1' : '0.6';
+  });
+
+  document.getElementById('btn-open-cert').addEventListener('click', openCertModal);
+
+  // Load Lesson 1 (First Question, Card #1) by default
+  beadCountCurrentNum = 1;
+  loadLesson('sec-bead-count-1');
+});
+</script>
+</body>
+</html>
