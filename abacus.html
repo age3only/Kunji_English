@@ -527,53 +527,172 @@
     box-shadow: 0 0 8px rgba(74, 222, 128, 0.4);
   }
 
-  .giant-answer-input {
-    width: 130px;
-    height: 54px;
-    text-align: center;
-    font-size: 2rem;
-    font-weight: 900;
-    border: 3px solid #22c55e;
-    border-radius: 14px;
-    color: #4ade80;
-    outline: none;
+  /* =========================================================================
+     HULK NUMBER SCROLL WHEEL PICKER (Replaces up/down arrows)
+     ========================================================================= */
+  .hulk-wheel-box {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    width: 140px;
+    height: 94px;
     background: #112213;
-    transition: all 0.2s;
+    border: 3px solid #22c55e;
+    border-radius: 18px;
+    box-shadow: 0 0 16px rgba(74, 222, 128, 0.25), inset 0 2px 8px rgba(0, 0, 0, 0.6);
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: none;
+    cursor: ns-resize;
+    outline: none;
+    padding: 2px 0;
+    transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
   }
 
-  .giant-answer-input::placeholder {
-    color: #4ade80;
-    opacity: 0.65;
-  }
-
-  /* Count up and count down buttons: vibrant Hulk neon green */
-  .giant-answer-input::-webkit-inner-spin-button,
-  .giant-answer-input::-webkit-outer-spin-button {
-    opacity: 1 !important;
-    cursor: pointer;
-    height: 38px;
-    margin-right: 6px;
-    filter: invert(65%) sepia(85%) saturate(550%) hue-rotate(85deg) brightness(120%) drop-shadow(0 0 3px rgba(74, 222, 128, 0.85));
-    transition: filter 0.2s, transform 0.15s;
-  }
-
-  .giant-answer-input::-webkit-inner-spin-button:hover,
-  .giant-answer-input::-webkit-outer-spin-button:hover {
-    filter: invert(75%) sepia(90%) saturate(700%) hue-rotate(85deg) brightness(135%) drop-shadow(0 0 5px #4ade80);
-    transform: scale(1.12);
-  }
-
-  .giant-answer-input:focus {
+  .hulk-wheel-box:focus,
+  .hulk-wheel-box:hover {
     border-color: #4ade80;
-    box-shadow: 0 0 0 4px rgba(74, 222, 128, 0.35);
+    box-shadow: 0 0 22px rgba(74, 222, 128, 0.5), inset 0 2px 10px rgba(0, 0, 0, 0.7);
     background: #142a17;
   }
 
-  .giant-answer-input.correct {
-    background: #064e3b;
-    border-color: #34d399;
-    color: #a7f3d0;
-    box-shadow: 0 0 15px rgba(52, 211, 153, 0.5);
+  .hulk-wheel-box.correct {
+    background: #064e3b !important;
+    border-color: #34d399 !important;
+    box-shadow: 0 0 25px rgba(52, 211, 153, 0.7) !important;
+  }
+
+  .hulk-wheel-box.wrong {
+    background: #3b0d0c !important;
+    border-color: #ef4444 !important;
+    box-shadow: 0 0 25px rgba(239, 68, 68, 0.7) !important;
+  }
+
+  /* Sleek Nudge Chevrons at top and bottom */
+  .wheel-nudge-btn {
+    width: 100%;
+    height: 18px;
+    background: transparent;
+    border: none;
+    color: #4ade80;
+    font-size: 0.8rem;
+    font-weight: 900;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.75;
+    transition: opacity 0.15s, transform 0.1s, color 0.15s;
+    z-index: 3;
+    padding: 0;
+    line-height: 1;
+  }
+  .wheel-nudge-btn:hover {
+    opacity: 1;
+    color: #86efac;
+    transform: scale(1.25);
+  }
+  .wheel-nudge-btn:active {
+    transform: scale(0.9);
+  }
+
+  /* Roller Viewport with 3D Drum cylinder effect */
+  .wheel-roller-viewport {
+    position: relative;
+    width: 100%;
+    height: 52px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* 3D shading overlays on top and bottom of cylinder */
+  .wheel-roller-viewport::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 14px;
+    background: linear-gradient(180deg, rgba(17, 34, 19, 0.95) 0%, transparent 100%);
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .wheel-roller-viewport::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 14px;
+    background: linear-gradient(0deg, rgba(17, 34, 19, 0.95) 0%, transparent 100%);
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  /* Center slot bracket */
+  .wheel-slot-bracket {
+    position: absolute;
+    width: calc(100% - 16px);
+    height: 38px;
+    border-top: 1.5px solid rgba(74, 222, 128, 0.5);
+    border-bottom: 1.5px solid rgba(74, 222, 128, 0.5);
+    background: rgba(74, 222, 128, 0.08);
+    border-radius: 8px;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* Drum track items */
+  .wheel-roller-track {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    transition: transform 0.12s cubic-bezier(0.2, 0.9, 0.3, 1);
+  }
+
+  .wheel-digit {
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    font-weight: 900;
+    line-height: 1;
+    cursor: pointer;
+  }
+
+  .wheel-digit.wheel-curr {
+    font-size: 2.15rem;
+    color: #4ade80;
+    text-shadow: 0 0 14px rgba(74, 222, 128, 0.65);
+    cursor: default;
+  }
+
+  .wheel-digit.wheel-prev,
+  .wheel-digit.wheel-next {
+    font-size: 1.05rem;
+    color: #2e6638;
+    opacity: 0.6;
+    transform: scale(0.85);
+  }
+
+  .wheel-digit.wheel-prev:hover,
+  .wheel-digit.wheel-next:hover {
+    color: #4ade80;
+    opacity: 1;
+  }
+
+  /* Legacy input fallback hidden class if used */
+  .giant-answer-input {
+    display: none;
   }
 
   /* Actions underneath sum */
@@ -2892,6 +3011,193 @@ function updateTimerDisplay() {
   }
 }
 
+/* =========================================================================
+   HULK NUMBER SCROLL WHEEL CONTROLLER
+   ========================================================================= */
+
+const activeNumberWheels = {};
+
+class NumberWheelController {
+  constructor(wheelId, inputId, onEnterCallback, minVal = 0, maxVal = 100) {
+    this.wheelId = wheelId;
+    this.inputId = inputId;
+    this.onEnter = onEnterCallback;
+    this.minVal = minVal;
+    this.maxVal = maxVal;
+    this.value = null; // null displays '?'
+    this.container = document.getElementById(`${wheelId}-wheel-box`);
+    this.track = document.getElementById(`${wheelId}-wheel-track`);
+    this.prevEl = document.getElementById(`${wheelId}-wheel-prev`);
+    this.currEl = document.getElementById(`${wheelId}-wheel-curr`);
+    this.nextEl = document.getElementById(`${wheelId}-wheel-next`);
+    this.inputEl = document.getElementById(inputId);
+    this.typedBuffer = '';
+    this.typedTimer = null;
+    this.startY = null;
+    this.dragThreshold = 14;
+    this.isDragging = false;
+    this.wheelAccumulator = 0;
+
+    this.initEvents();
+    this.render();
+  }
+
+  render(animDirection = 0) {
+    if (!this.currEl) return;
+
+    if (this.value === null) {
+      this.currEl.innerText = '?';
+      if (this.prevEl) this.prevEl.innerText = '0';
+      if (this.nextEl) this.nextEl.innerText = '1';
+      if (this.inputEl) this.inputEl.value = '';
+    } else {
+      this.currEl.innerText = this.value;
+      if (this.prevEl) this.prevEl.innerText = (this.value > this.minVal) ? (this.value - 1) : '-';
+      if (this.nextEl) this.nextEl.innerText = (this.value < this.maxVal) ? (this.value + 1) : '-';
+      if (this.inputEl) this.inputEl.value = this.value;
+    }
+
+    if (animDirection !== 0 && this.track) {
+      const offset = animDirection > 0 ? -12 : 12;
+      this.track.style.transition = 'none';
+      this.track.style.transform = `translateY(${offset}px)`;
+      requestAnimationFrame(() => {
+        this.track.style.transition = 'transform 0.12s cubic-bezier(0.2, 0.9, 0.3, 1)';
+        this.track.style.transform = 'translateY(0)';
+      });
+    }
+  }
+
+  setValue(val, triggerSound = true, animDirection = 0) {
+    if (val === null || val === '' || isNaN(val)) {
+      this.value = null;
+    } else {
+      let num = parseInt(val, 10);
+      num = Math.max(this.minVal, Math.min(this.maxVal, num));
+      if (this.value !== null && animDirection === 0) {
+        animDirection = num > this.value ? 1 : (num < this.value ? -1 : 0);
+      }
+      this.value = num;
+    }
+    if (triggerSound) playSound('tick');
+    this.render(animDirection);
+  }
+
+  getValue() {
+    return this.value;
+  }
+
+  step(delta) {
+    let nextVal;
+    if (this.value === null) {
+      nextVal = delta > 0 ? (this.minVal === 0 ? 1 : this.minVal) : this.minVal;
+    } else {
+      nextVal = this.value + delta;
+    }
+    this.setValue(nextVal, true, delta);
+  }
+
+  initEvents() {
+    if (!this.container) return;
+
+    // 1. Mouse wheel / trackpad scrolling
+    this.container.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      this.wheelAccumulator += e.deltaY;
+      if (Math.abs(this.wheelAccumulator) >= 20) {
+        // Scrolling wheel down = next (+1), scrolling wheel up = prev (-1)
+        const delta = this.wheelAccumulator > 0 ? 1 : -1;
+        this.step(delta);
+        this.wheelAccumulator = 0;
+      }
+    }, { passive: false });
+
+    // 2. Touch / Mouse drag
+    const onPointerDown = (e) => {
+      this.startY = e.clientY;
+      this.isDragging = true;
+      try { this.container.setPointerCapture(e.pointerId); } catch(err) {}
+    };
+
+    const onPointerMove = (e) => {
+      if (!this.isDragging || this.startY === null) return;
+      const diffY = e.clientY - this.startY;
+      if (Math.abs(diffY) >= this.dragThreshold) {
+        // Dragging UP = increment (+1), Dragging DOWN = decrement (-1)
+        const delta = diffY < 0 ? 1 : -1;
+        this.step(delta);
+        this.startY = e.clientY;
+      }
+    };
+
+    const onPointerUp = (e) => {
+      this.isDragging = false;
+      this.startY = null;
+      try { this.container.releasePointerCapture(e.pointerId); } catch(err) {}
+    };
+
+    this.container.addEventListener('pointerdown', onPointerDown);
+    this.container.addEventListener('pointermove', onPointerMove);
+    this.container.addEventListener('pointerup', onPointerUp);
+    this.container.addEventListener('pointercancel', onPointerUp);
+
+    // 3. Direct Keyboard input & Arrow navigation
+    this.container.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowUp' || e.key === 'ArrowRight') {
+        e.preventDefault();
+        this.step(1);
+      } else if (e.key === 'ArrowDown' || e.key === 'ArrowLeft') {
+        e.preventDefault();
+        this.step(-1);
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        if (typeof this.onEnter === 'function') {
+          this.onEnter();
+        }
+      } else if (e.key === 'Backspace' || e.key === 'Delete') {
+        e.preventDefault();
+        this.setValue(null, true);
+        this.typedBuffer = '';
+      } else if (/^[0-9]$/.test(e.key)) {
+        e.preventDefault();
+        clearTimeout(this.typedTimer);
+        this.typedBuffer += e.key;
+        if (parseInt(this.typedBuffer, 10) > this.maxVal) {
+          this.typedBuffer = e.key;
+        }
+        this.setValue(parseInt(this.typedBuffer, 10), true);
+        this.typedTimer = setTimeout(() => {
+          this.typedBuffer = '';
+        }, 1200);
+      }
+    });
+
+    // 4. Click prev / next numbers to step
+    if (this.prevEl) {
+      this.prevEl.addEventListener('click', (e) => {
+        e.stopPropagation();
+        this.step(-1);
+        if (this.container) this.container.focus();
+      });
+    }
+    if (this.nextEl) {
+      this.nextEl.addEventListener('click', (e) => {
+        e.stopPropagation();
+        this.step(1);
+        if (this.container) this.container.focus();
+      });
+    }
+  }
+}
+
+function nudgeNumberWheel(wheelId, delta) {
+  const wheel = activeNumberWheels[wheelId];
+  if (wheel) {
+    wheel.step(delta);
+    if (wheel.container) wheel.container.focus();
+  }
+}
+
 function renderActiveChallenge() {
   const arena = document.getElementById('arena-main-wrapper');
   if (arena) arena.style.display = 'grid';
@@ -2948,8 +3254,21 @@ function renderActiveChallenge() {
         `).join('')}
       </div>
       <div class="giant-sum-divider"></div>
-      <input type="number" id="arena-answer-input" class="giant-answer-input" placeholder="?"
-        onkeydown="handleAnswerEnter(event, ${correctSum})">
+      
+      <!-- Hulk Number Scroll Wheel Picker -->
+      <div class="hulk-wheel-box" id="arena-wheel-box" tabindex="0" title="Scroll with mouse wheel, swipe up/down, or click arrows">
+        <button type="button" class="wheel-nudge-btn wheel-up" onclick="nudgeNumberWheel('arena', 1)" title="Scroll Up">▲</button>
+        <div class="wheel-roller-viewport">
+          <div class="wheel-slot-bracket"></div>
+          <div class="wheel-roller-track" id="arena-wheel-track">
+            <div class="wheel-digit wheel-prev" id="arena-wheel-prev">-</div>
+            <div class="wheel-digit wheel-curr" id="arena-wheel-curr">?</div>
+            <div class="wheel-digit wheel-next" id="arena-wheel-next">-</div>
+          </div>
+        </div>
+        <button type="button" class="wheel-nudge-btn wheel-down" onclick="nudgeNumberWheel('arena', -1)" title="Scroll Down">▼</button>
+        <input type="hidden" id="arena-answer-input" value="">
+      </div>
     </div>
 
     <!-- Actions -->
@@ -2980,13 +3299,22 @@ function renderActiveChallenge() {
     </div>
   `;
 
+  // Mount Number Wheel Controller for Arena
+  activeNumberWheels['arena'] = new NumberWheelController(
+    'arena',
+    'arena-answer-input',
+    () => checkCurrentArenaAnswer(correctSum),
+    0,
+    100
+  );
+
   // Start 10s countdown for every challenge!
   start10SecChallengeTimer();
 
-  // Focus answer input
+  // Focus answer wheel
   setTimeout(() => {
-    const inp = document.getElementById('arena-answer-input');
-    if (inp) inp.focus();
+    const box = document.getElementById('arena-wheel-box');
+    if (box) box.focus();
   }, 100);
 
   updateAbacusPeekButton();
@@ -3007,20 +3335,30 @@ function updateAbacusPeekButton() {
 
 function useCurrentAbacusValue(correctSum) {
   const abacusVal = getCurrentSorobanTotal();
+  const wheel = activeNumberWheels['arena'];
+  if (wheel) {
+    wheel.setValue(abacusVal, true);
+  }
   const inp = document.getElementById('arena-answer-input');
   if (inp) {
     inp.value = abacusVal;
-    checkCurrentArenaAnswer(correctSum);
   }
+  checkCurrentArenaAnswer(correctSum);
 }
 
 function checkCurrentArenaAnswer(correctSum) {
+  const wheel = activeNumberWheels['arena'];
   const inp = document.getElementById('arena-answer-input');
-  if (!inp) return;
+  const wheelBox = document.getElementById('arena-wheel-box');
 
-  const userVal = parseInt(inp.value, 10);
+  let userVal = (wheel && wheel.getValue() !== null)
+    ? wheel.getValue()
+    : (inp && inp.value !== '' ? parseInt(inp.value, 10) : null);
+
+  if (userVal === null || isNaN(userVal)) return;
+
   if (userVal === correctSum) {
-    inp.classList.add('correct');
+    if (wheelBox) wheelBox.classList.add('correct');
     lessonSolvedMap[`${activeLessonKey}_${activeQuestionIndex}`] = true;
     totalCorrect++;
     totalQuestions++;
@@ -3081,13 +3419,13 @@ function checkCurrentArenaAnswer(correctSum) {
     }, 1400);
 
   } else {
-    inp.style.background = '#fed7d7';
-    inp.style.borderColor = '#e53e3e';
+    if (wheelBox) {
+      wheelBox.classList.add('wrong');
+      setTimeout(() => {
+        wheelBox.classList.remove('wrong');
+      }, 600);
+    }
     playSound('bead');
-    setTimeout(() => {
-      inp.style.background = '#142817';
-      inp.style.borderColor = '#22c55e';
-    }, 600);
   }
 }
 
@@ -3583,8 +3921,22 @@ function renderBeadLessonArena(lessonKey) {
       ${isMl ? 'ഈ മണികളുടെ മൂല്യം എത്രയാണ്?' : 'What is the value of these beads?'}
     </div>
 
-    <input type="number" id="bead-answer-input" class="giant-answer-input" placeholder="?"
-      onkeydown="if(event.key === 'Enter') checkBeadCountAnswer(${beadCountCurrentNum}, ${start}, ${end})">
+    <!-- Hulk Number Scroll Wheel Picker for Bead Counting -->
+    <div style="display: flex; justify-content: center; margin-bottom: 10px;">
+      <div class="hulk-wheel-box" id="bead-wheel-box" tabindex="0" title="Scroll with mouse wheel, swipe up/down, or click arrows">
+        <button type="button" class="wheel-nudge-btn wheel-up" onclick="nudgeNumberWheel('bead', 1)" title="Scroll Up">▲</button>
+        <div class="wheel-roller-viewport">
+          <div class="wheel-slot-bracket"></div>
+          <div class="wheel-roller-track" id="bead-wheel-track">
+            <div class="wheel-digit wheel-prev" id="bead-wheel-prev">-</div>
+            <div class="wheel-digit wheel-curr" id="bead-wheel-curr">?</div>
+            <div class="wheel-digit wheel-next" id="bead-wheel-next">-</div>
+          </div>
+        </div>
+        <button type="button" class="wheel-nudge-btn wheel-down" onclick="nudgeNumberWheel('bead', -1)" title="Scroll Down">▼</button>
+        <input type="hidden" id="bead-answer-input" value="">
+      </div>
+    </div>
 
     <div class="challenge-action-buttons" style="margin-top: 14px;">
       <button class="btn-submit-arena" onclick="checkBeadCountAnswer(${beadCountCurrentNum}, ${start}, ${end})">
@@ -3611,11 +3963,20 @@ function renderBeadLessonArena(lessonKey) {
     </div>
   `;
 
+  // Mount Number Wheel Controller for Bead Counting Lesson
+  activeNumberWheels['bead'] = new NumberWheelController(
+    'bead',
+    'bead-answer-input',
+    () => checkBeadCountAnswer(beadCountCurrentNum, start, end),
+    0,
+    100
+  );
+
   setTimeout(() => {
     const peek = document.getElementById('btn-abacus-val-peek-bead');
     if (peek) peek.innerText = getCurrentSorobanTotal();
-    const inp = document.getElementById('bead-answer-input');
-    if (inp) inp.focus();
+    const box = document.getElementById('bead-wheel-box');
+    if (box) box.focus();
   }, 100);
 }
 
@@ -3637,19 +3998,34 @@ function jumpToBeadCard(num) {
 
 function useCurrentAbacusValueForBead(target, start, end) {
   const abacusVal = getCurrentSorobanTotal();
+  const wheel = activeNumberWheels['bead'];
+  if (wheel) {
+    wheel.setValue(abacusVal, true);
+  }
   const inp = document.getElementById('bead-answer-input');
   if (inp) {
     inp.value = abacusVal;
-    checkBeadCountAnswer(target, start, end);
   }
+  checkBeadCountAnswer(target, start, end);
 }
 
 function checkBeadCountAnswer(target, start, end) {
+  const wheel = activeNumberWheels['bead'];
   const inp = document.getElementById('bead-answer-input');
-  if (!inp) return;
-  const userVal = parseInt(inp.value, 10);
+  const wheelBox = document.getElementById('bead-wheel-box');
+
+  let userVal = (wheel && wheel.getValue() !== null)
+    ? wheel.getValue()
+    : (inp && inp.value !== '' ? parseInt(inp.value, 10) : null);
+
+  if (userVal === null || isNaN(userVal)) return;
+
   if (userVal === target) {
-    inp.classList.add('correct');
+    if (wheelBox) {
+      wheelBox.classList.remove('wrong');
+      wheelBox.classList.add('correct');
+    }
+    if (inp) inp.classList.add('correct');
     // Requirement 1: Mark this card solved in persistent lessonSolvedMap
     lessonSolvedMap[`${activeLessonKey}_${beadCountCurrentNum}`] = true;
     totalCorrect++;
@@ -3707,13 +4083,22 @@ function checkBeadCountAnswer(target, start, end) {
       }
     }, 1400);
   } else {
-    inp.style.background = '#3b1212';
-    inp.style.borderColor = '#ef4444';
+    if (wheelBox) {
+      wheelBox.classList.remove('correct');
+      wheelBox.classList.add('wrong');
+      setTimeout(() => {
+        if (wheelBox) wheelBox.classList.remove('wrong');
+      }, 700);
+    }
+    if (inp) {
+      inp.style.background = '#3b1212';
+      inp.style.borderColor = '#ef4444';
+      setTimeout(() => {
+        inp.style.background = '#112213';
+        inp.style.borderColor = '#22c55e';
+      }, 600);
+    }
     playSound('bead');
-    setTimeout(() => {
-      inp.style.background = '#112213';
-      inp.style.borderColor = '#22c55e';
-    }, 600);
   }
 }
 
