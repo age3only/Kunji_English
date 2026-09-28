@@ -178,8 +178,8 @@
   }
 
   @keyframes hulkBreathing {
-    0%, 100% { box-shadow: 0 8px 30px rgba(34, 197, 94, 0.35), 0 0 15px rgba(126, 34, 206, 0.3); }
-    50% { box-shadow: 0 8px 40px rgba(74, 222, 128, 0.6), 0 0 30px rgba(168, 85, 247, 0.5); }
+    0%, 100% { box-shadow: 0 4px 15px rgba(34, 197, 94, 0.25), 0 0 8px rgba(126, 34, 206, 0.2); }
+    50% { box-shadow: 0 4px 20px rgba(74, 222, 128, 0.35), 0 0 15px rgba(168, 85, 247, 0.25); }
   }
 
   .hero-banner:active {
@@ -197,7 +197,7 @@
 
   @keyframes hulkFlex {
     0%, 100% { transform: translateY(0) scale(1); }
-    50% { transform: translateY(-7px) scale(1.18); filter: drop-shadow(0 0 8px #4ade80); }
+    50% { transform: translateY(-3px) scale(1.045); filter: drop-shadow(0 0 4px #4ade80); }
   }
 
   .hero-title {
@@ -1502,8 +1502,19 @@
     border-radius: 50px;
     font-size: 1.25rem;
     font-weight: 900;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4), 0 0 15px rgba(34, 197, 94, 0.4);
-    animation: hulkFlex 2s infinite ease-in-out;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35), 0 0 8px rgba(34, 197, 94, 0.3);
+    animation: handBannerBreathe 2.4s infinite ease-in-out;
+  }
+
+  @keyframes handBannerBreathe {
+    0%, 100% {
+      transform: translateY(0) scale(1);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35), 0 0 6px rgba(34, 197, 94, 0.25);
+    }
+    50% {
+      transform: translateY(-3px) scale(1.045);
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.4), 0 0 10px rgba(74, 222, 128, 0.4);
+    }
   }
 
   .timer-16s-ring {
@@ -4286,6 +4297,48 @@ function start16SecSpeedSession() {
 
 let beadCountCurrentNum = 1;
 
+function verifyOrSetBeadDrawNumber(targetNum, idx) {
+  const currentTotal = getCurrentSorobanTotal();
+  const isMl = (currentLang === 'ml' || currentLang === 'id');
+  if (currentTotal === targetNum) {
+    totalStars += 1;
+    savePersistentStats();
+    updateStatsUI();
+    playSound('star');
+    showCelebrationOverlay(
+      '⭐',
+      isMl ? 'നല്ല ശ്രമം കുഞ്ഞീ!' : 'Good job Kungi!',
+      isMl ? `✨ ${targetNum} അബാക്കസിൽ കൃത്യമായി ചെയ്തു! ✨` : `✨ ${targetNum} matched on the abacus! ✨`
+    );
+    speakPraiseCustom(isMl ? 'നല്ല ശ്രമം കുഞ്ഞീ!' : 'Good job Kungi!');
+    launchConfetti();
+    const btn = document.getElementById(`btn-bead-draw-${idx}`);
+    if (btn) {
+      btn.style.background = 'linear-gradient(135deg, #15803d 0%, #22c55e 100%)';
+      btn.style.borderColor = '#86efac';
+      btn.style.color = '#ffffff';
+      btn.style.boxShadow = '0 0 12px rgba(74, 222, 128, 0.6)';
+      btn.innerHTML = `${targetNum} ⭐`;
+    }
+  } else {
+    setSorobanNumber(targetNum);
+    const msg = isMl 
+      ? `അബാക്കസിൽ ${targetNum} കാണിക്കുന്നു. അടുത്ത സംഖ്യ ചെയ്തു നോക്കൂ!` 
+      : `Showing ${targetNum} on the abacus. Now try another number!`;
+    speakPraiseCustom(msg);
+    const btn = document.getElementById(`btn-bead-draw-${idx}`);
+    if (btn) {
+      const origBorder = btn.style.borderColor;
+      btn.style.borderColor = '#facc15';
+      setTimeout(() => {
+        if (btn && !btn.innerHTML.includes('⭐')) {
+          btn.style.borderColor = origBorder || '#2e5333';
+        }
+      }, 1200);
+    }
+  }
+}
+
 function renderBeadLessonArena(lessonKey, autoFocus = true) {
   const cardContainer = document.getElementById('active-challenge-card');
   if (!cardContainer) return;
@@ -4298,13 +4351,13 @@ function renderBeadLessonArena(lessonKey, autoFocus = true) {
     cardContainer.innerHTML = `
       <div style="width: 100%;">
         <h3 style="color: #4ade80; margin-bottom: 8px;">✏️ ${isMl ? 'അബാക്കസിൽ മണികൾ വെക്കൂ!' : 'Build Beads on the Abacus!'}</h3>
-        <p style="font-size: 0.95rem; color: #86efac; margin-bottom: 14px;">
-          ${isMl ? 'അബാക്കസിൽ കാണിക്കാൻ താഴെ പറയുന്ന നമ്പറുകളിൽ ക്ലിക്ക് ചെയ്യുക!' : 'Click any number below to set it directly on the abacus beside!'}
+        <p style="font-size: 0.98rem; font-weight: 700; color: #86efac; line-height: 1.5; margin-bottom: 14px;">
+          ${isMl ? 'പട്ടികയിലെ ഒരു സംഖ്യ അബാക്കസിൽ ചെയ്യുക, തുടർന്ന് നിങ്ങളുടെ ഉത്തരം പരിശോധിക്കാൻ ആ സംഖ്യയിൽ ക്ലിക്ക് ചെയ്യുക.' : 'Select a number from the list on the abacus, then click on that number to verify your answer.'}
         </p>
         <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(70px, 1fr)); gap: 8px; max-height: 380px; overflow-y: auto;">
           ${[27, 45, 81, 66, 39, 13, 22, 74, 92, 53, 71, 80, 29, 50, 55, 78, 63, 47, 36, 99, 84, 57, 11, 10, 35, 80, 76, 44, 22, 19].map((n, i) => `
-            <button style="background: #112213; border: 2px solid #2e5333; border-radius: 12px; padding: 10px 4px; font-size: 1.25rem; font-weight: 900; color: #4ade80; cursor: pointer;"
-              onclick="setSorobanNumber(${n}); totalStars++; savePersistentStats(); updateStatsUI(); showCelebrationOverlay('⭐', '${isMl ? 'നല്ല ശ്രമം കുഞ്ഞീ!' : 'Good job Kungi!'}', '+1 Golden Star'); speakPraiseCustom('${isMl ? 'നല്ല ശ്രമം കുഞ്ഞീ!' : 'Good job Kungi!'}');">
+            <button id="btn-bead-draw-${i}" style="background: #112213; border: 2px solid #2e5333; border-radius: 12px; padding: 10px 4px; font-size: 1.25rem; font-weight: 900; color: #4ade80; cursor: pointer; transition: all 0.2s ease;"
+              onclick="verifyOrSetBeadDrawNumber(${n}, ${i})">
               ${n}
             </button>
           `).join('')}
