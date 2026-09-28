@@ -263,11 +263,59 @@
     transform: scale(1.15);
   }
 
+  .banner-star-item.in-progress {
+    color: #fde047;
+    filter: drop-shadow(0 0 7px rgba(250, 204, 21, 0.7));
+    opacity: 0.92;
+    animation: bannerStarPulse 2s infinite ease-in-out;
+  }
+
+  @keyframes bannerStarPulse {
+    0%, 100% { transform: scale(1.02); filter: drop-shadow(0 0 4px rgba(250, 204, 21, 0.5)); }
+    50% { transform: scale(1.12); filter: drop-shadow(0 0 10px rgba(250, 204, 21, 0.9)); }
+  }
+
   .banner-star-item.inactive {
     color: rgba(255, 255, 255, 0.22);
     filter: grayscale(1);
     opacity: 0.38;
     transform: scale(0.92);
+  }
+
+  /* Section Right Answers Progress Breakdown Modal */
+  .prog-sec-card {
+    background: #112213;
+    border: 1.5px solid #2e5333;
+    border-radius: 12px;
+    padding: 10px 14px;
+    transition: all 0.2s ease;
+  }
+  .prog-sec-card:hover {
+    border-color: #4ade80;
+    box-shadow: 0 4px 12px rgba(34, 197, 94, 0.2);
+  }
+  .prog-sub-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.85rem;
+    padding: 4px 8px;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.03);
+    margin-top: 4px;
+  }
+  .prog-sub-bar-bg {
+    width: 90px;
+    height: 7px;
+    background: #1a381e;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .prog-sub-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #15803d, #22c55e);
+    border-radius: 4px;
+    transition: width 0.3s ease;
   }
 
   .banner-stars-caption {
@@ -1854,7 +1902,7 @@
           <p class="hero-subtitle" id="t-app-subtitle">Welcome, Kungi! Let's learn Abacus together! 🚗💨</p>
 
           <!-- 10 Stars Overall Progress Bar (Persists until Reset) -->
-          <div class="banner-overall-progress" id="banner-overall-progress" title="Overall Progress (10 Stars)">
+          <div class="banner-overall-progress" id="banner-overall-progress" title="Overall Progress (10 Stars) - Click to view detailed section right answers!" onclick="event.stopPropagation(); openSectionProgressModal();" style="cursor: pointer;">
             <div class="banner-stars-track" id="banner-stars-track">
               <!-- 10 Stars Injected Dynamically -->
             </div>
@@ -2080,6 +2128,25 @@
         </div>
       </div>
       <button class="btn-submit-arena" onclick="closeCertModal()" style="margin: 12px auto 0 auto; width: auto;" id="t-cert-btn">Keep Shining, Kungi! 🚀</button>
+    </div>
+  </div>
+</div>
+
+<!-- Overall Progress Breakdown Modal -->
+<div class="modal-overlay" id="progress-breakdown-modal" onclick="closeSectionProgressModal()">
+  <div class="modal-box" onclick="event.stopPropagation()" style="max-width: 680px; max-height: 88vh; display: flex; flex-direction: column; overflow: hidden; padding: 22px 24px; text-align: left;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; border-bottom: 2px solid #2e5333; padding-bottom: 8px;">
+      <h2 style="font-size: 1.35rem; font-weight: 900; color: #4ade80; margin: 0; display: flex; align-items: center; gap: 8px;">
+        <span>⭐</span> <span id="t-prog-modal-title">Overall Right Answers Progress</span>
+      </h2>
+      <button onclick="closeSectionProgressModal()" style="background: none; border: none; font-size: 1.5rem; color: #86efac; cursor: pointer;">✖</button>
+    </div>
+    <div id="prog-modal-summary" style="background: #112213; border: 2px solid #2e5333; border-radius: 14px; padding: 12px 16px; margin-bottom: 14px;"></div>
+    <div id="prog-modal-sections-list" style="overflow-y: auto; flex: 1; display: flex; flex-direction: column; gap: 10px; padding-right: 4px;"></div>
+    <div style="margin-top: 14px; text-align: center;">
+      <button class="btn-submit-arena" onclick="closeSectionProgressModal()" style="padding: 8px 24px; font-size: 1rem; width: auto;" id="t-prog-modal-btn">
+        Got it! Keep Learning 🚀
+      </button>
     </div>
   </div>
 </div>
@@ -2758,24 +2825,312 @@ try {
   lessonSolvedMap = {};
 }
 
+const COURSE_SECTIONS = [
+  {
+    id: 'sec-bead-count',
+    titleEn: 'Lesson 1: Bead Counting',
+    titleMl: 'പാഠം 1: മണികൾ എണ്ണാം',
+    icon: '🚗',
+    lessonKey: 'sec-bead-count-1',
+    subsections: [
+      { key: 'sec-bead-count-1', titleEn: 'Count 1-30', titleMl: '1-30 എണ്ണൽ', total: 30, range: [1, 30] },
+      { key: 'sec-bead-count-2', titleEn: 'Count 31-50', titleMl: '31-50 എണ്ണൽ', total: 20, range: [31, 50] }
+    ]
+  },
+  {
+    id: 'sec-lesson-2',
+    titleEn: 'Lesson 2: Addition +1 to +5',
+    titleMl: 'പാഠം 2: സങ്കലനം +1 മുതൽ +5',
+    icon: '🐹',
+    lessonKey: 'sec-lesson-2',
+    subsections: [
+      { key: 'sec-lesson-2', titleEn: 'Direct +/- 5 (Page 9)', titleMl: 'നേരിട്ടുള്ള +/- 5 (പേജ് 9)', total: 30, range: [0, 29] }
+    ]
+  },
+  {
+    id: 'sec-practice-6',
+    titleEn: 'Lesson 3: Addition +6 to +9',
+    titleMl: 'പാഠം 3: സങ്കലനം +6 മുതൽ +9',
+    icon: '🚲',
+    lessonKey: 'sec-practice-6',
+    subsections: [
+      { key: 'sec-practice-6', titleEn: 'Addition +6 (Page 11)', titleMl: 'സങ്കലനം +6 (പേജ് 11)', total: 30, range: [0, 29] },
+      { key: 'sec-practice-7', titleEn: 'Addition +7 (Page 12)', titleMl: 'സങ്കലനം +7 (പേജ് 12)', total: 30, range: [0, 29] },
+      { key: 'sec-practice-8', titleEn: 'Addition +8 4-Rows (Page 14)', titleMl: 'സങ്കലനം +8 (പേജ് 14)', total: 30, range: [0, 29] }
+    ]
+  },
+  {
+    id: 'sec-practice-sub6',
+    titleEn: 'Lesson 4: Subtraction -1 to -5',
+    titleMl: 'പാഠം 4: വ്യവകലനം -1 മുതൽ -5',
+    icon: '🏎️',
+    lessonKey: 'sec-practice-sub6',
+    subsections: [
+      { key: 'sec-practice-sub6', titleEn: 'Subtraction -6 (Page 16)', titleMl: 'വ്യവകലനം -6 (പേജ് 16)', total: 30, range: [0, 29] }
+    ]
+  },
+  {
+    id: 'sec-practice-sub7',
+    titleEn: 'Lesson 5: Subtraction -6 to -9',
+    titleMl: 'പാഠം 5: വ്യവകലനം -6 മുതൽ -9',
+    icon: '🏍️',
+    lessonKey: 'sec-practice-sub7',
+    subsections: [
+      { key: 'sec-practice-sub7', titleEn: 'Subtraction -7 (Page 17)', titleMl: 'വ്യവകലനം -7 (പേജ് 17)', total: 30, range: [0, 29] },
+      { key: 'sec-practice-sub89', titleEn: 'Subtraction -8, -9 (Page 19)', titleMl: 'വ്യവകലനം -8, -9 (പേജ് 19)', total: 30, range: [0, 29] }
+    ]
+  },
+  {
+    id: 'sec-friends-1',
+    titleEn: 'Lesson 6: Small Friends',
+    titleMl: 'പാഠം 6: സ്മോൾ ഫ്രണ്ട്സ്',
+    icon: '🚀',
+    lessonKey: 'sec-friends-1',
+    subsections: [
+      { key: 'sec-friends-1', titleEn: 'Friend +1 = +5-4 (Page 20)', titleMl: 'കൂട്ടുകാരൻ +1 (പേജ് 20)', total: 30, range: [0, 29] },
+      { key: 'sec-friends-2', titleEn: 'Friend +2 = +5-3 (Page 21)', titleMl: 'കൂട്ടുകാരൻ +2 (പേജ് 21)', total: 30, range: [0, 29] },
+      { key: 'sec-friends-3', titleEn: 'Friend +3 = +5-2 (Page 23)', titleMl: 'കൂട്ടുകാരൻ +3 (പേജ് 23)', total: 30, range: [0, 29] },
+      { key: 'sec-friends-4', titleEn: 'Friend +4 = +5-1 (Page 24)', titleMl: 'കൂട്ടുകാരൻ +4 (പേജ് 24)', total: 30, range: [0, 29] }
+    ]
+  },
+  {
+    id: 'sec-speed-writing',
+    titleEn: 'Speed Writing Lab',
+    titleMl: 'സ്പീഡ് റൈറ്റിംഗ് ലാബ്',
+    icon: '✍️',
+    lessonKey: 'sec-speed-writing',
+    subsections: [
+      { key: 'sec-speed-writing-left', titleEn: 'Left Hand Sessions', titleMl: 'ഇടത് കൈ പരിശീലനം', total: 5, range: [0, 4] },
+      { key: 'sec-speed-writing-right', titleEn: 'Right Hand Sessions', titleMl: 'വലത് കൈ പരിശീലനം', total: 5, range: [0, 4] }
+    ]
+  },
+  {
+    id: 'sec-bead-draw',
+    titleEn: 'Bead Drawing',
+    titleMl: 'മണി വരയ്ക്കൽ',
+    icon: '✏️',
+    lessonKey: 'sec-bead-draw',
+    subsections: [
+      { key: 'sec-bead-draw', titleEn: '30 Interactive Builds', titleMl: '30 മണി പരിശോധന', total: 30, range: [0, 29] }
+    ]
+  },
+  {
+    id: 'sec-revision',
+    titleEn: '8-Min Master Revision',
+    titleMl: 'മാസ്റ്റർ റിവിഷൻ (8 മിനിറ്റ്)',
+    icon: '📚',
+    lessonKey: 'sec-revision',
+    subsections: [
+      { key: 'sec-revision', titleEn: 'Master Revision (Page 25)', titleMl: 'റിവിഷൻ ചോദ്യങ്ങൾ (പേജ് 25)', total: 30, range: [0, 29] }
+    ]
+  },
+  {
+    id: 'sec-test-paper',
+    titleEn: 'Final Test Paper (200 MM)',
+    titleMl: 'ഫൈനൽ പരീക്ഷ പേപ്പർ',
+    icon: '🏆',
+    lessonKey: 'sec-test-paper',
+    subsections: [
+      { key: 'sec-test-paper', titleEn: 'Final Test (Page 26)', titleMl: 'ഫൈനൽ പരീക്ഷ ചോദ്യങ്ങൾ (പേജ് 26)', total: 30, range: [0, 29] }
+    ]
+  }
+];
+
+function calculateOverallCurriculumProgress() {
+  let totalCurriculumQuestions = 0;
+  let totalCurriculumSolved = 0;
+  let sumOfSectionRatios = 0;
+
+  const sectionDetails = COURSE_SECTIONS.map((sec, sIdx) => {
+    let secTotal = 0;
+    let secSolved = 0;
+
+    const subDetails = sec.subsections.map(sub => {
+      let subSolved = 0;
+      for (let i = sub.range[0]; i <= sub.range[1]; i++) {
+        if (lessonSolvedMap[`${sub.key}_${i}`]) {
+          subSolved++;
+        }
+      }
+      secTotal += sub.total;
+      secSolved += subSolved;
+      return {
+        ...sub,
+        solved: subSolved,
+        percent: sub.total > 0 ? Math.round((subSolved / sub.total) * 100) : 0
+      };
+    });
+
+    const secRatio = secTotal > 0 ? (secSolved / secTotal) : 0;
+    const secPercent = Math.round(secRatio * 100);
+    sumOfSectionRatios += secRatio;
+    totalCurriculumQuestions += secTotal;
+    totalCurriculumSolved += secSolved;
+
+    return {
+      ...sec,
+      secIdx: sIdx,
+      total: secTotal,
+      solved: secSolved,
+      ratio: secRatio,
+      percent: secPercent,
+      subsections: subDetails
+    };
+  });
+
+  const displaySolved = Math.max(totalCurriculumSolved, totalCorrect);
+  if (totalCurriculumSolved > totalCorrect) {
+    totalCorrect = totalCurriculumSolved;
+    localStorage.setItem('kungi_correct_ans', totalCorrect);
+  }
+
+  const overallPercent = Math.min(100, Math.round((sumOfSectionRatios / 10) * 100));
+  const earnedStarsExact = Math.min(10, Math.max(0, sumOfSectionRatios));
+  const earnedStarsInt = Math.min(10, Math.floor(earnedStarsExact));
+
+  return {
+    sections: sectionDetails,
+    totalQuestions: totalCurriculumQuestions,
+    totalSolved: displaySolved,
+    overallPercent,
+    earnedStarsExact,
+    earnedStarsInt
+  };
+}
+
 function renderOverallProgressStars() {
   const track = document.getElementById('banner-stars-track');
   if (!track) return;
 
-  const counterEl = document.getElementById('banner-stars-counter');
-  const activeCount = Math.min(10, Math.max(0, totalStars));
+  const data = calculateOverallCurriculumProgress();
+  const isMl = (currentLang === 'ml' || currentLang === 'id');
 
-  if (counterEl) {
-    counterEl.innerText = `${activeCount} / 10`;
+  const captionEl = document.getElementById('banner-stars-caption');
+  if (captionEl) {
+    captionEl.innerHTML = `⭐ <span id="banner-stars-counter">${data.earnedStarsInt} / 10</span> <span>${isMl ? 'ആകെ പുരോഗതി' : 'Overall Progress'}</span> (${data.totalSolved} ${isMl ? 'ശരി' : 'Right Answers'} • ${data.overallPercent}%) ⭐`;
+  } else {
+    const counterEl = document.getElementById('banner-stars-counter');
+    if (counterEl) counterEl.innerText = `${data.earnedStarsInt} / 10`;
   }
 
   let html = '';
-  for (let i = 1; i <= 10; i++) {
-    const isLit = (i <= activeCount);
-    const starTitle = isLit ? `Star ${i}: Earned! ⭐` : `Star ${i}: Complete questions to earn!`;
-    html += `<span class="banner-star-item ${isLit ? 'active' : 'inactive'}" title="${starTitle}">${isLit ? '⭐' : '★'}</span>`;
-  }
+  data.sections.forEach((sec, idx) => {
+    const starNum = idx + 1;
+    const isEarned = (sec.ratio >= 0.7) || (data.earnedStarsExact >= starNum);
+    const isInProgress = !isEarned && (sec.ratio > 0 || (data.earnedStarsExact >= (starNum - 0.85)));
+
+    let statusClass = 'inactive';
+    let starGlyph = '★';
+    if (isEarned) {
+      statusClass = 'active';
+      starGlyph = '⭐';
+    } else if (isInProgress) {
+      statusClass = 'in-progress';
+      starGlyph = '🌟';
+    }
+
+    const secTitle = isMl ? sec.titleMl : sec.titleEn;
+    const tooltip = `${sec.icon} Star ${starNum}: ${secTitle} - ${sec.solved}/${sec.total} ${isMl ? 'ശരി' : 'Right Answers'} (${sec.percent}%)`;
+
+    html += `
+      <div class="banner-star-item ${statusClass}" title="${tooltip}" onclick="event.stopPropagation(); openSectionProgressModal(${idx});" style="cursor: pointer; display: inline-flex; flex-direction: column; align-items: center; gap: 1px;">
+        <span class="star-glyph">${starGlyph}</span>
+        <span style="font-size: 0.65rem; line-height: 1; opacity: 0.88;">${sec.icon}</span>
+      </div>
+    `;
+  });
+
   track.innerHTML = html;
+}
+
+function openSectionProgressModal(focusSecIdx = null) {
+  const modal = document.getElementById('progress-breakdown-modal');
+  if (!modal) return;
+
+  const isMl = (currentLang === 'ml' || currentLang === 'id');
+  const data = calculateOverallCurriculumProgress();
+
+  const titleEl = document.getElementById('t-prog-modal-title');
+  if (titleEl) {
+    titleEl.innerText = isMl ? 'പാഠങ്ങളുടെ ആകെ പുരോഗതിയും ശരിയായ ഉത്തരങ്ങളും' : 'Overall Right Answers Progress by Section';
+  }
+
+  const summaryEl = document.getElementById('prog-modal-summary');
+  if (summaryEl) {
+    summaryEl.innerHTML = `
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; flex-wrap: wrap; gap: 8px;">
+        <span style="font-size: 1.15rem; font-weight: 900; color: #fde047;">
+          ⭐ ${data.earnedStarsInt} / 10 ${isMl ? 'നക്ഷത്രങ്ങൾ നേടി' : 'Stars Earned'} (${data.overallPercent}%)
+        </span>
+        <span style="font-size: 0.92rem; font-weight: 800; color: #86efac; background: #1c2e1f; border: 1px solid #2e5333; padding: 4px 12px; border-radius: 20px;">
+          🎯 ${data.totalSolved} / ${data.totalQuestions} ${isMl ? 'ശരിയായ ഉത്തരങ്ങൾ' : 'Right Answers'}
+        </span>
+      </div>
+      <div style="width: 100%; height: 12px; background: #0c1a0e; border: 1px solid #2e5333; border-radius: 8px; overflow: hidden;">
+        <div style="width: ${data.overallPercent}%; height: 100%; background: linear-gradient(90deg, #15803d, #22c55e, #fde047); border-radius: 8px; transition: width 0.4s ease;"></div>
+      </div>
+      <div style="font-size: 0.8rem; color: #a7f3d0; margin-top: 6px; text-align: right;">
+        ${isMl ? 'ഓരോ വിഭാഗത്തിലെയും ശരിയായ ഉത്തരങ്ങൾ 10 നക്ഷത്ര പുരോഗതി വർദ്ധിപ്പിക്കും' : 'Right answers from each section and subsection advance your 10 stars!'}
+      </div>
+    `;
+  }
+
+  const listEl = document.getElementById('prog-modal-sections-list');
+  if (listEl) {
+    listEl.innerHTML = data.sections.map((sec, idx) => {
+      const isFocused = (focusSecIdx === idx);
+      const secTitle = isMl ? sec.titleMl : sec.titleEn;
+      const isSecMastered = (sec.ratio >= 0.7);
+
+      const subRowsHtml = sec.subsections.map(sub => {
+        const subTitle = isMl ? sub.titleMl : sub.titleEn;
+        return `
+          <div class="prog-sub-row">
+            <span style="color: #dcfce7;">• ${subTitle}</span>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="font-weight: 800; color: ${sub.solved === sub.total && sub.total > 0 ? '#4ade80' : '#fde047'}; font-size: 0.82rem;">
+                ${sub.solved} / ${sub.total}
+              </span>
+              <div class="prog-sub-bar-bg">
+                <div class="prog-sub-bar-fill" style="width: ${sub.percent}%;"></div>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      return `
+        <div class="prog-sec-card" style="${isFocused ? 'border-color: #facc15; box-shadow: 0 0 14px rgba(250, 204, 21, 0.4);' : ''}">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; flex-wrap: wrap; gap: 6px;">
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <span style="font-size: 1.25rem;">${sec.icon}</span>
+              <strong style="color: #4ade80; font-size: 0.98rem;">${secTitle}</strong>
+              ${isSecMastered ? '<span style="font-size: 0.9rem;" title="Mastered!">⭐</span>' : ''}
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="font-size: 0.88rem; font-weight: 900; color: #86efac;">
+                ${sec.solved} / ${sec.total} (${sec.percent}%)
+              </span>
+              <button class="extra-tab-btn" onclick="loadLesson('${sec.lessonKey}', true); closeSectionProgressModal();" style="padding: 4px 10px; font-size: 0.78rem;">
+                ${isMl ? 'പരിശീലിക്കുക ➡️' : 'Practice ➡️'}
+              </button>
+            </div>
+          </div>
+          <div style="width: 100%; height: 6px; background: #0c1a0e; border-radius: 4px; overflow: hidden; margin-bottom: 6px;">
+            <div style="width: ${sec.percent}%; height: 100%; background: linear-gradient(90deg, #15803d, #22c55e); border-radius: 4px;"></div>
+          </div>
+          ${subRowsHtml}
+        </div>
+      `;
+    }).join('');
+  }
+
+  modal.classList.add('open');
+}
+
+function closeSectionProgressModal() {
+  const modal = document.getElementById('progress-breakdown-modal');
+  if (modal) modal.classList.remove('open');
 }
 
 function updateStatsUI() {
@@ -4133,6 +4488,17 @@ function finishSpeedWritingSession() {
   if (speedTimerInterval) clearInterval(speedTimerInterval);
   if (speedMusicInterval) clearInterval(speedMusicInterval);
 
+  // Record speed writing session progress in lessonSolvedMap & totalCorrect
+  const handKey = speedHandMode === 'left' ? 'sec-speed-writing-left' : 'sec-speed-writing-right';
+  for (let s = 0; s < 5; s++) {
+    if (!lessonSolvedMap[`${handKey}_${s}`]) {
+      lessonSolvedMap[`${handKey}_${s}`] = true;
+      totalCorrect++;
+      totalQuestions++;
+      break;
+    }
+  }
+
   // Requirement 3: ONLY when pressing Finish tab does the Outstanding Kungi message and crown appear!
   totalStars += 3;
   totalCrowns += 1;
@@ -4301,6 +4667,11 @@ function verifyOrSetBeadDrawNumber(targetNum, idx) {
   const currentTotal = getCurrentSorobanTotal();
   const isMl = (currentLang === 'ml' || currentLang === 'id');
   if (currentTotal === targetNum) {
+    if (!lessonSolvedMap[`sec-bead-draw_${idx}`]) {
+      lessonSolvedMap[`sec-bead-draw_${idx}`] = true;
+      totalCorrect++;
+      totalQuestions++;
+    }
     totalStars += 1;
     savePersistentStats();
     updateStatsUI();
@@ -4355,12 +4726,15 @@ function renderBeadLessonArena(lessonKey, autoFocus = true) {
           ${isMl ? 'പട്ടികയിലെ ഒരു സംഖ്യ അബാക്കസിൽ ചെയ്യുക, തുടർന്ന് നിങ്ങളുടെ ഉത്തരം പരിശോധിക്കാൻ ആ സംഖ്യയിൽ ക്ലിക്ക് ചെയ്യുക.' : 'Select a number from the list on the abacus, then click on that number to verify your answer.'}
         </p>
         <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(70px, 1fr)); gap: 8px; max-height: 380px; overflow-y: auto;">
-          ${[27, 45, 81, 66, 39, 13, 22, 74, 92, 53, 71, 80, 29, 50, 55, 78, 63, 47, 36, 99, 84, 57, 11, 10, 35, 80, 76, 44, 22, 19].map((n, i) => `
-            <button id="btn-bead-draw-${i}" style="background: #112213; border: 2px solid #2e5333; border-radius: 12px; padding: 10px 4px; font-size: 1.25rem; font-weight: 900; color: #4ade80; cursor: pointer; transition: all 0.2s ease;"
-              onclick="verifyOrSetBeadDrawNumber(${n}, ${i})">
-              ${n}
-            </button>
-          `).join('')}
+          ${[27, 45, 81, 66, 39, 13, 22, 74, 92, 53, 71, 80, 29, 50, 55, 78, 63, 47, 36, 99, 84, 57, 11, 10, 35, 80, 76, 44, 22, 19].map((n, i) => {
+            const isSolved = lessonSolvedMap[`sec-bead-draw_${i}`];
+            return `
+              <button id="btn-bead-draw-${i}" style="background: ${isSolved ? 'linear-gradient(135deg, #15803d 0%, #22c55e 100%)' : '#112213'}; border: 2px solid ${isSolved ? '#86efac' : '#2e5333'}; border-radius: 12px; padding: 10px 4px; font-size: 1.25rem; font-weight: 900; color: ${isSolved ? '#ffffff' : '#4ade80'}; cursor: pointer; transition: all 0.2s ease; ${isSolved ? 'box-shadow: 0 0 12px rgba(74, 222, 128, 0.6);' : ''}"
+                onclick="verifyOrSetBeadDrawNumber(${n}, ${i})">
+                ${n}${isSolved ? ' ⭐' : ''}
+              </button>
+            `;
+          }).join('')}
         </div>
       </div>
     `;
