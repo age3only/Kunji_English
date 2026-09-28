@@ -282,53 +282,53 @@
     width: 100%;
   }
 
-  /* Currently Learning Lesson Selector Widget with Two Big Navigation Arrows */
+  /* Currently Learning Lesson Selector Widget with Two Big Navigation Arrows (Big & Bold) */
   .current-lesson-selector-widget {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: clamp(8px, 1.5vw, 14px);
+    gap: clamp(10px, 2vw, 18px);
     width: 100%;
-    background: linear-gradient(135deg, #132416 0%, #17331c 100%);
-    border: 3px solid #2e5333;
-    border-radius: var(--radius-md);
-    padding: clamp(6px, 1.2vw, 10px) clamp(8px, 1.5vw, 14px);
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4), 0 0 14px rgba(34, 197, 94, 0.15);
+    background: linear-gradient(135deg, #0d2012 0%, #15381a 50%, #0d2012 100%);
+    border: 3.5px solid #22c55e;
+    border-radius: clamp(14px, 2vw, 22px);
+    padding: clamp(12px, 1.8vw, 18px) clamp(14px, 2.2vw, 22px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), 0 0 20px rgba(34, 197, 94, 0.25);
     user-select: none;
-    transition: border-color 0.25s, box-shadow 0.25s;
+    transition: all 0.25s ease;
   }
 
   .current-lesson-selector-widget:hover {
-    border-color: #3b7443;
-    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.5), 0 0 18px rgba(74, 222, 128, 0.25);
+    border-color: #4ade80;
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.6), 0 0 24px rgba(74, 222, 128, 0.4);
   }
 
-  /* Two Big Arrows on both sides of the Tile */
+  /* Two Big Bold Arrows on both sides of the Tile */
   .big-lesson-arrow-btn {
     background: linear-gradient(135deg, #15803d 0%, #22c55e 100%);
-    border: 2.5px solid #4ade80;
+    border: 3.5px solid #86efac;
     border-radius: 50%;
-    width: clamp(44px, 5.5vw, 54px);
-    height: clamp(44px, 5.5vw, 54px);
-    min-width: clamp(44px, 5.5vw, 54px);
-    color: white;
-    font-size: clamp(1.4rem, 2.4vw, 1.85rem);
+    width: clamp(54px, 6.5vw, 68px);
+    height: clamp(54px, 6.5vw, 68px);
+    min-width: clamp(54px, 6.5vw, 68px);
+    color: #ffffff;
+    font-size: clamp(2rem, 3.2vw, 2.7rem);
     font-weight: 900;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45), 0 0 12px rgba(74, 222, 128, 0.4);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5), 0 0 18px rgba(74, 222, 128, 0.6);
     transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     padding: 0;
     line-height: 1;
   }
 
   .big-lesson-arrow-btn:hover {
-    transform: scale(1.14);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6), 0 0 20px rgba(74, 222, 128, 0.7);
+    transform: scale(1.15);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.7), 0 0 26px rgba(74, 222, 128, 0.85);
     background: linear-gradient(135deg, #16a34a 0%, #4ade80 100%);
-    border-color: #86efac;
+    border-color: #bbf7d0;
   }
 
   .big-lesson-arrow-btn:active {
@@ -340,21 +340,21 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: clamp(8px, 1.5vw, 14px);
+    gap: clamp(12px, 2vw, 20px);
     flex: 1;
     text-align: center;
     cursor: pointer;
-    padding: 4px 6px;
+    padding: 6px 10px;
     transition: transform 0.2s ease;
   }
 
   .current-lesson-tile-display:hover {
-    transform: scale(1.02);
+    transform: scale(1.03);
   }
 
   .curr-tile-icon {
-    font-size: clamp(1.8rem, 3.8vw, 2.4rem);
-    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+    font-size: clamp(2.6rem, 4.5vw, 3.6rem);
+    filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.6));
     line-height: 1;
   }
 
@@ -366,41 +366,44 @@
   }
 
   .curr-tile-badge {
-    font-size: clamp(0.68rem, 1.4vw, 0.76rem);
+    font-size: clamp(0.82rem, 1.4vw, 1.02rem);
     font-weight: 900;
     color: #86efac;
     text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 2px;
+    letter-spacing: 2px;
+    margin-bottom: 4px;
+    text-shadow: 0 0 8px rgba(74, 222, 128, 0.5);
   }
 
   .curr-tile-title {
-    font-size: clamp(0.92rem, 2vw, 1.15rem);
+    font-size: clamp(1.3rem, 2.6vw, 1.8rem);
     font-weight: 900;
     color: #4ade80;
-    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
-    line-height: 1.2;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6), 0 0 14px rgba(74, 222, 128, 0.5);
+    line-height: 1.25;
   }
 
   .curr-tile-sub {
-    font-size: clamp(0.72rem, 1.5vw, 0.82rem);
+    font-size: clamp(0.95rem, 1.8vw, 1.2rem);
     color: #bbf7d0;
-    font-weight: 700;
-    line-height: 1.2;
+    font-weight: 800;
+    line-height: 1.25;
+    margin-top: 2px;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
   }
 
-  /* Restored All Lessons Section (Always fully visible below arena) */
+  /* Restored All Lessons Section (Width matches above sections in left column) */
   .all-lessons-section {
     background: #142817;
-    border: 2px solid #2e5333;
+    border: 3px solid #2e5333;
     border-radius: clamp(12px, 2vw, var(--radius-lg));
-    padding: clamp(14px, 2.2vw, 24px);
+    padding: clamp(14px, 2.2vw, 22px);
     display: flex;
     flex-direction: column;
     align-items: center;
-    box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.3);
+    box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.3), 0 6px 18px rgba(0, 0, 0, 0.4);
     width: 100%;
-    margin-top: 14px;
+    margin-top: 0;
     transition: all 0.3s ease;
   }
 
@@ -419,8 +422,8 @@
   /* Dynamic Responsive Lesson Cards Grid */
   .lesson-cards-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: clamp(8px, 1.6vw, 16px);
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: clamp(8px, 1.4vw, 14px);
     width: 100%;
   }
 
@@ -555,7 +558,7 @@
   /* Responsive Breakpoints */
   @media (max-width: 1024px) {
     .lesson-cards-grid {
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
       gap: 10px;
     }
     .arena-wrapper {
@@ -571,7 +574,7 @@
       grid-template-columns: repeat(2, 1fr);
     }
     .lesson-cards-grid {
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
       gap: 10px;
     }
   }
@@ -1012,6 +1015,8 @@
     flex-direction: column;
     align-items: center;
     gap: 12px;
+    position: sticky;
+    top: 16px;
   }
 
   .abacus-header-row {
@@ -1811,6 +1816,89 @@
       <div class="challenge-focus-card" id="active-challenge-card">
         <!-- Injected dynamically -->
       </div>
+
+      <!-- 3RD RECTANGLE AREA: RESTORED ALL LESSONS & TABS SECTION (WIDTH MATCHES ABOVE SECTIONS) -->
+      <div class="all-lessons-section" id="all-lessons-section-container">
+        <div class="section-heading">
+          <span>🎓</span>
+          <span id="t-choose-lesson">Choose Your Lesson</span>
+          <span>🎓</span>
+        </div>
+
+        <div class="lesson-cards-grid">
+          <!-- Lesson 1 -->
+          <div class="lesson-card-item active" onclick="loadLesson('sec-bead-count-1', true)">
+            <div class="lesson-card-icon">🚗</div>
+            <div class="lesson-card-title" id="t-l1-title">Lesson 1: Bead Counting</div>
+            <div class="lesson-card-sub" id="t-l1-sub">Count 1-30 & 31-50</div>
+          </div>
+
+          <!-- Lesson 2 -->
+          <div class="lesson-card-item" onclick="loadLesson('sec-lesson-2', true)">
+            <div class="lesson-card-icon">🐹</div>
+            <div class="lesson-card-title" id="t-l2-title">Lesson 2: Addition +1 to +5</div>
+            <div class="lesson-card-sub" id="t-l2-sub">Adding 1-5</div>
+          </div>
+
+          <!-- Lesson 3 -->
+          <div class="lesson-card-item" onclick="loadLesson('sec-practice-6', true)">
+            <div class="lesson-card-icon">🚲</div>
+            <div class="lesson-card-title" id="t-l3-title">Lesson 3: Addition +6 to +9</div>
+            <div class="lesson-card-sub" id="t-l3-sub">Adding 6-9</div>
+          </div>
+
+          <!-- Lesson 4 -->
+          <div class="lesson-card-item" onclick="loadLesson('sec-practice-sub6', true)">
+            <div class="lesson-card-icon">🏎️</div>
+            <div class="lesson-card-title" id="t-l4-title">Lesson 4: Subtraction -1 to -5</div>
+            <div class="lesson-card-sub" id="t-l4-sub">Subtracting 1-5</div>
+          </div>
+
+          <!-- Lesson 5 -->
+          <div class="lesson-card-item" onclick="loadLesson('sec-practice-sub7', true)">
+            <div class="lesson-card-icon">🏍️</div>
+            <div class="lesson-card-title" id="t-l5-title">Lesson 5: Subtraction -6 to -9</div>
+            <div class="lesson-card-sub" id="t-l5-sub">Subtracting 6-9</div>
+          </div>
+
+          <!-- Lesson 6 -->
+          <div class="lesson-card-item" onclick="loadLesson('sec-friends-1', true)">
+            <div class="lesson-card-icon">🚀</div>
+            <div class="lesson-card-title" id="t-l6-title">Lesson 6: Small Friends</div>
+            <div class="lesson-card-sub" id="t-l6-sub">Formulas (+1, +2, +3, +4)</div>
+          </div>
+
+          <!-- Speed Writing -->
+          <div class="lesson-card-item" onclick="loadLesson('sec-speed-writing', true)">
+            <div class="lesson-card-icon">✍️</div>
+            <div class="lesson-card-title" id="t-speed-title">Speed Writing Lab</div>
+            <div class="lesson-card-sub" id="t-speed-sub">Left & Right Hand (Apple Pencil)</div>
+          </div>
+
+          <!-- Final Test & Revision -->
+          <div class="lesson-card-item" onclick="loadLesson('sec-test-paper', true)">
+            <div class="lesson-card-icon">🏆</div>
+            <div class="lesson-card-title" id="t-test-title">Final Test Paper</div>
+            <div class="lesson-card-sub" id="t-test-sub">200 Marks & Certificate</div>
+          </div>
+        </div>
+
+        <!-- Extra Worksheets Pill Selectors -->
+        <div class="extra-tabs-row">
+          <button class="extra-tab-btn" onclick="loadLesson('sec-tool-intro', true)" id="t-tab-basics">🧮 Abacus Basics</button>
+          <button class="extra-tab-btn" onclick="loadLesson('sec-finger-tech', true)" id="t-tab-fingers">🖐️ Finger Tech</button>
+          <button class="extra-tab-btn" onclick="loadLesson('sec-bead-draw', true)" id="t-tab-draw">✏️ Bead Drawing (30 Qs)</button>
+          <button class="extra-tab-btn" onclick="loadLesson('sec-practice-8', true)" id="t-tab-p8">🏎️ Practice +8 (4-Rows)</button>
+          <button class="extra-tab-btn" onclick="loadLesson('sec-practice-sub89', true)" id="t-tab-p89">🔥 Practice -8, -9</button>
+          <button class="extra-tab-btn" onclick="loadLesson('sec-friends-2', true)" id="t-tab-f2">🚗 Friend +2</button>
+          <button class="extra-tab-btn" onclick="loadLesson('sec-friends-3', true)" id="t-tab-f3">🐹 Friend +3</button>
+          <button class="extra-tab-btn" onclick="loadLesson('sec-friends-4', true)" id="t-tab-f4">🚲 Friend +4</button>
+          <button class="extra-tab-btn" onclick="loadLesson('sec-revision', true)" id="t-tab-rev">📚 8-Min Revision</button>
+        </div>
+      </div>
+
+      <!-- Optional All-Questions Grid View -->
+      <div id="all-questions-grid-view" style="display: none; margin-top: 15px;"></div>
     </div>
 
     <!-- RIGHT COLUMN: GRAPHICAL RAINBOW SOROBAN ABACUS BESIDE IT -->
@@ -1862,89 +1950,6 @@
     </div>
 
   </div>
-
-  <!-- RESTORED ALL LESSONS & TABS SECTION (ALWAYS FULLY VISIBLE & RESTORED) -->
-  <div class="all-lessons-section" id="all-lessons-section-container">
-    <div class="section-heading">
-      <span>🎓</span>
-      <span id="t-choose-lesson">Choose Your Lesson</span>
-      <span>🎓</span>
-    </div>
-
-    <div class="lesson-cards-grid">
-      <!-- Lesson 1 -->
-      <div class="lesson-card-item active" onclick="loadLesson('sec-bead-count-1', true)">
-        <div class="lesson-card-icon">🚗</div>
-        <div class="lesson-card-title" id="t-l1-title">Lesson 1: Bead Counting</div>
-        <div class="lesson-card-sub" id="t-l1-sub">Count 1-30 & 31-50</div>
-      </div>
-
-      <!-- Lesson 2 -->
-      <div class="lesson-card-item" onclick="loadLesson('sec-lesson-2', true)">
-        <div class="lesson-card-icon">🐹</div>
-        <div class="lesson-card-title" id="t-l2-title">Lesson 2: Addition +1 to +5</div>
-        <div class="lesson-card-sub" id="t-l2-sub">Adding 1-5</div>
-      </div>
-
-      <!-- Lesson 3 -->
-      <div class="lesson-card-item" onclick="loadLesson('sec-practice-6', true)">
-        <div class="lesson-card-icon">🚲</div>
-        <div class="lesson-card-title" id="t-l3-title">Lesson 3: Addition +6 to +9</div>
-        <div class="lesson-card-sub" id="t-l3-sub">Adding 6-9</div>
-      </div>
-
-      <!-- Lesson 4 -->
-      <div class="lesson-card-item" onclick="loadLesson('sec-practice-sub6', true)">
-        <div class="lesson-card-icon">🏎️</div>
-        <div class="lesson-card-title" id="t-l4-title">Lesson 4: Subtraction -1 to -5</div>
-        <div class="lesson-card-sub" id="t-l4-sub">Subtracting 1-5</div>
-      </div>
-
-      <!-- Lesson 5 -->
-      <div class="lesson-card-item" onclick="loadLesson('sec-practice-sub7', true)">
-        <div class="lesson-card-icon">🏍️</div>
-        <div class="lesson-card-title" id="t-l5-title">Lesson 5: Subtraction -6 to -9</div>
-        <div class="lesson-card-sub" id="t-l5-sub">Subtracting 6-9</div>
-      </div>
-
-      <!-- Lesson 6 -->
-      <div class="lesson-card-item" onclick="loadLesson('sec-friends-1', true)">
-        <div class="lesson-card-icon">🚀</div>
-        <div class="lesson-card-title" id="t-l6-title">Lesson 6: Small Friends</div>
-        <div class="lesson-card-sub" id="t-l6-sub">Formulas (+1, +2, +3, +4)</div>
-      </div>
-
-      <!-- Speed Writing -->
-      <div class="lesson-card-item" onclick="loadLesson('sec-speed-writing', true)">
-        <div class="lesson-card-icon">✍️</div>
-        <div class="lesson-card-title" id="t-speed-title">Speed Writing Lab</div>
-        <div class="lesson-card-sub" id="t-speed-sub">Left & Right Hand (Apple Pencil)</div>
-      </div>
-
-      <!-- Final Test & Revision -->
-      <div class="lesson-card-item" onclick="loadLesson('sec-test-paper', true)">
-        <div class="lesson-card-icon">🏆</div>
-        <div class="lesson-card-title" id="t-test-title">Final Test Paper</div>
-        <div class="lesson-card-sub" id="t-test-sub">200 Marks & Certificate</div>
-      </div>
-    </div>
-
-    <!-- Extra Worksheets Pill Selectors -->
-    <div class="extra-tabs-row">
-      <button class="extra-tab-btn" onclick="loadLesson('sec-tool-intro', true)" id="t-tab-basics">🧮 Abacus Basics</button>
-      <button class="extra-tab-btn" onclick="loadLesson('sec-finger-tech', true)" id="t-tab-fingers">🖐️ Finger Tech</button>
-      <button class="extra-tab-btn" onclick="loadLesson('sec-bead-draw', true)" id="t-tab-draw">✏️ Bead Drawing (30 Qs)</button>
-      <button class="extra-tab-btn" onclick="loadLesson('sec-practice-8', true)" id="t-tab-p8">🏎️ Practice +8 (4-Rows)</button>
-      <button class="extra-tab-btn" onclick="loadLesson('sec-practice-sub89', true)" id="t-tab-p89">🔥 Practice -8, -9</button>
-      <button class="extra-tab-btn" onclick="loadLesson('sec-friends-2', true)" id="t-tab-f2">🚗 Friend +2</button>
-      <button class="extra-tab-btn" onclick="loadLesson('sec-friends-3', true)" id="t-tab-f3">🐹 Friend +3</button>
-      <button class="extra-tab-btn" onclick="loadLesson('sec-friends-4', true)" id="t-tab-f4">🚲 Friend +4</button>
-      <button class="extra-tab-btn" onclick="loadLesson('sec-revision', true)" id="t-tab-rev">📚 8-Min Revision</button>
-    </div>
-  </div>
-
-  <!-- Optional All-Questions Grid View -->
-  <div id="all-questions-grid-view" style="display: none; margin-top: 15px;"></div>
 
 </div>
 
@@ -2148,15 +2153,15 @@ function updateRodNames() {
   });
 }
 
-function refreshCurrentActiveLesson() {
+function refreshCurrentActiveLesson(autoFocus = false) {
   if (activeLessonKey === 'sec-tool-intro' || activeLessonKey === 'sec-finger-tech') {
     renderStaticLesson(activeLessonKey);
   } else if (activeLessonKey === 'sec-speed-writing') {
     renderSpeedWritingArena();
   } else if (activeLessonKey === 'sec-bead-count-1' || activeLessonKey === 'sec-bead-count-2' || activeLessonKey === 'sec-bead-draw') {
-    renderBeadLessonArena(activeLessonKey);
+    renderBeadLessonArena(activeLessonKey, autoFocus);
   } else {
-    renderActiveChallenge();
+    renderActiveChallenge(autoFocus);
   }
 
   const gridView = document.getElementById('all-questions-grid-view');
@@ -2255,8 +2260,8 @@ function setLanguage(lang) {
   if (typeof renderSoroban === 'function') renderSoroban();
   if (typeof updateDisplayAndSpeech === 'function') updateDisplayAndSpeech(false);
 
-  // Instantly update Left Block (Active Challenge / Lesson Arena)
-  refreshCurrentActiveLesson();
+  // Instantly update Left Block (Active Challenge / Lesson Arena) without moving focus or scrolling
+  refreshCurrentActiveLesson(false);
 }
 
 function numberToWords(num) {
@@ -3256,7 +3261,8 @@ function navigateActiveLesson(direction) {
   let idx = ALL_LESSON_KEYS.indexOf(activeLessonKey);
   if (idx === -1) idx = 0;
   idx = (idx + direction + ALL_LESSON_KEYS.length) % ALL_LESSON_KEYS.length;
-  loadLesson(ALL_LESSON_KEYS[idx], true);
+  // Clicking left/right arrow changes lesson in place without moving focus or scrolling webpage
+  loadLesson(ALL_LESSON_KEYS[idx], false, false);
 }
 
 function focusBeadCardSection() {
@@ -3274,18 +3280,18 @@ function focusBeadCardSection() {
     const beadInp = document.getElementById('bead-answer-input');
     const speedBtn = document.getElementById('btn-start-speed-timer');
     if (beadWheel && beadWheel.offsetParent !== null) {
-      beadWheel.focus();
+      beadWheel.focus({ preventScroll: true });
     } else if (arenaWheel && arenaWheel.offsetParent !== null) {
-      arenaWheel.focus();
+      arenaWheel.focus({ preventScroll: true });
     } else if (beadInp && beadInp.offsetParent !== null) {
-      beadInp.focus();
+      beadInp.focus({ preventScroll: true });
     } else if (speedBtn && speedBtn.offsetParent !== null) {
-      speedBtn.focus();
+      speedBtn.focus({ preventScroll: true });
     }
   }, 300);
 }
 
-function loadLesson(lessonKey, shouldScroll = false) {
+function loadLesson(lessonKey, shouldScroll = false, autoFocus = true) {
   activeLessonKey = lessonKey;
   activeQuestionIndex = 0;
 
@@ -3293,7 +3299,7 @@ function loadLesson(lessonKey, shouldScroll = false) {
     card.classList.remove('active');
   });
   document.querySelectorAll('.extra-tab-btn').forEach(btn => {
-    btn.classList.toggle('active', btn.getAttribute('onclick').includes(lessonKey));
+    btn.classList.toggle('active', !!(btn.getAttribute('onclick') && btn.getAttribute('onclick').includes(lessonKey)));
   });
 
   const targetCard = document.querySelector(`.lesson-card-item[onclick*="${lessonKey}"]`);
@@ -3314,18 +3320,18 @@ function loadLesson(lessonKey, shouldScroll = false) {
   }
 
   if (lessonKey === 'sec-bead-count-1' || lessonKey === 'sec-bead-count-2') {
-    renderBeadLessonArena(lessonKey);
+    renderBeadLessonArena(lessonKey, autoFocus);
     if (shouldScroll) focusBeadCardSection();
     return;
   }
 
   if (lessonKey === 'sec-bead-draw') {
-    renderBeadLessonArena(lessonKey);
+    renderBeadLessonArena(lessonKey, autoFocus);
     if (shouldScroll) focusBeadCardSection();
     return;
   }
 
-  renderActiveChallenge();
+  renderActiveChallenge(autoFocus);
   if (shouldScroll) focusBeadCardSection();
 }
 
@@ -3549,7 +3555,7 @@ function nudgeNumberWheel(wheelId, delta) {
   }
 }
 
-function renderActiveChallenge() {
+function renderActiveChallenge(autoFocus = true) {
   const arena = document.getElementById('arena-main-wrapper');
   if (arena) arena.style.display = 'grid';
 
@@ -3662,11 +3668,13 @@ function renderActiveChallenge() {
   // Start 10s countdown for every challenge!
   start10SecChallengeTimer();
 
-  // Focus answer wheel
-  setTimeout(() => {
-    const box = document.getElementById('arena-wheel-box');
-    if (box) box.focus();
-  }, 100);
+  // Focus answer wheel only when autoFocus is true
+  if (autoFocus) {
+    setTimeout(() => {
+      const box = document.getElementById('arena-wheel-box');
+      if (box) box.focus({ preventScroll: true });
+    }, 100);
+  }
 
   updateAbacusPeekButton();
 }
@@ -4165,7 +4173,7 @@ function start16SecSpeedSession() {
 
 let beadCountCurrentNum = 1;
 
-function renderBeadLessonArena(lessonKey) {
+function renderBeadLessonArena(lessonKey, autoFocus = true) {
   const cardContainer = document.getElementById('active-challenge-card');
   if (!cardContainer) return;
 
@@ -4326,8 +4334,10 @@ function renderBeadLessonArena(lessonKey) {
   setTimeout(() => {
     const peek = document.getElementById('btn-abacus-val-peek-bead');
     if (peek) peek.innerText = getCurrentSorobanTotal();
-    const box = document.getElementById('bead-wheel-box');
-    if (box) box.focus();
+    if (autoFocus) {
+      const box = document.getElementById('bead-wheel-box');
+      if (box) box.focus({ preventScroll: true });
+    }
   }, 100);
 }
 
