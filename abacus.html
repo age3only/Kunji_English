@@ -221,6 +221,72 @@
     color: #dcfce7;
   }
 
+  /* 10 Stars Overall Progress Bar inside Hero Banner */
+  .banner-overall-progress {
+    margin-top: 10px;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    background: rgba(10, 25, 14, 0.82);
+    border: 2.5px solid #4ade80;
+    border-radius: 16px;
+    padding: 8px 16px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45), 0 0 14px rgba(74, 222, 128, 0.3);
+    backdrop-filter: blur(4px);
+    user-select: none;
+    max-width: 95%;
+  }
+
+  .banner-stars-track {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(4px, 1.2vw, 10px);
+    flex-wrap: wrap;
+  }
+
+  .banner-star-item {
+    font-size: clamp(1.45rem, 2.6vw, 1.95rem);
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    cursor: default;
+  }
+
+  .banner-star-item.active {
+    color: #fbbf24;
+    filter: drop-shadow(0 0 8px rgba(250, 204, 21, 0.95)) drop-shadow(0 2px 4px rgba(0,0,0,0.6));
+    transform: scale(1.15);
+  }
+
+  .banner-star-item.inactive {
+    color: rgba(255, 255, 255, 0.22);
+    filter: grayscale(1);
+    opacity: 0.38;
+    transform: scale(0.92);
+  }
+
+  .banner-stars-caption {
+    font-size: clamp(0.78rem, 1.6vw, 0.92rem);
+    font-weight: 800;
+    color: #dcfce7;
+    letter-spacing: 1px;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .banner-stars-counter-num {
+    color: #facc15;
+    font-weight: 900;
+    font-size: 1.05em;
+  }
+
   /* 4 Stat Cards: Hulk Purple & Green Muscle Glow */
   .stats-grid {
     display: grid;
@@ -392,7 +458,7 @@
     text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
   }
 
-  /* Restored All Lessons Section (Width matches above sections in left column) */
+  /* All Lessons Section (Interchanged into Right Column) */
   .all-lessons-section {
     background: #142817;
     border: 3px solid #2e5333;
@@ -401,8 +467,11 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.3), 0 6px 18px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45), 0 0 15px rgba(34, 197, 94, 0.15);
     width: 100%;
+    box-sizing: border-box;
+    position: sticky;
+    top: 16px;
     margin-top: 0;
     transition: all 0.3s ease;
   }
@@ -576,6 +645,9 @@
     .lesson-cards-grid {
       grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
       gap: 10px;
+    }
+    .all-lessons-section {
+      position: static;
     }
   }
 
@@ -1004,19 +1076,19 @@
     border-color: #22c55e;
   }
 
-  /* Right Box: The Graphical Abacus in Arena */
+  /* Soroban Abacus (Interchanged into Left Column under Bead Card) */
   .abacus-stage-box {
     background: #142817;
     border: 3px solid #2e5333;
     border-radius: var(--radius-lg);
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45), 0 0 15px rgba(34, 197, 94, 0.15);
-    padding: 18px 20px;
+    padding: clamp(14px, 2vw, 20px);
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 12px;
-    position: sticky;
-    top: 16px;
+    width: 100%;
+    box-sizing: border-box;
   }
 
   .abacus-header-row {
@@ -1769,6 +1841,16 @@
           <span class="corner-vehicle right">🏍️</span>
           <h1 class="hero-title">✨ <span id="t-app-title">KUNGI'S SUPER ABACUS</span> ✨</h1>
           <p class="hero-subtitle" id="t-app-subtitle">Welcome, Kungi! Let's learn Abacus together! 🚗💨</p>
+
+          <!-- 10 Stars Overall Progress Bar (Persists until Reset) -->
+          <div class="banner-overall-progress" id="banner-overall-progress" title="Overall Progress (10 Stars)">
+            <div class="banner-stars-track" id="banner-stars-track">
+              <!-- 10 Stars Injected Dynamically -->
+            </div>
+            <div class="banner-stars-caption" id="banner-stars-caption">
+              ⭐ <span id="banner-stars-counter">0 / 10</span> <span id="t-overall-progress">Overall Progress</span> ⭐
+            </div>
+          </div>
         </div>
 
         <!-- 4 Stats Cards: Correct, Total, Stars, Crowns -->
@@ -1817,136 +1899,136 @@
         <!-- Injected dynamically -->
       </div>
 
-      <!-- 3RD RECTANGLE AREA: RESTORED ALL LESSONS & TABS SECTION (WIDTH MATCHES ABOVE SECTIONS) -->
-      <div class="all-lessons-section" id="all-lessons-section-container">
-        <div class="section-heading">
-          <span>🎓</span>
-          <span id="t-choose-lesson">Choose Your Lesson</span>
-          <span>🎓</span>
-        </div>
-
-        <div class="lesson-cards-grid">
-          <!-- Lesson 1 -->
-          <div class="lesson-card-item active" onclick="loadLesson('sec-bead-count-1', true)">
-            <div class="lesson-card-icon">🚗</div>
-            <div class="lesson-card-title" id="t-l1-title">Lesson 1: Bead Counting</div>
-            <div class="lesson-card-sub" id="t-l1-sub">Count 1-30 & 31-50</div>
+      <!-- 3RD RECTANGLE AREA: KUNGI'S SOROBAN ABACUS (WIDTH MATCHES ABOVE SECTIONS) -->
+      <div class="abacus-stage-box" id="side-abacus-box">
+        <div class="abacus-header-row">
+          <div class="abacus-headline">
+            <span>🧮</span>
+            <span id="t-abacus-title">Kungi's Soroban Abacus</span>
           </div>
 
-          <!-- Lesson 2 -->
-          <div class="lesson-card-item" onclick="loadLesson('sec-lesson-2', true)">
-            <div class="lesson-card-icon">🐹</div>
-            <div class="lesson-card-title" id="t-l2-title">Lesson 2: Addition +1 to +5</div>
-            <div class="lesson-card-sub" id="t-l2-sub">Adding 1-5</div>
+          <div class="rod-selector-wrap">
+            <span style="font-size: 0.75rem; font-weight: bold; color: var(--primary-dark);" id="t-rods-lbl">Rods:</span>
+            <button class="rod-sel-btn" onclick="switchRodCount(3)">3</button>
+            <button class="rod-sel-btn active" onclick="switchRodCount(5)">5</button>
+            <button class="rod-sel-btn" onclick="switchRodCount(7)">7</button>
+            <button class="rod-sel-btn" onclick="switchRodCount(13)">13 (Photo)</button>
           </div>
 
-          <!-- Lesson 3 -->
-          <div class="lesson-card-item" onclick="loadLesson('sec-practice-6', true)">
-            <div class="lesson-card-icon">🚲</div>
-            <div class="lesson-card-title" id="t-l3-title">Lesson 3: Addition +6 to +9</div>
-            <div class="lesson-card-sub" id="t-l3-sub">Adding 6-9</div>
-          </div>
-
-          <!-- Lesson 4 -->
-          <div class="lesson-card-item" onclick="loadLesson('sec-practice-sub6', true)">
-            <div class="lesson-card-icon">🏎️</div>
-            <div class="lesson-card-title" id="t-l4-title">Lesson 4: Subtraction -1 to -5</div>
-            <div class="lesson-card-sub" id="t-l4-sub">Subtracting 1-5</div>
-          </div>
-
-          <!-- Lesson 5 -->
-          <div class="lesson-card-item" onclick="loadLesson('sec-practice-sub7', true)">
-            <div class="lesson-card-icon">🏍️</div>
-            <div class="lesson-card-title" id="t-l5-title">Lesson 5: Subtraction -6 to -9</div>
-            <div class="lesson-card-sub" id="t-l5-sub">Subtracting 6-9</div>
-          </div>
-
-          <!-- Lesson 6 -->
-          <div class="lesson-card-item" onclick="loadLesson('sec-friends-1', true)">
-            <div class="lesson-card-icon">🚀</div>
-            <div class="lesson-card-title" id="t-l6-title">Lesson 6: Small Friends</div>
-            <div class="lesson-card-sub" id="t-l6-sub">Formulas (+1, +2, +3, +4)</div>
-          </div>
-
-          <!-- Speed Writing -->
-          <div class="lesson-card-item" onclick="loadLesson('sec-speed-writing', true)">
-            <div class="lesson-card-icon">✍️</div>
-            <div class="lesson-card-title" id="t-speed-title">Speed Writing Lab</div>
-            <div class="lesson-card-sub" id="t-speed-sub">Left & Right Hand (Apple Pencil)</div>
-          </div>
-
-          <!-- Final Test & Revision -->
-          <div class="lesson-card-item" onclick="loadLesson('sec-test-paper', true)">
-            <div class="lesson-card-icon">🏆</div>
-            <div class="lesson-card-title" id="t-test-title">Final Test Paper</div>
-            <div class="lesson-card-sub" id="t-test-sub">200 Marks & Certificate</div>
+          <div class="abacus-tool-actions">
+            <button class="btn-pink-pill btn-pink-reset" id="btn-clear-abacus">🧹 <span id="t-clear-btn">Clear (0)</span></button>
+            <button class="btn-pink-pill btn-pink-hint" id="btn-explain-move">💡 <span id="t-how-works">How Beads Work</span></button>
           </div>
         </div>
 
-        <!-- Extra Worksheets Pill Selectors -->
-        <div class="extra-tabs-row">
-          <button class="extra-tab-btn" onclick="loadLesson('sec-tool-intro', true)" id="t-tab-basics">🧮 Abacus Basics</button>
-          <button class="extra-tab-btn" onclick="loadLesson('sec-finger-tech', true)" id="t-tab-fingers">🖐️ Finger Tech</button>
-          <button class="extra-tab-btn" onclick="loadLesson('sec-bead-draw', true)" id="t-tab-draw">✏️ Bead Drawing (30 Qs)</button>
-          <button class="extra-tab-btn" onclick="loadLesson('sec-practice-8', true)" id="t-tab-p8">🏎️ Practice +8 (4-Rows)</button>
-          <button class="extra-tab-btn" onclick="loadLesson('sec-practice-sub89', true)" id="t-tab-p89">🔥 Practice -8, -9</button>
-          <button class="extra-tab-btn" onclick="loadLesson('sec-friends-2', true)" id="t-tab-f2">🚗 Friend +2</button>
-          <button class="extra-tab-btn" onclick="loadLesson('sec-friends-3', true)" id="t-tab-f3">🐹 Friend +3</button>
-          <button class="extra-tab-btn" onclick="loadLesson('sec-friends-4', true)" id="t-tab-f4">🚲 Friend +4</button>
-          <button class="extra-tab-btn" onclick="loadLesson('sec-revision', true)" id="t-tab-rev">📚 8-Min Revision</button>
+        <!-- Authentic Soroban Frame with Rainbow Beads -->
+        <div class="soroban-frame" id="main-soroban">
+          <div class="soroban-inner" id="soroban-rods-container">
+            <!-- Rods injected dynamically -->
+          </div>
         </div>
+
+        <!-- Rod Place Value Readouts -->
+        <div class="rod-readouts" id="rod-readouts-container">
+          <!-- Injected -->
+        </div>
+
+        <div class="soroban-total-display">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span id="t-val-lbl">Value:</span>
+            <span id="soroban-val-text" style="color: #fffa65; font-size: 1.6rem; min-width: 32px;">0</span>
+          </div>
+          <div class="spelled-words-badge" id="soroban-val-words">
+            <span>🚗</span>
+            <span id="soroban-spelled-text">Zero</span>
+            <span>🏁</span>
+          </div>
+          <button class="icon-toggle-btn" style="padding: 4px 10px; font-size: 0.85rem;" onclick="speakCurrentValue(true)" title="Speak sweet pronunciation">🔊</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT COLUMN: CHOOSE YOUR LESSON SECTION & TABS (INTERCHANGED WITH SOROBAN ABACUS) -->
+    <div class="all-lessons-section" id="all-lessons-section-container">
+      <div class="section-heading">
+        <span>🎓</span>
+        <span id="t-choose-lesson">Choose Your Lesson</span>
+        <span>🎓</span>
+      </div>
+
+      <div class="lesson-cards-grid">
+        <!-- Lesson 1 -->
+        <div class="lesson-card-item active" onclick="loadLesson('sec-bead-count-1', true)">
+          <div class="lesson-card-icon">🚗</div>
+          <div class="lesson-card-title" id="t-l1-title">Lesson 1: Bead Counting</div>
+          <div class="lesson-card-sub" id="t-l1-sub">Count 1-30 & 31-50</div>
+        </div>
+
+        <!-- Lesson 2 -->
+        <div class="lesson-card-item" onclick="loadLesson('sec-lesson-2', true)">
+          <div class="lesson-card-icon">🐹</div>
+          <div class="lesson-card-title" id="t-l2-title">Lesson 2: Addition +1 to +5</div>
+          <div class="lesson-card-sub" id="t-l2-sub">Adding 1-5</div>
+        </div>
+
+        <!-- Lesson 3 -->
+        <div class="lesson-card-item" onclick="loadLesson('sec-practice-6', true)">
+          <div class="lesson-card-icon">🚲</div>
+          <div class="lesson-card-title" id="t-l3-title">Lesson 3: Addition +6 to +9</div>
+          <div class="lesson-card-sub" id="t-l3-sub">Adding 6-9</div>
+        </div>
+
+        <!-- Lesson 4 -->
+        <div class="lesson-card-item" onclick="loadLesson('sec-practice-sub6', true)">
+          <div class="lesson-card-icon">🏎️</div>
+          <div class="lesson-card-title" id="t-l4-title">Lesson 4: Subtraction -1 to -5</div>
+          <div class="lesson-card-sub" id="t-l4-sub">Subtracting 1-5</div>
+        </div>
+
+        <!-- Lesson 5 -->
+        <div class="lesson-card-item" onclick="loadLesson('sec-practice-sub7', true)">
+          <div class="lesson-card-icon">🏍️</div>
+          <div class="lesson-card-title" id="t-l5-title">Lesson 5: Subtraction -6 to -9</div>
+          <div class="lesson-card-sub" id="t-l5-sub">Subtracting 6-9</div>
+        </div>
+
+        <!-- Lesson 6 -->
+        <div class="lesson-card-item" onclick="loadLesson('sec-friends-1', true)">
+          <div class="lesson-card-icon">🚀</div>
+          <div class="lesson-card-title" id="t-l6-title">Lesson 6: Small Friends</div>
+          <div class="lesson-card-sub" id="t-l6-sub">Formulas (+1, +2, +3, +4)</div>
+        </div>
+
+        <!-- Speed Writing -->
+        <div class="lesson-card-item" onclick="loadLesson('sec-speed-writing', true)">
+          <div class="lesson-card-icon">✍️</div>
+          <div class="lesson-card-title" id="t-speed-title">Speed Writing Lab</div>
+          <div class="lesson-card-sub" id="t-speed-sub">Left & Right Hand (Apple Pencil)</div>
+        </div>
+
+        <!-- Final Test & Revision -->
+        <div class="lesson-card-item" onclick="loadLesson('sec-test-paper', true)">
+          <div class="lesson-card-icon">🏆</div>
+          <div class="lesson-card-title" id="t-test-title">Final Test Paper</div>
+          <div class="lesson-card-sub" id="t-test-sub">200 Marks & Certificate</div>
+        </div>
+      </div>
+
+      <!-- Extra Worksheets Pill Selectors -->
+      <div class="extra-tabs-row">
+        <button class="extra-tab-btn" onclick="loadLesson('sec-tool-intro', true)" id="t-tab-basics">🧮 Abacus Basics</button>
+        <button class="extra-tab-btn" onclick="loadLesson('sec-finger-tech', true)" id="t-tab-fingers">🖐️ Finger Tech</button>
+        <button class="extra-tab-btn" onclick="loadLesson('sec-bead-draw', true)" id="t-tab-draw">✏️ Bead Drawing (30 Qs)</button>
+        <button class="extra-tab-btn" onclick="loadLesson('sec-practice-8', true)" id="t-tab-p8">🏎️ Practice +8 (4-Rows)</button>
+        <button class="extra-tab-btn" onclick="loadLesson('sec-practice-sub89', true)" id="t-tab-p89">🔥 Practice -8, -9</button>
+        <button class="extra-tab-btn" onclick="loadLesson('sec-friends-2', true)" id="t-tab-f2">🚗 Friend +2</button>
+        <button class="extra-tab-btn" onclick="loadLesson('sec-friends-3', true)" id="t-tab-f3">🐹 Friend +3</button>
+        <button class="extra-tab-btn" onclick="loadLesson('sec-friends-4', true)" id="t-tab-f4">🚲 Friend +4</button>
+        <button class="extra-tab-btn" onclick="loadLesson('sec-revision', true)" id="t-tab-rev">📚 8-Min Revision</button>
       </div>
 
       <!-- Optional All-Questions Grid View -->
       <div id="all-questions-grid-view" style="display: none; margin-top: 15px;"></div>
-    </div>
-
-    <!-- RIGHT COLUMN: GRAPHICAL RAINBOW SOROBAN ABACUS BESIDE IT -->
-    <div class="abacus-stage-box" id="side-abacus-box">
-      <div class="abacus-header-row">
-        <div class="abacus-headline">
-          <span>🧮</span>
-          <span id="t-abacus-title">Kungi's Soroban Abacus</span>
-        </div>
-
-        <div class="rod-selector-wrap">
-          <span style="font-size: 0.75rem; font-weight: bold; color: var(--primary-dark);" id="t-rods-lbl">Rods:</span>
-          <button class="rod-sel-btn" onclick="switchRodCount(3)">3</button>
-          <button class="rod-sel-btn active" onclick="switchRodCount(5)">5</button>
-          <button class="rod-sel-btn" onclick="switchRodCount(7)">7</button>
-          <button class="rod-sel-btn" onclick="switchRodCount(13)">13 (Photo)</button>
-        </div>
-
-        <div class="abacus-tool-actions">
-          <button class="btn-pink-pill btn-pink-reset" id="btn-clear-abacus">🧹 <span id="t-clear-btn">Clear (0)</span></button>
-          <button class="btn-pink-pill btn-pink-hint" id="btn-explain-move">💡 <span id="t-how-works">How Beads Work</span></button>
-        </div>
-      </div>
-
-      <!-- Authentic Soroban Frame with Rainbow Beads -->
-      <div class="soroban-frame" id="main-soroban">
-        <div class="soroban-inner" id="soroban-rods-container">
-          <!-- Rods injected dynamically -->
-        </div>
-      </div>
-
-      <!-- Rod Place Value Readouts -->
-      <div class="rod-readouts" id="rod-readouts-container">
-        <!-- Injected -->
-      </div>
-
-      <div class="soroban-total-display">
-        <div style="display: flex; align-items: center; gap: 8px;">
-          <span id="t-val-lbl">Value:</span>
-          <span id="soroban-val-text" style="color: #fffa65; font-size: 1.6rem; min-width: 32px;">0</span>
-        </div>
-        <div class="spelled-words-badge" id="soroban-val-words">
-          <span>🚗</span>
-          <span id="soroban-spelled-text">Zero</span>
-          <span>🏁</span>
-        </div>
-        <button class="icon-toggle-btn" style="padding: 4px 10px; font-size: 0.85rem;" onclick="speakCurrentValue(true)" title="Speak sweet pronunciation">🔊</button>
-      </div>
     </div>
 
   </div>
@@ -2064,6 +2146,7 @@ const I18N = {
     allLessons: "📚 All Lessons",
     hideLessons: "✖️ Hide Lessons",
     changeLesson: "📚 Change Lesson",
+    overallProgress: "Overall Progress",
     maximize: "Maximize",
     restore: "Restore"
   },
@@ -2131,6 +2214,7 @@ const I18N = {
     allLessons: "📚 എല്ലാ പാഠങ്ങളും",
     hideLessons: "✖️ പാഠങ്ങൾ മറയ്ക്കുക",
     changeLesson: "📚 പാഠം മാറ്റുക",
+    overallProgress: "ആകെ പുരോഗതി",
     maximize: "വലുതാക്കുക",
     restore: "ചുരുക്കുക"
   }
@@ -2197,6 +2281,7 @@ function setLanguage(lang) {
   // Hero & Stats
   setTxt('t-app-title', dict.appTitle);
   setTxt('t-app-subtitle', dict.welcomeSub);
+  setTxt('t-overall-progress', dict.overallProgress);
   setTxt('t-correct-answers', dict.correctAnswers);
   setTxt('t-total-questions', dict.totalQuestions);
   setTxt('t-stars-earned', dict.starsEarned);
@@ -2662,13 +2747,41 @@ try {
   lessonSolvedMap = {};
 }
 
+function renderOverallProgressStars() {
+  const track = document.getElementById('banner-stars-track');
+  if (!track) return;
+
+  const counterEl = document.getElementById('banner-stars-counter');
+  const activeCount = Math.min(10, Math.max(0, totalStars));
+
+  if (counterEl) {
+    counterEl.innerText = `${activeCount} / 10`;
+  }
+
+  let html = '';
+  for (let i = 1; i <= 10; i++) {
+    const isLit = (i <= activeCount);
+    const starTitle = isLit ? `Star ${i}: Earned! ⭐` : `Star ${i}: Complete questions to earn!`;
+    html += `<span class="banner-star-item ${isLit ? 'active' : 'inactive'}" title="${starTitle}">${isLit ? '⭐' : '★'}</span>`;
+  }
+  track.innerHTML = html;
+}
+
 function updateStatsUI() {
-  document.getElementById('stat-correct').innerText = totalCorrect;
-  document.getElementById('stat-total').innerText = totalQuestions;
-  document.getElementById('stat-stars').innerText = totalStars;
-  document.getElementById('stat-crowns').innerText = totalCrowns;
-  document.getElementById('modal-star-count').innerText = totalStars + ' ⭐';
-  document.getElementById('modal-crown-count').innerText = totalCrowns + ' 👑';
+  const statCorrect = document.getElementById('stat-correct');
+  const statTotal = document.getElementById('stat-total');
+  const statStars = document.getElementById('stat-stars');
+  const statCrowns = document.getElementById('stat-crowns');
+  const modalStar = document.getElementById('modal-star-count');
+  const modalCrown = document.getElementById('modal-crown-count');
+  if (statCorrect) statCorrect.innerText = totalCorrect;
+  if (statTotal) statTotal.innerText = totalQuestions;
+  if (statStars) statStars.innerText = totalStars;
+  if (statCrowns) statCrowns.innerText = totalCrowns;
+  if (modalStar) modalStar.innerText = totalStars + ' ⭐';
+  if (modalCrown) modalCrown.innerText = totalCrowns + ' 👑';
+
+  renderOverallProgressStars();
 }
 
 function savePersistentStats() {
