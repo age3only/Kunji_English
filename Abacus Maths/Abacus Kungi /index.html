@@ -4675,6 +4675,7 @@ function verifyOrSetBeadDrawNumber(targetNum, idx) {
     totalStars += 1;
     savePersistentStats();
     updateStatsUI();
+    playSound('fanfare');
     playSound('star');
     showCelebrationOverlay(
       '⭐',
