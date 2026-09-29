@@ -4253,8 +4253,8 @@ function navigateActiveLesson(direction) {
   let idx = ALL_LESSON_KEYS.indexOf(activeLessonKey);
   if (idx === -1) idx = 0;
   idx = (idx + direction + ALL_LESSON_KEYS.length) % ALL_LESSON_KEYS.length;
-  // Clicking left/right arrow changes lesson in place without moving focus or scrolling webpage
-  loadLesson(ALL_LESSON_KEYS[idx], false, false);
+  // Clicking left/right arrow navigates lesson and automatically moves screen focus to problem solving area
+  loadLesson(ALL_LESSON_KEYS[idx], true, true);
 }
 
 function focusBeadCardSection() {
