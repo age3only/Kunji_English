@@ -729,7 +729,7 @@
     }
   }
 
-  /* Left Box: Active Challenge Focus Card */
+  /* Left Box: Active Challenge Focus Card (Problem Solving Area) */
   .challenge-focus-card {
     background: #142817;
     border: 3px solid #2e5333;
@@ -741,6 +741,8 @@
     align-items: center;
     position: relative;
     text-align: center;
+    scroll-margin-top: 24px;
+    transition: box-shadow 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
   }
 
   .challenge-nav-bar {
@@ -4256,32 +4258,55 @@ function navigateActiveLesson(direction) {
 }
 
 function focusBeadCardSection() {
-  const beadCard = document.getElementById('active-challenge-card');
-  if (beadCard) {
-    beadCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    beadCard.classList.remove('bead-card-focus-highlight');
-    void beadCard.offsetWidth; // trigger reflow
-    beadCard.classList.add('bead-card-focus-highlight');
-  }
-
+  // Use a slight delay to allow the selected lesson DOM to finish render/reflow
   setTimeout(() => {
-    const beadWheel = document.getElementById('bead-wheel-box');
-    const arenaWheel = document.getElementById('arena-wheel-box');
-    const beadInp = document.getElementById('bead-answer-input');
-    const speedBtn = document.getElementById('btn-start-speed-timer');
-    if (beadWheel && beadWheel.offsetParent !== null) {
-      beadWheel.focus({ preventScroll: true });
-    } else if (arenaWheel && arenaWheel.offsetParent !== null) {
-      arenaWheel.focus({ preventScroll: true });
-    } else if (beadInp && beadInp.offsetParent !== null) {
-      beadInp.focus({ preventScroll: true });
-    } else if (speedBtn && speedBtn.offsetParent !== null) {
-      speedBtn.focus({ preventScroll: true });
+    const beadCard = document.getElementById('active-challenge-card');
+    if (beadCard) {
+      // 1. Calculate top offset with generous margin so the whole problem area is in full view
+      const cardRect = beadCard.getBoundingClientRect();
+      const currentScrollY = window.pageYOffset || document.documentElement.scrollTop;
+      const targetScrollY = Math.max(0, cardRect.top + currentScrollY - 24);
+
+      window.scrollTo({
+        top: targetScrollY,
+        behavior: 'smooth'
+      });
+
+      // 2. Also trigger native smooth scroll with block start as standard fallback
+      try {
+        beadCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } catch(e) {}
+
+      // 3. Trigger pulse highlight animation to clearly indicate focus
+      beadCard.classList.remove('bead-card-focus-highlight');
+      void beadCard.offsetWidth; // trigger reflow
+      beadCard.classList.add('bead-card-focus-highlight');
     }
-  }, 300);
+
+    // 4. Focus relevant input/wheel within problem solving area without snapping scroll
+    setTimeout(() => {
+      const arenaWheel = document.getElementById('arena-wheel-box');
+      const beadWheel = document.getElementById('bead-wheel-box');
+      const speedBox1 = document.getElementById('speed-box-1');
+      const stylusCanvas = document.getElementById('stylus-canvas');
+      const beadInp = document.getElementById('bead-answer-input');
+
+      if (arenaWheel && arenaWheel.offsetParent !== null) {
+        arenaWheel.focus({ preventScroll: true });
+      } else if (beadWheel && beadWheel.offsetParent !== null) {
+        beadWheel.focus({ preventScroll: true });
+      } else if (speedBox1 && speedBox1.offsetParent !== null) {
+        speedBox1.focus({ preventScroll: true });
+      } else if (stylusCanvas && stylusCanvas.offsetParent !== null) {
+        stylusCanvas.focus({ preventScroll: true });
+      } else if (beadInp && beadInp.offsetParent !== null) {
+        beadInp.focus({ preventScroll: true });
+      }
+    }, 180);
+  }, 50);
 }
 
-function loadLesson(lessonKey, shouldScroll = false, autoFocus = true) {
+function loadLesson(lessonKey, shouldScroll = true, autoFocus = true) {
   activeLessonKey = lessonKey;
   activeQuestionIndex = 0;
 
@@ -5820,9 +5845,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.getElementById('btn-open-cert').addEventListener('click', openCertModal);
 
-  // Load Lesson 1 (First Question, Card #1) by default
+  // Load Lesson 1 (First Question, Card #1) by default (without jumping on initial load)
   beadCountCurrentNum = 1;
-  loadLesson('sec-bead-count-1');
+  loadLesson('sec-bead-count-1', false, false);
 });
 </script>
 </body>
