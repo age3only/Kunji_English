@@ -1628,6 +1628,42 @@
     border: 1.5px solid #2e5333;
   }
 
+  .box-trace-area {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-top: 1px;
+    margin-bottom: 2px;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .trace-number-svg {
+    width: 38px;
+    height: 48px;
+    fill: none;
+    stroke: #4ade80;
+    stroke-width: 3.2px;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 4.5 4.5;
+    opacity: 0.85;
+    transition: all 0.25s ease;
+  }
+
+  .dotted-digit-box.completed-box .trace-number-svg {
+    stroke: #86efac !important;
+    opacity: 0.95;
+    stroke-dasharray: none;
+  }
+
+  .dotted-digit-box.active-box .trace-number-svg {
+    stroke: #facc15 !important;
+    opacity: 1;
+  }
+
   .box-guide-line {
     width: 75%;
     height: 1px;
@@ -4850,6 +4886,19 @@ function animateAbacusSteps(nums) {
    16-SECOND COUNTDOWN TIMER, RHYTHMIC MUSIC, AND APPLE PENCIL DRAWING PAD!
    ========================================================================= */
 
+const DIGIT_TRACE_PATHS = {
+  '1': 'M14,19 L20,11 L20,45 M12,45 L28,45',
+  '2': 'M11,19 C11,9 29,9 29,19 C29,29 11,38 11,45 L29,45',
+  '3': 'M12,14 C16,9 28,9 28,19 C28,26 19,26 19,26 C25,26 29,29 29,37 C29,45 15,46 12,42',
+  '4': 'M24,10 L10,33 L30,33 M24,22 L24,45',
+  '5': 'M28,11 L14,11 L13,24 C16,21 28,21 28,33 C28,43 15,45 11,40',
+  '6': 'M26,13 C18,9 12,19 12,31 C12,43 28,43 28,32 C28,21 12,23 12,32',
+  '7': 'M10,11 L30,11 L16,45',
+  '8': 'M20,26 C13,26 12,18 20,11 C28,18 27,26 20,26 C13,26 12,35 20,44 C28,35 27,26 20,26 Z',
+  '9': 'M14,41 C22,46 28,37 28,24 C28,12 12,12 12,24 C12,33 27,31 28,23',
+  '0': 'M20,11 C12,11 12,44 20,44 C28,44 28,11 20,11 Z'
+};
+
 const SPEED_DIGITS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
 let activeSpeedDigitIndex = 0;
 let speedTurn = parseInt(localStorage.getItem('kungi_speed_turn') || '1', 10);
@@ -4955,6 +5004,11 @@ function renderSpeedWritingArena() {
           ${SPEED_DIGITS.map((d, idx) => `
             <div class="dotted-digit-box ${idx === 0 ? 'active-box' : ''}" id="speed-box-${d}" onclick="selectSpeedDigitBox(${idx})">
               <span class="box-digit-watermark">${d}</span>
+              <div class="box-trace-area">
+                <svg class="trace-number-svg" viewBox="0 0 40 52">
+                  <path d="${DIGIT_TRACE_PATHS[d]}" />
+                </svg>
+              </div>
               <div class="box-guide-line"></div>
             </div>
           `).join('')}
