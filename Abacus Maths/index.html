@@ -3950,6 +3950,7 @@ class NumberWheelController {
 
     // 2. Touch / Mouse drag
     const onPointerDown = (e) => {
+      if (e.target && e.target.closest('.wheel-nudge-btn')) return;
       this.startY = e.clientY;
       this.isDragging = true;
       try { this.container.setPointerCapture(e.pointerId); } catch(err) {}
@@ -4093,7 +4094,7 @@ function renderActiveChallenge(autoFocus = true) {
       
       <!-- Hulk Number Scroll Wheel Picker -->
       <div class="hulk-wheel-box" id="arena-wheel-box" tabindex="0" title="Scroll with mouse wheel, swipe up/down, or click arrows">
-        <button type="button" class="wheel-nudge-btn wheel-up" onclick="nudgeNumberWheel('arena', 1)" title="Scroll Up">▲</button>
+        <button type="button" class="wheel-nudge-btn wheel-up" onclick="nudgeNumberWheel('arena', 1)" onpointerdown="event.stopPropagation(); nudgeNumberWheel('arena', 1);" title="Scroll Up">▲</button>
         <div class="wheel-roller-viewport">
           <div class="wheel-slot-bracket"></div>
           <div class="wheel-roller-track" id="arena-wheel-track">
@@ -4102,7 +4103,7 @@ function renderActiveChallenge(autoFocus = true) {
             <div class="wheel-digit wheel-next" id="arena-wheel-next">-</div>
           </div>
         </div>
-        <button type="button" class="wheel-nudge-btn wheel-down" onclick="nudgeNumberWheel('arena', -1)" title="Scroll Down">▼</button>
+        <button type="button" class="wheel-nudge-btn wheel-down" onclick="nudgeNumberWheel('arena', -1)" onpointerdown="event.stopPropagation(); nudgeNumberWheel('arena', -1);" title="Scroll Down">▼</button>
         <input type="hidden" id="arena-answer-input" value="">
       </div>
     </div>
@@ -4824,7 +4825,7 @@ function renderBeadLessonArena(lessonKey, autoFocus = true) {
     <!-- Hulk Number Scroll Wheel Picker for Bead Counting -->
     <div style="display: flex; justify-content: center; margin-bottom: 10px;">
       <div class="hulk-wheel-box" id="bead-wheel-box" tabindex="0" title="Scroll with mouse wheel, swipe up/down, or click arrows">
-        <button type="button" class="wheel-nudge-btn wheel-up" onclick="nudgeNumberWheel('bead', 1)" title="Scroll Up">▲</button>
+        <button type="button" class="wheel-nudge-btn wheel-up" onclick="nudgeNumberWheel('bead', 1)" onpointerdown="event.stopPropagation(); nudgeNumberWheel('bead', 1);" title="Scroll Up">▲</button>
         <div class="wheel-roller-viewport">
           <div class="wheel-slot-bracket"></div>
           <div class="wheel-roller-track" id="bead-wheel-track">
@@ -4833,7 +4834,7 @@ function renderBeadLessonArena(lessonKey, autoFocus = true) {
             <div class="wheel-digit wheel-next" id="bead-wheel-next">-</div>
           </div>
         </div>
-        <button type="button" class="wheel-nudge-btn wheel-down" onclick="nudgeNumberWheel('bead', -1)" title="Scroll Down">▼</button>
+        <button type="button" class="wheel-nudge-btn wheel-down" onclick="nudgeNumberWheel('bead', -1)" onpointerdown="event.stopPropagation(); nudgeNumberWheel('bead', -1);" title="Scroll Down">▼</button>
         <input type="hidden" id="bead-answer-input" value="">
       </div>
     </div>
