@@ -104,6 +104,13 @@
     border-color: #4ade80;
   }
 
+  .icon-toggle-btn.muted {
+    background: #3b1818 !important;
+    border-color: #ef4444 !important;
+    color: #fca5a5 !important;
+    box-shadow: 0 4px 10px rgba(239, 68, 68, 0.3) !important;
+  }
+
   .lang-switcher-box {
     display: flex;
     gap: 8px;
@@ -1941,8 +1948,9 @@
 <!-- Top Bar with Sound/Voice and Language Switcher -->
 <div class="top-bar">
   <div class="top-left-controls">
+    <button class="icon-toggle-btn" id="btn-sound-mute" title="Mute / Unmute Sound" onclick="toggleMasterMute()"><span id="ico-mute">🔊</span> <span id="lbl-mute">Sound: ON</span></button>
     <button class="icon-toggle-btn" id="btn-toggle-voice" title="Voice Appreciation (On/Off)">🗣️ <span id="lbl-voice">Voice</span></button>
-    <button class="icon-toggle-btn" id="btn-toggle-sound" title="Sound Effects (On/Off)">🔊 <span id="lbl-sound">Sound</span></button>
+    <button class="icon-toggle-btn" id="btn-toggle-sound" title="Sound Effects (On/Off)">🎵 <span id="lbl-sound">Sound</span></button>
     <button class="icon-toggle-btn" id="btn-open-cert" title="Certificate & Trophy">🏆 <span id="lbl-trophy">Trophy</span></button>
   </div>
 
@@ -2281,6 +2289,9 @@ const I18N = {
     voiceLbl: "Voice",
     soundLbl: "Sound",
     trophyLbl: "Trophy",
+    soundOn: "Sound: ON",
+    soundOff: "Muted 🔇",
+    soundMuteTitle: "Mute / Unmute Sound",
     tabBasics: "🧮 Abacus Basics",
     tabFingers: "🖐️ Finger Tech",
     tabDraw: "✏️ Bead Drawing (30 Qs)",
@@ -2349,6 +2360,9 @@ const I18N = {
     voiceLbl: "ശബ്ദം",
     soundLbl: "സംഗീതം",
     trophyLbl: "ട്രോഫി",
+    soundOn: "ശബ്ദം: ഓൺ",
+    soundOff: "നിശബ്ദം 🔇",
+    soundMuteTitle: "ശബ്ദം നിശബ്ദമാക്കുക / ഓൺ ചെയ്യുക",
     tabBasics: "🧮 അബാക്കസ് അടിസ്ഥാനങ്ങൾ",
     tabFingers: "🖐️ വിരൽ സാങ്കേതികത",
     tabDraw: "✏️ മണി വരയ്ക്കൽ (30)",
@@ -2422,6 +2436,7 @@ function setLanguage(lang) {
   };
 
   // Top header button labels
+  updateMuteButtonUI();
   setTxt('lbl-voice', dict.voiceLbl);
   setTxt('lbl-sound', dict.soundLbl);
   setTxt('lbl-trophy', dict.trophyLbl);
@@ -2615,7 +2630,66 @@ function numberToWordsMalayalam(num) {
 
 let voiceEnabled = true;
 let soundEnabled = true;
+let masterMuted = false;
+try {
+  if (localStorage.getItem('abacus_master_muted') === 'true') {
+    masterMuted = true;
+    soundEnabled = false;
+    voiceEnabled = false;
+  }
+} catch(e) {}
 let audioCtx = null;
+
+function toggleMasterMute() {
+  masterMuted = !masterMuted;
+  try {
+    localStorage.setItem('abacus_master_muted', masterMuted ? 'true' : 'false');
+  } catch(e) {}
+
+  if (masterMuted) {
+    soundEnabled = false;
+    voiceEnabled = false;
+    if (typeof currentTtsAudio !== 'undefined' && currentTtsAudio) {
+      try {
+        currentTtsAudio.pause();
+        currentTtsAudio.currentTime = 0;
+        currentTtsAudio = null;
+      } catch(e) {}
+    }
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+    }
+  } else {
+    soundEnabled = true;
+    voiceEnabled = true;
+  }
+
+  updateMuteButtonUI();
+
+  if (!masterMuted) {
+    playSweetTone(4);
+  }
+}
+
+function updateMuteButtonUI() {
+  const btn = document.getElementById('btn-sound-mute');
+  const ico = document.getElementById('ico-mute');
+  const lbl = document.getElementById('lbl-mute');
+  if (!btn || !ico || !lbl) return;
+
+  const dict = I18N[currentLang] || I18N.en;
+  if (masterMuted) {
+    btn.classList.add('muted');
+    ico.innerText = '🔇';
+    lbl.innerText = dict.soundOff || 'Muted 🔇';
+    btn.setAttribute('title', dict.soundMuteTitle || 'Unmute Sound');
+  } else {
+    btn.classList.remove('muted');
+    ico.innerText = '🔊';
+    lbl.innerText = dict.soundOn || 'Sound: ON';
+    btn.setAttribute('title', dict.soundMuteTitle || 'Mute Sound');
+  }
+}
 
 function initAudio() {
   if (!audioCtx) {
@@ -2624,7 +2698,7 @@ function initAudio() {
 }
 
 function playSweetTone(noteIndex = 0) {
-  if (!soundEnabled) return;
+  if (!soundEnabled || masterMuted) return;
   try {
     initAudio();
     const now = audioCtx.currentTime;
@@ -2664,7 +2738,7 @@ function playSweetTone(noteIndex = 0) {
 }
 
 function playSound(type) {
-  if (!soundEnabled) return;
+  if (!soundEnabled || masterMuted) return;
   try {
     initAudio();
     const now = audioCtx.currentTime;
@@ -2773,6 +2847,7 @@ function sanitizeSpeechText(str) {
 
 // Helper to play high-fidelity, native Malayalam human speech
 function playNaturalMalayalamAudio(text, onEnded = null) {
+  if (masterMuted || !voiceEnabled) return;
   try {
     if (currentTtsAudio) {
       currentTtsAudio.pause();
@@ -2813,7 +2888,7 @@ function playNaturalMalayalamAudio(text, onEnded = null) {
 
 // Fallback to Web Speech API if offline or network blocked
 function speakMalayalamWebSpeechFallback(text) {
-  if (!('speechSynthesis' in window)) return;
+  if (masterMuted || !voiceEnabled || !('speechSynthesis' in window)) return;
   window.speechSynthesis.cancel();
   const cleanText = sanitizeSpeechText(text);
   if (!cleanText) return;
@@ -2831,7 +2906,7 @@ function speakMalayalamWebSpeechFallback(text) {
 }
 
 function speakValueSweetly(val, force = false) {
-  if (!voiceEnabled) return;
+  if (masterMuted || !voiceEnabled) return;
   clearTimeout(speechDebounceTimer);
   speechDebounceTimer = setTimeout(() => {
     if (currentTtsAudio) {
@@ -2865,7 +2940,7 @@ function speakValueSweetly(val, force = false) {
 }
 
 function speakPraiseCustom(text) {
-  if (!voiceEnabled) return;
+  if (masterMuted || !voiceEnabled) return;
   if (currentTtsAudio) {
     currentTtsAudio.pause();
     currentTtsAudio.currentTime = 0;
@@ -3281,7 +3356,7 @@ function resetAllScoresManually() {
 let hasPlayedWelcomeMusic = false;
 
 function playWelcomeMusic() {
-  if (!soundEnabled) return;
+  if (!soundEnabled || masterMuted) return;
   try {
     initAudio();
     if (audioCtx.state === 'suspended') {
@@ -4839,7 +4914,7 @@ function start16SecSpeedSession() {
   const rhythmNotes = [523.25, 659.25, 783.99, 659.25];
   let noteIdx = 0;
   speedMusicInterval = setInterval(() => {
-    if (soundEnabled && audioCtx) {
+    if (!masterMuted && soundEnabled && audioCtx) {
       const now = audioCtx.currentTime;
       const osc = audioCtx.createOscillator();
       const gain = audioCtx.createGain();
@@ -5294,7 +5369,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Top Left: Click on Voice plays sweet voice greeting
   document.getElementById('btn-toggle-voice').addEventListener('click', function() {
-    voiceEnabled = true;
+    if (masterMuted) {
+      toggleMasterMute();
+    } else {
+      voiceEnabled = true;
+    }
     this.style.opacity = '1';
     const isMl = (currentLang === 'ml' || currentLang === 'id');
     const welcomeVoiceMsg = isMl
@@ -5305,9 +5384,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Top Left: Click on Sound plays sweet musical chime tune
   document.getElementById('btn-toggle-sound').addEventListener('click', function() {
-    soundEnabled = true;
+    if (masterMuted) {
+      toggleMasterMute();
+    } else {
+      soundEnabled = true;
+      playWelcomeMusic();
+    }
     this.style.opacity = '1';
-    playWelcomeMusic();
   });
 
   // Welcome music on page open (handles browser autoplay policies smoothly)
@@ -5329,6 +5412,9 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('keydown', unlockAudioOnFirstGesture, { once: true });
 
   document.getElementById('btn-open-cert').addEventListener('click', openCertModal);
+
+  // Initialize mute button state
+  updateMuteButtonUI();
 
   // Load Lesson 1 (First Question, Card #1) by default
   beadCountCurrentNum = 1;
