@@ -2732,23 +2732,46 @@ let isMasterMuted = localStorage.getItem('kungi_master_muted') === '1';
 let voiceEnabled = true;
 let soundEnabled = true;
 let audioCtx = null;
+let masterGainNode = null;
 let currentSoundTheme = localStorage.getItem('kungi_sound_theme') || 'crystal';
 let selectedVoiceProfile = localStorage.getItem('kungi_voice_profile') || 'female';
 
 function initAudio() {
   try {
-    if (!audioCtx) {
-      const AudioCtxClass = window.AudioContext || window.webkitAudioContext;
-      if (AudioCtxClass) {
-        audioCtx = new AudioCtxClass();
-      }
+    const AudioCtxClass = window.AudioContext || window.webkitAudioContext;
+    if (!AudioCtxClass) return;
+
+    if (!audioCtx || audioCtx.state === 'closed') {
+      audioCtx = new AudioCtxClass();
+      masterGainNode = audioCtx.createGain();
+      masterGainNode.gain.setValueAtTime(isMasterMuted ? 0 : 1.0, audioCtx.currentTime);
+      masterGainNode.connect(audioCtx.destination);
     }
-    if (audioCtx && audioCtx.state === 'suspended') {
+
+    if (audioCtx.state === 'suspended' || audioCtx.state === 'interrupted') {
       audioCtx.resume();
+    }
+    if (masterGainNode) {
+      masterGainNode.gain.setValueAtTime(isMasterMuted ? 0 : 1.0, audioCtx.currentTime);
     }
   } catch(e) {
     console.warn('initAudio error:', e);
   }
+}
+
+function getAudioDestination() {
+  initAudio();
+  if (masterGainNode) return masterGainNode;
+  return audioCtx ? audioCtx.destination : null;
+}
+
+function ensureAudioRunning() {
+  try {
+    initAudio();
+    if (audioCtx && (audioCtx.state === 'suspended' || audioCtx.state === 'interrupted')) {
+      audioCtx.resume();
+    }
+  } catch(e) {}
 }
 
 function updateMuteButtonUI() {
@@ -2767,6 +2790,9 @@ function updateMuteButtonUI() {
       if (lbl) lbl.innerText = isMl ? 'ശബ്ദം ഓൺ' : 'Sound ON';
     }
   }
+  if (masterGainNode && audioCtx) {
+    masterGainNode.gain.setValueAtTime(isMasterMuted ? 0 : 1.0, audioCtx.currentTime);
+  }
 }
 
 function toggleMasterMute() {
@@ -2780,12 +2806,11 @@ function toggleMasterMute() {
       currentTtsAudio = null;
     }
     if ('speechSynthesis' in window) window.speechSynthesis.cancel();
-    if (speedMusicInterval) {
-      clearInterval(speedMusicInterval);
-      speedMusicInterval = null;
+    if (typeof stopSpeedSessionTimers === 'function') {
+      stopSpeedSessionTimers();
     }
   } else {
-    initAudio();
+    ensureAudioRunning();
     playSound('tick');
   }
 }
@@ -2921,12 +2946,11 @@ function previewSoundTheme(id) {
 function playSweetTone(noteIndex = 0, force = false) {
   if (!force && (isMasterMuted || !soundEnabled)) return;
   try {
-    initAudio();
+    ensureAudioRunning();
     if (!audioCtx) return;
-    if (audioCtx.state === 'suspended') {
-      audioCtx.resume();
-    }
-    const now = audioCtx.currentTime + 0.01;
+    const dest = getAudioDestination();
+    if (!dest) return;
+    const now = Math.max(audioCtx.currentTime, 0) + 0.008;
     const scale = [523.25, 587.33, 659.25, 783.99, 880.00, 1046.50, 1174.66, 1318.51, 1567.98];
     const freq = scale[Math.abs(noteIndex) % scale.length];
 
@@ -2943,11 +2967,12 @@ function playSweetTone(noteIndex = 0, force = false) {
       gain.gain.linearRampToValueAtTime(0.0001, now + 0.55);
       osc.connect(gain);
       osc2.connect(gain);
-      gain.connect(audioCtx.destination);
+      gain.connect(dest);
       osc.start(now);
       osc2.start(now);
       osc.stop(now + 0.55);
       osc2.stop(now + 0.55);
+      osc.onended = () => { try { osc.disconnect(); osc2.disconnect(); gain.disconnect(); } catch(e) {} };
     } else if (currentSoundTheme === 'marimba') {
       const osc = audioCtx.createOscillator();
       const gain = audioCtx.createGain();
@@ -2958,9 +2983,10 @@ function playSweetTone(noteIndex = 0, force = false) {
       gain.gain.linearRampToValueAtTime(0.35, now + 0.01);
       gain.gain.linearRampToValueAtTime(0.0001, now + 0.18);
       osc.connect(gain);
-      gain.connect(audioCtx.destination);
+      gain.connect(dest);
       osc.start(now);
       osc.stop(now + 0.18);
+      osc.onended = () => { try { osc.disconnect(); gain.disconnect(); } catch(e) {} };
     } else if (currentSoundTheme === 'arcade') {
       const osc = audioCtx.createOscillator();
       const gain = audioCtx.createGain();
@@ -2971,9 +2997,10 @@ function playSweetTone(noteIndex = 0, force = false) {
       gain.gain.linearRampToValueAtTime(0.14, now + 0.01);
       gain.gain.linearRampToValueAtTime(0.0001, now + 0.16);
       osc.connect(gain);
-      gain.connect(audioCtx.destination);
+      gain.connect(dest);
       osc.start(now);
       osc.stop(now + 0.16);
+      osc.onended = () => { try { osc.disconnect(); gain.disconnect(); } catch(e) {} };
     } else if (currentSoundTheme === 'celestial') {
       const osc = audioCtx.createOscillator();
       const gain = audioCtx.createGain();
@@ -2983,9 +3010,10 @@ function playSweetTone(noteIndex = 0, force = false) {
       gain.gain.linearRampToValueAtTime(0.2, now + 0.06);
       gain.gain.linearRampToValueAtTime(0.0001, now + 0.65);
       osc.connect(gain);
-      gain.connect(audioCtx.destination);
+      gain.connect(dest);
       osc.start(now);
       osc.stop(now + 0.65);
+      osc.onended = () => { try { osc.disconnect(); gain.disconnect(); } catch(e) {} };
     } else {
       // Default crystal bells
       const osc = audioCtx.createOscillator();
@@ -3008,13 +3036,14 @@ function playSweetTone(noteIndex = 0, force = false) {
 
       osc.connect(gain);
       overtone.connect(overGain);
-      gain.connect(audioCtx.destination);
-      overGain.connect(audioCtx.destination);
+      gain.connect(dest);
+      overGain.connect(dest);
 
       osc.start(now);
       overtone.start(now);
       osc.stop(now + 0.40);
       overtone.stop(now + 0.25);
+      osc.onended = () => { try { osc.disconnect(); overtone.disconnect(); gain.disconnect(); overGain.disconnect(); } catch(e) {} };
     }
   } catch(e) {
     console.warn('playSweetTone failed:', e);
@@ -3024,12 +3053,11 @@ function playSweetTone(noteIndex = 0, force = false) {
 function playSound(type) {
   if (isMasterMuted || !soundEnabled) return;
   try {
-    initAudio();
+    ensureAudioRunning();
     if (!audioCtx) return;
-    if (audioCtx.state === 'suspended') {
-      audioCtx.resume();
-    }
-    const now = audioCtx.currentTime + 0.01;
+    const dest = getAudioDestination();
+    if (!dest) return;
+    const now = Math.max(audioCtx.currentTime, 0) + 0.008;
 
     if (type === 'bead') {
       playSweetTone(Math.floor(Math.random() * 5));
@@ -3044,9 +3072,10 @@ function playSound(type) {
         g.gain.linearRampToValueAtTime(0.22, now + i * 0.08 + 0.02);
         g.gain.linearRampToValueAtTime(0.0001, now + i * 0.08 + 0.45);
         o.connect(g);
-        g.connect(audioCtx.destination);
+        g.connect(dest);
         o.start(now + i * 0.08);
         o.stop(now + i * 0.08 + 0.45);
+        o.onended = () => { try { o.disconnect(); g.disconnect(); } catch(e) {} };
       });
     } else if (type === 'crown') {
       // Royal crown fanfare
@@ -3059,9 +3088,10 @@ function playSound(type) {
         g.gain.linearRampToValueAtTime(0.25, now + idx * 0.07 + 0.03);
         g.gain.linearRampToValueAtTime(0.0001, now + idx * 0.07 + 0.55);
         o.connect(g);
-        g.connect(audioCtx.destination);
+        g.connect(dest);
         o.start(now + idx * 0.07);
         o.stop(now + idx * 0.07 + 0.55);
+        o.onended = () => { try { o.disconnect(); g.disconnect(); } catch(e) {} };
       });
     } else if (type === 'tick') {
       const o = audioCtx.createOscillator();
@@ -3072,9 +3102,10 @@ function playSound(type) {
       g.gain.linearRampToValueAtTime(0.08, now + 0.005);
       g.gain.linearRampToValueAtTime(0.0001, now + 0.04);
       o.connect(g);
-      g.connect(audioCtx.destination);
+      g.connect(dest);
       o.start(now);
       o.stop(now + 0.04);
+      o.onended = () => { try { o.disconnect(); g.disconnect(); } catch(e) {} };
     } else if (type === 'clear') {
       const o = audioCtx.createOscillator();
       const g = audioCtx.createGain();
@@ -3085,9 +3116,10 @@ function playSound(type) {
       g.gain.linearRampToValueAtTime(0.2, now + 0.01);
       g.gain.linearRampToValueAtTime(0.0001, now + 0.12);
       o.connect(g);
-      g.connect(audioCtx.destination);
+      g.connect(dest);
       o.start(now);
       o.stop(now + 0.12);
+      o.onended = () => { try { o.disconnect(); g.disconnect(); } catch(e) {} };
     } else if (type === 'fanfare') {
       [523.25, 659.25, 783.99, 1046.50, 1318.51].forEach((freq, idx) => {
         const o = audioCtx.createOscillator();
@@ -3098,9 +3130,10 @@ function playSound(type) {
         g.gain.linearRampToValueAtTime(0.22, now + idx * 0.09 + 0.02);
         g.gain.linearRampToValueAtTime(0.0001, now + idx * 0.09 + 0.5);
         o.connect(g);
-        g.connect(audioCtx.destination);
+        g.connect(dest);
         o.start(now + idx * 0.09);
         o.stop(now + idx * 0.09 + 0.5);
+        o.onended = () => { try { o.disconnect(); g.disconnect(); } catch(e) {} };
       });
     }
   } catch(e) {
@@ -3662,11 +3695,11 @@ let hasPlayedWelcomeMusic = false;
 function playWelcomeMusic() {
   if (isMasterMuted || !soundEnabled) return;
   try {
-    initAudio();
-    if (audioCtx.state === 'suspended') {
-      audioCtx.resume();
-    }
-    const now = audioCtx.currentTime + 0.05;
+    ensureAudioRunning();
+    if (!audioCtx) return;
+    const dest = getAudioDestination();
+    if (!dest) return;
+    const now = Math.max(audioCtx.currentTime, 0) + 0.05;
     // Magical sweet welcome melody (Celesta + Music Box chime)
     const melody = [
       { freq: 523.25, time: 0.0, dur: 0.35, vol: 0.24 }, // C5
@@ -3701,24 +3734,28 @@ function playWelcomeMusic() {
       overtone.type = 'sine';
       overtone.frequency.setValueAtTime(note.freq * 2, t);
 
-      gain.gain.setValueAtTime(0, t);
+      gain.gain.setValueAtTime(0.001, t);
       gain.gain.linearRampToValueAtTime(note.vol, t + 0.02);
-      gain.gain.exponentialRampToValueAtTime(0.0001, t + note.dur);
+      gain.gain.linearRampToValueAtTime(0.0001, t + note.dur);
 
-      overGain.gain.setValueAtTime(0, t);
+      overGain.gain.setValueAtTime(0.001, t);
       overGain.gain.linearRampToValueAtTime(note.vol * 0.35, t + 0.015);
-      overGain.gain.exponentialRampToValueAtTime(0.0001, t + note.dur * 0.7);
+      overGain.gain.linearRampToValueAtTime(0.0001, t + note.dur * 0.7);
 
       osc.connect(gain);
       overtone.connect(overGain);
-      gain.connect(audioCtx.destination);
-      overGain.connect(audioCtx.destination);
+      gain.connect(dest);
+      overGain.connect(dest);
 
       osc.start(t);
       overtone.start(t);
       osc.stop(t + note.dur + 0.05);
       overtone.stop(t + note.dur * 0.7 + 0.05);
+
+      osc.onended = () => { try { osc.disconnect(); gain.disconnect(); } catch(e) {} };
+      overtone.onended = () => { try { overtone.disconnect(); overGain.disconnect(); } catch(e) {} };
     });
+    hasPlayedWelcomeMusic = true;
   } catch(e) {
     console.warn('Welcome music failed:', e);
   }
@@ -3726,8 +3763,18 @@ function playWelcomeMusic() {
 
 function triggerWelcomeMusicSafely() {
   if (hasPlayedWelcomeMusic) return;
-  playWelcomeMusic();
-  hasPlayedWelcomeMusic = true;
+  initAudio();
+  if (audioCtx) {
+    if (audioCtx.state === 'suspended' || audioCtx.state === 'interrupted') {
+      audioCtx.resume().then(() => {
+        if (!hasPlayedWelcomeMusic && audioCtx.state === 'running') {
+          playWelcomeMusic();
+        }
+      }).catch(() => {});
+    } else if (audioCtx.state === 'running') {
+      playWelcomeMusic();
+    }
+  }
 }
 
 /* =========================================================================
@@ -4950,12 +4997,24 @@ function selectSpeedDigitBox(idx) {
   }
 }
 
+function stopSpeedSessionTimers() {
+  if (speedTimerInterval) {
+    clearInterval(speedTimerInterval);
+    speedTimerInterval = null;
+  }
+  if (speedMusicInterval) {
+    clearInterval(speedMusicInterval);
+    speedMusicInterval = null;
+  }
+  isSpeedTimerRunning = false;
+}
+
 function renderSpeedWritingArena() {
   const cardContainer = document.getElementById('active-challenge-card');
   if (!cardContainer) return;
 
+  stopSpeedSessionTimers();
   activeSpeedDigitIndex = 0;
-  isSpeedTimerRunning = false;
   speedTurnCompleted = false;
 
   const isMl = (currentLang === 'ml' || currentLang === 'id');
@@ -5038,9 +5097,7 @@ function completeSpeedWritingTurn() {
   if (speedTurnCompleted) return;
   speedTurnCompleted = true;
 
-  if (speedTimerInterval) clearInterval(speedTimerInterval);
-  if (speedMusicInterval) clearInterval(speedMusicInterval);
-  isSpeedTimerRunning = false;
+  stopSpeedSessionTimers();
 
   const isMl = (currentLang === 'ml' || currentLang === 'id');
   const currentTurn = speedTurn;
@@ -5210,9 +5267,7 @@ function initStylusCanvas() {
       // Check if this was Box 0 (the last box in sequence 1..0)
       if (activeSpeedDigitIndex >= SPEED_DIGITS.length - 1) {
         // Turn completed when Box 0 is finished!
-        if (speedTimerInterval) clearInterval(speedTimerInterval);
-        if (speedMusicInterval) clearInterval(speedMusicInterval);
-        isSpeedTimerRunning = false;
+        stopSpeedSessionTimers();
         playSweetTone(4, true);
         completeSpeedWritingTurn();
       } else {
@@ -5253,7 +5308,11 @@ function clearStylusCanvas() {
   if (canvas && canvasCtx) {
     canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
   }
+  stopSpeedSessionTimers();
   activeSpeedDigitIndex = 0;
+  const disp = document.getElementById('speed-16s-display');
+  if (disp) disp.innerText = '16';
+
   SPEED_DIGITS.forEach((d, idx) => {
     const el = document.getElementById(`speed-box-${d}`);
     if (el) {
@@ -5272,13 +5331,8 @@ function clearStylusCanvas() {
 // 16s Countdown timer with rhythmic background music
 function start16SecSpeedSession() {
   if (speedTurnCompleted) return;
-  if (speedTimerInterval) clearInterval(speedTimerInterval);
-  if (speedMusicInterval) clearInterval(speedMusicInterval);
-
-  initAudio();
-  if (audioCtx && audioCtx.state === 'suspended') {
-    audioCtx.resume();
-  }
+  stopSpeedSessionTimers();
+  ensureAudioRunning();
 
   isSpeedTimerRunning = true;
   speedTimer16 = 16;
@@ -5289,22 +5343,25 @@ function start16SecSpeedSession() {
   const rhythmNotes = [523.25, 659.25, 783.99, 659.25];
   let noteIdx = 0;
   speedMusicInterval = setInterval(() => {
-    if (!isMasterMuted && soundEnabled && audioCtx) {
-      if (audioCtx.state === 'suspended') audioCtx.resume();
-      const now = audioCtx.currentTime + 0.01;
-      const osc = audioCtx.createOscillator();
-      const gain = audioCtx.createGain();
-      osc.type = currentSoundTheme === 'arcade' ? 'square' : 'triangle';
-      osc.frequency.setValueAtTime(rhythmNotes[noteIdx % rhythmNotes.length], now);
-      gain.gain.setValueAtTime(0.001, now);
-      gain.gain.linearRampToValueAtTime(0.09, now + 0.01);
-      gain.gain.linearRampToValueAtTime(0.0001, now + 0.16);
-      osc.connect(gain);
-      gain.connect(audioCtx.destination);
-      osc.start(now);
-      osc.stop(now + 0.16);
-      noteIdx++;
-    }
+    if (isMasterMuted || !soundEnabled) return;
+    ensureAudioRunning();
+    if (!audioCtx) return;
+    const dest = getAudioDestination();
+    if (!dest) return;
+    const now = Math.max(audioCtx.currentTime, 0) + 0.01;
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = currentSoundTheme === 'arcade' ? 'square' : 'triangle';
+    osc.frequency.setValueAtTime(rhythmNotes[noteIdx % rhythmNotes.length], now);
+    gain.gain.setValueAtTime(0.001, now);
+    gain.gain.linearRampToValueAtTime(0.09, now + 0.01);
+    gain.gain.linearRampToValueAtTime(0.0001, now + 0.16);
+    osc.connect(gain);
+    gain.connect(dest);
+    osc.start(now);
+    osc.stop(now + 0.16);
+    osc.onended = () => { try { osc.disconnect(); gain.disconnect(); } catch(e) {} };
+    noteIdx++;
   }, 400);
 
   const isMl = (currentLang === 'ml' || currentLang === 'id');
@@ -5317,9 +5374,7 @@ function start16SecSpeedSession() {
     if (!isMasterMuted) playSound('tick');
 
     if (speedTimer16 <= 0) {
-      clearInterval(speedTimerInterval);
-      clearInterval(speedMusicInterval);
-      isSpeedTimerRunning = false;
+      stopSpeedSessionTimers();
 
       if (statusEl) {
         statusEl.innerHTML = `⏰ <strong>${isMl ? 'സമയം കഴിഞ്ഞു! പെട്ടികൾ പൂർത്തിയാക്കി തുടരൂ!' : "Time's up! Keep writing to finish the remaining boxes!"}</strong>`;
@@ -5741,14 +5796,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // Welcome music on page open (handles browser autoplay policies smoothly)
   triggerWelcomeMusicSafely();
   const unlockAudioOnFirstGesture = () => {
-    initAudio();
-    if (audioCtx && audioCtx.state === 'suspended') {
-      audioCtx.resume().then(() => {
-        triggerWelcomeMusicSafely();
-      });
-    } else {
-      triggerWelcomeMusicSafely();
-    }
+    ensureAudioRunning();
+    triggerWelcomeMusicSafely();
     window.removeEventListener('pointerdown', unlockAudioOnFirstGesture);
     window.removeEventListener('click', unlockAudioOnFirstGesture);
     window.removeEventListener('keydown', unlockAudioOnFirstGesture);
@@ -5756,6 +5805,18 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('pointerdown', unlockAudioOnFirstGesture, { once: true });
   window.addEventListener('click', unlockAudioOnFirstGesture, { once: true });
   window.addEventListener('keydown', unlockAudioOnFirstGesture, { once: true });
+
+  // Continuous auto-resume on interactions & visibility return
+  window.addEventListener('pointerdown', ensureAudioRunning, { passive: true });
+  window.addEventListener('touchstart', ensureAudioRunning, { passive: true });
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') {
+      ensureAudioRunning();
+    }
+  });
+  window.addEventListener('focus', () => {
+    ensureAudioRunning();
+  });
 
   document.getElementById('btn-open-cert').addEventListener('click', openCertModal);
 
