@@ -1691,15 +1691,32 @@
   .dotted-digit-box.active-box {
     border-color: #facc15 !important;
     border-style: solid !important;
-    box-shadow: 0 0 14px rgba(250, 204, 21, 0.7);
-    background: #19381e;
+    border-width: 3px !important;
+    box-shadow: 0 0 18px rgba(250, 204, 21, 0.95), inset 0 0 12px rgba(250, 204, 21, 0.25) !important;
+    background: #1e4624 !important;
+    transform: scale(1.05);
+    animation: boxPulseGlow 1.2s infinite alternate ease-in-out;
+    cursor: pointer;
+  }
+
+  @keyframes boxPulseGlow {
+    from {
+      box-shadow: 0 0 10px rgba(250, 204, 21, 0.6), inset 0 0 6px rgba(250, 204, 21, 0.15);
+      border-color: #eab308;
+    }
+    to {
+      box-shadow: 0 0 22px rgba(250, 204, 21, 1), inset 0 0 14px rgba(250, 204, 21, 0.35);
+      border-color: #fef08a;
+    }
   }
 
   .dotted-digit-box.completed-box {
     border-color: #4ade80 !important;
     border-style: solid !important;
-    box-shadow: 0 0 12px rgba(74, 222, 128, 0.6);
-    background: #14351a;
+    box-shadow: 0 0 12px rgba(74, 222, 128, 0.65), inset 0 0 8px rgba(74, 222, 128, 0.2) !important;
+    background: #14351a !important;
+    transform: scale(1);
+    cursor: pointer;
   }
 
   /* Voice & Sound settings option cards */
@@ -2683,8 +2700,18 @@ let currentSoundTheme = localStorage.getItem('kungi_sound_theme') || 'crystal';
 let selectedVoiceProfile = localStorage.getItem('kungi_voice_profile') || 'female';
 
 function initAudio() {
-  if (!audioCtx) {
-    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  try {
+    if (!audioCtx) {
+      const AudioCtxClass = window.AudioContext || window.webkitAudioContext;
+      if (AudioCtxClass) {
+        audioCtx = new AudioCtxClass();
+      }
+    }
+    if (audioCtx && audioCtx.state === 'suspended') {
+      audioCtx.resume();
+    }
+  } catch(e) {
+    console.warn('initAudio error:', e);
   }
 }
 
@@ -2722,6 +2749,7 @@ function toggleMasterMute() {
       speedMusicInterval = null;
     }
   } else {
+    initAudio();
     playSound('tick');
   }
 }
@@ -2743,6 +2771,7 @@ const SOUND_THEMES = [
 ];
 
 function openVoiceSettingsModal() {
+  initAudio();
   renderVoiceOptions();
   const modal = document.getElementById('voice-settings-modal');
   if (modal) modal.style.display = 'flex';
@@ -2775,14 +2804,19 @@ function renderVoiceOptions() {
 }
 
 function selectVoiceProfile(id) {
+  if (isMasterMuted) toggleMasterMute();
+  initAudio();
   selectedVoiceProfile = id;
   localStorage.setItem('kungi_voice_profile', id);
   renderVoiceOptions();
-  previewVoiceProfile(id);
+  const isMl = (id === 'malayalam' || currentLang === 'ml' || currentLang === 'id');
+  const sample = isMl ? 'ഹലോ കുഞ്ഞീ! ഞാൻ നിങ്ങളുടെ അധ്യാപികയാണ്!' : 'Hello Kungi! I am your voice tutor!';
+  speakPraiseCustom(sample);
 }
 
 function previewVoiceProfile(id) {
-  if (isMasterMuted) return;
+  if (isMasterMuted) toggleMasterMute();
+  initAudio();
   const oldProfile = selectedVoiceProfile;
   selectedVoiceProfile = id;
   const isMl = (id === 'malayalam' || currentLang === 'ml' || currentLang === 'id');
@@ -2792,6 +2826,7 @@ function previewVoiceProfile(id) {
 }
 
 function openSoundSettingsModal() {
+  initAudio();
   renderSoundThemes();
   const modal = document.getElementById('sound-settings-modal');
   if (modal) modal.style.display = 'flex';
@@ -2824,31 +2859,38 @@ function renderSoundThemes() {
 }
 
 function selectSoundTheme(id) {
+  if (isMasterMuted) toggleMasterMute();
+  initAudio();
   currentSoundTheme = id;
   localStorage.setItem('kungi_sound_theme', id);
   renderSoundThemes();
-  previewSoundTheme(id);
+  playSweetTone(0, true);
+  setTimeout(() => { playSweetTone(2, true); }, 140);
+  setTimeout(() => { playSweetTone(4, true); }, 280);
 }
 
 function previewSoundTheme(id) {
-  if (isMasterMuted) return;
+  if (isMasterMuted) toggleMasterMute();
+  initAudio();
   const oldTheme = currentSoundTheme;
   currentSoundTheme = id;
-  [0, 2, 4].forEach((n, idx) => {
-    setTimeout(() => {
-      playSweetTone(n);
-    }, idx * 120);
-  });
+  playSweetTone(0, true);
+  setTimeout(() => { playSweetTone(2, true); }, 140);
+  setTimeout(() => { playSweetTone(4, true); }, 280);
   setTimeout(() => {
     currentSoundTheme = oldTheme;
-  }, 400);
+  }, 450);
 }
 
-function playSweetTone(noteIndex = 0) {
-  if (isMasterMuted || !soundEnabled) return;
+function playSweetTone(noteIndex = 0, force = false) {
+  if (!force && (isMasterMuted || !soundEnabled)) return;
   try {
     initAudio();
-    const now = audioCtx.currentTime;
+    if (!audioCtx) return;
+    if (audioCtx.state === 'suspended') {
+      audioCtx.resume();
+    }
+    const now = audioCtx.currentTime + 0.01;
     const scale = [523.25, 587.33, 659.25, 783.99, 880.00, 1046.50, 1174.66, 1318.51, 1567.98];
     const freq = scale[Math.abs(noteIndex) % scale.length];
 
@@ -2860,9 +2902,9 @@ function playSweetTone(noteIndex = 0) {
       osc2.type = 'sine';
       osc.frequency.setValueAtTime(freq, now);
       osc2.frequency.setValueAtTime(freq * 2, now);
-      gain.gain.setValueAtTime(0, now);
-      gain.gain.linearRampToValueAtTime(0.28, now + 0.015);
-      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.55);
+      gain.gain.setValueAtTime(0.001, now);
+      gain.gain.linearRampToValueAtTime(0.3, now + 0.02);
+      gain.gain.linearRampToValueAtTime(0.0001, now + 0.55);
       osc.connect(gain);
       osc2.connect(gain);
       gain.connect(audioCtx.destination);
@@ -2875,33 +2917,35 @@ function playSweetTone(noteIndex = 0) {
       const gain = audioCtx.createGain();
       osc.type = 'sine';
       osc.frequency.setValueAtTime(freq, now);
-      osc.frequency.exponentialRampToValueAtTime(freq * 0.96, now + 0.14);
-      gain.gain.setValueAtTime(0.35, now);
-      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.16);
+      osc.frequency.linearRampToValueAtTime(freq * 0.95, now + 0.16);
+      gain.gain.setValueAtTime(0.001, now);
+      gain.gain.linearRampToValueAtTime(0.35, now + 0.01);
+      gain.gain.linearRampToValueAtTime(0.0001, now + 0.18);
       osc.connect(gain);
       gain.connect(audioCtx.destination);
       osc.start(now);
-      osc.stop(now + 0.16);
+      osc.stop(now + 0.18);
     } else if (currentSoundTheme === 'arcade') {
       const osc = audioCtx.createOscillator();
       const gain = audioCtx.createGain();
       osc.type = 'square';
       osc.frequency.setValueAtTime(freq * 0.9, now);
-      osc.frequency.exponentialRampToValueAtTime(freq, now + 0.04);
-      gain.gain.setValueAtTime(0.12, now);
-      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
+      osc.frequency.linearRampToValueAtTime(freq, now + 0.04);
+      gain.gain.setValueAtTime(0.001, now);
+      gain.gain.linearRampToValueAtTime(0.14, now + 0.01);
+      gain.gain.linearRampToValueAtTime(0.0001, now + 0.16);
       osc.connect(gain);
       gain.connect(audioCtx.destination);
       osc.start(now);
-      osc.stop(now + 0.15);
+      osc.stop(now + 0.16);
     } else if (currentSoundTheme === 'celestial') {
       const osc = audioCtx.createOscillator();
       const gain = audioCtx.createGain();
       osc.type = 'sawtooth';
       osc.frequency.setValueAtTime(freq, now);
-      gain.gain.setValueAtTime(0, now);
-      gain.gain.linearRampToValueAtTime(0.18, now + 0.06);
-      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.65);
+      gain.gain.setValueAtTime(0.001, now);
+      gain.gain.linearRampToValueAtTime(0.2, now + 0.06);
+      gain.gain.linearRampToValueAtTime(0.0001, now + 0.65);
       osc.connect(gain);
       gain.connect(audioCtx.destination);
       osc.start(now);
@@ -2918,13 +2962,13 @@ function playSweetTone(noteIndex = 0) {
       overtone.type = 'sine';
       overtone.frequency.setValueAtTime(freq * 2.756, now);
 
-      gain.gain.setValueAtTime(0, now);
-      gain.gain.linearRampToValueAtTime(0.24, now + 0.012);
-      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.38);
+      gain.gain.setValueAtTime(0.001, now);
+      gain.gain.linearRampToValueAtTime(0.25, now + 0.012);
+      gain.gain.linearRampToValueAtTime(0.0001, now + 0.40);
 
-      overGain.gain.setValueAtTime(0, now);
+      overGain.gain.setValueAtTime(0.001, now);
       overGain.gain.linearRampToValueAtTime(0.09, now + 0.01);
-      overGain.gain.exponentialRampToValueAtTime(0.001, now + 0.22);
+      overGain.gain.linearRampToValueAtTime(0.0001, now + 0.25);
 
       osc.connect(gain);
       overtone.connect(overGain);
@@ -2933,11 +2977,11 @@ function playSweetTone(noteIndex = 0) {
 
       osc.start(now);
       overtone.start(now);
-      osc.stop(now + 0.38);
-      overtone.stop(now + 0.22);
+      osc.stop(now + 0.40);
+      overtone.stop(now + 0.25);
     }
   } catch(e) {
-    console.warn(e);
+    console.warn('playSweetTone failed:', e);
   }
 }
 
@@ -2945,7 +2989,11 @@ function playSound(type) {
   if (isMasterMuted || !soundEnabled) return;
   try {
     initAudio();
-    const now = audioCtx.currentTime;
+    if (!audioCtx) return;
+    if (audioCtx.state === 'suspended') {
+      audioCtx.resume();
+    }
+    const now = audioCtx.currentTime + 0.01;
 
     if (type === 'bead') {
       playSweetTone(Math.floor(Math.random() * 5));
@@ -2956,9 +3004,9 @@ function playSound(type) {
         const g = audioCtx.createGain();
         o.type = currentSoundTheme === 'arcade' ? 'square' : 'triangle';
         o.frequency.value = freq;
-        g.gain.setValueAtTime(0, now + i * 0.08);
+        g.gain.setValueAtTime(0.001, now + i * 0.08);
         g.gain.linearRampToValueAtTime(0.22, now + i * 0.08 + 0.02);
-        g.gain.exponentialRampToValueAtTime(0.001, now + i * 0.08 + 0.45);
+        g.gain.linearRampToValueAtTime(0.0001, now + i * 0.08 + 0.45);
         o.connect(g);
         g.connect(audioCtx.destination);
         o.start(now + i * 0.08);
@@ -2971,9 +3019,9 @@ function playSound(type) {
         const g = audioCtx.createGain();
         o.type = currentSoundTheme === 'arcade' ? 'square' : 'triangle';
         o.frequency.value = freq;
-        g.gain.setValueAtTime(0, now + idx * 0.07);
+        g.gain.setValueAtTime(0.001, now + idx * 0.07);
         g.gain.linearRampToValueAtTime(0.25, now + idx * 0.07 + 0.03);
-        g.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.07 + 0.55);
+        g.gain.linearRampToValueAtTime(0.0001, now + idx * 0.07 + 0.55);
         o.connect(g);
         g.connect(audioCtx.destination);
         o.start(now + idx * 0.07);
@@ -2984,8 +3032,9 @@ function playSound(type) {
       const g = audioCtx.createGain();
       o.type = currentSoundTheme === 'arcade' ? 'square' : 'sine';
       o.frequency.setValueAtTime(800, now);
-      g.gain.setValueAtTime(0.08, now);
-      g.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
+      g.gain.setValueAtTime(0.001, now);
+      g.gain.linearRampToValueAtTime(0.08, now + 0.005);
+      g.gain.linearRampToValueAtTime(0.0001, now + 0.04);
       o.connect(g);
       g.connect(audioCtx.destination);
       o.start(now);
@@ -2995,9 +3044,10 @@ function playSound(type) {
       const g = audioCtx.createGain();
       o.type = 'sine';
       o.frequency.setValueAtTime(600, now);
-      o.frequency.exponentialRampToValueAtTime(260, now + 0.12);
-      g.gain.setValueAtTime(0.2, now);
-      g.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
+      o.frequency.linearRampToValueAtTime(260, now + 0.12);
+      g.gain.setValueAtTime(0.001, now);
+      g.gain.linearRampToValueAtTime(0.2, now + 0.01);
+      g.gain.linearRampToValueAtTime(0.0001, now + 0.12);
       o.connect(g);
       g.connect(audioCtx.destination);
       o.start(now);
@@ -3008,8 +3058,9 @@ function playSound(type) {
         const g = audioCtx.createGain();
         o.type = currentSoundTheme === 'arcade' ? 'square' : 'triangle';
         o.frequency.value = freq;
-        g.gain.setValueAtTime(0.22, now + idx * 0.09);
-        g.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.09 + 0.5);
+        g.gain.setValueAtTime(0.001, now + idx * 0.09);
+        g.gain.linearRampToValueAtTime(0.22, now + idx * 0.09 + 0.02);
+        g.gain.linearRampToValueAtTime(0.0001, now + idx * 0.09 + 0.5);
         o.connect(g);
         g.connect(audioCtx.destination);
         o.start(now + idx * 0.09);
@@ -3017,7 +3068,7 @@ function playSound(type) {
       });
     }
   } catch(e) {
-    console.warn(e);
+    console.warn('playSound error:', e);
   }
 }
 
@@ -4799,6 +4850,8 @@ function animateAbacusSteps(nums) {
    16-SECOND COUNTDOWN TIMER, RHYTHMIC MUSIC, AND APPLE PENCIL DRAWING PAD!
    ========================================================================= */
 
+const SPEED_DIGITS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
+let activeSpeedDigitIndex = 0;
 let speedTurn = parseInt(localStorage.getItem('kungi_speed_turn') || '1', 10);
 if (isNaN(speedTurn) || speedTurn < 1 || speedTurn > 12) speedTurn = 1;
 let speedHandMode = (speedTurn % 2 === 1) ? 'right' : 'left'; // Right hand first on Turn 1!
@@ -4806,14 +4859,55 @@ let speedTimer16 = 16;
 let speedTimerInterval = null;
 let speedMusicInterval = null;
 let isSpeedTimerRunning = false;
-let speedBox1Triggered = false;
 let speedTurnCompleted = false;
 let isDrawing = false;
 let canvasCtx = null;
+let strokePointsCount = 0;
+
+function getBoxCanvasBounds(digit) {
+  const box = document.getElementById(`speed-box-${digit}`);
+  const canvas = document.getElementById('stylus-canvas');
+  if (!box || !canvas) return null;
+  const cRect = canvas.getBoundingClientRect();
+  const bRect = box.getBoundingClientRect();
+  return {
+    left: bRect.left - cRect.left,
+    top: bRect.top - cRect.top,
+    right: bRect.right - cRect.left,
+    bottom: bRect.bottom - cRect.top,
+    width: bRect.width,
+    height: bRect.height,
+    screenLeft: bRect.left,
+    screenTop: bRect.top,
+    screenRight: bRect.right,
+    screenBottom: bRect.bottom
+  };
+}
+
+function selectSpeedDigitBox(idx) {
+  if (idx < 0 || idx >= SPEED_DIGITS.length) return;
+  SPEED_DIGITS.forEach(d => {
+    const el = document.getElementById(`speed-box-${d}`);
+    if (el) el.classList.remove('active-box');
+  });
+  activeSpeedDigitIndex = idx;
+  const targetDigit = SPEED_DIGITS[idx];
+  const targetEl = document.getElementById(`speed-box-${targetDigit}`);
+  if (targetEl) targetEl.classList.add('active-box');
+  const isMl = (currentLang === 'ml' || currentLang === 'id');
+  const statusEl = document.getElementById('speed-writing-status');
+  if (statusEl) {
+    statusEl.innerHTML = isMl ? `പെട്ടി ${targetDigit}-ൽ ${targetDigit} എഴുതൂ! ✍️` : `Write ${targetDigit} in box ${targetDigit}! ✍️`;
+  }
+}
 
 function renderSpeedWritingArena() {
   const cardContainer = document.getElementById('active-challenge-card');
   if (!cardContainer) return;
+
+  activeSpeedDigitIndex = 0;
+  isSpeedTimerRunning = false;
+  speedTurnCompleted = false;
 
   const isMl = (currentLang === 'ml' || currentLang === 'id');
   const handTitle = speedHandMode === 'right'
@@ -4858,8 +4952,8 @@ function renderSpeedWritingArena() {
       <!-- Stylus / Apple Pencil Canvas with Dotted Line Rectangles for 1 to 0 -->
       <div class="canvas-sheet-wrap" id="canvas-sheet-wrap">
         <div class="dotted-boxes-grid">
-          ${[1, 2, 3, 4, 5, 6, 7, 8, 9, 0].map(d => `
-            <div class="dotted-digit-box" id="speed-box-${d}">
+          ${SPEED_DIGITS.map((d, idx) => `
+            <div class="dotted-digit-box ${idx === 0 ? 'active-box' : ''}" id="speed-box-${d}" onclick="selectSpeedDigitBox(${idx})">
               <span class="box-digit-watermark">${d}</span>
               <div class="box-guide-line"></div>
             </div>
@@ -4868,21 +4962,18 @@ function renderSpeedWritingArena() {
         <canvas id="stylus-canvas"></canvas>
       </div>
 
-      <div style="display: flex; gap: 10px; width: 100%; max-width: 480px; justify-content: center; flex-wrap: wrap;">
+      <!-- Action Buttons: Clean & Simple (Removed Start Timer & Finish buttons) -->
+      <div style="display: flex; gap: 12px; width: 100%; max-width: 480px; justify-content: center; flex-wrap: wrap;">
         <button class="btn-pink-pill btn-pink-reset" onclick="clearStylusCanvas()">
           🧹 ${isMl ? 'തുടയ്ക്കുക' : 'Clear Pad'}
         </button>
-        <button class="btn-submit-arena" id="btn-start-speed-session" onclick="start16SecSpeedSession()" style="padding: 10px 16px; font-size: 0.95rem;">
-          ▶️ ${isMl ? '16 സെക്കൻഡ് തുടങ്ങൂ!' : 'Start 16s Timer & Music!'}
-        </button>
-        <button class="btn-submit-arena" id="btn-finish-speed-tab" onclick="finishSpeedWritingSession()" style="padding: 10px 18px; font-size: 1rem; background: linear-gradient(135deg, #15803d 0%, #22c55e 100%); box-shadow: 0 4px 14px rgba(34, 197, 94, 0.4);">
-          🏁 ${isMl ? 'എഴുതിക്കഴിഞ്ഞു!' : 'Finish Writing!'}
-        </button>
-        <button class="btn-nav-mini" onclick="toggleSpeedHand()" style="font-size: 0.9rem;">
+        <button class="btn-nav-mini" onclick="toggleSpeedHand()" style="font-size: 0.95rem; padding: 10px 18px;">
           🔄 ${speedHandMode === 'left' ? (isMl ? 'വലത് കൈ' : 'Switch Right') : (isMl ? 'ഇടത് കൈ' : 'Switch Left')}
         </button>
       </div>
-      <div id="speed-writing-status" style="font-size: 0.9rem; font-weight: 700; color: #4ade80; margin-top: 6px; min-height: 22px;"></div>
+      <div id="speed-writing-status" style="font-size: 0.9rem; font-weight: 700; color: #4ade80; margin-top: 6px; min-height: 22px;">
+        ${isMl ? 'തുടങ്ങാൻ പെട്ടി 1-ൽ 1 എഴുതൂ! ✍️' : 'Start by writing 1 in box 1! ✍️'}
+      </div>
     </div>
   `;
 
@@ -4929,7 +5020,6 @@ function completeSpeedWritingTurn() {
 
     setTimeout(() => {
       speedTurnCompleted = false;
-      speedBox1Triggered = false;
       renderSpeedWritingArena();
     }, 2800);
   } else {
@@ -4957,14 +5047,9 @@ function completeSpeedWritingTurn() {
 
     setTimeout(() => {
       speedTurnCompleted = false;
-      speedBox1Triggered = false;
       renderSpeedWritingArena();
     }, 1500);
   }
-}
-
-function finishSpeedWritingSession() {
-  completeSpeedWritingTurn();
 }
 
 function toggleSpeedHand() {
@@ -4999,47 +5084,43 @@ function initStylusCanvas() {
     };
   }
 
-  function checkBoxHit(clientX, clientY) {
-    for (const d of [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]) {
-      const box = document.getElementById(`speed-box-${d}`);
-      if (box) {
-        const r = box.getBoundingClientRect();
-        if (clientX >= r.left && clientX <= r.right && clientY >= r.top && clientY <= r.bottom) {
-          return { digit: d, element: box };
-        }
-      }
+  function startDraw(e) {
+    e.preventDefault();
+    initAudio();
+
+    const targetDigit = SPEED_DIGITS[activeSpeedDigitIndex];
+    const bounds = getBoxCanvasBounds(targetDigit);
+    if (!bounds) return;
+
+    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+
+    // Strict boundary: Only allow drawing inside the currently active number box!
+    if (clientX < bounds.screenLeft || clientX > bounds.screenRight ||
+        clientY < bounds.screenTop || clientY > bounds.screenBottom) {
+      return;
     }
-    return null;
-  }
 
-  function handleStylusBoxHit(clientX, clientY) {
-    const hit = checkBoxHit(clientX, clientY);
-    if (!hit) return;
-
-    // Start timer & music automatically when writing starts in Box 1
-    if (hit.digit === 1 && !isSpeedTimerRunning && !speedTurnCompleted) {
-      speedBox1Triggered = true;
-      hit.element.classList.add('active-box');
+    // Auto-start 16s timer & rhythmic background music when writing starts in Box 1
+    if (activeSpeedDigitIndex === 0 && !isSpeedTimerRunning && !speedTurnCompleted) {
       start16SecSpeedSession();
     }
 
-    // Stop timer & music, complete turn automatically when writing in Box 0
-    if (hit.digit === 0 && (isSpeedTimerRunning || speedBox1Triggered) && !speedTurnCompleted) {
-      hit.element.classList.add('completed-box');
-      completeSpeedWritingTurn();
-    }
-  }
-
-  function startDraw(e) {
-    e.preventDefault();
     isDrawing = true;
+    strokePointsCount = 1;
     const pos = getPos(e);
     lastX = pos.x;
     lastY = pos.y;
+
+    // Clip drawing strictly inside this box's interior so no strokes spill outside
+    canvasCtx.save();
+    canvasCtx.beginPath();
+    canvasCtx.rect(bounds.left + 3, bounds.top + 3, bounds.width - 6, bounds.height - 6);
+    canvasCtx.clip();
+
     if (e.pressure && e.pressure > 0) {
       canvasCtx.lineWidth = Math.max(2, e.pressure * 8);
     }
-    handleStylusBoxHit(pos.clientX, pos.clientY);
   }
 
   function drawMove(e) {
@@ -5055,11 +5136,50 @@ function initStylusCanvas() {
     canvasCtx.stroke();
     lastX = pos.x;
     lastY = pos.y;
-    handleStylusBoxHit(pos.clientX, pos.clientY);
+    strokePointsCount++;
   }
 
   function stopDraw(e) {
+    if (!isDrawing) return;
     isDrawing = false;
+    canvasCtx.restore(); // remove clip
+
+    // If user drew at least a few points in the active box, mark it completed and advance
+    if (strokePointsCount >= 3) {
+      const finishedDigit = SPEED_DIGITS[activeSpeedDigitIndex];
+      const finishedBox = document.getElementById(`speed-box-${finishedDigit}`);
+      if (finishedBox) {
+        finishedBox.classList.remove('active-box');
+        finishedBox.classList.add('completed-box');
+      }
+
+      // Check if this was Box 0 (the last box in sequence 1..0)
+      if (activeSpeedDigitIndex >= SPEED_DIGITS.length - 1) {
+        // Turn completed when Box 0 is finished!
+        if (speedTimerInterval) clearInterval(speedTimerInterval);
+        if (speedMusicInterval) clearInterval(speedMusicInterval);
+        isSpeedTimerRunning = false;
+        playSweetTone(4, true);
+        completeSpeedWritingTurn();
+      } else {
+        // Advance to next box and highlight it!
+        playSweetTone(activeSpeedDigitIndex % 5, true);
+        activeSpeedDigitIndex++;
+        const nextDigit = SPEED_DIGITS[activeSpeedDigitIndex];
+        const nextBox = document.getElementById(`speed-box-${nextDigit}`);
+        if (nextBox) {
+          nextBox.classList.add('active-box');
+        }
+        const isMl = (currentLang === 'ml' || currentLang === 'id');
+        const statusEl = document.getElementById('speed-writing-status');
+        if (statusEl) {
+          statusEl.innerHTML = isMl
+            ? `നന്നായി! ഇനി പെട്ടി ${nextDigit}-ൽ ${nextDigit} എഴുതൂ! ⭐`
+            : `Great! Now write ${nextDigit} in box ${nextDigit}! ⭐`;
+        }
+      }
+    }
+    strokePointsCount = 0;
   }
 
   // Pointer events (optimal for Apple Pencil & stylus)
@@ -5079,10 +5199,20 @@ function clearStylusCanvas() {
   if (canvas && canvasCtx) {
     canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
   }
-  document.querySelectorAll('.dotted-digit-box').forEach(b => {
-    b.classList.remove('active-box');
-    b.classList.remove('completed-box');
+  activeSpeedDigitIndex = 0;
+  SPEED_DIGITS.forEach((d, idx) => {
+    const el = document.getElementById(`speed-box-${d}`);
+    if (el) {
+      el.classList.remove('active-box');
+      el.classList.remove('completed-box');
+      if (idx === 0) el.classList.add('active-box');
+    }
   });
+  const isMl = (currentLang === 'ml' || currentLang === 'id');
+  const statusEl = document.getElementById('speed-writing-status');
+  if (statusEl) {
+    statusEl.innerHTML = isMl ? 'തുടങ്ങാൻ പെട്ടി 1-ൽ 1 എഴുതൂ! ✍️' : 'Start by writing 1 in box 1! ✍️';
+  }
 }
 
 // 16s Countdown timer with rhythmic background music
@@ -5091,37 +5221,41 @@ function start16SecSpeedSession() {
   if (speedTimerInterval) clearInterval(speedTimerInterval);
   if (speedMusicInterval) clearInterval(speedMusicInterval);
 
+  initAudio();
+  if (audioCtx && audioCtx.state === 'suspended') {
+    audioCtx.resume();
+  }
+
   isSpeedTimerRunning = true;
   speedTimer16 = 16;
   const disp = document.getElementById('speed-16s-display');
   if (disp) disp.innerText = speedTimer16;
-
-  const b1 = document.getElementById('speed-box-1');
-  if (b1) b1.classList.add('active-box');
 
   // Background rhythmic music notes during the 16 seconds
   const rhythmNotes = [523.25, 659.25, 783.99, 659.25];
   let noteIdx = 0;
   speedMusicInterval = setInterval(() => {
     if (!isMasterMuted && soundEnabled && audioCtx) {
-      const now = audioCtx.currentTime;
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+      const now = audioCtx.currentTime + 0.01;
       const osc = audioCtx.createOscillator();
       const gain = audioCtx.createGain();
       osc.type = currentSoundTheme === 'arcade' ? 'square' : 'triangle';
       osc.frequency.setValueAtTime(rhythmNotes[noteIdx % rhythmNotes.length], now);
-      gain.gain.setValueAtTime(0.09, now);
-      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
+      gain.gain.setValueAtTime(0.001, now);
+      gain.gain.linearRampToValueAtTime(0.09, now + 0.01);
+      gain.gain.linearRampToValueAtTime(0.0001, now + 0.16);
       osc.connect(gain);
       gain.connect(audioCtx.destination);
       osc.start(now);
-      osc.stop(now + 0.15);
+      osc.stop(now + 0.16);
       noteIdx++;
     }
   }, 400);
 
   const isMl = (currentLang === 'ml' || currentLang === 'id');
   const statusEl = document.getElementById('speed-writing-status');
-  if (statusEl) statusEl.innerText = isMl ? '⏳ ടൈമർ ഓടുന്നു! 1 മുതൽ 0 വരെ എഴുതൂ (പെട്ടി 0-ൽ എത്തുമ്പോൾ നിൽക്കും)!' : '⏳ Timer & music running! Write 1 to 0 (stops in box 0)!';
+  if (statusEl) statusEl.innerText = isMl ? '⏳ ടൈമർ ഓടുന്നു! 1 മുതൽ 0 വരെ പെട്ടികൾ പൂർത്തിയാക്കൂ!' : '⏳ Timer & music running! Write 1 to 0 in sequence!';
 
   speedTimerInterval = setInterval(() => {
     speedTimer16--;
@@ -5133,13 +5267,8 @@ function start16SecSpeedSession() {
       clearInterval(speedMusicInterval);
       isSpeedTimerRunning = false;
 
-      // Timer completed: Prompt Kungi to complete box 0 or press Finish Writing
       if (statusEl) {
-        statusEl.innerHTML = `⏰ <strong>${isMl ? 'സമയം കഴിഞ്ഞു! പെട്ടി 0 പൂർത്തിയാക്കുക അല്ലെങ്കിൽ "🏁 എഴുതിക്കഴിഞ്ഞു!" ബട്ടൺ അമർത്തൂ!' : "Time's up! Finish box 0 or press '🏁 Finish Writing'!"}</strong>`;
-      }
-      const finishBtn = document.getElementById('btn-finish-speed-tab');
-      if (finishBtn) {
-        finishBtn.style.animation = 'pulse 1s infinite alternate';
+        statusEl.innerHTML = `⏰ <strong>${isMl ? 'സമയം കഴിഞ്ഞു! പെട്ടികൾ പൂർത്തിയാക്കി തുടരൂ!' : "Time's up! Keep writing to finish the remaining boxes!"}</strong>`;
       }
     }
   }, 1000);
@@ -5558,6 +5687,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Welcome music on page open (handles browser autoplay policies smoothly)
   triggerWelcomeMusicSafely();
   const unlockAudioOnFirstGesture = () => {
+    initAudio();
     if (audioCtx && audioCtx.state === 'suspended') {
       audioCtx.resume().then(() => {
         triggerWelcomeMusicSafely();
