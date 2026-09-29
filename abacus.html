@@ -1650,6 +1650,83 @@
     z-index: 5;
   }
 
+  /* Mute button styling */
+  .icon-toggle-btn.muted {
+    background: #450a0a !important;
+    border-color: #ef4444 !important;
+    color: #fca5a5 !important;
+  }
+
+  /* Speed writing turn stats bar & active boxes */
+  .speed-turn-stats-bar {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 100%;
+    margin-top: 2px;
+  }
+
+  .speed-turn-pill {
+    background: #112213;
+    border: 2px solid #2e5333;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.88rem;
+    font-weight: 900;
+    color: #86efac;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  }
+
+  .speed-turn-pill.highlight {
+    border-color: #facc15;
+    color: #fef08a;
+    background: #19381e;
+  }
+
+  .dotted-digit-box.active-box {
+    border-color: #facc15 !important;
+    border-style: solid !important;
+    box-shadow: 0 0 14px rgba(250, 204, 21, 0.7);
+    background: #19381e;
+  }
+
+  .dotted-digit-box.completed-box {
+    border-color: #4ade80 !important;
+    border-style: solid !important;
+    box-shadow: 0 0 12px rgba(74, 222, 128, 0.6);
+    background: #14351a;
+  }
+
+  /* Voice & Sound settings option cards */
+  .settings-option-card {
+    background: #112213;
+    border: 2px solid #2e5333;
+    border-radius: 14px;
+    padding: 10px 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .settings-option-card:hover {
+    border-color: #4ade80;
+    background: #162f19;
+    transform: translateY(-1px);
+  }
+
+  .settings-option-card.selected {
+    border-color: #facc15;
+    background: #1a381e;
+    box-shadow: 0 0 12px rgba(250, 204, 21, 0.35);
+  }
+
   /* Grid problems list */
   .grid-problems {
     display: grid;
@@ -1871,9 +1948,18 @@
 <!-- Top Bar with Sound/Voice and Language Switcher -->
 <div class="top-bar">
   <div class="top-left-controls">
-    <button class="icon-toggle-btn" id="btn-toggle-voice" title="Voice Appreciation (On/Off)">🗣️ <span id="lbl-voice">Voice</span></button>
-    <button class="icon-toggle-btn" id="btn-toggle-sound" title="Sound Effects (On/Off)">🔊 <span id="lbl-sound">Sound</span></button>
-    <button class="icon-toggle-btn" id="btn-open-cert" title="Certificate & Trophy">🏆 <span id="lbl-trophy">Trophy</span></button>
+    <button class="icon-toggle-btn mute-btn" id="btn-master-mute" onclick="toggleMasterMute()" title="Master Sound Mute Toggle">
+      <span id="mute-icon">🔊</span> <span id="lbl-mute">Sound ON</span>
+    </button>
+    <button class="icon-toggle-btn" id="btn-toggle-voice" onclick="openVoiceSettingsModal()" title="Voice Tutor Selection">
+      🗣️ <span id="lbl-voice">Voice</span>
+    </button>
+    <button class="icon-toggle-btn" id="btn-toggle-sound" onclick="openSoundSettingsModal()" title="Musical Themes & Sound Effects">
+      🎶 <span id="lbl-sound">Musical Sound</span>
+    </button>
+    <button class="icon-toggle-btn" id="btn-open-cert" title="Certificate & Trophy">
+      🏆 <span id="lbl-trophy">Trophy</span>
+    </button>
   </div>
 
   <div class="lang-switcher-box">
@@ -2146,6 +2232,52 @@
     <div style="margin-top: 14px; text-align: center;">
       <button class="btn-submit-arena" onclick="closeSectionProgressModal()" style="padding: 8px 24px; font-size: 1rem; width: auto;" id="t-prog-modal-btn">
         Got it! Keep Learning 🚀
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Voice Settings Modal -->
+<div class="modal-overlay" id="voice-settings-modal" onclick="closeVoiceSettingsModal()">
+  <div class="modal-box" onclick="event.stopPropagation()" style="max-width: 520px; text-align: left; padding: 24px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; border-bottom: 2px solid #2e5333; padding-bottom: 10px;">
+      <h3 style="color: #4ade80; margin: 0; font-size: 1.3rem; display: flex; align-items: center; gap: 8px;">
+        🗣️ <span id="t-voice-modal-title">Voice Tutor Selection</span>
+      </h3>
+      <button onclick="closeVoiceSettingsModal()" style="background: none; border: none; font-size: 1.4rem; color: #86efac; cursor: pointer;">✖</button>
+    </div>
+    <div style="font-size: 0.88rem; color: #86efac; margin-bottom: 12px;" id="t-voice-modal-desc">
+      Choose your favorite voice tutor for praises and number pronunciations:
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 18px;" id="voice-options-container">
+      <!-- Options injected by renderVoiceOptions() -->
+    </div>
+    <div style="text-align: center;">
+      <button class="btn-submit-arena" onclick="closeVoiceSettingsModal()" style="width: auto; padding: 8px 26px; font-size: 1rem;">
+        Done ✅
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Musical Sound Theme Modal -->
+<div class="modal-overlay" id="sound-settings-modal" onclick="closeSoundSettingsModal()">
+  <div class="modal-box" onclick="event.stopPropagation()" style="max-width: 520px; text-align: left; padding: 24px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; border-bottom: 2px solid #2e5333; padding-bottom: 10px;">
+      <h3 style="color: #4ade80; margin: 0; font-size: 1.3rem; display: flex; align-items: center; gap: 8px;">
+        🎶 <span id="t-sound-modal-title">Musical Sound Theme</span>
+      </h3>
+      <button onclick="closeSoundSettingsModal()" style="background: none; border: none; font-size: 1.4rem; color: #86efac; cursor: pointer;">✖</button>
+    </div>
+    <div style="font-size: 0.88rem; color: #86efac; margin-bottom: 12px;" id="t-sound-modal-desc">
+      Select your favorite musical instruments and sound effects:
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 18px;" id="sound-themes-container">
+      <!-- Themes injected by renderSoundThemes() -->
+    </div>
+    <div style="text-align: center;">
+      <button class="btn-submit-arena" onclick="closeSoundSettingsModal()" style="width: auto; padding: 8px 26px; font-size: 1rem;">
+        Done ✅
       </button>
     </div>
   </div>
@@ -2543,9 +2675,12 @@ function numberToWordsMalayalam(num) {
    AUDIO & SYNTHESIZER
    ========================================================================= */
 
+let isMasterMuted = localStorage.getItem('kungi_master_muted') === '1';
 let voiceEnabled = true;
 let soundEnabled = true;
 let audioCtx = null;
+let currentSoundTheme = localStorage.getItem('kungi_sound_theme') || 'crystal';
+let selectedVoiceProfile = localStorage.getItem('kungi_voice_profile') || 'female';
 
 function initAudio() {
   if (!audioCtx) {
@@ -2553,48 +2688,261 @@ function initAudio() {
   }
 }
 
+function updateMuteButtonUI() {
+  const muteBtn = document.getElementById('btn-master-mute');
+  const icon = document.getElementById('mute-icon');
+  const lbl = document.getElementById('lbl-mute');
+  const isMl = (currentLang === 'ml' || currentLang === 'id');
+  if (muteBtn) {
+    if (isMasterMuted) {
+      muteBtn.classList.add('muted');
+      if (icon) icon.innerText = '🔇';
+      if (lbl) lbl.innerText = isMl ? 'ശബ്ദം ഓഫ്' : 'Muted';
+    } else {
+      muteBtn.classList.remove('muted');
+      if (icon) icon.innerText = '🔊';
+      if (lbl) lbl.innerText = isMl ? 'ശബ്ദം ഓൺ' : 'Sound ON';
+    }
+  }
+}
+
+function toggleMasterMute() {
+  isMasterMuted = !isMasterMuted;
+  localStorage.setItem('kungi_master_muted', isMasterMuted ? '1' : '0');
+  updateMuteButtonUI();
+  if (isMasterMuted) {
+    if (currentTtsAudio) {
+      currentTtsAudio.pause();
+      currentTtsAudio.currentTime = 0;
+      currentTtsAudio = null;
+    }
+    if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+    if (speedMusicInterval) {
+      clearInterval(speedMusicInterval);
+      speedMusicInterval = null;
+    }
+  } else {
+    playSound('tick');
+  }
+}
+
+const VOICE_PROFILES = [
+  { id: 'female', icon: '👩‍🏫', name: 'Sweet Tutor (Female)', desc: 'Friendly, clear English tutor voice' },
+  { id: 'male', icon: '👨‍🏫', name: 'Friendly Coach (Male)', desc: 'Encouraging and motivating coach' },
+  { id: 'kid', icon: '🧒', name: 'Playful Pal (Kid style)', desc: 'Fun, high-energy learning companion' },
+  { id: 'robot', icon: '🤖', name: 'Kungi Robot Buddy', desc: 'Futuristic electronic assistant' },
+  { id: 'malayalam', icon: '🌺', name: 'Malayalam Teacher (മലയാളം)', desc: 'സ്വാഭാവിക മലയാള ഉച്ചാരണം' }
+];
+
+const SOUND_THEMES = [
+  { id: 'crystal', icon: '🔔', name: 'Sweet Chimes & Bells', desc: 'Gentle crystal bells and music box chimes' },
+  { id: 'piano', icon: '🎹', name: 'Grand Piano Chords', desc: 'Warm acoustic piano harmonic tones' },
+  { id: 'marimba', icon: '🪵', name: 'Tropical Marimba', desc: 'Wooden mallet percussion & xylophone' },
+  { id: 'arcade', icon: '👾', name: 'Retro 8-Bit Arcade', desc: 'Playful video game chiptune bleeps' },
+  { id: 'celestial', icon: '🌌', name: 'Celestial Space Synth', desc: 'Dreamy harmonic atmospheric pads' }
+];
+
+function openVoiceSettingsModal() {
+  renderVoiceOptions();
+  const modal = document.getElementById('voice-settings-modal');
+  if (modal) modal.style.display = 'flex';
+}
+
+function closeVoiceSettingsModal() {
+  const modal = document.getElementById('voice-settings-modal');
+  if (modal) modal.style.display = 'none';
+}
+
+function renderVoiceOptions() {
+  const container = document.getElementById('voice-options-container');
+  if (!container) return;
+  const isMl = (currentLang === 'ml' || currentLang === 'id');
+  container.innerHTML = VOICE_PROFILES.map(vp => `
+    <div class="settings-option-card ${selectedVoiceProfile === vp.id ? 'selected' : ''}" onclick="selectVoiceProfile('${vp.id}')">
+      <div style="font-size: 1.6rem;">${vp.icon}</div>
+      <div style="flex: 1;">
+        <div style="font-weight: 800; color: #4ade80; font-size: 1rem;">${vp.name}</div>
+        <div style="font-size: 0.8rem; color: #86efac; opacity: 0.85;">${vp.desc}</div>
+      </div>
+      <div style="display: flex; gap: 8px; align-items: center;">
+        <button type="button" class="btn-demo-abacus-mini" onclick="event.stopPropagation(); previewVoiceProfile('${vp.id}')" style="font-size: 0.82rem; padding: 4px 10px;">
+          ▶️ ${isMl ? 'കേൾക്കൂ' : 'Audition'}
+        </button>
+        ${selectedVoiceProfile === vp.id ? '<span style="color: #4ade80; font-size: 1.2rem;">✅</span>' : ''}
+      </div>
+    </div>
+  `).join('');
+}
+
+function selectVoiceProfile(id) {
+  selectedVoiceProfile = id;
+  localStorage.setItem('kungi_voice_profile', id);
+  renderVoiceOptions();
+  previewVoiceProfile(id);
+}
+
+function previewVoiceProfile(id) {
+  if (isMasterMuted) return;
+  const oldProfile = selectedVoiceProfile;
+  selectedVoiceProfile = id;
+  const isMl = (id === 'malayalam' || currentLang === 'ml' || currentLang === 'id');
+  const sample = isMl ? 'ഹലോ കുഞ്ഞീ! ഞാൻ നിങ്ങളുടെ അധ്യാപികയാണ്!' : 'Hello Kungi! I am your voice tutor!';
+  speakPraiseCustom(sample);
+  selectedVoiceProfile = oldProfile;
+}
+
+function openSoundSettingsModal() {
+  renderSoundThemes();
+  const modal = document.getElementById('sound-settings-modal');
+  if (modal) modal.style.display = 'flex';
+}
+
+function closeSoundSettingsModal() {
+  const modal = document.getElementById('sound-settings-modal');
+  if (modal) modal.style.display = 'none';
+}
+
+function renderSoundThemes() {
+  const container = document.getElementById('sound-themes-container');
+  if (!container) return;
+  const isMl = (currentLang === 'ml' || currentLang === 'id');
+  container.innerHTML = SOUND_THEMES.map(st => `
+    <div class="settings-option-card ${currentSoundTheme === st.id ? 'selected' : ''}" onclick="selectSoundTheme('${st.id}')">
+      <div style="font-size: 1.6rem;">${st.icon}</div>
+      <div style="flex: 1;">
+        <div style="font-weight: 800; color: #4ade80; font-size: 1rem;">${st.name}</div>
+        <div style="font-size: 0.8rem; color: #86efac; opacity: 0.85;">${st.desc}</div>
+      </div>
+      <div style="display: flex; gap: 8px; align-items: center;">
+        <button type="button" class="btn-demo-abacus-mini" onclick="event.stopPropagation(); previewSoundTheme('${st.id}')" style="font-size: 0.82rem; padding: 4px 10px;">
+          🎵 ${isMl ? 'കേൾക്കൂ' : 'Audition'}
+        </button>
+        ${currentSoundTheme === st.id ? '<span style="color: #4ade80; font-size: 1.2rem;">✅</span>' : ''}
+      </div>
+    </div>
+  `).join('');
+}
+
+function selectSoundTheme(id) {
+  currentSoundTheme = id;
+  localStorage.setItem('kungi_sound_theme', id);
+  renderSoundThemes();
+  previewSoundTheme(id);
+}
+
+function previewSoundTheme(id) {
+  if (isMasterMuted) return;
+  const oldTheme = currentSoundTheme;
+  currentSoundTheme = id;
+  [0, 2, 4].forEach((n, idx) => {
+    setTimeout(() => {
+      playSweetTone(n);
+    }, idx * 120);
+  });
+  setTimeout(() => {
+    currentSoundTheme = oldTheme;
+  }, 400);
+}
+
 function playSweetTone(noteIndex = 0) {
-  if (!soundEnabled) return;
+  if (isMasterMuted || !soundEnabled) return;
   try {
     initAudio();
     const now = audioCtx.currentTime;
     const scale = [523.25, 587.33, 659.25, 783.99, 880.00, 1046.50, 1174.66, 1318.51, 1567.98];
     const freq = scale[Math.abs(noteIndex) % scale.length];
 
-    const osc = audioCtx.createOscillator();
-    const gain = audioCtx.createGain();
-    osc.type = 'sine';
-    osc.frequency.setValueAtTime(freq, now);
+    if (currentSoundTheme === 'piano') {
+      const osc = audioCtx.createOscillator();
+      const osc2 = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'triangle';
+      osc2.type = 'sine';
+      osc.frequency.setValueAtTime(freq, now);
+      osc2.frequency.setValueAtTime(freq * 2, now);
+      gain.gain.setValueAtTime(0, now);
+      gain.gain.linearRampToValueAtTime(0.28, now + 0.015);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.55);
+      osc.connect(gain);
+      osc2.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start(now);
+      osc2.start(now);
+      osc.stop(now + 0.55);
+      osc2.stop(now + 0.55);
+    } else if (currentSoundTheme === 'marimba') {
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(freq, now);
+      osc.frequency.exponentialRampToValueAtTime(freq * 0.96, now + 0.14);
+      gain.gain.setValueAtTime(0.35, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.16);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start(now);
+      osc.stop(now + 0.16);
+    } else if (currentSoundTheme === 'arcade') {
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'square';
+      osc.frequency.setValueAtTime(freq * 0.9, now);
+      osc.frequency.exponentialRampToValueAtTime(freq, now + 0.04);
+      gain.gain.setValueAtTime(0.12, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start(now);
+      osc.stop(now + 0.15);
+    } else if (currentSoundTheme === 'celestial') {
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(freq, now);
+      gain.gain.setValueAtTime(0, now);
+      gain.gain.linearRampToValueAtTime(0.18, now + 0.06);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.65);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start(now);
+      osc.stop(now + 0.65);
+    } else {
+      // Default crystal bells
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(freq, now);
 
-    const overtone = audioCtx.createOscillator();
-    const overGain = audioCtx.createGain();
-    overtone.type = 'sine';
-    overtone.frequency.setValueAtTime(freq * 2.756, now);
+      const overtone = audioCtx.createOscillator();
+      const overGain = audioCtx.createGain();
+      overtone.type = 'sine';
+      overtone.frequency.setValueAtTime(freq * 2.756, now);
 
-    gain.gain.setValueAtTime(0, now);
-    gain.gain.linearRampToValueAtTime(0.24, now + 0.012);
-    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.38);
+      gain.gain.setValueAtTime(0, now);
+      gain.gain.linearRampToValueAtTime(0.24, now + 0.012);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.38);
 
-    overGain.gain.setValueAtTime(0, now);
-    overGain.gain.linearRampToValueAtTime(0.09, now + 0.01);
-    overGain.gain.exponentialRampToValueAtTime(0.001, now + 0.22);
+      overGain.gain.setValueAtTime(0, now);
+      overGain.gain.linearRampToValueAtTime(0.09, now + 0.01);
+      overGain.gain.exponentialRampToValueAtTime(0.001, now + 0.22);
 
-    osc.connect(gain);
-    overtone.connect(overGain);
-    gain.connect(audioCtx.destination);
-    overGain.connect(audioCtx.destination);
+      osc.connect(gain);
+      overtone.connect(overGain);
+      gain.connect(audioCtx.destination);
+      overGain.connect(audioCtx.destination);
 
-    osc.start(now);
-    overtone.start(now);
-    osc.stop(now + 0.38);
-    overtone.stop(now + 0.22);
+      osc.start(now);
+      overtone.start(now);
+      osc.stop(now + 0.38);
+      overtone.stop(now + 0.22);
+    }
   } catch(e) {
     console.warn(e);
   }
 }
 
 function playSound(type) {
-  if (!soundEnabled) return;
+  if (isMasterMuted || !soundEnabled) return;
   try {
     initAudio();
     const now = audioCtx.currentTime;
@@ -2606,7 +2954,7 @@ function playSound(type) {
       [523.25, 659.25, 783.99, 1046.50].forEach((freq, i) => {
         const o = audioCtx.createOscillator();
         const g = audioCtx.createGain();
-        o.type = 'triangle';
+        o.type = currentSoundTheme === 'arcade' ? 'square' : 'triangle';
         o.frequency.value = freq;
         g.gain.setValueAtTime(0, now + i * 0.08);
         g.gain.linearRampToValueAtTime(0.22, now + i * 0.08 + 0.02);
@@ -2621,7 +2969,7 @@ function playSound(type) {
       [523.25, 659.25, 783.99, 1046.50, 1318.51, 1567.98].forEach((freq, idx) => {
         const o = audioCtx.createOscillator();
         const g = audioCtx.createGain();
-        o.type = 'triangle';
+        o.type = currentSoundTheme === 'arcade' ? 'square' : 'triangle';
         o.frequency.value = freq;
         g.gain.setValueAtTime(0, now + idx * 0.07);
         g.gain.linearRampToValueAtTime(0.25, now + idx * 0.07 + 0.03);
@@ -2634,7 +2982,7 @@ function playSound(type) {
     } else if (type === 'tick') {
       const o = audioCtx.createOscillator();
       const g = audioCtx.createGain();
-      o.type = 'sine';
+      o.type = currentSoundTheme === 'arcade' ? 'square' : 'sine';
       o.frequency.setValueAtTime(800, now);
       g.gain.setValueAtTime(0.08, now);
       g.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
@@ -2658,7 +3006,7 @@ function playSound(type) {
       [523.25, 659.25, 783.99, 1046.50, 1318.51].forEach((freq, idx) => {
         const o = audioCtx.createOscillator();
         const g = audioCtx.createGain();
-        o.type = 'triangle';
+        o.type = currentSoundTheme === 'arcade' ? 'square' : 'triangle';
         o.frequency.value = freq;
         g.gain.setValueAtTime(0.22, now + idx * 0.09);
         g.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.09 + 0.5);
@@ -2688,6 +3036,7 @@ function sanitizeSpeechText(str) {
 
 // Helper to play high-fidelity, native Malayalam human speech
 function playNaturalMalayalamAudio(text, onEnded = null) {
+  if (isMasterMuted) return;
   try {
     if (currentTtsAudio) {
       currentTtsAudio.pause();
@@ -2728,7 +3077,7 @@ function playNaturalMalayalamAudio(text, onEnded = null) {
 
 // Fallback to Web Speech API if offline or network blocked
 function speakMalayalamWebSpeechFallback(text) {
-  if (!('speechSynthesis' in window)) return;
+  if (isMasterMuted || !('speechSynthesis' in window)) return;
   window.speechSynthesis.cancel();
   const cleanText = sanitizeSpeechText(text);
   if (!cleanText) return;
@@ -2746,7 +3095,7 @@ function speakMalayalamWebSpeechFallback(text) {
 }
 
 function speakValueSweetly(val, force = false) {
-  if (!voiceEnabled) return;
+  if (isMasterMuted || !voiceEnabled) return;
   clearTimeout(speechDebounceTimer);
   speechDebounceTimer = setTimeout(() => {
     if (currentTtsAudio) {
@@ -2758,29 +3107,43 @@ function speakValueSweetly(val, force = false) {
 
     const words = numberToWords(val);
 
-    if (currentLang === 'ml' || currentLang === 'id') {
+    if (currentLang === 'ml' || currentLang === 'id' || selectedVoiceProfile === 'malayalam') {
       playNaturalMalayalamAudio(words);
     } else {
       if (!('speechSynthesis' in window)) return;
       const cleanWords = sanitizeSpeechText(words);
       const utter = new SpeechSynthesisUtterance(cleanWords);
-      utter.rate = 0.94;
-      utter.pitch = 1.1;
       const voices = window.speechSynthesis.getVoices();
-      const enVoice = voices.find(v =>
-        v.name.includes('Samantha') ||
-        v.name.includes('Victoria') ||
-        v.name.includes('Karen') ||
-        (v.lang && v.lang.startsWith('en') && v.name.toLowerCase().includes('female'))
-      ) || voices.find(v => v.lang && v.lang.startsWith('en'));
-      if (enVoice) utter.voice = enVoice;
+
+      if (selectedVoiceProfile === 'kid') {
+        utter.rate = 1.05;
+        utter.pitch = 1.35;
+      } else if (selectedVoiceProfile === 'robot') {
+        utter.rate = 0.88;
+        utter.pitch = 0.65;
+      } else if (selectedVoiceProfile === 'male') {
+        utter.rate = 0.92;
+        utter.pitch = 0.88;
+        const maleVoice = voices.find(v => (v.name.includes('Daniel') || v.name.includes('Alex') || v.name.includes('David') || (v.lang && v.lang.startsWith('en') && v.name.toLowerCase().includes('male'))));
+        if (maleVoice) utter.voice = maleVoice;
+      } else {
+        utter.rate = 0.94;
+        utter.pitch = 1.1;
+        const enVoice = voices.find(v =>
+          v.name.includes('Samantha') ||
+          v.name.includes('Victoria') ||
+          v.name.includes('Karen') ||
+          (v.lang && v.lang.startsWith('en') && v.name.toLowerCase().includes('female'))
+        ) || voices.find(v => v.lang && v.lang.startsWith('en'));
+        if (enVoice) utter.voice = enVoice;
+      }
       window.speechSynthesis.speak(utter);
     }
   }, force ? 10 : 200);
 }
 
 function speakPraiseCustom(text) {
-  if (!voiceEnabled) return;
+  if (isMasterMuted || !voiceEnabled) return;
   if (currentTtsAudio) {
     currentTtsAudio.pause();
     currentTtsAudio.currentTime = 0;
@@ -2791,21 +3154,35 @@ function speakPraiseCustom(text) {
   const cleanText = sanitizeSpeechText(text);
   if (!cleanText) return;
 
-  if (currentLang === 'ml' || currentLang === 'id') {
+  if (currentLang === 'ml' || currentLang === 'id' || selectedVoiceProfile === 'malayalam') {
     playNaturalMalayalamAudio(cleanText);
   } else {
     if (!('speechSynthesis' in window)) return;
     const utter = new SpeechSynthesisUtterance(cleanText);
-    utter.rate = 1.0;
-    utter.pitch = 1.1;
     const voices = window.speechSynthesis.getVoices();
-    const enVoice = voices.find(v =>
-      v.name.includes('Samantha') ||
-      v.name.includes('Victoria') ||
-      v.name.includes('Karen') ||
-      (v.lang && v.lang.startsWith('en') && v.name.toLowerCase().includes('female'))
-    ) || voices.find(v => v.lang && v.lang.startsWith('en'));
-    if (enVoice) utter.voice = enVoice;
+
+    if (selectedVoiceProfile === 'kid') {
+      utter.rate = 1.05;
+      utter.pitch = 1.35;
+    } else if (selectedVoiceProfile === 'robot') {
+      utter.rate = 0.88;
+      utter.pitch = 0.65;
+    } else if (selectedVoiceProfile === 'male') {
+      utter.rate = 0.94;
+      utter.pitch = 0.88;
+      const maleVoice = voices.find(v => (v.name.includes('Daniel') || v.name.includes('Alex') || v.name.includes('David') || (v.lang && v.lang.startsWith('en') && v.name.toLowerCase().includes('male'))));
+      if (maleVoice) utter.voice = maleVoice;
+    } else {
+      utter.rate = 1.0;
+      utter.pitch = 1.1;
+      const enVoice = voices.find(v =>
+        v.name.includes('Samantha') ||
+        v.name.includes('Victoria') ||
+        v.name.includes('Karen') ||
+        (v.lang && v.lang.startsWith('en') && v.name.toLowerCase().includes('female'))
+      ) || voices.find(v => v.lang && v.lang.startsWith('en'));
+      if (enVoice) utter.voice = enVoice;
+    }
     window.speechSynthesis.speak(utter);
   }
 }
@@ -3196,7 +3573,7 @@ function resetAllScoresManually() {
 let hasPlayedWelcomeMusic = false;
 
 function playWelcomeMusic() {
-  if (!soundEnabled) return;
+  if (isMasterMuted || !soundEnabled) return;
   try {
     initAudio();
     if (audioCtx.state === 'suspended') {
@@ -3862,6 +4239,7 @@ class NumberWheelController {
     this.maxVal = maxVal;
     this.value = null; // null displays '?'
     this.container = document.getElementById(`${wheelId}-wheel-box`);
+    this.viewport = this.container ? this.container.querySelector('.wheel-roller-viewport') : null;
     this.track = document.getElementById(`${wheelId}-wheel-track`);
     this.prevEl = document.getElementById(`${wheelId}-wheel-prev`);
     this.currEl = document.getElementById(`${wheelId}-wheel-curr`);
@@ -3870,7 +4248,7 @@ class NumberWheelController {
     this.typedBuffer = '';
     this.typedTimer = null;
     this.startY = null;
-    this.dragThreshold = 14;
+    this.dragThreshold = 18;
     this.isDragging = false;
     this.wheelAccumulator = 0;
 
@@ -3935,31 +4313,32 @@ class NumberWheelController {
 
   initEvents() {
     if (!this.container) return;
+    const targetElement = this.viewport || this.container;
 
-    // 1. Mouse wheel / trackpad scrolling
-    this.container.addEventListener('wheel', (e) => {
+    // 1. Mouse wheel / trackpad scrolling ONLY on roller viewport
+    targetElement.addEventListener('wheel', (e) => {
       e.preventDefault();
+      e.stopPropagation();
       this.wheelAccumulator += e.deltaY;
-      if (Math.abs(this.wheelAccumulator) >= 20) {
-        // Scrolling wheel down = next (+1), scrolling wheel up = prev (-1)
+      if (Math.abs(this.wheelAccumulator) >= 25) {
         const delta = this.wheelAccumulator > 0 ? 1 : -1;
         this.step(delta);
         this.wheelAccumulator = 0;
       }
     }, { passive: false });
 
-    // 2. Touch / Mouse drag
+    // 2. Touch / Mouse drag ONLY on roller viewport
     const onPointerDown = (e) => {
+      if (e.target && e.target.closest && e.target.closest('.wheel-nudge-btn')) return;
       this.startY = e.clientY;
       this.isDragging = true;
-      try { this.container.setPointerCapture(e.pointerId); } catch(err) {}
+      try { targetElement.setPointerCapture(e.pointerId); } catch(err) {}
     };
 
     const onPointerMove = (e) => {
       if (!this.isDragging || this.startY === null) return;
       const diffY = e.clientY - this.startY;
       if (Math.abs(diffY) >= this.dragThreshold) {
-        // Dragging UP = increment (+1), Dragging DOWN = decrement (-1)
         const delta = diffY < 0 ? 1 : -1;
         this.step(delta);
         this.startY = e.clientY;
@@ -3969,13 +4348,13 @@ class NumberWheelController {
     const onPointerUp = (e) => {
       this.isDragging = false;
       this.startY = null;
-      try { this.container.releasePointerCapture(e.pointerId); } catch(err) {}
+      try { targetElement.releasePointerCapture(e.pointerId); } catch(err) {}
     };
 
-    this.container.addEventListener('pointerdown', onPointerDown);
-    this.container.addEventListener('pointermove', onPointerMove);
-    this.container.addEventListener('pointerup', onPointerUp);
-    this.container.addEventListener('pointercancel', onPointerUp);
+    targetElement.addEventListener('pointerdown', onPointerDown);
+    targetElement.addEventListener('pointermove', onPointerMove);
+    targetElement.addEventListener('pointerup', onPointerUp);
+    targetElement.addEventListener('pointercancel', onPointerUp);
 
     // 3. Direct Keyboard input & Arrow navigation
     this.container.addEventListener('keydown', (e) => {
@@ -4026,7 +4405,16 @@ class NumberWheelController {
   }
 }
 
-function nudgeNumberWheel(wheelId, delta) {
+let lastNudgeTimestamp = 0;
+function nudgeNumberWheel(wheelId, delta, event) {
+  if (event) {
+    try { event.stopPropagation(); } catch(e) {}
+    try { event.preventDefault(); } catch(e) {}
+  }
+  const now = Date.now();
+  if (now - lastNudgeTimestamp < 180) return;
+  lastNudgeTimestamp = now;
+
   const wheel = activeNumberWheels[wheelId];
   if (wheel) {
     wheel.step(delta);
@@ -4093,7 +4481,7 @@ function renderActiveChallenge(autoFocus = true) {
       
       <!-- Hulk Number Scroll Wheel Picker -->
       <div class="hulk-wheel-box" id="arena-wheel-box" tabindex="0" title="Scroll with mouse wheel, swipe up/down, or click arrows">
-        <button type="button" class="wheel-nudge-btn wheel-up" onclick="nudgeNumberWheel('arena', 1)" title="Scroll Up">▲</button>
+        <button type="button" class="wheel-nudge-btn wheel-up" onpointerdown="event.stopPropagation()" onclick="nudgeNumberWheel('arena', 1, event)" title="Scroll Up">▲</button>
         <div class="wheel-roller-viewport">
           <div class="wheel-slot-bracket"></div>
           <div class="wheel-roller-track" id="arena-wheel-track">
@@ -4102,7 +4490,7 @@ function renderActiveChallenge(autoFocus = true) {
             <div class="wheel-digit wheel-next" id="arena-wheel-next">-</div>
           </div>
         </div>
-        <button type="button" class="wheel-nudge-btn wheel-down" onclick="nudgeNumberWheel('arena', -1)" title="Scroll Down">▼</button>
+        <button type="button" class="wheel-nudge-btn wheel-down" onpointerdown="event.stopPropagation()" onclick="nudgeNumberWheel('arena', -1, event)" title="Scroll Down">▼</button>
         <input type="hidden" id="arena-answer-input" value="">
       </div>
     </div>
@@ -4411,10 +4799,15 @@ function animateAbacusSteps(nums) {
    16-SECOND COUNTDOWN TIMER, RHYTHMIC MUSIC, AND APPLE PENCIL DRAWING PAD!
    ========================================================================= */
 
-let speedHandMode = 'left'; // 'left' or 'right'
+let speedTurn = parseInt(localStorage.getItem('kungi_speed_turn') || '1', 10);
+if (isNaN(speedTurn) || speedTurn < 1 || speedTurn > 12) speedTurn = 1;
+let speedHandMode = (speedTurn % 2 === 1) ? 'right' : 'left'; // Right hand first on Turn 1!
 let speedTimer16 = 16;
 let speedTimerInterval = null;
 let speedMusicInterval = null;
+let isSpeedTimerRunning = false;
+let speedBox1Triggered = false;
+let speedTurnCompleted = false;
 let isDrawing = false;
 let canvasCtx = null;
 
@@ -4423,14 +4816,26 @@ function renderSpeedWritingArena() {
   if (!cardContainer) return;
 
   const isMl = (currentLang === 'ml' || currentLang === 'id');
-  const handTitle = speedHandMode === 'left'
-    ? (isMl ? '🖐️ ഇടത് കൈ പരിശീലനം (16 സെക്കൻഡ്)' : '🖐️ LEFT HAND TURN (16s Timer)')
-    : (isMl ? '🖐️ വലത് കൈ പരിശീലനം (16 സെക്കൻഡ്)' : '🖐️ RIGHT HAND TURN (16s Timer)');
+  const handTitle = speedHandMode === 'right'
+    ? (isMl ? '🖐️ വലത് കൈ പരിശീലനം (16 സെക്കൻഡ്)' : '🖐️ RIGHT HAND TURN (16s Timer)')
+    : (isMl ? '🖐️ ഇടത് കൈ പരിശീലനം (16 സെക്കൻഡ്)' : '🖐️ LEFT HAND TURN (16s Timer)');
+
+  const turnsLeft = 12 - speedTurn + 1;
 
   cardContainer.innerHTML = `
     <div class="writing-pad-container">
       <div class="hand-indicator-banner">
         ${handTitle}
+      </div>
+
+      <!-- 12-Turn Countdown and Practice Progress Badges -->
+      <div class="speed-turn-stats-bar">
+        <span class="speed-turn-pill highlight" id="speed-countdown-badge">
+          ⏳ Countdown: ${turnsLeft} Turns Left.
+        </span>
+        <span class="speed-turn-pill" id="speed-practice-badge">
+          🎯 Practice: Turn ${speedTurn} of 12.
+        </span>
       </div>
 
       <div style="display: flex; align-items: center; gap: 20px;">
@@ -4439,8 +4844,8 @@ function renderSpeedWritingArena() {
           <div style="font-weight: 900; color: #4ade80; font-size: 1.1rem;">
             ${isMl ? 'ആപ്പിൾ പെൻസിൽ അല്ലെങ്കിൽ വിരൽ ഉപയോഗിക്കുക' : 'Use Apple Pencil or Finger'}
           </div>
-          <div style="font-size: 0.85rem; color: #86efac;">
-            ${isMl ? 'താഴെയുള്ള പാഡിൽ 1 2 3 4 5 6 7 8 9 0 എന്ന് എഴുതുക!' : 'Write 1 2 3 4 5 6 7 8 9 0 on the pad below!'}
+          <div style="font-size: 0.85rem; color: #86efac; margin-top: 4px; line-height: 1.4;">
+            ${isMl ? 'പെട്ടി 1-ൽ എഴുതി തുടങ്ങൂ! പെട്ടി 1-ൽ എഴുതുമ്പോൾ ടൈമറും സംഗീതവും ആരംഭിക്കും, പെട്ടി 0-ൽ എഴുതുമ്പോൾ നിൽക്കും (1 മുതൽ 0 വരെയുള്ള പെട്ടികൾ പൂർത്തിയാക്കൂ).' : 'Start writing in box 1! Timer & music start when writing in box 1, and stop when writing in box 0 (fill boxes 1 to 0).'}
           </div>
         </div>
       </div>
@@ -4454,7 +4859,7 @@ function renderSpeedWritingArena() {
       <div class="canvas-sheet-wrap" id="canvas-sheet-wrap">
         <div class="dotted-boxes-grid">
           ${[1, 2, 3, 4, 5, 6, 7, 8, 9, 0].map(d => `
-            <div class="dotted-digit-box">
+            <div class="dotted-digit-box" id="speed-box-${d}">
               <span class="box-digit-watermark">${d}</span>
               <div class="box-guide-line"></div>
             </div>
@@ -4484,42 +4889,82 @@ function renderSpeedWritingArena() {
   initStylusCanvas();
 }
 
-function finishSpeedWritingSession() {
+function completeSpeedWritingTurn() {
+  if (speedTurnCompleted) return;
+  speedTurnCompleted = true;
+
   if (speedTimerInterval) clearInterval(speedTimerInterval);
   if (speedMusicInterval) clearInterval(speedMusicInterval);
-
-  // Record speed writing session progress in lessonSolvedMap & totalCorrect
-  const handKey = speedHandMode === 'left' ? 'sec-speed-writing-left' : 'sec-speed-writing-right';
-  for (let s = 0; s < 5; s++) {
-    if (!lessonSolvedMap[`${handKey}_${s}`]) {
-      lessonSolvedMap[`${handKey}_${s}`] = true;
-      totalCorrect++;
-      totalQuestions++;
-      break;
-    }
-  }
-
-  // Requirement 3: ONLY when pressing Finish tab does the Outstanding Kungi message and crown appear!
-  totalStars += 3;
-  totalCrowns += 1;
-  savePersistentStats();
-  updateStatsUI();
-  playSound('crown');
-  launchConfetti();
+  isSpeedTimerRunning = false;
 
   const isMl = (currentLang === 'ml' || currentLang === 'id');
-  const nextHand = speedHandMode === 'left' ? 'right' : 'left';
-  const msg = isMl
-    ? `അത്യുജ്ജ്വലം കുഞ്ഞീ! ഇനി അടുത്ത കൈയിലേക്ക് മാറ്റാം!`
-    : `Outstanding Kungi! Great ${speedHandMode} hand practice! Now get ready for ${nextHand} hand!`;
+  const currentTurn = speedTurn;
 
-  showCelebrationOverlay('👑', isMl ? 'അത്യുജ്ജ്വലം കുഞ്ഞീ!' : 'Outstanding Kungi!', isMl ? 'പരിശീലനം പൂർത്തിയായി! അടുത്ത കൈ!' : `Practice Completed! Switched to ${nextHand.toUpperCase()} Hand!`);
-  speakPraiseCustom(msg);
+  // Record practice progress in persistent score counters
+  totalCorrect++;
+  totalQuestions++;
+  totalStars += 1;
 
-  setTimeout(() => {
-    speedHandMode = nextHand;
-    renderSpeedWritingArena();
-  }, 1800);
+  if (currentTurn >= 12) {
+    // 12 turns complete: Level graduation!
+    totalCrowns += 1;
+    totalStars += 10;
+    speedTurn = 1;
+    speedHandMode = 'right';
+    localStorage.setItem('kungi_speed_turn', '1');
+    savePersistentStats();
+    updateStatsUI();
+
+    playSound('crown');
+    launchConfetti();
+
+    const bannerTitle = isMl ? 'അത്യുജ്ജ്വലം കുഞ്ഞീ!' : 'Outstanding Kungi!';
+    const bannerSub = isMl ? '12 റൗണ്ട് പരിശീലനം പൂർത്തിയായി! സ്വർണ്ണ കിരീടം നേടി! 👑' : '12 Turns Speed Writing Level Completed! Golden Crown Won! 👑';
+    showCelebrationOverlay('👑', bannerTitle, bannerSub);
+
+    const voiceMsg = isMl
+      ? 'അത്യുജ്ജ്വലം കുഞ്ഞീ! രണ്ട് കൈകളും ഉപയോഗിച്ച് പന്ത്രണ്ട് റൗണ്ട് പരിശീലനം വിജയകരമായി പൂർത്തിയാക്കി! സ്വർണ്ണ കിരീടം സമ്മാനിക്കുന്നു!'
+      : 'Outstanding Kungi! You mastered 12 turns of speed writing with both hands! Golden Crown awarded!';
+    speakPraiseCustom(voiceMsg);
+
+    setTimeout(() => {
+      speedTurnCompleted = false;
+      speedBox1Triggered = false;
+      renderSpeedWritingArena();
+    }, 2800);
+  } else {
+    // Turn 1 to 11: Switch hand, update countdown & turn
+    const nextTurn = currentTurn + 1;
+    speedTurn = nextTurn;
+    speedHandMode = (nextTurn % 2 === 1) ? 'right' : 'left';
+    localStorage.setItem('kungi_speed_turn', speedTurn.toString());
+    savePersistentStats();
+    updateStatsUI();
+
+    playSound('star');
+
+    const nextHandName = speedHandMode === 'right' ? (isMl ? 'വലത് കൈ' : 'Right') : (isMl ? 'ഇടത് കൈ' : 'Left');
+    const msg = isMl
+      ? `മിടുക്കൻ കുഞ്ഞീ! റൗണ്ട് ${currentTurn} കഴിഞ്ഞു. അടുത്തത് ${nextHandName}!`
+      : `Great turn Kungi! Turn ${currentTurn} done. Get ready for ${nextHandName} hand! Turn ${nextTurn} of 12!`;
+
+    const statusEl = document.getElementById('speed-writing-status');
+    if (statusEl) {
+      statusEl.innerHTML = `⭐ <strong>${isMl ? `റൗണ്ട് ${currentTurn} പൂർത്തിയായി! ഇനി ${nextHandName}!` : `Turn ${currentTurn} of 12 complete! Switched to ${nextHandName} Hand!`}</strong>`;
+    }
+
+    speakPraiseCustom(msg);
+
+    setTimeout(() => {
+      speedTurnCompleted = false;
+      speedBox1Triggered = false;
+      renderSpeedWritingArena();
+    }, 1500);
+  }
+}
+
+function finishSpeedWritingSession() {
+  completeSpeedWritingTurn();
 }
 
 function toggleSpeedHand() {
@@ -4548,8 +4993,41 @@ function initStylusCanvas() {
     const clientY = e.touches ? e.touches[0].clientY : e.clientY;
     return {
       x: clientX - rect.left,
-      y: clientY - rect.top
+      y: clientY - rect.top,
+      clientX: clientX,
+      clientY: clientY
     };
+  }
+
+  function checkBoxHit(clientX, clientY) {
+    for (const d of [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]) {
+      const box = document.getElementById(`speed-box-${d}`);
+      if (box) {
+        const r = box.getBoundingClientRect();
+        if (clientX >= r.left && clientX <= r.right && clientY >= r.top && clientY <= r.bottom) {
+          return { digit: d, element: box };
+        }
+      }
+    }
+    return null;
+  }
+
+  function handleStylusBoxHit(clientX, clientY) {
+    const hit = checkBoxHit(clientX, clientY);
+    if (!hit) return;
+
+    // Start timer & music automatically when writing starts in Box 1
+    if (hit.digit === 1 && !isSpeedTimerRunning && !speedTurnCompleted) {
+      speedBox1Triggered = true;
+      hit.element.classList.add('active-box');
+      start16SecSpeedSession();
+    }
+
+    // Stop timer & music, complete turn automatically when writing in Box 0
+    if (hit.digit === 0 && (isSpeedTimerRunning || speedBox1Triggered) && !speedTurnCompleted) {
+      hit.element.classList.add('completed-box');
+      completeSpeedWritingTurn();
+    }
   }
 
   function startDraw(e) {
@@ -4558,10 +5036,10 @@ function initStylusCanvas() {
     const pos = getPos(e);
     lastX = pos.x;
     lastY = pos.y;
-    // Pressure sensitivity for Apple Pencil
     if (e.pressure && e.pressure > 0) {
       canvasCtx.lineWidth = Math.max(2, e.pressure * 8);
     }
+    handleStylusBoxHit(pos.clientX, pos.clientY);
   }
 
   function drawMove(e) {
@@ -4577,6 +5055,7 @@ function initStylusCanvas() {
     canvasCtx.stroke();
     lastX = pos.x;
     lastY = pos.y;
+    handleStylusBoxHit(pos.clientX, pos.clientY);
   }
 
   function stopDraw(e) {
@@ -4600,26 +5079,35 @@ function clearStylusCanvas() {
   if (canvas && canvasCtx) {
     canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
   }
+  document.querySelectorAll('.dotted-digit-box').forEach(b => {
+    b.classList.remove('active-box');
+    b.classList.remove('completed-box');
+  });
 }
 
 // 16s Countdown timer with rhythmic background music
 function start16SecSpeedSession() {
+  if (speedTurnCompleted) return;
   if (speedTimerInterval) clearInterval(speedTimerInterval);
   if (speedMusicInterval) clearInterval(speedMusicInterval);
 
+  isSpeedTimerRunning = true;
   speedTimer16 = 16;
   const disp = document.getElementById('speed-16s-display');
   if (disp) disp.innerText = speedTimer16;
+
+  const b1 = document.getElementById('speed-box-1');
+  if (b1) b1.classList.add('active-box');
 
   // Background rhythmic music notes during the 16 seconds
   const rhythmNotes = [523.25, 659.25, 783.99, 659.25];
   let noteIdx = 0;
   speedMusicInterval = setInterval(() => {
-    if (soundEnabled && audioCtx) {
+    if (!isMasterMuted && soundEnabled && audioCtx) {
       const now = audioCtx.currentTime;
       const osc = audioCtx.createOscillator();
       const gain = audioCtx.createGain();
-      osc.type = 'triangle';
+      osc.type = currentSoundTheme === 'arcade' ? 'square' : 'triangle';
       osc.frequency.setValueAtTime(rhythmNotes[noteIdx % rhythmNotes.length], now);
       gain.gain.setValueAtTime(0.09, now);
       gain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
@@ -4633,25 +5121,25 @@ function start16SecSpeedSession() {
 
   const isMl = (currentLang === 'ml' || currentLang === 'id');
   const statusEl = document.getElementById('speed-writing-status');
-  if (statusEl) statusEl.innerText = isMl ? '⏳ ഇപ്പോൾ എഴുതൂ! പൂർത്തിയായാൽ "🏁 എഴുതിക്കഴിഞ്ഞു!" ബട്ടൺ അമർത്തൂ!' : '⏳ Writing in progress! When finished, press "🏁 Finish Writing" tab!';
+  if (statusEl) statusEl.innerText = isMl ? '⏳ ടൈമർ ഓടുന്നു! 1 മുതൽ 0 വരെ എഴുതൂ (പെട്ടി 0-ൽ എത്തുമ്പോൾ നിൽക്കും)!' : '⏳ Timer & music running! Write 1 to 0 (stops in box 0)!';
 
   speedTimerInterval = setInterval(() => {
     speedTimer16--;
     if (disp) disp.innerText = speedTimer16;
-    playSound('tick');
+    if (!isMasterMuted) playSound('tick');
 
     if (speedTimer16 <= 0) {
       clearInterval(speedTimerInterval);
       clearInterval(speedMusicInterval);
+      isSpeedTimerRunning = false;
 
-      // Timer completed: Prompt Kungi to press Finish Writing tab!
+      // Timer completed: Prompt Kungi to complete box 0 or press Finish Writing
       if (statusEl) {
-        statusEl.innerHTML = `⏰ <strong>${isMl ? 'സമയം കഴിഞ്ഞു! "🏁 എഴുതിക്കഴിഞ്ഞു!" ബട്ടൺ അമർത്തൂ!' : "Time's up! Press '🏁 Finish Writing' tab now!"}</strong>`;
+        statusEl.innerHTML = `⏰ <strong>${isMl ? 'സമയം കഴിഞ്ഞു! പെട്ടി 0 പൂർത്തിയാക്കുക അല്ലെങ്കിൽ "🏁 എഴുതിക്കഴിഞ്ഞു!" ബട്ടൺ അമർത്തൂ!' : "Time's up! Finish box 0 or press '🏁 Finish Writing'!"}</strong>`;
       }
       const finishBtn = document.getElementById('btn-finish-speed-tab');
       if (finishBtn) {
         finishBtn.style.animation = 'pulse 1s infinite alternate';
-        finishBtn.focus();
       }
     }
   }, 1000);
@@ -4824,7 +5312,7 @@ function renderBeadLessonArena(lessonKey, autoFocus = true) {
     <!-- Hulk Number Scroll Wheel Picker for Bead Counting -->
     <div style="display: flex; justify-content: center; margin-bottom: 10px;">
       <div class="hulk-wheel-box" id="bead-wheel-box" tabindex="0" title="Scroll with mouse wheel, swipe up/down, or click arrows">
-        <button type="button" class="wheel-nudge-btn wheel-up" onclick="nudgeNumberWheel('bead', 1)" title="Scroll Up">▲</button>
+        <button type="button" class="wheel-nudge-btn wheel-up" onpointerdown="event.stopPropagation()" onclick="nudgeNumberWheel('bead', 1, event)" title="Scroll Up">▲</button>
         <div class="wheel-roller-viewport">
           <div class="wheel-slot-bracket"></div>
           <div class="wheel-roller-track" id="bead-wheel-track">
@@ -4833,7 +5321,7 @@ function renderBeadLessonArena(lessonKey, autoFocus = true) {
             <div class="wheel-digit wheel-next" id="bead-wheel-next">-</div>
           </div>
         </div>
-        <button type="button" class="wheel-nudge-btn wheel-down" onclick="nudgeNumberWheel('bead', -1)" title="Scroll Down">▼</button>
+        <button type="button" class="wheel-nudge-btn wheel-down" onpointerdown="event.stopPropagation()" onclick="nudgeNumberWheel('bead', -1, event)" title="Scroll Down">▼</button>
         <input type="hidden" id="bead-answer-input" value="">
       </div>
     </div>
@@ -5064,23 +5552,8 @@ document.addEventListener('DOMContentLoaded', () => {
     alert(I18N[currentLang].howBeadsMsg);
   });
 
-  // Top Left: Click on Voice plays sweet voice greeting
-  document.getElementById('btn-toggle-voice').addEventListener('click', function() {
-    voiceEnabled = true;
-    this.style.opacity = '1';
-    const isMl = (currentLang === 'ml' || currentLang === 'id');
-    const welcomeVoiceMsg = isMl
-      ? "ഹലോ കുഞ്ഞീ നിങ്ങളുടെ സൂപ്പർ അബാക്കസിലേക്ക് സ്വാഗതം നമുക്ക് ഒരുമിച്ച് കണക്ക് പഠിക്കാം"
-      : "Hello Kungi Welcome to your Super Abacus Voice is active lets learn together";
-    speakPraiseCustom(welcomeVoiceMsg);
-  });
-
-  // Top Left: Click on Sound plays sweet musical chime tune
-  document.getElementById('btn-toggle-sound').addEventListener('click', function() {
-    soundEnabled = true;
-    this.style.opacity = '1';
-    playWelcomeMusic();
-  });
+  // Initialize Master Sound Mute UI state
+  updateMuteButtonUI();
 
   // Welcome music on page open (handles browser autoplay policies smoothly)
   triggerWelcomeMusicSafely();
