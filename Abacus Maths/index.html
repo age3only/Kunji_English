@@ -2339,11 +2339,32 @@
 </div>
 
 <script>
+// Safe LocalStorage wrapper to prevent SecurityError or QuotaExceededError in Private Browsing / iOS Safari
+const safeStorage = {
+  get(key, fallback = null) {
+    try {
+      const v = localStorage.getItem(key);
+      return v !== null ? v : fallback;
+    } catch(e) {
+      return fallback;
+    }
+  },
+  set(key, val) {
+    try {
+      localStorage.setItem(key, val);
+    } catch(e) {}
+  }
+};
+
+window.addEventListener('error', (e) => {
+  console.warn('Recovered from uncaught window error:', e.message);
+});
+
 /* =========================================================================
    I18N LANGUAGE DICTIONARIES (ENGLISH & MALAYALAM)
    ========================================================================= */
 
-let currentLang = localStorage.getItem('kungi_abacus_lang') || localStorage.getItem('freya_abacus_lang') || 'en';
+let currentLang = safeStorage.get('kungi_abacus_lang') || safeStorage.get('freya_abacus_lang') || 'en';
 if (currentLang === 'id') currentLang = 'ml';
 
 const I18N = {
@@ -2524,7 +2545,7 @@ function refreshCurrentActiveLesson(autoFocus = false) {
 function setLanguage(lang) {
   if (lang === 'id') lang = 'ml';
   currentLang = lang;
-  localStorage.setItem('kungi_abacus_lang', lang);
+  safeStorage.set('kungi_abacus_lang', lang);
 
   const btnEn = document.getElementById('lang-btn-en');
   const btnMl = document.getElementById('lang-btn-ml') || document.getElementById('lang-btn-id');
@@ -2730,13 +2751,13 @@ function numberToWordsMalayalam(num) {
    AUDIO & SYNTHESIZER
    ========================================================================= */
 
-let isMasterMuted = localStorage.getItem('kungi_master_muted') === '1';
+let isMasterMuted = safeStorage.get('kungi_master_muted') === '1';
 let voiceEnabled = true;
 let soundEnabled = true;
 let audioCtx = null;
 let masterGainNode = null;
-let currentSoundTheme = localStorage.getItem('kungi_sound_theme') || 'crystal';
-let selectedVoiceProfile = localStorage.getItem('kungi_voice_profile') || 'female';
+let currentSoundTheme = safeStorage.get('kungi_sound_theme') || 'crystal';
+let selectedVoiceProfile = safeStorage.get('kungi_voice_profile') || 'female';
 
 function initAudio() {
   try {
@@ -2791,6 +2812,7 @@ function updateMuteButtonUI() {
       if (icon) icon.innerText = '🔊';
       if (lbl) lbl.innerText = isMl ? 'ശബ്ദം ഓൺ' : 'Sound ON';
     }
+  }
   if (masterGainNode && audioCtx) {
     try {
       masterGainNode.gain.cancelScheduledValues(audioCtx.currentTime);
@@ -2801,7 +2823,7 @@ function updateMuteButtonUI() {
 
 function toggleMasterMute() {
   isMasterMuted = !isMasterMuted;
-  localStorage.setItem('kungi_master_muted', isMasterMuted ? '1' : '0');
+  safeStorage.set('kungi_master_muted', isMasterMuted ? '1' : '0');
   updateMuteButtonUI();
   if (isMasterMuted) {
     if (currentTtsAudio) {
@@ -2872,7 +2894,7 @@ function selectVoiceProfile(id) {
   if (isMasterMuted) toggleMasterMute();
   initAudio();
   selectedVoiceProfile = id;
-  localStorage.setItem('kungi_voice_profile', id);
+  safeStorage.set('kungi_voice_profile', id);
   renderVoiceOptions();
   const isMl = (id === 'malayalam' || currentLang === 'ml' || currentLang === 'id');
   const sample = isMl ? 'ഹലോ കുഞ്ഞീ! ഞാൻ നിങ്ങളുടെ അധ്യാപികയാണ്!' : 'Hello Kungi! I am your voice tutor!';
@@ -2927,7 +2949,7 @@ function selectSoundTheme(id) {
   if (isMasterMuted) toggleMasterMute();
   initAudio();
   currentSoundTheme = id;
-  localStorage.setItem('kungi_sound_theme', id);
+  safeStorage.set('kungi_sound_theme', id);
   renderSoundThemes();
   playSweetTone(0, true);
   setTimeout(() => { playSweetTone(2, true); }, 140);
@@ -3061,6 +3083,8 @@ function playSound(type) {
     if (!audioCtx) return;
     const dest = getAudioDestination();
     if (!dest) return;
+    const now = Math.max(audioCtx.currentTime, 0) + 0.008;
+
     if (type === 'tryagain') {
       const o = audioCtx.createOscillator();
       const g = audioCtx.createGain();
@@ -3330,13 +3354,13 @@ function speakPraiseCustom(text) {
    PERSISTENT SCORES & MANUAL 5-CLICK RESET ENGINE
    ========================================================================= */
 
-let totalCorrect = parseInt(localStorage.getItem('kungi_correct_ans') || localStorage.getItem('freya_correct_ans') || '0', 10);
-let totalQuestions = parseInt(localStorage.getItem('kungi_total_qs') || localStorage.getItem('freya_total_qs') || '0', 10);
-let totalStars = parseInt(localStorage.getItem('kungi_stars') || localStorage.getItem('freya_stars') || '0', 10);
-let totalCrowns = parseInt(localStorage.getItem('kungi_crowns') || localStorage.getItem('freya_crowns') || '0', 10);
+let totalCorrect = parseInt(safeStorage.get('kungi_correct_ans') || safeStorage.get('freya_correct_ans') || '0', 10);
+let totalQuestions = parseInt(safeStorage.get('kungi_total_qs') || safeStorage.get('freya_total_qs') || '0', 10);
+let totalStars = parseInt(safeStorage.get('kungi_stars') || safeStorage.get('freya_stars') || '0', 10);
+let totalCrowns = parseInt(safeStorage.get('kungi_crowns') || safeStorage.get('freya_crowns') || '0', 10);
 let lessonSolvedMap = {};
 try {
-  lessonSolvedMap = JSON.parse(localStorage.getItem('kungi_solved_map') || localStorage.getItem('freya_solved_map') || '{}');
+  lessonSolvedMap = JSON.parse(safeStorage.get('kungi_solved_map') || safeStorage.get('freya_solved_map') || '{}');
 } catch(e) {
   lessonSolvedMap = {};
 }
@@ -3497,7 +3521,7 @@ function calculateOverallCurriculumProgress() {
   const displaySolved = Math.max(totalCurriculumSolved, totalCorrect);
   if (totalCurriculumSolved > totalCorrect) {
     totalCorrect = totalCurriculumSolved;
-    localStorage.setItem('kungi_correct_ans', totalCorrect);
+    safeStorage.set('kungi_correct_ans', totalCorrect);
   }
 
   const overallPercent = Math.min(100, Math.round((sumOfSectionRatios / 10) * 100));
@@ -3667,11 +3691,11 @@ function updateStatsUI() {
 }
 
 function savePersistentStats() {
-  localStorage.setItem('kungi_correct_ans', totalCorrect);
-  localStorage.setItem('kungi_total_qs', totalQuestions);
-  localStorage.setItem('kungi_stars', totalStars);
-  localStorage.setItem('kungi_crowns', totalCrowns);
-  localStorage.setItem('kungi_solved_map', JSON.stringify(lessonSolvedMap));
+  safeStorage.set('kungi_correct_ans', totalCorrect);
+  safeStorage.set('kungi_total_qs', totalQuestions);
+  safeStorage.set('kungi_stars', totalStars);
+  safeStorage.set('kungi_crowns', totalCrowns);
+  safeStorage.set('kungi_solved_map', JSON.stringify(lessonSolvedMap));
 }
 
 // 5-Clicks on Heading Manual Reset
@@ -3994,7 +4018,9 @@ function setSorobanNumber(num) {
 
 function launchConfetti() {
   const canvas = document.getElementById('confetti-canvas');
+  if (!canvas) return;
   const ctx = canvas.getContext('2d');
+  if (!ctx) return;
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
 
@@ -4990,7 +5016,7 @@ const DIGIT_TRACE_PATHS = {
 
 const SPEED_DIGITS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
 let activeSpeedDigitIndex = 0;
-let speedTurn = parseInt(localStorage.getItem('kungi_speed_turn') || '1', 10);
+let speedTurn = parseInt(safeStorage.get('kungi_speed_turn') || '1', 10);
 if (isNaN(speedTurn) || speedTurn < 1 || speedTurn > 12) speedTurn = 1;
 let speedHandMode = (speedTurn % 2 === 1) ? 'right' : 'left'; // Right hand first on Turn 1!
 let speedTimer16 = 16;
@@ -5155,7 +5181,7 @@ function completeSpeedWritingTurn() {
     totalStars += 10;
     speedTurn = 1;
     speedHandMode = 'right';
-    localStorage.setItem('kungi_speed_turn', '1');
+    safeStorage.set('kungi_speed_turn', '1');
     savePersistentStats();
     updateStatsUI();
 
@@ -5180,7 +5206,7 @@ function completeSpeedWritingTurn() {
     const nextTurn = currentTurn + 1;
     speedTurn = nextTurn;
     speedHandMode = (nextTurn % 2 === 1) ? 'right' : 'left';
-    localStorage.setItem('kungi_speed_turn', speedTurn.toString());
+    safeStorage.set('kungi_speed_turn', speedTurn.toString());
     savePersistentStats();
     updateStatsUI();
 
