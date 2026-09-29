@@ -1934,8 +1934,8 @@
         <div class="hero-banner" id="main-hero-banner" title="Click 5 times to reset scores">
           <span class="corner-vehicle left">🚗</span>
           <span class="corner-vehicle right">🏍️</span>
-          <h1 class="hero-title">✨ <span id="t-app-title">KUNGI'S SUPER ABACUS</span> ✨</h1>
-          <p class="hero-subtitle" id="t-app-subtitle">Welcome, Kungi! Let's learn Abacus together! 🚗💨</p>
+          <h1 class="hero-title" onclick="handleHeadingClick(event)" style="cursor: pointer;">✨ <span id="t-app-title">KUNGI'S SUPER ABACUS</span> ✨</h1>
+          <p class="hero-subtitle" id="t-app-subtitle" onclick="handleHeadingClick(event)" style="cursor: pointer;">Welcome, Kungi! Let's learn Abacus together! 🚗💨</p>
 
           <!-- 10 Stars Overall Progress Bar (Persists until Reset) -->
           <div class="banner-overall-progress" id="banner-overall-progress" title="Overall Progress (10 Stars) - Click to view detailed section right answers!" onclick="event.stopPropagation(); openSectionProgressModal();" style="cursor: pointer;">
@@ -4463,7 +4463,8 @@ function animateAbacusSteps(nums) {
    16-SECOND COUNTDOWN TIMER, RHYTHMIC MUSIC, AND APPLE PENCIL DRAWING PAD!
    ========================================================================= */
 
-let speedHandMode = 'left'; // 'left' or 'right'
+let speedWritingTurnCount = parseInt(localStorage.getItem('kungi_speed_turn_count') || '0', 10);
+let speedHandMode = (speedWritingTurnCount % 2 === 0) ? 'right' : 'left'; // Right hand first, alternating till 12 times
 let speedTimer16 = 16;
 let speedTimerInterval = null;
 let speedMusicInterval = null;
