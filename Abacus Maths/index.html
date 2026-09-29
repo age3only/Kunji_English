@@ -1603,6 +1603,24 @@
     pointer-events: none;
   }
 
+  
+  .dotted-digit-box.box-filled {
+    border-color: #22c55e !important;
+    background: #142816 !important;
+    box-shadow: 0 0 10px rgba(34, 197, 94, 0.35) !important;
+    transition: all 0.2s ease;
+  }
+  .dotted-digit-box.box-filled .box-digit-watermark {
+    background: #166534 !important;
+    color: #86efac !important;
+    border-color: #4ade80 !important;
+  }
+  .dotted-digit-box.box-active {
+    border-color: #22c55e !important;
+    background: #1c351f !important;
+    box-shadow: 0 0 12px rgba(34, 197, 94, 0.4) !important;
+  }
+
   .dotted-digit-box {
     border: 2.5px dashed #22c55e;
     border-radius: 14px;
@@ -4452,6 +4470,124 @@ let speedMusicInterval = null;
 let isDrawing = false;
 let canvasCtx = null;
 
+
+/* =========================================================================
+   SPEED WRITING BLOCK DETECTION & PROGRESS ENGINE (KUNJI)
+   ========================================================================= */
+
+let speedBoxStrokes = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 0: 0 };
+let speedActivityStarted = false;
+let speedActivityFinished = false;
+
+function resetSpeedWritingState() {
+  speedBoxStrokes = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 0: 0 };
+  speedActivityStarted = false;
+  speedActivityFinished = false;
+  document.querySelectorAll('.dotted-digit-box').forEach(b => {
+    b.classList.remove('box-filled', 'box-active');
+  });
+  if (speedTimerInterval) clearInterval(speedTimerInterval);
+  if (speedMusicInterval) clearInterval(speedMusicInterval);
+  speedTimerInterval = null;
+  speedMusicInterval = null;
+  speedTimer16 = 16;
+  const disp = document.getElementById('speed-16s-display');
+  if (disp) disp.innerText = speedTimer16;
+  const st = document.getElementById('speed-writing-status');
+  if (st) {
+    st.innerText = currentLang === 'ml' 
+      ? '👉 ബോക്സ് 1 ൽ 1 എന്ന് എഴുതി തുടങ്ങൂ!' 
+      : '👉 Start by writing number 1 inside Box 1!';
+  }
+}
+
+function getDigitBoxUnderPoint(clientX, clientY) {
+  const boxes = document.querySelectorAll('.dotted-digit-box');
+  for (let i = 0; i < boxes.length; i++) {
+    const box = boxes[i];
+    const rect = box.getBoundingClientRect();
+    if (clientX >= rect.left && clientX <= rect.right &&
+        clientY >= rect.top && clientY <= rect.bottom) {
+      return parseInt(box.getAttribute('data-digit'), 10);
+    }
+  }
+  return null;
+}
+
+function registerSpeedStrokePoint(clientX, clientY) {
+  if (speedActivityFinished) return;
+  const digit = getDigitBoxUnderPoint(clientX, clientY);
+  const st = document.getElementById('speed-writing-status');
+  const isMl = (currentLang === 'ml');
+
+  // Start timer & music specifically inside Box 1
+  if (!speedActivityStarted) {
+    if (digit === 1) {
+      speedActivityStarted = true;
+      start16SecSpeedSession();
+      const b1 = document.getElementById('box-digit-1');
+      if (b1) b1.classList.add('box-active');
+      if (st) st.innerText = isMl ? '⏱️ ടൈമർ തുടങ്ങി! 2, 3, 4 ബോക്സുകളിലേക്ക് തുടരൂ...' : '⏱️ 16s Timer running! Continue to boxes 2, 3, 4...';
+    } else {
+      if (st) st.innerText = isMl ? '👉 ടൈമർ തുടങ്ങാൻ ബോക്സ് 1 ൽ നിന്ന് എഴുതൂ!' : '👉 Start inside Box 1 to start the timer!';
+      return;
+    }
+  }
+
+  if (digit !== null) {
+    speedBoxStrokes[digit] = (speedBoxStrokes[digit] || 0) + 1;
+    const boxEl = document.getElementById(`box-digit-${digit}`);
+
+    if (speedBoxStrokes[digit] >= 3 && boxEl && !boxEl.classList.contains('box-filled')) {
+      boxEl.classList.add('box-filled');
+      boxEl.classList.remove('box-active');
+      const nextDigit = digit === 9 ? 0 : (digit + 1);
+      const nextEl = document.getElementById(`box-digit-${nextDigit}`);
+      if (nextEl && !nextEl.classList.contains('box-filled')) nextEl.classList.add('box-active');
+    }
+
+    // Stop timer & music on Box 0 and verify blocks 2-9
+    if (digit === 0 && speedActivityStarted && !speedActivityFinished && speedBoxStrokes[0] >= 3) {
+      if (speedTimerInterval) clearInterval(speedTimerInterval);
+      if (speedMusicInterval) clearInterval(speedMusicInterval);
+      speedTimerInterval = null;
+      speedMusicInterval = null;
+
+      const requiredIntermediate = [2, 3, 4, 5, 6, 7, 8, 9];
+      const missing = requiredIntermediate.filter(d => (speedBoxStrokes[d] || 0) < 3);
+
+      if (missing.length === 0) {
+        speedActivityFinished = true;
+        if (st) {
+          st.innerHTML = `🎉 <strong>${isMl ? 'ഗംഭീരം! 1 മുതൽ 0 വരെയുള്ള എല്ലാ ബോക്സുകളും പൂർത്തിയായി!' : 'Outstanding! All boxes 1 to 0 completed!'}</strong>`;
+        }
+        setTimeout(() => {
+          finishSpeedWritingSession();
+        }, 300);
+      } else {
+        if (st) {
+          st.innerHTML = `⚠️ <strong style="color: #facc15;">${isMl ? `ടൈമർ നിന്നു! വിട്ടുപോയ ബോക്സുകൾ: [${missing.join(', ')}]. അവയിൽ എഴുതി പൂർത്തിയാക്കൂ!` : `Timer stopped! Missing boxes: [${missing.join(', ')}]. Write in them to finish!`}</strong>`;
+        }
+      }
+    } else if (speedActivityStarted && !speedActivityFinished) {
+      if (speedBoxStrokes[0] >= 3) {
+        const requiredIntermediate = [2, 3, 4, 5, 6, 7, 8, 9];
+        const missing = requiredIntermediate.filter(d => (speedBoxStrokes[d] || 0) < 3);
+        if (missing.length === 0) {
+          speedActivityFinished = true;
+          if (st) {
+            st.innerHTML = `🎉 <strong>${isMl ? 'ഗംഭീരം! എല്ലാം പൂർത്തിയായി!' : 'Great! All boxes are now completed!'}</strong>`;
+          }
+          setTimeout(() => {
+            finishSpeedWritingSession();
+          }, 300);
+        }
+      }
+    }
+  }
+}
+
+
 function renderSpeedWritingArena() {
   const cardContainer = document.getElementById('active-challenge-card');
   if (!cardContainer) return;
@@ -4486,10 +4622,10 @@ function renderSpeedWritingArena() {
 
       <!-- Stylus / Apple Pencil Canvas with Dotted Line Rectangles for 1 to 0 -->
       <div class="canvas-sheet-wrap" id="canvas-sheet-wrap">
-        <div class="dotted-boxes-grid">
+        <div class="dotted-boxes-grid" id="speed-writing-boxes-grid">
           ${[1, 2, 3, 4, 5, 6, 7, 8, 9, 0].map(d => `
-            <div class="dotted-digit-box">
-              <span class="box-digit-watermark">${d}</span>
+            <div class="dotted-digit-box" id="box-digit-${d}" data-digit="${d}">
+              <span class="box-digit-watermark" id="box-watermark-${d}">${d}</span>
               <div class="box-guide-line"></div>
             </div>
           `).join('')}
@@ -4592,16 +4728,12 @@ function initStylusCanvas() {
     const pos = getPos(e);
     lastX = pos.x;
     lastY = pos.y;
-    // Pressure sensitivity for Apple Pencil
     if (e.pressure && e.pressure > 0) {
       canvasCtx.lineWidth = Math.max(2, e.pressure * 8);
     }
-    // Auto start 16s timer & music on first stroke
-    if (!speedTimerInterval) {
-      start16SecSpeedSession();
-      const st = document.getElementById('speed-writing-status');
-      if (st) st.innerText = currentLang === 'ml' ? '⏱️ 16 സെക്കൻഡ് ടൈമറും സംഗീതവും തുടങ്ങി!' : '⏱️ 16s Timer & Music running!';
-    }
+    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+    registerSpeedStrokePoint(clientX, clientY);
   }
 
   function drawMove(e) {
@@ -4617,6 +4749,9 @@ function initStylusCanvas() {
     canvasCtx.stroke();
     lastX = pos.x;
     lastY = pos.y;
+    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+    registerSpeedStrokePoint(clientX, clientY);
   }
 
   function stopDraw(e) {
@@ -4640,6 +4775,7 @@ function clearStylusCanvas() {
   if (canvas && canvasCtx) {
     canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
   }
+  resetSpeedWritingState();
 }
 
 // 16s Countdown timer with rhythmic background music
