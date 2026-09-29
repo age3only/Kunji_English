@@ -1862,6 +1862,24 @@
     background: #112213;
     position: relative;
   }
+
+@keyframes beadShake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-6px); }
+  40%, 80% { transform: translateX(6px); }
+}
+.shake-anim {
+  animation: beadShake 0.4s ease-in-out !important;
+}
+@keyframes starPopAnim {
+  0% { transform: scale(0.85); }
+  50% { transform: scale(1.15); }
+  100% { transform: scale(1.0); }
+}
+.star-pop-anim {
+  animation: starPopAnim 0.35s ease-out !important;
+}
+
 </style>
 </head>
 <body>
@@ -2598,6 +2616,21 @@ function playSound(type) {
   try {
     initAudio();
     const now = audioCtx.currentTime;
+
+    if (type === 'tryagain') {
+      const o = audioCtx.createOscillator();
+      const g = audioCtx.createGain();
+      o.type = 'sine';
+      o.frequency.setValueAtTime(320, now);
+      o.frequency.exponentialRampToValueAtTime(260, now + 0.28);
+      g.gain.setValueAtTime(0.18, now);
+      g.gain.exponentialRampToValueAtTime(0.001, now + 0.28);
+      o.connect(g);
+      g.connect(audioCtx.destination);
+      o.start(now);
+      o.stop(now + 0.28);
+      return;
+    }
 
     if (type === 'bead') {
       playSweetTone(Math.floor(Math.random() * 5));
@@ -3424,7 +3457,7 @@ function updateDisplayAndSpeech(triggerVoice = true) {
 
   // Requirement 2: Never speak "zero" automatically on clear or transition!
   // Only speak if triggerVoice is explicitly true AND total > 0.
-  if (triggerVoice && total > 0) {
+  if (triggerVoice && total > 0 && activeLessonKey !== 'sec-bead-draw') {
     speakValueSweetly(total);
   }
 }
@@ -3950,6 +3983,7 @@ class NumberWheelController {
 
     // 2. Touch / Mouse drag
     const onPointerDown = (e) => {
+      if (e.target && e.target.closest('.wheel-nudge-btn')) return;
       this.startY = e.clientY;
       this.isDragging = true;
       try { this.container.setPointerCapture(e.pointerId); } catch(err) {}
@@ -4093,7 +4127,7 @@ function renderActiveChallenge(autoFocus = true) {
       
       <!-- Hulk Number Scroll Wheel Picker -->
       <div class="hulk-wheel-box" id="arena-wheel-box" tabindex="0" title="Scroll with mouse wheel, swipe up/down, or click arrows">
-        <button type="button" class="wheel-nudge-btn wheel-up" onclick="nudgeNumberWheel('arena', 1)" title="Scroll Up">▲</button>
+        <button type="button" class="wheel-nudge-btn wheel-up" onclick="nudgeNumberWheel('arena', 1)" onpointerdown="event.stopPropagation(); nudgeNumberWheel('arena', 1);" title="Scroll Up">▲</button>
         <div class="wheel-roller-viewport">
           <div class="wheel-slot-bracket"></div>
           <div class="wheel-roller-track" id="arena-wheel-track">
@@ -4102,7 +4136,7 @@ function renderActiveChallenge(autoFocus = true) {
             <div class="wheel-digit wheel-next" id="arena-wheel-next">-</div>
           </div>
         </div>
-        <button type="button" class="wheel-nudge-btn wheel-down" onclick="nudgeNumberWheel('arena', -1)" title="Scroll Down">▼</button>
+        <button type="button" class="wheel-nudge-btn wheel-down" onclick="nudgeNumberWheel('arena', -1)" onpointerdown="event.stopPropagation(); nudgeNumberWheel('arena', -1);" title="Scroll Down">▼</button>
         <input type="hidden" id="arena-answer-input" value="">
       </div>
     </div>
@@ -4562,6 +4596,12 @@ function initStylusCanvas() {
     if (e.pressure && e.pressure > 0) {
       canvasCtx.lineWidth = Math.max(2, e.pressure * 8);
     }
+    // Auto start 16s timer & music on first stroke
+    if (!speedTimerInterval) {
+      start16SecSpeedSession();
+      const st = document.getElementById('speed-writing-status');
+      if (st) st.innerText = currentLang === 'ml' ? '⏱️ 16 സെക്കൻഡ് ടൈമറും സംഗീതവും തുടങ്ങി!' : '⏱️ 16s Timer & Music running!';
+    }
   }
 
   function drawMove(e) {
@@ -4666,6 +4706,8 @@ let beadCountCurrentNum = 1;
 function verifyOrSetBeadDrawNumber(targetNum, idx) {
   const currentTotal = getCurrentSorobanTotal();
   const isMl = (currentLang === 'ml' || currentLang === 'id');
+  const btn = document.getElementById(`btn-bead-draw-${idx}`);
+
   if (currentTotal === targetNum) {
     if (!lessonSolvedMap[`sec-bead-draw_${idx}`]) {
       lessonSolvedMap[`sec-bead-draw_${idx}`] = true;
@@ -4675,6 +4717,8 @@ function verifyOrSetBeadDrawNumber(targetNum, idx) {
     totalStars += 1;
     savePersistentStats();
     updateStatsUI();
+    renderOverallProgressStars();
+
     playSound('fanfare');
     playSound('star');
     showCelebrationOverlay(
@@ -4684,29 +4728,29 @@ function verifyOrSetBeadDrawNumber(targetNum, idx) {
     );
     speakPraiseCustom(isMl ? 'നല്ല ശ്രമം കുഞ്ഞീ!' : 'Good job Kungi!');
     launchConfetti();
-    const btn = document.getElementById(`btn-bead-draw-${idx}`);
     if (btn) {
       btn.style.background = 'linear-gradient(135deg, #15803d 0%, #22c55e 100%)';
       btn.style.borderColor = '#86efac';
       btn.style.color = '#ffffff';
-      btn.style.boxShadow = '0 0 12px rgba(74, 222, 128, 0.6)';
+      btn.style.boxShadow = '0 0 16px rgba(74, 222, 128, 0.7)';
       btn.innerHTML = `${targetNum} ⭐`;
+      btn.classList.add('star-pop-anim');
     }
   } else {
-    setSorobanNumber(targetNum);
-    const msg = isMl 
-      ? `അബാക്കസിൽ ${targetNum} കാണിക്കുന്നു. അടുത്ത സംഖ്യ ചെയ്തു നോക്കൂ!` 
-      : `Showing ${targetNum} on the abacus. Now try another number!`;
-    speakPraiseCustom(msg);
-    const btn = document.getElementById(`btn-bead-draw-${idx}`);
+    // Mismatch: Say try again please, keep abacus beads intact
+    playSound('tryagain');
+    speakPraiseCustom(isMl ? 'വീണ്ടും ശ്രമിക്കൂ!' : 'Try again please!');
     if (btn) {
+      btn.classList.remove('shake-anim');
+      void btn.offsetWidth;
+      btn.classList.add('shake-anim');
       const origBorder = btn.style.borderColor;
       btn.style.borderColor = '#facc15';
       setTimeout(() => {
         if (btn && !btn.innerHTML.includes('⭐')) {
           btn.style.borderColor = origBorder || '#2e5333';
         }
-      }, 1200);
+      }, 1000);
     }
   }
 }
@@ -4724,7 +4768,7 @@ function renderBeadLessonArena(lessonKey, autoFocus = true) {
       <div style="width: 100%;">
         <h3 style="color: #4ade80; margin-bottom: 8px;">✏️ ${isMl ? 'അബാക്കസിൽ മണികൾ വെക്കൂ!' : 'Build Beads on the Abacus!'}</h3>
         <p style="font-size: 0.98rem; font-weight: 700; color: #86efac; line-height: 1.5; margin-bottom: 14px;">
-          ${isMl ? 'പട്ടികയിലെ ഒരു സംഖ്യ അബാക്കസിൽ ചെയ്യുക, തുടർന്ന് നിങ്ങളുടെ ഉത്തരം പരിശോധിക്കാൻ ആ സംഖ്യയിൽ ക്ലിക്ക് ചെയ്യുക.' : 'Select a number from the list on the abacus, then click on that number to verify your answer.'}
+          ${isMl ? 'പട്ടികയിലെ ഒരു സംഖ്യ അബാക്കസിൽ ചെയ്യുക, തുടർന്ന് നിങ്ങളുടെ ഉത്തരം പരിശോധിക്കാൻ ആ സംഖ്യയിൽ ക്ലിക്ക് ചെയ്യുക.' : 'Select a number on the abacus, then click on that number to verify your answer.'}
         </p>
         <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(70px, 1fr)); gap: 8px; max-height: 380px; overflow-y: auto;">
           ${[27, 45, 81, 66, 39, 13, 22, 74, 92, 53, 71, 80, 29, 50, 55, 78, 63, 47, 36, 99, 84, 57, 11, 10, 35, 80, 76, 44, 22, 19].map((n, i) => {
@@ -4824,7 +4868,7 @@ function renderBeadLessonArena(lessonKey, autoFocus = true) {
     <!-- Hulk Number Scroll Wheel Picker for Bead Counting -->
     <div style="display: flex; justify-content: center; margin-bottom: 10px;">
       <div class="hulk-wheel-box" id="bead-wheel-box" tabindex="0" title="Scroll with mouse wheel, swipe up/down, or click arrows">
-        <button type="button" class="wheel-nudge-btn wheel-up" onclick="nudgeNumberWheel('bead', 1)" title="Scroll Up">▲</button>
+        <button type="button" class="wheel-nudge-btn wheel-up" onclick="nudgeNumberWheel('bead', 1)" onpointerdown="event.stopPropagation(); nudgeNumberWheel('bead', 1);" title="Scroll Up">▲</button>
         <div class="wheel-roller-viewport">
           <div class="wheel-slot-bracket"></div>
           <div class="wheel-roller-track" id="bead-wheel-track">
@@ -4833,7 +4877,7 @@ function renderBeadLessonArena(lessonKey, autoFocus = true) {
             <div class="wheel-digit wheel-next" id="bead-wheel-next">-</div>
           </div>
         </div>
-        <button type="button" class="wheel-nudge-btn wheel-down" onclick="nudgeNumberWheel('bead', -1)" title="Scroll Down">▼</button>
+        <button type="button" class="wheel-nudge-btn wheel-down" onclick="nudgeNumberWheel('bead', -1)" onpointerdown="event.stopPropagation(); nudgeNumberWheel('bead', -1);" title="Scroll Down">▼</button>
         <input type="hidden" id="bead-answer-input" value="">
       </div>
     </div>
