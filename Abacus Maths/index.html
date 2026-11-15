@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="referrer" content="no-referrer">
-<title>Kungi's Super Abacus 💥🟢</title>
+<title>Freya's Magical Abacus ✨</title>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-XBMNZQX5M5"></script>
 <script>
@@ -15,34 +15,34 @@
 </script>
 <style>
   :root {
-    --bg-page-top: #142816;
-    --bg-page-bottom: #09150a;
-    --card-bg: #1c2e1f;
-    --primary-blue: #22c55e;
-    --primary-pink: #22c55e;
-    --primary-dark: #15803d;
-    --primary-light: #233d26;
-    --banner-gradient-start: #15803d;
-    --banner-gradient-end: #4ade80;
-    --hulk-purple: #7e22ce;
-    --hulk-purple-light: #a855f7;
-    --hulk-purple-dark: #581c87;
-    --hulk-green: #22c55e;
-    --hulk-neon: #4ade80;
-    --border-blue: #4ade80;
-    --border-pink: #22c55e;
-    --border-card: #2e5333;
-    --stat-gradient-start: #7e22ce;
-    --stat-gradient-end: #a855f7;
+    --bg-page-top: #ffd3e2;
+    --bg-page-bottom: #ffaec9;
+    --card-bg: #ffffff;
+    --primary-blue: #ff5e97;
+    --primary-pink: #ff5e97;
+    --primary-dark: #d81b60;
+    --primary-light: #fff0f5;
+    --banner-gradient-start: #ff85ad;
+    --banner-gradient-end: #ffb6ce;
+    --hulk-purple: #ff85ad;
+    --hulk-purple-light: #ffccd9;
+    --hulk-purple-dark: #d81b60;
+    --hulk-green: #ff5e97;
+    --hulk-neon: #ff80bf;
+    --border-blue: #ff85ad;
+    --border-pink: #ff85ad;
+    --border-card: #ffccd9;
+    --stat-gradient-start: #ffb3cb;
+    --stat-gradient-end: #ffcadc;
     --text-white: #ffffff;
-    --text-pink-title: #4ade80;
-    --text-blue-title: #4ade80;
-    --text-dark: #e2fbe8;
+    --text-pink-title: #d81b60;
+    --text-blue-title: #d81b60;
+    --text-dark: #2d3436;
     --radius-xl: 32px;
     --radius-lg: 22px;
     --radius-md: 16px;
     --radius-sm: 10px;
-    --shadow-soft: 0 15px 40px rgba(34, 197, 94, 0.28);
+    --shadow-soft: 0 15px 40px rgba(255, 117, 160, 0.22);
   }
 
   * {
@@ -54,7 +54,7 @@
   }
 
   body {
-    background: radial-gradient(circle at 50% 20%, #1e3d21 0%, #122614 60%, var(--bg-page-bottom) 100%);
+    background: linear-gradient(180deg, var(--bg-page-top) 0%, #ffc0d6 50%, var(--bg-page-bottom) 100%);
     min-height: 100vh;
     padding: 20px 16px 40px 16px;
     display: flex;
@@ -2015,11 +2015,14 @@
     <button class="icon-toggle-btn" id="btn-open-cert" title="Certificate & Trophy">
       🏆 <span id="lbl-trophy">Trophy</span>
     </button>
+    <a href="maths_adventure.html" class="icon-toggle-btn" style="text-decoration:none; background: linear-gradient(135deg, #ff2d87, #ec4899); border-color:#ff80bf; color:white; font-weight:800;" title="Open Oxford Primary Maths Book 2 Application">
+      ✨ <span>Freya's Maths Book 2 🌸</span>
+    </a>
   </div>
 
   <div class="lang-switcher-box">
     <button class="lang-btn active" id="lang-btn-en" onclick="setLanguage('en')">🇬🇧 ENGLISH</button>
-    <button class="lang-btn" id="lang-btn-ml" onclick="setLanguage('ml')">🇮🇳 മലയാളം</button>
+    <button class="lang-btn" id="lang-btn-id" onclick="setLanguage('id')">🇮🇩 INDONESIA</button>
   </div>
 </div>
 
@@ -2032,15 +2035,15 @@
     <!-- LEFT COLUMN: CONTAINS 1ST RECTANGLE (HEADER, SCORES, CURRENT LESSON TILE WITH BIG ARROWS) & 2ND RECTANGLE (BEAD CARD) -->
     <div class="arena-left-column" id="arena-left-column">
       
-      <!-- 1ST RECTANGLE AREA: Kungi's Super Abacus Header, Scores & Currently Learning Lesson Tile with Two Big Arrows -->
+      <!-- 1ST RECTANGLE AREA: Freya's Super Abacus Header, Scores & Currently Learning Lesson Tile with Two Big Arrows -->
       <div class="top-info-box" id="top-info-rectangle">
         
         <!-- Header Banner (Click 5 times to manually reset all scores!) -->
         <div class="hero-banner" id="main-hero-banner" title="Click 5 times to reset scores">
-          <span class="corner-vehicle left">🚗</span>
-          <span class="corner-vehicle right">🏍️</span>
-          <h1 class="hero-title">✨ <span id="t-app-title">KUNGI'S SUPER ABACUS</span> ✨</h1>
-          <p class="hero-subtitle" id="t-app-subtitle">Welcome, Kungi! Let's learn Abacus together! 🚗💨</p>
+          <span class="corner-vehicle left">🦄</span>
+          <span class="corner-vehicle right">🦄</span>
+          <h1 class="hero-title">✨ <span id="t-app-title">FREYA'S SUPER ABACUS</span> ✨</h1>
+          <p class="hero-subtitle" id="t-app-subtitle">Welcome, Freya! Let's learn Abacus together! 🎀</p>
 
           <!-- 10 Stars Overall Progress Bar (Persists until Reset) -->
           <div class="banner-overall-progress" id="banner-overall-progress" title="Overall Progress (10 Stars) - Click to view detailed section right answers!" onclick="event.stopPropagation(); openSectionProgressModal();" style="cursor: pointer;">
@@ -2099,12 +2102,12 @@
         <!-- Injected dynamically -->
       </div>
 
-      <!-- 3RD RECTANGLE AREA: KUNGI'S SOROBAN ABACUS (WIDTH MATCHES ABOVE SECTIONS) -->
+      <!-- 3RD RECTANGLE AREA: FREYA'S SOROBAN ABACUS (WIDTH MATCHES ABOVE SECTIONS) -->
       <div class="abacus-stage-box" id="side-abacus-box">
         <div class="abacus-header-row">
           <div class="abacus-headline">
             <span>🧮</span>
-            <span id="t-abacus-title">Kungi's Soroban Abacus</span>
+            <span id="t-abacus-title">Freya's Soroban Abacus</span>
           </div>
 
           <div class="rod-selector-wrap">
@@ -2235,10 +2238,10 @@
 
 </div>
 
-<!-- CROWN ANIMATION & OUTSTANDING KUNGI CELEBRATION POPUP -->
+<!-- CROWN ANIMATION & OUTSTANDING FREYA CELEBRATION POPUP -->
 <div class="celebration-overlay" id="celebration-popup">
   <div class="crown-icon-animated" id="celebration-crown">👑</div>
-  <div class="celebration-praise-text" id="celebration-msg">Outstanding Kungi!</div>
+  <div class="celebration-praise-text" id="celebration-msg">Outstanding Freya!</div>
   <div class="celebration-sub-text" id="celebration-sub">✨ Golden Crown & Star Won! ✨</div>
 </div>
 
@@ -2250,7 +2253,7 @@
       <div style="font-size: 1.3rem; margin-bottom: 8px;">🌟🏅🌟</div>
       <h2 style="font-size: 1.85rem; font-weight: 900; color: #4ade80; margin-bottom: 6px; text-shadow: 0 0 10px rgba(74, 222, 128, 0.4);" id="t-cert-title">Certificate of Excellence</h2>
       <p style="color: #a7f3d0; font-size: 0.95rem;" id="t-cert-sub">This certifies that our brilliant math explorer</p>
-      <div style="font-size: 2.6rem; font-weight: 900; color: #4ade80; margin: 10px 0; text-decoration: underline wavy #a855f7;">Kungi</div>
+      <div style="font-size: 2.6rem; font-weight: 900; color: #4ade80; margin: 10px 0; text-decoration: underline wavy #a855f7;">Freya</div>
       <p style="font-size: 1.1rem; color: #dcfce7; line-height: 1.5; margin-bottom: 14px; font-weight: 700;" id="t-cert-desc">
         has successfully graduated <strong>Abacus Level 1A</strong> with extraordinary speed, dedication, and golden crown mastery!
       </p>
@@ -2268,7 +2271,7 @@
           <div style="font-size: 1.25rem; font-weight: 900; color: #4ade80;" id="t-cert-level">Graduated! 🎓</div>
         </div>
       </div>
-      <button class="btn-submit-arena" onclick="closeCertModal()" style="margin: 12px auto 0 auto; width: auto;" id="t-cert-btn">Keep Shining, Kungi! 🚀</button>
+      <button class="btn-submit-arena" onclick="closeCertModal()" style="margin: 12px auto 0 auto; width: auto;" id="t-cert-btn">Keep Shining, Freya! 🚀</button>
     </div>
   </div>
 </div>
@@ -2361,16 +2364,16 @@ window.addEventListener('error', (e) => {
 });
 
 /* =========================================================================
-   I18N LANGUAGE DICTIONARIES (ENGLISH & MALAYALAM)
+   I18N LANGUAGE DICTIONARIES (ENGLISH & BAHASA INDONESIA)
    ========================================================================= */
 
-let currentLang = safeStorage.get('kungi_abacus_lang') || safeStorage.get('freya_abacus_lang') || 'en';
-if (currentLang === 'id') currentLang = 'ml';
+let currentLang = safeStorage.get('freya_abacus_lang') || safeStorage.get('kungi_abacus_lang') || safeStorage.get('freya_maths_lang') || 'en';
+if (currentLang === 'ml') currentLang = 'id';
 
 const I18N = {
   en: {
-    appTitle: "KUNGI'S SUPER ABACUS",
-    welcomeSub: "Welcome, Kungi! Let's learn Abacus together! 🚗💨",
+    appTitle: "FREYA'S SUPER ABACUS",
+    welcomeSub: "Welcome, Freya! Let's learn Abacus together! 🎀",
     correctAnswers: "Correct Answers",
     totalQuestions: "Total Questions",
     starsEarned: "Stars Earned",
@@ -2392,7 +2395,7 @@ const I18N = {
     speedSub: "Left & Right Hand (Apple Pencil)",
     testTitle: "Final Test Paper",
     testSub: "200 Marks & Certificate",
-    abacusTitle: "Kungi's Soroban Abacus",
+    abacusTitle: "Freya's Soroban Abacus",
     rodsLbl: "Rods:",
     clearBtn: "Clear (0)",
     howBeadsWork: "How Beads Work",
@@ -2404,10 +2407,10 @@ const I18N = {
     prevChallenge: "⬅️ Prev",
     viewAllGrid: "📋 View All Questions",
     hideAllGrid: "✖️ Hide All Questions",
-    outstanding: "Outstanding Kungi!",
-    wellDone: "Well done Kungi! Excellent!",
-    goodJob: "Good job Kungi! Outstanding!",
-    howBeadsMsg: "🌟 How Beads Work:\n\n1. Upper bead = 5 (pull down to beam to add)\n2. Lower beads = 1 each (push up to beam to add)\n3. Clear button resets all beads back to 0!\n\nTry it now Kungi!",
+    outstanding: "Outstanding Freya!",
+    wellDone: "Well done Freya! Excellent!",
+    goodJob: "Good job Freya! Outstanding!",
+    howBeadsMsg: "🌟 How Beads Work:\n\n1. Upper bead = 5 (pull down to beam to add)\n2. Lower beads = 1 each (push up to beam to add)\n3. Clear button resets all beads back to 0!\n\nTry it now Freya!",
     certTitle: "Certificate of Excellence",
     certSub: "This certifies that our brilliant math explorer",
     certDesc: "has successfully graduated Abacus Level 1A with extraordinary speed, dedication, and golden crown mastery!",
@@ -2415,7 +2418,7 @@ const I18N = {
     certCrowns: "Golden Crowns",
     certRank: "Status",
     certLevel: "Graduated! 🎓",
-    certBtn: "Keep Shining, Kungi! 🚀",
+    certBtn: "Keep Shining, Freya! 🚀",
     voiceLbl: "Voice",
     soundLbl: "Sound",
     trophyLbl: "Trophy",
@@ -2436,83 +2439,82 @@ const I18N = {
     maximize: "Maximize",
     restore: "Restore"
   },
-  ml: {
-    appTitle: "കുഞ്ഞിയുടെ സൂപ്പർ അബാക്കസ്",
-    welcomeSub: "സ്വാഗതം കുഞ്ഞീ! നമുക്ക് ഒരുമിച്ച് അബാക്കസ് പഠിക്കാം! 🚗💨",
-    correctAnswers: "ശരിയായ ഉത്തരങ്ങൾ",
-    totalQuestions: "ആകെ ചോദ്യങ്ങൾ",
-    starsEarned: "നേടിയ നക്ഷത്രങ്ങൾ",
-    crownsEarned: "നേടിയ കിരീടങ്ങൾ",
-    chooseLesson: "നിങ്ങളുടെ പാഠം തിരഞ്ഞെടുക്കൂ",
-    l1Title: "പാഠം 1: മണികൾ എണ്ണാം",
-    l1Sub: "1-30 & 31-50 എണ്ണൽ",
-    l2Title: "പാഠം 2: സങ്കലനം +1 മുതൽ +5 വരെ",
-    l2Sub: "1-5 കൂട്ടാം",
-    l3Title: "പാഠം 3: സങ്കലനം +6 മുതൽ +9 വരെ",
-    l3Sub: "6-9 കൂട്ടാം",
-    l4Title: "പാഠം 4: വ്യവകലനം -1 മുതൽ -5 വരെ",
-    l4Sub: "1-5 കുറയ്ക്കാം",
-    l5Title: "പാഠം 5: വ്യവകലനം -6 മുതൽ -9 വരെ",
-    l5Sub: "6-9 കുറയ്ക്കാം",
-    l6Title: "പാഠം 6: സ്മോൾ ഫ്രണ്ട്സ് (കൂട്ടുകാർ)",
-    l6Sub: "സൂത്രവാക്യങ്ങൾ (+1, +2, +3, +4)",
-    speedTitle: "സ്പീഡ് റൈറ്റിംഗ് ലാബ്",
-    speedSub: "ഇടത് & വലത് കൈ പരിശീലനം",
-    testTitle: "ഫൈനൽ പരീക്ഷ പേപ്പർ",
-    testSub: "200 മാർക്ക് & സർട്ടിഫിക്കറ്റ്",
-    abacusTitle: "കുഞ്ഞിയുടെ സൊറോബൻ അബാക്കസ്",
-    rodsLbl: "കമ്പികൾ:",
-    clearBtn: "തുടയ്ക്കുക (0)",
-    howBeadsWork: "മണികൾ പ്രവർത്തിക്കുന്ന വിധം",
-    valLbl: "മൂല്യം:",
-    demoAbacus: "ഡെമോ അബാക്കസ്",
-    checkAnswer: "ഉത്തരം പരിശോധിക്കൂ ⭐",
-    useAbacusAns: "അബാക്കസ് മൂല്യം ഉപയോഗിക്കൂ",
-    nextChallenge: "അടുത്ത ചോദ്യം ➡️",
-    prevChallenge: "⬅️ മുൻപത്തെ ചോദ്യം",
-    viewAllGrid: "📋 എല്ലാ ചോദ്യങ്ങളും കാണുക",
-    hideAllGrid: "✖️ ചോദ്യങ്ങൾ മറയ്ക്കുക",
-    outstanding: "അത്യുജ്ജ്വലം കുഞ്ഞീ!",
-    wellDone: "മിടുക്കൻ കുഞ്ഞീ! കൊള്ളാം!",
-    goodJob: "നല്ല ശ്രമം കുഞ്ഞീ! ഉഷാർ!",
-    howBeadsMsg: "🌟 മണികൾ എങ്ങനെ പ്രവർത്തിക്കുന്നു:\n\n1. മുകളിലെ മണി = 5 (ചേർക്കാൻ താഴോട്ട് നീക്കുക)\n2. താഴത്തെ മണികൾ = ഓരോന്നിനും 1 (ചേർക്കാൻ മുകളിലോട്ട് നീക്കുക)\n3. 'തുടയ്ക്കുക' ബട്ടൺ എല്ലാം 0 ആക്കും!\n\nഇപ്പോൾ ചെയ്തു നോക്കൂ കുഞ്ഞീ!",
-    certTitle: "മികവിനുള്ള സർട്ടിഫിക്കറ്റ്",
-    certSub: "ഞങ്ങളുടെ മിടുക്കനായ കൊച്ചു ഗണിത പ്രതിഭയ്ക്ക് നൽകുന്നത്",
-    certDesc: "മികച്ച വേഗതയോടും അർപ്പണബോധത്തോടും കൂടി അബാക്കസ് ലെവൽ 1A വിജയകരമായി പൂർത്തിയാക്കി സ്വർണ്ണ കിരീടം സ്വന്തമാക്കിയിരിക്കുന്നു!",
-    certStars: "ആകെ നക്ഷത്രങ്ങൾ",
-    certCrowns: "സ്വർണ്ണ കിരീടങ്ങൾ",
-    certRank: "പദവി",
-    certLevel: "പാസ്സായി! 🎓",
-    certBtn: "മിടുക്കനായി തിളങ്ങൂ, കുഞ്ഞീ! 🚀",
-    voiceLbl: "ശബ്ദം",
-    soundLbl: "സംഗീതം",
-    trophyLbl: "ട്രോഫി",
-    tabBasics: "🧮 അബാക്കസ് അടിസ്ഥാനങ്ങൾ",
-    tabFingers: "🖐️ വിരൽ സാങ്കേതികത",
-    tabDraw: "✏️ മണി വരയ്ക്കൽ (30)",
-    tabP8: "🏎️ പരിശീലനം +8 (4-വരികൾ)",
-    tabP89: "🔥 പരിശീലനം -8, -9",
-    tabF2: "🚗 കൂട്ടുകാരൻ +2",
-    tabF3: "🐹 കൂട്ടുകാരൻ +3",
-    tabF4: "🚲 കൂട്ടുകാരൻ +4",
-    tabRev: "📚 8-മിനിറ്റ് റിവിഷൻ",
-    currentlyLearning: "ഇപ്പോൾ പഠിക്കുന്നത്:",
-    allLessons: "📚 എല്ലാ പാഠങ്ങളും",
-    hideLessons: "✖️ പാഠങ്ങൾ മറയ്ക്കുക",
-    changeLesson: "📚 പാഠം മാറ്റുക",
-    overallProgress: "ആകെ പുരോഗതി",
-    maximize: "വലുതാക്കുക",
-    restore: "ചുരുക്കുക"
+  id: {
+    appTitle: "SUPER SEMPOA FREYA",
+    welcomeSub: "Selamat datang, Freya! Mari belajar Sempoa bersama! 🎀",
+    correctAnswers: "Jawaban Benar",
+    totalQuestions: "Total Pertanyaan",
+    starsEarned: "Bintang Diperoleh",
+    crownsEarned: "Mahkota Emas",
+    chooseLesson: "Pilih Pelajaranmu",
+    l1Title: "Pelajaran 1: Menghitung Manik",
+    l1Sub: "Hitung 1-30 & 31-50",
+    l2Title: "Pelajaran 2: Penjumlahan +1 hingga +5",
+    l2Sub: "Menjumlahkan 1-5",
+    l3Title: "Pelajaran 3: Penjumlahan +6 hingga +9",
+    l3Sub: "Menjumlahkan 6-9",
+    l4Title: "Pelajaran 4: Pengurangan -1 hingga -5",
+    l4Sub: "Mengurangkan 1-5",
+    l5Title: "Pelajaran 5: Pengurangan -6 hingga -9",
+    l5Sub: "Mengurangkan 6-9",
+    l6Title: "Pelajaran 6: Teman Kecil",
+    l6Sub: "Rumus (+1, +2, +3, +4)",
+    speedTitle: "Lab Menulis Cepat",
+    speedSub: "Tangan Kiri & Kanan (Apple Pencil)",
+    testTitle: "Ujian Akhir",
+    testSub: "200 Nilai & Sertifikat",
+    abacusTitle: "Sempoa Soroban Freya",
+    rodsLbl: "Tiang:",
+    clearBtn: "Bersihkan (0)",
+    howBeadsWork: "Cara Kerja Manik",
+    valLbl: "Nilai:",
+    demoAbacus: "Demo Sempoa",
+    checkAnswer: "Periksa Jawaban ⭐",
+    useAbacusAns: "Gunakan Nilai Sempoa",
+    nextChallenge: "Lanjut ➡️",
+    prevChallenge: "⬅️ Sebelumnya",
+    viewAllGrid: "📋 Lihat Semua Soal",
+    hideAllGrid: "✖️ Sembunyikan Soal",
+    outstanding: "Luar Biasa Freya!",
+    wellDone: "Hebat Freya! Luar Biasa!",
+    goodJob: "Bagus sekali Freya! Keren!",
+    howBeadsMsg: "🌟 Cara Kerja Manik Sempoa:\n\n1. Manik atas = 5 (tarik ke bawah mendekati palang)\n2. Manik bawah = 1 (dorong ke atas mendekati palang)\n3. Tombol 'Bersihkan' mengembalikan semua manik ke 0!\n\nCoba sekarang Freya!",
+    certTitle: "Sertifikat Prestasi Luar Biasa",
+    certSub: "Diberikan kepada penjelajah matematika cilik kami yang hebat",
+    certDesc: "telah berhasil menyelesaikan Sempoa Tingkat 1A dengan kecepatan luar biasa, ketekunan, dan penguasaan mahkota emas!",
+    certStars: "Total Bintang",
+    certCrowns: "Mahkota Emas",
+    certRank: "Status",
+    certLevel: "Lulus! 🎓",
+    certBtn: "Terus Bersinar, Freya! 🚀",
+    voiceLbl: "Suara",
+    soundLbl: "Musik",
+    trophyLbl: "Piala",
+    tabBasics: "🧮 Dasar Sempoa",
+    tabFingers: "🖐️ Gerakan Jari",
+    tabDraw: "✏️ Gambar Manik (30)",
+    tabP8: "🏎️ Latihan +8 (4-Baris)",
+    tabP89: "🔥 Latihan -8, -9",
+    tabF2: "🚗 Teman +2",
+    tabF3: "🐹 Teman +3",
+    tabF4: "🚲 Teman +4",
+    tabRev: "📚 Ulasan 8 Menit",
+    currentlyLearning: "Sedang Dipelajari:",
+    allLessons: "📚 Semua Pelajaran",
+    hideLessons: "✖️ Sembunyikan",
+    changeLesson: "📚 Ganti Pelajaran",
+    overallProgress: "Kemajuan Total",
+    maximize: "Perbesar",
+    restore: "Kembalikan"
   }
 };
-I18N.id = I18N.ml;
 
 function getRodNameByPower(power) {
-  if (power === 0) return (currentLang === 'ml' || currentLang === 'id') ? 'ഒറ്റകൾ' : '1s (Unit)';
-  if (power === 1) return (currentLang === 'ml' || currentLang === 'id') ? 'പത്തുകൾ' : '10s';
-  if (power === 2) return (currentLang === 'ml' || currentLang === 'id') ? 'നൂറുകൾ' : '100s';
-  if (power === 3) return (currentLang === 'ml' || currentLang === 'id') ? 'ആയിരങ്ങൾ' : '1,000s';
-  if (power === 4) return (currentLang === 'ml' || currentLang === 'id') ? 'പതിനായിരം' : '10,000s';
+  if (power === 0) return (currentLang === 'id') ? 'Satuan (1s)' : '1s (Unit)';
+  if (power === 1) return (currentLang === 'id') ? 'Puluhan (10s)' : '10s';
+  if (power === 2) return (currentLang === 'id') ? 'Ratusan (100s)' : '100s';
+  if (power === 3) return (currentLang === 'id') ? 'Ribuan (1.000s)' : '1,000s';
+  if (power === 4) return (currentLang === 'id') ? 'Puluhan Ribu (10.000s)' : '10,000s';
   return `10^${power}`;
 }
 
@@ -2543,14 +2545,15 @@ function refreshCurrentActiveLesson(autoFocus = false) {
 }
 
 function setLanguage(lang) {
-  if (lang === 'id') lang = 'ml';
+  if (lang === 'ml') lang = 'id';
   currentLang = lang;
+  safeStorage.set('freya_abacus_lang', lang);
   safeStorage.set('kungi_abacus_lang', lang);
 
   const btnEn = document.getElementById('lang-btn-en');
-  const btnMl = document.getElementById('lang-btn-ml') || document.getElementById('lang-btn-id');
+  const btnId = document.getElementById('lang-btn-id') || document.getElementById('lang-btn-ml');
   if (btnEn) btnEn.classList.toggle('active', lang === 'en');
-  if (btnMl) btnMl.classList.toggle('active', lang === 'ml');
+  if (btnId) btnId.classList.toggle('active', lang === 'id');
 
   const dict = I18N[lang] || I18N.en;
 
@@ -2621,7 +2624,7 @@ function setLanguage(lang) {
   setTxt('t-cert-btn', dict.certBtn);
 
   // Currently Learning Lesson Tile Widget
-  setTxt('t-curr-learning-badge', (currentLang === 'ml' || currentLang === 'id') ? 'ഇപ്പോൾ പഠിക്കുന്നത്' : 'Currently Learning');
+  setTxt('t-curr-learning-badge', (currentLang === 'id') ? 'Sedang Dipelajari' : 'Currently Learning');
   if (typeof updateActiveLessonTile === 'function') {
     updateActiveLessonTile(activeLessonKey);
   }
@@ -2636,11 +2639,38 @@ function setLanguage(lang) {
 }
 
 function numberToWords(num) {
-  if (currentLang === 'ml' || currentLang === 'id') {
-    return numberToWordsMalayalam(num);
+  if (currentLang === 'id') {
+    return numberToWordsIndonesian(num);
   } else {
     return numberToWordsEnglish(num);
   }
+}
+
+function numberToWordsIndonesian(n) {
+  if (n === 0) return "Nol";
+  const satuan = ["", "Satu", "Dua", "Tiga", "Empat", "Lima", "Enam", "Tujuh", "Delapan", "Sembilan"];
+  if (n < 10) return satuan[n];
+  if (n === 10) return "Sepuluh";
+  if (n === 11) return "Sebelas";
+  if (n < 20) return satuan[n - 10] + " Belas";
+  if (n < 100) {
+    const tens = Math.floor(n / 10);
+    const rem = n % 10;
+    return satuan[tens] + " Puluh" + (rem > 0 ? " " + satuan[rem] : "");
+  }
+  if (n < 1000) {
+    const hundreds = Math.floor(n / 100);
+    const rem = n % 100;
+    const hPrefix = hundreds === 1 ? "Seratus" : satuan[hundreds] + " Ratus";
+    return hPrefix + (rem > 0 ? " " + numberToWordsIndonesian(rem) : "");
+  }
+  if (n < 1000000) {
+    const thousands = Math.floor(n / 1000);
+    const rem = n % 1000;
+    const tPrefix = thousands === 1 ? "Seribu" : numberToWordsIndonesian(thousands) + " Ribu";
+    return tPrefix + (rem > 0 ? " " + numberToWordsIndonesian(rem) : "");
+  }
+  return String(n);
 }
 
 function numberToWordsEnglish(num) {
@@ -2681,83 +2711,17 @@ function numberToWordsEnglish(num) {
   return convertChunk(num);
 }
 
-function numberToWordsMalayalam(num) {
-  if (num === 0) return "പൂജ്യം";
-  const ones = ["", "ഒന്ന്", "രണ്ട്", "മൂന്ന്", "നാല്", "അഞ്ച്", "ആറ്", "ഏഴ്", "എട്ട്", "ഒൻപത്"];
-  const teens = ["പത്ത്", "പതിനൊന്ന്", "പന്ത്രണ്ട്", "പതിമൂന്ന്", "പതിനാല്", "പതിനഞ്ച്", "പതിനാറ്", "പതിനേഴ്", "പതിനെട്ട്", "പത്തൊൻപത്"];
-  const tens = ["", "", "ഇരുപത്", "മുപ്പത്", "നാൽപ്പത്", "അൻപത്", "അറുപത്", "എഴുപത്", "എൺപത്", "തൊണ്ണൂറ്"];
-  const tensPrefix = ["", "", "ഇരുപത്തി", "മുപ്പത്തി", "നാൽപത്തി", "അൻപത്തി", "അറുപത്തി", "എഴുപത്തി", "എൺപത്തി", "തൊണ്ണൂറ്റി"];
-
-  function convertTwoDigits(n) {
-    if (n === 0) return "";
-    if (n < 10) return ones[n];
-    if (n < 20) return teens[n - 10];
-    const t = Math.floor(n / 10);
-    const r = n % 10;
-    if (r === 0) return tens[t];
-    return tensPrefix[t] + ones[r];
-  }
-
-  function convertHundreds(n) {
-    let str = "";
-    const h = Math.floor(n / 100);
-    const rem = n % 100;
-    if (h > 0) {
-      if (h === 1) str += (rem > 0 ? "നൂറ്റി " : "നൂറ്");
-      else if (h === 2) str += (rem > 0 ? "ഇരുനൂറ്റി " : "ഇരുനൂറ്");
-      else if (h === 3) str += (rem > 0 ? "മുനൂറ്റി " : "മുനൂറ്");
-      else if (h === 4) str += (rem > 0 ? "നാനൂറ്റി " : "നാനൂറ്");
-      else if (h === 5) str += (rem > 0 ? "അഞ്ഞൂറ്റി " : "അഞ്ഞൂറ്");
-      else if (h === 6) str += (rem > 0 ? "അറുനൂറ്റി " : "അറുനൂറ്");
-      else if (h === 7) str += (rem > 0 ? "എഴുനൂറ്റി " : "എഴുനൂറ്");
-      else if (h === 8) str += (rem > 0 ? "എണ്ണൂറ്റി " : "എണ്ണൂറ്");
-      else if (h === 9) str += (rem > 0 ? "തൊള്ളായിരത്തി " : "തൊള്ളായിരം");
-    }
-    if (rem > 0) {
-      str += convertTwoDigits(rem);
-    }
-    return str.trim();
-  }
-
-  if (num < 1000) {
-    return convertHundreds(num);
-  }
-
-  if (num < 100000) {
-    const th = Math.floor(num / 1000);
-    const rem = num % 1000;
-    let thStr = "";
-    if (th === 1) thStr = "ആയിരത്തി ";
-    else thStr = convertHundreds(th) + " ആയിരത്തി ";
-    if (rem === 0) {
-      if (th === 1) return "ആയിരം";
-      return convertHundreds(th) + " ആയിരം";
-    }
-    return (thStr + convertHundreds(rem)).trim();
-  }
-
-  if (num < 10000000) {
-    const lk = Math.floor(num / 100000);
-    const rem = num % 100000;
-    let lkStr = convertHundreds(lk) + " ലക്ഷം ";
-    if (rem === 0) return lkStr.trim();
-    return (lkStr + numberToWordsMalayalam(rem)).trim();
-  }
-
-  return num.toString();
-}
-
 /* =========================================================================
    AUDIO & SYNTHESIZER
    ========================================================================= */
 
-let isMasterMuted = safeStorage.get('kungi_master_muted') === '1';
+let isMasterMuted = (safeStorage.get('freya_master_muted') || safeStorage.get('kungi_master_muted')) === '1';
 let voiceEnabled = true;
 let soundEnabled = true;
 let audioCtx = null;
 let masterGainNode = null;
-let currentSoundTheme = safeStorage.get('kungi_sound_theme') || 'crystal';
-let selectedVoiceProfile = safeStorage.get('kungi_voice_profile') || 'female';
+let currentSoundTheme = safeStorage.get('freya_sound_theme') || safeStorage.get('kungi_sound_theme') || 'crystal';
+let selectedVoiceProfile = safeStorage.get('freya_voice_profile') || safeStorage.get('kungi_voice_profile') || 'female';
 
 function initAudio() {
   try {
@@ -2801,16 +2765,16 @@ function updateMuteButtonUI() {
   const muteBtn = document.getElementById('btn-master-mute');
   const icon = document.getElementById('mute-icon');
   const lbl = document.getElementById('lbl-mute');
-  const isMl = (currentLang === 'ml' || currentLang === 'id');
+  const isId = (currentLang === 'id');
   if (muteBtn) {
     if (isMasterMuted) {
       muteBtn.classList.add('muted');
       if (icon) icon.innerText = '🔇';
-      if (lbl) lbl.innerText = isMl ? 'ശബ്ദം ഓഫ്' : 'Muted';
+      if (lbl) lbl.innerText = isId ? 'Senyap' : 'Muted';
     } else {
       muteBtn.classList.remove('muted');
       if (icon) icon.innerText = '🔊';
-      if (lbl) lbl.innerText = isMl ? 'ശബ്ദം ഓൺ' : 'Sound ON';
+      if (lbl) lbl.innerText = isId ? 'Suara ON' : 'Sound ON';
     }
   }
   if (masterGainNode && audioCtx) {
@@ -2823,6 +2787,7 @@ function updateMuteButtonUI() {
 
 function toggleMasterMute() {
   isMasterMuted = !isMasterMuted;
+  safeStorage.set('freya_master_muted', isMasterMuted ? '1' : '0');
   safeStorage.set('kungi_master_muted', isMasterMuted ? '1' : '0');
   updateMuteButtonUI();
   if (isMasterMuted) {
@@ -2845,8 +2810,8 @@ const VOICE_PROFILES = [
   { id: 'female', icon: '👩‍🏫', name: 'Sweet Tutor (Female)', desc: 'Friendly, clear English tutor voice' },
   { id: 'male', icon: '👨‍🏫', name: 'Friendly Coach (Male)', desc: 'Encouraging and motivating coach' },
   { id: 'kid', icon: '🧒', name: 'Playful Pal (Kid style)', desc: 'Fun, high-energy learning companion' },
-  { id: 'robot', icon: '🤖', name: 'Kungi Robot Buddy', desc: 'Futuristic electronic assistant' },
-  { id: 'malayalam', icon: '🌺', name: 'Malayalam Teacher (മലയാളം)', desc: 'സ്വാഭാവിക മലയാള ഉച്ചാരണം' }
+  { id: 'robot', icon: '🤖', name: 'Freya Robot Buddy', desc: 'Futuristic electronic assistant' },
+  { id: 'indonesian', icon: '🇮🇩', name: 'Guru Indonesia (Bahasa)', desc: 'Suara pengajar bahasa Indonesia yang ramah' }
 ];
 
 const SOUND_THEMES = [
@@ -2872,7 +2837,7 @@ function closeVoiceSettingsModal() {
 function renderVoiceOptions() {
   const container = document.getElementById('voice-options-container');
   if (!container) return;
-  const isMl = (currentLang === 'ml' || currentLang === 'id');
+  const isId = (currentLang === 'id');
   container.innerHTML = VOICE_PROFILES.map(vp => `
     <div class="settings-option-card ${selectedVoiceProfile === vp.id ? 'selected' : ''}" onclick="selectVoiceProfile('${vp.id}')">
       <div style="font-size: 1.6rem;">${vp.icon}</div>
@@ -2882,7 +2847,7 @@ function renderVoiceOptions() {
       </div>
       <div style="display: flex; gap: 8px; align-items: center;">
         <button type="button" class="btn-demo-abacus-mini" onclick="event.stopPropagation(); previewVoiceProfile('${vp.id}')" style="font-size: 0.82rem; padding: 4px 10px;">
-          ▶️ ${isMl ? 'കേൾക്കൂ' : 'Audition'}
+          ▶️ ${isId ? 'Dengarkan' : 'Audition'}
         </button>
         ${selectedVoiceProfile === vp.id ? '<span style="color: #4ade80; font-size: 1.2rem;">✅</span>' : ''}
       </div>
@@ -2894,10 +2859,11 @@ function selectVoiceProfile(id) {
   if (isMasterMuted) toggleMasterMute();
   initAudio();
   selectedVoiceProfile = id;
+  safeStorage.set('freya_voice_profile', id);
   safeStorage.set('kungi_voice_profile', id);
   renderVoiceOptions();
-  const isMl = (id === 'malayalam' || currentLang === 'ml' || currentLang === 'id');
-  const sample = isMl ? 'ഹലോ കുഞ്ഞീ! ഞാൻ നിങ്ങളുടെ അധ്യാപികയാണ്!' : 'Hello Kungi! I am your voice tutor!';
+  const isId = (id === 'indonesian' || currentLang === 'id');
+  const sample = isId ? 'Halo Freya! Saya adalah tutor suaramu!' : 'Hello Freya! I am your voice tutor!';
   speakPraiseCustom(sample);
 }
 
@@ -2906,8 +2872,8 @@ function previewVoiceProfile(id) {
   initAudio();
   const oldProfile = selectedVoiceProfile;
   selectedVoiceProfile = id;
-  const isMl = (id === 'malayalam' || currentLang === 'ml' || currentLang === 'id');
-  const sample = isMl ? 'ഹലോ കുഞ്ഞീ! ഞാൻ നിങ്ങളുടെ അധ്യാപികയാണ്!' : 'Hello Kungi! I am your voice tutor!';
+  const isId = (id === 'indonesian' || currentLang === 'id');
+  const sample = isId ? 'Halo Freya! Saya adalah tutor suaramu!' : 'Hello Freya! I am your voice tutor!';
   speakPraiseCustom(sample);
   selectedVoiceProfile = oldProfile;
 }
@@ -2927,7 +2893,7 @@ function closeSoundSettingsModal() {
 function renderSoundThemes() {
   const container = document.getElementById('sound-themes-container');
   if (!container) return;
-  const isMl = (currentLang === 'ml' || currentLang === 'id');
+  const isId = (currentLang === 'id');
   container.innerHTML = SOUND_THEMES.map(st => `
     <div class="settings-option-card ${currentSoundTheme === st.id ? 'selected' : ''}" onclick="selectSoundTheme('${st.id}')">
       <div style="font-size: 1.6rem;">${st.icon}</div>
@@ -2937,7 +2903,7 @@ function renderSoundThemes() {
       </div>
       <div style="display: flex; gap: 8px; align-items: center;">
         <button type="button" class="btn-demo-abacus-mini" onclick="event.stopPropagation(); previewSoundTheme('${st.id}')" style="font-size: 0.82rem; padding: 4px 10px;">
-          🎵 ${isMl ? 'കേൾക്കൂ' : 'Audition'}
+          🎵 ${currentLang === 'id' ? 'Dengarkan' : 'Audition'}
         </button>
         ${currentSoundTheme === st.id ? '<span style="color: #4ade80; font-size: 1.2rem;">✅</span>' : ''}
       </div>
@@ -2949,6 +2915,7 @@ function selectSoundTheme(id) {
   if (isMasterMuted) toggleMasterMute();
   initAudio();
   currentSoundTheme = id;
+  safeStorage.set('freya_sound_theme', id);
   safeStorage.set('kungi_sound_theme', id);
   renderSoundThemes();
   playSweetTone(0, true);
@@ -3197,8 +3164,8 @@ function sanitizeSpeechText(str) {
     .trim();
 }
 
-// Helper to play high-fidelity, native Malayalam human speech
-function playNaturalMalayalamAudio(text, onEnded = null) {
+// Helper to play high-fidelity, native Indonesian human speech
+function playNaturalIndonesianAudio(text, onEnded = null) {
   if (isMasterMuted) return;
   try {
     if (currentTtsAudio) {
@@ -3218,7 +3185,7 @@ function playNaturalMalayalamAudio(text, onEnded = null) {
     audio.onerror = () => {
       if (!fallbackTriggered) {
         fallbackTriggered = true;
-        speakMalayalamWebSpeechFallback(cleanText);
+        speakIndonesianWebSpeechFallback(cleanText);
       }
     };
     if (onEnded) {
@@ -3229,17 +3196,17 @@ function playNaturalMalayalamAudio(text, onEnded = null) {
       playPromise.catch(() => {
         if (!fallbackTriggered) {
           fallbackTriggered = true;
-          speakMalayalamWebSpeechFallback(cleanText);
+          speakIndonesianWebSpeechFallback(cleanText);
         }
       });
     }
   } catch(e) {
-    speakMalayalamWebSpeechFallback(text);
+    speakIndonesianWebSpeechFallback(text);
   }
 }
 
 // Fallback to Web Speech API if offline or network blocked
-function speakMalayalamWebSpeechFallback(text) {
+function speakIndonesianWebSpeechFallback(text) {
   if (isMasterMuted || !('speechSynthesis' in window)) return;
   window.speechSynthesis.cancel();
   const cleanText = sanitizeSpeechText(text);
@@ -3248,12 +3215,12 @@ function speakMalayalamWebSpeechFallback(text) {
   const utter = new SpeechSynthesisUtterance(cleanText);
   utter.rate = 0.88;
   utter.pitch = 1.0;
-  utter.lang = 'ml-IN';
+  utter.lang = 'id-ID';
 
   const voices = window.speechSynthesis.getVoices();
-  const mlVoice = voices.find(v => v.lang && (v.lang.toLowerCase().startsWith('ml') || v.lang.toLowerCase().includes('malayalam')))
+  const idVoice = voices.find(v => v.lang && (v.lang.toLowerCase().startsWith('id') || v.lang.toLowerCase().includes('indonesia')))
                || voices.find(v => v.lang && (v.lang.startsWith('hi') || v.lang.startsWith('ta') || v.lang.startsWith('kn') || v.lang.includes('IN')));
-  if (mlVoice) utter.voice = mlVoice;
+  if (idVoice) utter.voice = idVoice;
   window.speechSynthesis.speak(utter);
 }
 
@@ -3270,8 +3237,8 @@ function speakValueSweetly(val, force = false) {
 
     const words = numberToWords(val);
 
-    if (currentLang === 'ml' || currentLang === 'id' || selectedVoiceProfile === 'malayalam') {
-      playNaturalMalayalamAudio(words);
+    if (currentLang === 'ml' || currentLang === 'id' || selectedVoiceProfile === 'indonesian') {
+      playNaturalIndonesianAudio(words);
     } else {
       if (!('speechSynthesis' in window)) return;
       const cleanWords = sanitizeSpeechText(words);
@@ -3317,8 +3284,8 @@ function speakPraiseCustom(text) {
   const cleanText = sanitizeSpeechText(text);
   if (!cleanText) return;
 
-  if (currentLang === 'ml' || currentLang === 'id' || selectedVoiceProfile === 'malayalam') {
-    playNaturalMalayalamAudio(cleanText);
+  if (currentLang === 'ml' || currentLang === 'id' || selectedVoiceProfile === 'indonesian') {
+    playNaturalIndonesianAudio(cleanText);
   } else {
     if (!('speechSynthesis' in window)) return;
     const utter = new SpeechSynthesisUtterance(cleanText);
@@ -3369,109 +3336,109 @@ const COURSE_SECTIONS = [
   {
     id: 'sec-bead-count',
     titleEn: 'Lesson 1: Bead Counting',
-    titleMl: 'പാഠം 1: മണികൾ എണ്ണാം',
+    titleId: 'Pelajaran 1: Menghitung Manik',
     icon: '🚗',
     lessonKey: 'sec-bead-count-1',
     subsections: [
-      { key: 'sec-bead-count-1', titleEn: 'Count 1-30', titleMl: '1-30 എണ്ണൽ', total: 30, range: [1, 30] },
-      { key: 'sec-bead-count-2', titleEn: 'Count 31-50', titleMl: '31-50 എണ്ണൽ', total: 20, range: [31, 50] }
+      { key: 'sec-bead-count-1', titleEn: 'Count 1-30', titleId: 'Hitung 1-30', total: 30, range: [1, 30] },
+      { key: 'sec-bead-count-2', titleEn: 'Count 31-50', titleId: 'Hitung 31-50', total: 20, range: [31, 50] }
     ]
   },
   {
     id: 'sec-lesson-2',
     titleEn: 'Lesson 2: Addition +1 to +5',
-    titleMl: 'പാഠം 2: സങ്കലനം +1 മുതൽ +5',
+    titleId: 'Pelajaran 2: Penjumlahan +1 sampai +5',
     icon: '🐹',
     lessonKey: 'sec-lesson-2',
     subsections: [
-      { key: 'sec-lesson-2', titleEn: 'Direct +/- 5 (Page 9)', titleMl: 'നേരിട്ടുള്ള +/- 5 (പേജ് 9)', total: 30, range: [0, 29] }
+      { key: 'sec-lesson-2', titleEn: 'Direct +/- 5 (Page 9)', titleId: 'Langsung +/- 5 (Halaman 9)', total: 30, range: [0, 29] }
     ]
   },
   {
     id: 'sec-practice-6',
     titleEn: 'Lesson 3: Addition +6 to +9',
-    titleMl: 'പാഠം 3: സങ്കലനം +6 മുതൽ +9',
+    titleId: 'Pelajaran 3: Penjumlahan +6 sampai +9',
     icon: '🚲',
     lessonKey: 'sec-practice-6',
     subsections: [
-      { key: 'sec-practice-6', titleEn: 'Addition +6 (Page 11)', titleMl: 'സങ്കലനം +6 (പേജ് 11)', total: 30, range: [0, 29] },
-      { key: 'sec-practice-7', titleEn: 'Addition +7 (Page 12)', titleMl: 'സങ്കലനം +7 (പേജ് 12)', total: 30, range: [0, 29] },
-      { key: 'sec-practice-8', titleEn: 'Addition +8 4-Rows (Page 14)', titleMl: 'സങ്കലനം +8 (പേജ് 14)', total: 30, range: [0, 29] }
+      { key: 'sec-practice-6', titleEn: 'Addition +6 (Page 11)', titleId: 'Penjumlahan +6 (Halaman 11)', total: 30, range: [0, 29] },
+      { key: 'sec-practice-7', titleEn: 'Addition +7 (Page 12)', titleId: 'Penjumlahan +7 (Halaman 12)', total: 30, range: [0, 29] },
+      { key: 'sec-practice-8', titleEn: 'Addition +8 4-Rows (Page 14)', titleId: 'Penjumlahan +8 (Halaman 14)', total: 30, range: [0, 29] }
     ]
   },
   {
     id: 'sec-practice-sub6',
     titleEn: 'Lesson 4: Subtraction -1 to -5',
-    titleMl: 'പാഠം 4: വ്യവകലനം -1 മുതൽ -5',
+    titleId: 'Pelajaran 4: Pengurangan -1 sampai -5',
     icon: '🏎️',
     lessonKey: 'sec-practice-sub6',
     subsections: [
-      { key: 'sec-practice-sub6', titleEn: 'Subtraction -6 (Page 16)', titleMl: 'വ്യവകലനം -6 (പേജ് 16)', total: 30, range: [0, 29] }
+      { key: 'sec-practice-sub6', titleEn: 'Subtraction -6 (Page 16)', titleId: 'Pengurangan -6 (Halaman 16)', total: 30, range: [0, 29] }
     ]
   },
   {
     id: 'sec-practice-sub7',
     titleEn: 'Lesson 5: Subtraction -6 to -9',
-    titleMl: 'പാഠം 5: വ്യവകലനം -6 മുതൽ -9',
+    titleId: 'Pelajaran 5: Pengurangan -6 sampai -9',
     icon: '🏍️',
     lessonKey: 'sec-practice-sub7',
     subsections: [
-      { key: 'sec-practice-sub7', titleEn: 'Subtraction -7 (Page 17)', titleMl: 'വ്യവകലനം -7 (പേജ് 17)', total: 30, range: [0, 29] },
-      { key: 'sec-practice-sub89', titleEn: 'Subtraction -8, -9 (Page 19)', titleMl: 'വ്യവകലനം -8, -9 (പേജ് 19)', total: 30, range: [0, 29] }
+      { key: 'sec-practice-sub7', titleEn: 'Subtraction -7 (Page 17)', titleId: 'Pengurangan -7 (Halaman 17)', total: 30, range: [0, 29] },
+      { key: 'sec-practice-sub89', titleEn: 'Subtraction -8, -9 (Page 19)', titleId: 'Pengurangan -8, -9 (Halaman 19)', total: 30, range: [0, 29] }
     ]
   },
   {
     id: 'sec-friends-1',
     titleEn: 'Lesson 6: Small Friends',
-    titleMl: 'പാഠം 6: സ്മോൾ ഫ്രണ്ട്സ്',
+    titleId: 'Pelajaran 6: Teman Kecil',
     icon: '🚀',
     lessonKey: 'sec-friends-1',
     subsections: [
-      { key: 'sec-friends-1', titleEn: 'Friend +1 = +5-4 (Page 20)', titleMl: 'കൂട്ടുകാരൻ +1 (പേജ് 20)', total: 30, range: [0, 29] },
-      { key: 'sec-friends-2', titleEn: 'Friend +2 = +5-3 (Page 21)', titleMl: 'കൂട്ടുകാരൻ +2 (പേജ് 21)', total: 30, range: [0, 29] },
-      { key: 'sec-friends-3', titleEn: 'Friend +3 = +5-2 (Page 23)', titleMl: 'കൂട്ടുകാരൻ +3 (പേജ് 23)', total: 30, range: [0, 29] },
-      { key: 'sec-friends-4', titleEn: 'Friend +4 = +5-1 (Page 24)', titleMl: 'കൂട്ടുകാരൻ +4 (പേജ് 24)', total: 30, range: [0, 29] }
+      { key: 'sec-friends-1', titleEn: 'Friend +1 = +5-4 (Page 20)', titleId: 'Teman +1 (Halaman 20)', total: 30, range: [0, 29] },
+      { key: 'sec-friends-2', titleEn: 'Friend +2 = +5-3 (Page 21)', titleId: 'Teman +2 (Halaman 21)', total: 30, range: [0, 29] },
+      { key: 'sec-friends-3', titleEn: 'Friend +3 = +5-2 (Page 23)', titleId: 'Teman +3 (Halaman 23)', total: 30, range: [0, 29] },
+      { key: 'sec-friends-4', titleEn: 'Friend +4 = +5-1 (Page 24)', titleId: 'Teman +4 (Halaman 24)', total: 30, range: [0, 29] }
     ]
   },
   {
     id: 'sec-speed-writing',
     titleEn: 'Speed Writing Lab',
-    titleMl: 'സ്പീഡ് റൈറ്റിംഗ് ലാബ്',
+    titleId: 'Lab Menulis Cepat',
     icon: '✍️',
     lessonKey: 'sec-speed-writing',
     subsections: [
-      { key: 'sec-speed-writing-left', titleEn: 'Left Hand Sessions', titleMl: 'ഇടത് കൈ പരിശീലനം', total: 5, range: [0, 4] },
-      { key: 'sec-speed-writing-right', titleEn: 'Right Hand Sessions', titleMl: 'വലത് കൈ പരിശീലനം', total: 5, range: [0, 4] }
+      { key: 'sec-speed-writing-left', titleEn: 'Left Hand Sessions', titleId: 'Latihan Tangan Kiri', total: 5, range: [0, 4] },
+      { key: 'sec-speed-writing-right', titleEn: 'Right Hand Sessions', titleId: 'Latihan Tangan Kanan', total: 5, range: [0, 4] }
     ]
   },
   {
     id: 'sec-bead-draw',
     titleEn: 'Bead Drawing',
-    titleMl: 'മണി വരയ്ക്കൽ',
+    titleId: 'Gambar Manik',
     icon: '✏️',
     lessonKey: 'sec-bead-draw',
     subsections: [
-      { key: 'sec-bead-draw', titleEn: '30 Interactive Builds', titleMl: '30 മണി പരിശോധന', total: 30, range: [0, 29] }
+      { key: 'sec-bead-draw', titleEn: '30 Interactive Builds', titleId: '30 Uji Manik', total: 30, range: [0, 29] }
     ]
   },
   {
     id: 'sec-revision',
     titleEn: '8-Min Master Revision',
-    titleMl: 'മാസ്റ്റർ റിവിഷൻ (8 മിനിറ്റ്)',
+    titleId: 'Ulasan Cepat 8 Menit',
     icon: '📚',
     lessonKey: 'sec-revision',
     subsections: [
-      { key: 'sec-revision', titleEn: 'Master Revision (Page 25)', titleMl: 'റിവിഷൻ ചോദ്യങ്ങൾ (പേജ് 25)', total: 30, range: [0, 29] }
+      { key: 'sec-revision', titleEn: 'Master Revision (Page 25)', titleId: 'Soal Ulasan (Halaman 25)', total: 30, range: [0, 29] }
     ]
   },
   {
     id: 'sec-test-paper',
     titleEn: 'Final Test Paper (200 MM)',
-    titleMl: 'ഫൈനൽ പരീക്ഷ പേപ്പർ',
+    titleId: 'Ujian Akhir 200 Nilai',
     icon: '🏆',
     lessonKey: 'sec-test-paper',
     subsections: [
-      { key: 'sec-test-paper', titleEn: 'Final Test (Page 26)', titleMl: 'ഫൈനൽ പരീക്ഷ ചോദ്യങ്ങൾ (പേജ് 26)', total: 30, range: [0, 29] }
+      { key: 'sec-test-paper', titleEn: 'Final Test (Page 26)', titleId: 'Soal Ujian Akhir (Halaman 26)', total: 30, range: [0, 29] }
     ]
   }
 ];
@@ -3521,6 +3488,7 @@ function calculateOverallCurriculumProgress() {
   const displaySolved = Math.max(totalCurriculumSolved, totalCorrect);
   if (totalCurriculumSolved > totalCorrect) {
     totalCorrect = totalCurriculumSolved;
+    safeStorage.set('freya_correct_ans', totalCorrect);
     safeStorage.set('kungi_correct_ans', totalCorrect);
   }
 
@@ -3543,11 +3511,11 @@ function renderOverallProgressStars() {
   if (!track) return;
 
   const data = calculateOverallCurriculumProgress();
-  const isMl = (currentLang === 'ml' || currentLang === 'id');
+  const isId = (currentLang === 'id');
 
   const captionEl = document.getElementById('banner-stars-caption');
   if (captionEl) {
-    captionEl.innerHTML = `⭐ <span id="banner-stars-counter">${data.earnedStarsInt} / 10</span> <span>${isMl ? 'ആകെ പുരോഗതി' : 'Overall Progress'}</span> (${data.totalSolved} ${isMl ? 'ശരി' : 'Right Answers'} • ${data.overallPercent}%) ⭐`;
+    captionEl.innerHTML = `⭐ <span id="banner-stars-counter">${data.earnedStarsInt} / 10</span> <span>${(currentLang === 'id') ? 'Kemajuan Total' : 'Overall Progress'}</span> (${data.totalSolved} ${(currentLang === 'id') ? 'Jawaban Benar' : 'Right Answers'} • ${data.overallPercent}%) ⭐`;
   } else {
     const counterEl = document.getElementById('banner-stars-counter');
     if (counterEl) counterEl.innerText = `${data.earnedStarsInt} / 10`;
@@ -3569,8 +3537,8 @@ function renderOverallProgressStars() {
       starGlyph = '🌟';
     }
 
-    const secTitle = isMl ? sec.titleMl : sec.titleEn;
-    const tooltip = `${sec.icon} Star ${starNum}: ${secTitle} - ${sec.solved}/${sec.total} ${isMl ? 'ശരി' : 'Right Answers'} (${sec.percent}%)`;
+    const secTitle = isId ? sec.titleId : sec.titleEn;
+    const tooltip = `${sec.icon} Star ${starNum}: ${secTitle} - ${sec.solved}/${sec.total} ${(currentLang === 'id') ? 'Benar' : 'Right Answers'} (${sec.percent}%)`;
 
     html += `
       <div class="banner-star-item ${statusClass}" title="${tooltip}" onclick="event.stopPropagation(); openSectionProgressModal(${idx});" style="cursor: pointer; display: inline-flex; flex-direction: column; align-items: center; gap: 1px;">
@@ -3587,12 +3555,12 @@ function openSectionProgressModal(focusSecIdx = null) {
   const modal = document.getElementById('progress-breakdown-modal');
   if (!modal) return;
 
-  const isMl = (currentLang === 'ml' || currentLang === 'id');
+  const isId = (currentLang === 'id');
   const data = calculateOverallCurriculumProgress();
 
   const titleEl = document.getElementById('t-prog-modal-title');
   if (titleEl) {
-    titleEl.innerText = isMl ? 'പാഠങ്ങളുടെ ആകെ പുരോഗതിയും ശരിയായ ഉത്തരങ്ങളും' : 'Overall Right Answers Progress by Section';
+    titleEl.innerText = (currentLang === 'id') ? 'Kemajuan Total dan Jawaban Benar per Bagian' : 'Overall Right Answers Progress by Section';
   }
 
   const summaryEl = document.getElementById('prog-modal-summary');
@@ -3600,17 +3568,17 @@ function openSectionProgressModal(focusSecIdx = null) {
     summaryEl.innerHTML = `
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; flex-wrap: wrap; gap: 8px;">
         <span style="font-size: 1.15rem; font-weight: 900; color: #fde047;">
-          ⭐ ${data.earnedStarsInt} / 10 ${isMl ? 'നക്ഷത്രങ്ങൾ നേടി' : 'Stars Earned'} (${data.overallPercent}%)
+          ⭐ ${data.earnedStarsInt} / 10 ${(currentLang === 'id') ? 'Bintang Diperoleh' : 'Stars Earned'} (${data.overallPercent}%)
         </span>
         <span style="font-size: 0.92rem; font-weight: 800; color: #86efac; background: #1c2e1f; border: 1px solid #2e5333; padding: 4px 12px; border-radius: 20px;">
-          🎯 ${data.totalSolved} / ${data.totalQuestions} ${isMl ? 'ശരിയായ ഉത്തരങ്ങൾ' : 'Right Answers'}
+          🎯 ${data.totalSolved} / ${data.totalQuestions} ${(currentLang === 'id') ? 'Jawaban Benar' : 'Right Answers'}
         </span>
       </div>
       <div style="width: 100%; height: 12px; background: #0c1a0e; border: 1px solid #2e5333; border-radius: 8px; overflow: hidden;">
         <div style="width: ${data.overallPercent}%; height: 100%; background: linear-gradient(90deg, #15803d, #22c55e, #fde047); border-radius: 8px; transition: width 0.4s ease;"></div>
       </div>
       <div style="font-size: 0.8rem; color: #a7f3d0; margin-top: 6px; text-align: right;">
-        ${isMl ? 'ഓരോ വിഭാഗത്തിലെയും ശരിയായ ഉത്തരങ്ങൾ 10 നക്ഷത്ര പുരോഗതി വർദ്ധിപ്പിക്കും' : 'Right answers from each section and subsection advance your 10 stars!'}
+        ${(currentLang === 'id') ? 'Jawaban benar dari setiap bagian akan menambah 10 bintang kemajuanmu!' : 'Right answers from each section and subsection advance your 10 stars!'}
       </div>
     `;
   }
@@ -3619,11 +3587,11 @@ function openSectionProgressModal(focusSecIdx = null) {
   if (listEl) {
     listEl.innerHTML = data.sections.map((sec, idx) => {
       const isFocused = (focusSecIdx === idx);
-      const secTitle = isMl ? sec.titleMl : sec.titleEn;
+      const secTitle = isId ? sec.titleId : sec.titleEn;
       const isSecMastered = (sec.ratio >= 0.7);
 
       const subRowsHtml = sec.subsections.map(sub => {
-        const subTitle = isMl ? sub.titleMl : sub.titleEn;
+        const subTitle = isId ? sub.titleId : sub.titleEn;
         return `
           <div class="prog-sub-row">
             <span style="color: #dcfce7;">• ${subTitle}</span>
@@ -3652,7 +3620,7 @@ function openSectionProgressModal(focusSecIdx = null) {
                 ${sec.solved} / ${sec.total} (${sec.percent}%)
               </span>
               <button class="extra-tab-btn" onclick="loadLesson('${sec.lessonKey}', true); closeSectionProgressModal();" style="padding: 4px 10px; font-size: 0.78rem;">
-                ${isMl ? 'പരിശീലിക്കുക ➡️' : 'Practice ➡️'}
+                ${(currentLang === 'id') ? 'Latihan ➡️' : 'Practice ➡️'}
               </button>
             </div>
           </div>
@@ -3691,10 +3659,15 @@ function updateStatsUI() {
 }
 
 function savePersistentStats() {
+  safeStorage.set('freya_correct_ans', totalCorrect);
   safeStorage.set('kungi_correct_ans', totalCorrect);
+  safeStorage.set('freya_total_qs', totalQuestions);
   safeStorage.set('kungi_total_qs', totalQuestions);
+  safeStorage.set('freya_stars', totalStars);
   safeStorage.set('kungi_stars', totalStars);
+  safeStorage.set('freya_crowns', totalCrowns);
   safeStorage.set('kungi_crowns', totalCrowns);
+  safeStorage.set('freya_solved_map', JSON.stringify(lessonSolvedMap));
   safeStorage.set('kungi_solved_map', JSON.stringify(lessonSolvedMap));
 }
 
@@ -3726,7 +3699,7 @@ function resetAllScoresManually() {
   playSound('clear');
   clearSoroban();
   refreshCurrentActiveLesson();
-  alert("🔄 All scores and stars have been manually reset for Kungi! Fresh start!");
+  alert("🔄 All scores and stars have been manually reset for Freya! Fresh start!");
 }
 
 /* =========================================================================
@@ -4075,7 +4048,7 @@ function launchConfetti() {
 
 const LESSON_PROBLEMS = {
   'sec-lesson-2': {
-    title: { en: 'Lesson 2: Direct Addition / Subtraction +/- 5 - Page 9', ml: 'പാഠം 2: നേരിട്ടുള്ള സങ്കലനം / വ്യവകലനം +/- 5 - പേജ് 9', id: 'പാഠം 2: നേരിട്ടുള്ള സങ്കലനം / വ്യവകലനം +/- 5 - പേജ് 9' },
+    title: { en: 'Lesson 2: Direct Addition / Subtraction +/- 5 - Page 9', id: 'Pelajaran 2: Penjumlahan & Pengurangan Langsung +/- 5 - Halaman 9' },
     formula: '+5 / -5 Direct',
     questions: [
       [2, 5, 1], [3, 5, 1], [1, 5, -1], [5, 3, -5], [4, 5, -2],
@@ -4087,7 +4060,7 @@ const LESSON_PROBLEMS = {
     ]
   },
   'sec-practice-6': {
-    title: { en: 'Practice Page: Addition +6 - Page 11', ml: 'പരിശീലന പേജ്: സങ്കലനം +6 - പേജ് 11', id: 'പരിശീലന പേജ്: സങ്കലനം +6 - പേജ് 11' },
+    title: { en: 'Practice Page: Addition +6 - Page 11', id: 'Latihan: Penjumlahan +6 - Halaman 11' },
     formula: 'Pinch +6 (+5 and +1)',
     questions: [
       [6, 2, -5], [3, 6, -2], [1, 2, 6], [4, -3, 6], [2, 6, -1],
@@ -4099,7 +4072,7 @@ const LESSON_PROBLEMS = {
     ]
   },
   'sec-practice-7': {
-    title: { en: 'Practice Page: Addition +7 - Page 12', ml: 'പരിശീലന പേജ്: സങ്കലനം +7 - പേജ് 12', id: 'പരിശീലന പേജ്: സങ്കലനം +7 - പേജ് 12' },
+    title: { en: 'Practice Page: Addition +7 - Page 12', id: 'Latihan: Penjumlahan +7 - Halaman 12' },
     formula: 'Pinch +7 (+5 and +2)',
     questions: [
       [7, 2, -5], [3, -2, 7], [2, -1, 7], [4, -3, 7], [2, 7, -1],
@@ -4111,7 +4084,7 @@ const LESSON_PROBLEMS = {
     ]
   },
   'sec-practice-8': {
-    title: { en: 'Practice Page: Addition +8 (4-Rows) - Page 14', ml: 'പരിശീലന പേജ്: സങ്കലനം +8 (4 വരികൾ) - പേജ് 14', id: 'പരിശീലന പേജ്: സങ്കലനം +8 (4 വരികൾ) - പേജ് 14' },
+    title: { en: 'Practice Page: Addition +8 (4-Rows) - Page 14', id: 'Latihan: Penjumlahan +8 (4 Baris) - Halaman 14' },
     formula: 'Pinch +8 (+5 and +3)',
     questions: [
       [1, 8, -3], [2, -1, 8], [3, -2, 8], [4, -3, 8], [1, 8, -5],
@@ -4123,7 +4096,7 @@ const LESSON_PROBLEMS = {
     ]
   },
   'sec-practice-sub6': {
-    title: { en: 'Practice Page: Subtraction -6 - Page 16', ml: 'പരിശീലന പേജ്: വ്യവകലനം -6 - പേജ് 16', id: 'പരിശീലന പേജ്: വ്യവകലനം -6 - പേജ് 16' },
+    title: { en: 'Practice Page: Subtraction -6 - Page 16', id: 'Latihan: Pengurangan -6 - Halaman 16' },
     formula: 'Spread -6 (-5 and -1)',
     questions: [
       [8, -6, 5], [7, 2, -6], [5, 4, -6], [6, 2, -6], [9, -6, 1],
@@ -4135,7 +4108,7 @@ const LESSON_PROBLEMS = {
     ]
   },
   'sec-practice-sub7': {
-    title: { en: 'Practice Page: Subtraction -7 - Page 17', ml: 'പരിശീലന പേജ്: വ്യവകലനം -7 - പേജ് 17', id: 'പരിശീലന പേജ്: വ്യവകലനം -7 - പേജ് 17' },
+    title: { en: 'Practice Page: Subtraction -7 - Page 17', id: 'Latihan: Pengurangan -7 - Halaman 17' },
     formula: 'Spread -7 (-5 and -2)',
     questions: [
       [8, -7, 5], [6, 2, -7], [5, 4, -7], [7, 2, -7], [9, -7, 1],
@@ -4147,7 +4120,7 @@ const LESSON_PROBLEMS = {
     ]
   },
   'sec-practice-sub89': {
-    title: { en: 'Practice Page: Subtraction -8, -9 - Page 19', ml: 'പരിശീലന പേജ്: വ്യവകലനം -8, -9 - പേജ് 19', id: 'പരിശീലന പേജ്: വ്യവകലനം -8, -9 - പേജ് 19' },
+    title: { en: 'Practice Page: Subtraction -8, -9 - Page 19', id: 'Latihan: Pengurangan -8, -9 - Halaman 19' },
     formula: 'Spread -8 / -9',
     questions: [
       [9, -8, 7], [8, -8, 6], [4, 5, -8], [3, 6, -8], [5, 4, -9],
@@ -4159,7 +4132,7 @@ const LESSON_PROBLEMS = {
     ]
   },
   'sec-friends-1': {
-    title: { en: 'Lesson 6: Small Friend +1 = +5 - 4 - Page 20', ml: 'പാഠം 6: സ്മോൾ ഫ്രണ്ട് +1 = +5 - 4 - പേജ് 20', id: 'പാഠം 6: സ്മോൾ ഫ്രണ്ട് +1 = +5 - 4 - പേജ് 20' },
+    title: { en: 'Lesson 6: Small Friend +1 = +5 - 4 - Page 20', id: 'Pelajaran 6: Teman Kecil +1 = +5 - 4 - Halaman 20' },
     formula: '+1 = +5 - 4  |  +10 = +50 - 40',
     questions: [
       [2, 2, 1], [3, 1, 1], [4, 1, 3], [1, 3, 1], [9, -5, 1],
@@ -4171,7 +4144,7 @@ const LESSON_PROBLEMS = {
     ]
   },
   'sec-friends-2': {
-    title: { en: 'Lesson 6: Small Friend +2 = +5 - 3 - Page 21', ml: 'പാഠം 6: സ്മോൾ ഫ്രണ്ട് +2 = +5 - 3 - പേജ് 21', id: 'പാഠം 6: സ്മോൾ ഫ്രണ്ട് +2 = +5 - 3 - പേജ് 21' },
+    title: { en: 'Lesson 6: Small Friend +2 = +5 - 3 - Page 21', id: 'Pelajaran 6: Teman Kecil +2 = +5 - 3 - Halaman 21' },
     formula: '+2 = +5 - 3  |  +20 = +50 - 30',
     questions: [
       [3, 2, 4], [3, 1, 2], [4, 2, 3], [2, 2, 2], [3, 2, 2],
@@ -4183,7 +4156,7 @@ const LESSON_PROBLEMS = {
     ]
   },
   'sec-friends-3': {
-    title: { en: 'Practice Page: Small Friend +3 = +5 - 2 - Page 23', ml: 'പരിശീലന പേജ്: സ്മോൾ ഫ്രണ്ട് +3 = +5 - 2 - പേജ് 23', id: 'പരിശീലന പേജ്: സ്മോൾ ഫ്രണ്ട് +3 = +5 - 2 - പേജ് 23' },
+    title: { en: 'Practice Page: Small Friend +3 = +5 - 2 - Page 23', id: 'Latihan: Teman Kecil +3 = +5 - 2 - Halaman 23' },
     formula: '+3 = +5 - 2',
     questions: [
       [1, 1, 3], [2, 1, 3], [3, 1, 3], [2, 2, 3], [1, 3, 3],
@@ -4195,7 +4168,7 @@ const LESSON_PROBLEMS = {
     ]
   },
   'sec-friends-4': {
-    title: { en: 'Practice Page: Small Friend +4 = +5 - 1 - Page 24', ml: 'പരിശീലന പേജ്: സ്മോൾ ഫ്രണ്ട് +4 = +5 - 1 - പേജ് 24', id: 'പരിശീലന പേജ്: സ്മോൾ ഫ്രണ്ട് +4 = +5 - 1 - പേജ് 24' },
+    title: { en: 'Practice Page: Small Friend +4 = +5 - 1 - Page 24', id: 'Latihan: Teman Kecil +4 = +5 - 1 - Halaman 24' },
     formula: '+4 = +5 - 1',
     questions: [
       [2, 4, 2], [1, 4, 1], [4, 4, 1], [3, 4, 2], [7, -5, 4],
@@ -4207,7 +4180,7 @@ const LESSON_PROBLEMS = {
     ]
   },
   'sec-revision': {
-    title: { en: 'Master Revision (8 Minutes) - Page 25', ml: 'മാസ്റ്റർ റിവിഷൻ (8 മിനിറ്റ്) - പേജ് 25', id: 'മാസ്റ്റർ റിവിഷൻ (8 മിനിറ്റ്) - പേജ് 25' },
+    title: { en: 'Master Revision (8 Minutes) - Page 25', id: 'Ulasan Lengkap (8 Menit) - Halaman 25' },
     formula: 'All Rules Revision',
     questions: [
       [2, 2, 2, -1], [3, 1, 4, -5], [2, 3, 2, 1], [6, -5, 1, 3], [8, -5, 2, 2],
@@ -4219,7 +4192,7 @@ const LESSON_PROBLEMS = {
     ]
   },
   'sec-test-paper': {
-    title: { en: 'Level-1 Final Test Paper (200 MM) - Page 26', ml: 'ലെവൽ-1 ഫൈനൽ ടെസ്റ്റ് പേപ്പർ (200 മാർക്ക്) - പേജ് 26', id: 'ലെവൽ-1 ഫൈനൽ ടെസ്റ്റ് പേപ്പർ (200 മാർക്ക്) - പേജ് 26' },
+    title: { en: 'Level-1 Final Test Paper (200 MM) - Page 26', id: 'Ujian Akhir Tingkat-1 (200 Nilai) - Halaman 26' },
     formula: 'Final Exam (12 Min)',
     questions: [
       [1, 2, 1], [3, 3, 2], [8, 1, -9], [9, -7, 6], [4, 5, -8],
@@ -4262,34 +4235,34 @@ const ALL_LESSON_KEYS = [
 ];
 
 const LESSON_METADATA = {
-  'sec-bead-count-1': { icon: '🚗', en: 'Lesson 1: Bead Counting', ml: 'പാഠം 1: മണികൾ എണ്ണാം', subEn: 'Count 1-30 & 31-50', subMl: '1-30 & 31-50 എണ്ണൽ' },
-  'sec-lesson-2': { icon: '🐹', en: 'Lesson 2: Addition +1 to +5', ml: 'പാഠം 2: സങ്കലനം +1 മുതൽ +5 വരെ', subEn: 'Adding 1-5', subMl: '1-5 കൂട്ടാം' },
-  'sec-practice-6': { icon: '🚲', en: 'Lesson 3: Addition +6 to +9', ml: 'പാഠം 3: സങ്കലനം +6 മുതൽ +9 വരെ', subEn: 'Adding 6-9', subMl: '6-9 കൂട്ടാം' },
-  'sec-practice-sub6': { icon: '🏎️', en: 'Lesson 4: Subtraction -1 to -5', ml: 'പാഠം 4: വ്യവകലനം -1 മുതൽ -5 വരെ', subEn: 'Subtracting 1-5', subMl: '1-5 കുറയ്ക്കാം' },
-  'sec-practice-sub7': { icon: '🏍️', en: 'Lesson 5: Subtraction -6 to -9', ml: 'പാഠം 5: വ്യവകലനം -6 മുതൽ -9 വരെ', subEn: 'Subtracting 6-9', subMl: '6-9 കുറയ്ക്കാം' },
-  'sec-friends-1': { icon: '🚀', en: 'Lesson 6: Small Friends', ml: 'പാഠം 6: സ്മോൾ ഫ്രണ്ട്സ്', subEn: 'Formulas (+1, +2, +3, +4)', subMl: 'സൂത്രവാക്യങ്ങൾ (+1, +2, +3, +4)' },
-  'sec-speed-writing': { icon: '✍️', en: 'Speed Writing Lab', ml: 'സ്പീഡ് റൈറ്റിംഗ് ലാബ്', subEn: 'Left & Right Hand (Apple Pencil)', subMl: 'ഇടത് & വലത് കൈ പരിശീലനം' },
-  'sec-test-paper': { icon: '🏆', en: 'Final Test Paper', ml: 'ഫൈനൽ പരീക്ഷ പേപ്പർ', subEn: '200 Marks & Certificate', subMl: '200 മാർക്ക് & സർട്ടിഫിക്കറ്റ്' },
-  'sec-tool-intro': { icon: '🧮', en: 'Abacus Basics', ml: 'അബാക്കസ് അടിസ്ഥാനങ്ങൾ', subEn: 'Meet Your Soroban', subMl: 'അബാക്കസിനെ പരിചയപ്പെടാം' },
-  'sec-finger-tech': { icon: '🖐️', en: 'Finger Tech', ml: 'വിരൽ സാങ്കേതികത', subEn: 'Finger Moves & Pinch', subMl: 'വിരലുകളുടെ ചലനങ്ങൾ' },
-  'sec-bead-draw': { icon: '✏️', en: 'Bead Drawing', ml: 'മണി വരയ്ക്കൽ', subEn: '30 Interactive Questions', subMl: '30 ചോദ്യങ്ങൾ' },
-  'sec-practice-8': { icon: '🏎️', en: 'Practice +8', ml: 'പരിശീലനം +8', subEn: '4-Rows Addition', subMl: '4 വരികൾ' },
-  'sec-practice-sub89': { icon: '🔥', en: 'Practice -8, -9', ml: 'പരിശീലനം -8, -9', subEn: 'Fast Subtraction', subMl: 'വേഗത്തിൽ കുറയ്ക്കൽ' },
-  'sec-friends-2': { icon: '🚗', en: 'Friend +2', ml: 'കൂട്ടുകാരൻ +2', subEn: 'Formula (+5 - 3)', subMl: 'സൂത്രവാക്യം (+5 - 3)' },
-  'sec-friends-3': { icon: '🐹', en: 'Friend +3', ml: 'കൂട്ടുകാരൻ +3', subEn: 'Formula (+5 - 2)', subMl: 'സൂത്രവാക്യം (+5 - 2)' },
-  'sec-friends-4': { icon: '🚲', en: 'Friend +4', ml: 'കൂട്ടുകാരൻ +4', subEn: 'Formula (+5 - 1)', subMl: 'സൂത്രവാക്യം (+5 - 1)' },
-  'sec-revision': { icon: '📚', en: '8-Min Revision', ml: '8-മിനിറ്റ് റിവിഷൻ', subEn: 'Speed Mastery', subMl: 'വേഗത്തിലുള്ള പരിശീലനം' }
+  'sec-bead-count-1': { icon: '🚗', en: 'Lesson 1: Bead Counting', id: 'Pelajaran 1: Menghitung Manik', subEn: 'Count 1-30 & 31-50', subId: 'Hitung 1-30 & 31-50' },
+  'sec-lesson-2': { icon: '🐹', en: 'Lesson 2: Addition +1 to +5', id: 'Pelajaran 2: Penjumlahan +1 hingga +5', subEn: 'Adding 1-5', subId: 'Menjumlahkan 1-5' },
+  'sec-practice-6': { icon: '🚲', en: 'Lesson 3: Addition +6 to +9', id: 'Pelajaran 3: Penjumlahan +6 hingga +9', subEn: 'Adding 6-9', subId: 'Menjumlahkan 6-9' },
+  'sec-practice-sub6': { icon: '🏎️', en: 'Lesson 4: Subtraction -1 to -5', id: 'Pelajaran 4: Pengurangan -1 hingga -5', subEn: 'Subtracting 1-5', subId: 'Mengurangkan 1-5' },
+  'sec-practice-sub7': { icon: '🏍️', en: 'Lesson 5: Subtraction -6 to -9', id: 'Pelajaran 5: Pengurangan -6 hingga -9', subEn: 'Subtracting 6-9', subId: 'Mengurangkan 6-9' },
+  'sec-friends-1': { icon: '🚀', en: 'Lesson 6: Small Friends', id: 'Pelajaran 6: Teman Kecil', subEn: 'Formulas (+1, +2, +3, +4)', subId: 'Rumus (+1, +2, +3, +4)' },
+  'sec-speed-writing': { icon: '✍️', en: 'Speed Writing Lab', id: 'Lab Menulis Cepat', subEn: 'Left & Right Hand (Apple Pencil)', subId: 'Tangan Kiri & Kanan' },
+  'sec-test-paper': { icon: '🏆', en: 'Final Test Paper', id: 'Ujian Akhir', subEn: '200 Marks & Certificate', subId: '200 Nilai & Sertifikat' },
+  'sec-tool-intro': { icon: '🧮', en: 'Abacus Basics', id: 'Dasar Sempoa', subEn: 'Meet Your Soroban', subId: 'Mengenal Sempoa Soroban' },
+  'sec-finger-tech': { icon: '🖐️', en: 'Finger Tech', id: 'Gerakan Jari', subEn: 'Finger Moves & Pinch', subId: 'Gerakan Jari & Menjepit' },
+  'sec-bead-draw': { icon: '✏️', en: 'Bead Drawing', id: 'Gambar Manik', subEn: '30 Interactive Questions', subId: '30 Soal Interaktif' },
+  'sec-practice-8': { icon: '🏎️', en: 'Practice +8', id: 'Latihan +8', subEn: '4-Rows Addition', subId: 'Penjumlahan 4-Baris' },
+  'sec-practice-sub89': { icon: '🔥', en: 'Practice -8, -9', id: 'Latihan -8, -9', subEn: 'Fast Subtraction', subId: 'Pengurangan Cepat' },
+  'sec-friends-2': { icon: '🚗', en: 'Friend +2', id: 'Teman +2', subEn: 'Formula (+5 - 3)', subId: 'Rumus (+5 - 3)' },
+  'sec-friends-3': { icon: '🐹', en: 'Friend +3', id: 'Teman +3', subEn: 'Formula (+5 - 2)', subId: 'Rumus (+5 - 2)' },
+  'sec-friends-4': { icon: '🚲', en: 'Friend +4', id: 'Teman +4', subEn: 'Formula (+5 - 1)', subId: 'Rumus (+5 - 1)' },
+  'sec-revision': { icon: '📚', en: '8-Min Revision', id: 'Ulasan 8 Menit', subEn: 'Speed Mastery', subId: 'Penguasaan Kecepatan' }
 };
 
 function updateActiveLessonTile(lessonKey) {
-  const meta = LESSON_METADATA[lessonKey] || { icon: '🎓', en: 'Abacus Lesson', ml: 'അബാക്കസ് പാഠം', subEn: 'Practice', subMl: 'പരിശീലനം' };
+  const meta = LESSON_METADATA[lessonKey] || { icon: '🎓', en: 'Abacus Lesson', id: 'Pelajaran Sempoa', subEn: 'Practice', subId: 'Latihan' };
   const iconEl = document.getElementById('tile-lesson-icon');
   const titleEl = document.getElementById('tile-lesson-title');
   const subEl = document.getElementById('tile-lesson-sub');
-  const isMl = (currentLang === 'ml' || currentLang === 'id');
+  const isId = (currentLang === 'id');
   if (iconEl) iconEl.innerText = meta.icon;
-  if (titleEl) titleEl.innerText = isMl ? meta.ml : meta.en;
-  if (subEl) subEl.innerText = isMl ? (meta.subMl || '') : (meta.subEn || '');
+  if (titleEl) titleEl.innerText = isId ? meta.ml : meta.en;
+  if (subEl) subEl.innerText = isId ? (meta.subMl || '') : (meta.subEn || '');
 }
 
 function navigateActiveLesson(direction) {
@@ -4655,7 +4628,7 @@ function renderActiveChallenge(autoFocus = true) {
     }
   }
 
-  const qWord = (currentLang === 'ml' || currentLang === 'id') ? 'ചോദ്യം' : 'Question';
+  const qWord = (currentLang === 'id') ? 'Pertanyaan' : 'Question';
   cardContainer.innerHTML = `
     <div class="challenge-nav-bar">
       <span class="q-progress-badge">
@@ -4801,31 +4774,31 @@ function checkCurrentArenaAnswer(correctSum) {
     }
     if ('speechSynthesis' in window) window.speechSynthesis.cancel();
 
-    // Requirement 5: If answered within 10s timer, show Crown Animation and say "Outstanding Kungi!"
+    // Requirement 5: If answered within 10s timer, show Crown Animation and say "Outstanding Freya!"
     const within10Sec = (challengeTimerSeconds > 0);
-    const isMl = (currentLang === 'ml' || currentLang === 'id');
+    const isId = (currentLang === 'id');
     if (within10Sec) {
       totalCrowns++;
       playSound('crown');
       showCelebrationOverlay(
         '👑',
-        isMl ? 'അത്യുജ്ജ്വലം കുഞ്ഞീ!' : 'Outstanding Kungi!',
-        isMl ? '✨ സ്വർണ്ണ കിരീടവും നക്ഷത്രവും നേടി! ✨' : '✨ Golden Crown & Star Won! ✨'
+        isId ? 'Luar Biasa Freya!' : 'Outstanding Freya!',
+        isId ? '✨ Mahkota Emas & Bintang Diraih! ✨' : '✨ Golden Crown & Star Won! ✨'
       );
-      speakPraiseCustom(isMl ? "അത്യുജ്ജ്വലം കുഞ്ഞീ!" : "Outstanding Kungi!");
+      speakPraiseCustom((currentLang === 'id') ? "Luar Biasa Freya!" : "Outstanding Freya!");
     } else {
       playSound('star');
-      const praisesList = isMl ? [
-        "മിടുക്കൻ കുഞ്ഞീ!",
-        "നല്ല ശ്രമം കുഞ്ഞീ!",
-        "അതിഗംഭീരം കുഞ്ഞീ!"
+      const praisesList = isId ? [
+        "Hebat Freya!",
+        "Bagus sekali Freya!",
+        "Keren sekali Freya!"
       ] : [
-        "Well done Kungi!",
-        "Good job Kungi!",
-        "Excellent Kungi!"
+        "Well done Freya!",
+        "Good job Freya!",
+        "Excellent Freya!"
       ];
       const p = praisesList[Math.floor(Math.random() * praisesList.length)];
-      showCelebrationOverlay('⭐', p, isMl ? '+1 സ്വർണ്ണ നക്ഷത്രം!' : '+1 Golden Star!');
+      showCelebrationOverlay('⭐', p, (currentLang === 'id') ? '+1 Bintang Emas!' : '+1 Golden Star!');
       speakPraiseCustom(p);
     }
 
@@ -4878,10 +4851,10 @@ function showCelebrationOverlay(icon, title, sub) {
 function triggerGraduationCeremony() {
   launchConfetti();
   playSound('fanfare');
-  const isMl = (currentLang === 'ml' || currentLang === 'id');
-  const gradSpeech = isMl
-    ? "അഭിനന്ദനങ്ങൾ കുഞ്ഞീ! നീ വിജയകരമായി അബാക്കസ് ലെവൽ 1A സ്വർണ്ണ കിരീടത്തോടെ പാസ്സായിരിക്കുന്നു!"
-    : "Congratulations Kungi! You have successfully graduated Level 1A with a golden crown!";
+  const isId = (currentLang === 'id');
+  const gradSpeech = isId
+    ? "Selamat Freya! Kamu berhasil lulus Sempoa Tingkat 1A dengan Mahkota Emas!"
+    : "Congratulations Freya! You have successfully graduated Level 1A with a golden crown!";
   speakPraiseCustom(gradSpeech);
   totalStars += 15;
   totalCrowns += 2;
@@ -4907,7 +4880,7 @@ function renderAllQuestionsGrid() {
 
   let cardsHtml = '';
   const isBeadLesson = (activeLessonKey === 'sec-bead-count-1' || activeLessonKey === 'sec-bead-count-2');
-  const isMl = (currentLang === 'ml' || currentLang === 'id');
+  const isId = (currentLang === 'id');
 
   if (isBeadLesson) {
     const start = activeLessonKey === 'sec-bead-count-2' ? 31 : 1;
@@ -4917,11 +4890,11 @@ function renderAllQuestionsGrid() {
       const isSolved = lessonSolvedMap[`${activeLessonKey}_${n}`];
       cardItems.push(`
         <div class="problem-card ${isSolved ? 'solved' : ''}" onclick="jumpToBeadCard(${n}); toggleAllQuestionsGrid();" style="cursor: pointer; text-align: center;">
-          <span class="q-number">${isMl ? 'കാർഡ്' : 'Card'} #${n}</span>
+          <span class="q-number">${isId ? 'Kartu' : 'Card'} #${n}</span>
           <div style="font-size: 1.8rem; font-weight: 900; color: #4ade80; margin: 8px 0; text-shadow: 0 0 8px rgba(74,222,128,0.4);">
             ${n}
           </div>
-          <button class="btn-step-abacus" style="font-size: 0.72rem;">${isSolved ? (isMl ? '✓ പൂർത്തിയായി ⭐' : '✓ Solved ⭐') : (isMl ? 'പോകൂ' : 'Jump')}</button>
+          <button class="btn-step-abacus" style="font-size: 0.72rem;">${isSolved ? (isId ? '✓ Selesai ⭐' : '✓ Solved ⭐') : (isId ? 'Buka' : 'Jump')}</button>
         </div>
       `);
     }
@@ -4934,11 +4907,11 @@ function renderAllQuestionsGrid() {
       const isSolved = lessonSolvedMap[`${activeLessonKey}_${idx}`];
       return `
         <div class="problem-card ${isSolved ? 'solved' : ''}" onclick="jumpToChallenge(${idx})">
-          <span class="q-number">${isMl ? 'ചോ' : 'Q'}${idx+1}</span>
+          <span class="q-number">${isId ? 'Soal ' : 'Q'}${idx+1}</span>
           <div class="q-nums-stack">
             ${nums.map((n, i) => `<span>${i > 0 && n > 0 ? '+' + n : n}</span>`).join('')}
           </div>
-          <button class="btn-step-abacus" style="font-size: 0.72rem;">${isSolved ? (isMl ? '✓ പൂർത്തിയായി ⭐' : '✓ Solved ⭐') : (isMl ? 'പോകൂ' : 'Jump')}</button>
+          <button class="btn-step-abacus" style="font-size: 0.72rem;">${isSolved ? (isId ? '✓ Selesai ⭐' : '✓ Solved ⭐') : (isId ? 'Buka' : 'Jump')}</button>
         </div>
       `;
     }).join('');
@@ -4947,7 +4920,7 @@ function renderAllQuestionsGrid() {
   gridView.innerHTML = `
     <div style="background: #142817; border: 3px solid #2e5333; border-radius: 20px; padding: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-        <h3 style="color: #4ade80; text-shadow: 0 0 10px rgba(74,222,128,0.4);">📋 ${isMl ? 'ഈ പാഠത്തിലെ എല്ലാ ചോദ്യങ്ങളും' : 'All Questions in this Lesson'}</h3>
+        <h3 style="color: #4ade80; text-shadow: 0 0 10px rgba(74,222,128,0.4);">📋 ${isId ? 'Semua Soal dalam Pelajaran Ini' : 'All Questions in this Lesson'}</h3>
         <button class="btn-pink-pill btn-pink-hint" onclick="toggleAllQuestionsGrid()">✖️ ${I18N[currentLang].hideAllGrid}</button>
       </div>
       <div class="grid-problems">
@@ -4984,8 +4957,8 @@ function animateAbacusSteps(nums) {
 
   function doNext() {
     if (step >= nums.length) {
-      const isMl = (currentLang === 'ml' || currentLang === 'id');
-      speakPraiseCustom(isMl ? "ഡെമോ പൂർത്തിയായി!" : "Step solution complete!");
+      const isId = (currentLang === 'id');
+      speakPraiseCustom(isId ? "Langkah demonstrasi selesai!" : "Step solution complete!");
       return;
     }
     running += nums[step];
@@ -5016,7 +4989,7 @@ const DIGIT_TRACE_PATHS = {
 
 const SPEED_DIGITS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
 let activeSpeedDigitIndex = 0;
-let speedTurn = parseInt(safeStorage.get('kungi_speed_turn') || '1', 10);
+let speedTurn = parseInt(safeStorage.get('freya_speed_turn') || safeStorage.get('kungi_speed_turn') || '1', 10);
 if (isNaN(speedTurn) || speedTurn < 1 || speedTurn > 12) speedTurn = 1;
 let speedHandMode = (speedTurn % 2 === 1) ? 'right' : 'left'; // Right hand first on Turn 1!
 let speedTimer16 = 16;
@@ -5058,10 +5031,10 @@ function selectSpeedDigitBox(idx) {
   const targetDigit = SPEED_DIGITS[idx];
   const targetEl = document.getElementById(`speed-box-${targetDigit}`);
   if (targetEl) targetEl.classList.add('active-box');
-  const isMl = (currentLang === 'ml' || currentLang === 'id');
+  const isId = (currentLang === 'id');
   const statusEl = document.getElementById('speed-writing-status');
   if (statusEl) {
-    statusEl.innerHTML = isMl ? `പെട്ടി ${targetDigit}-ൽ ${targetDigit} എഴുതൂ! ✍️` : `Write ${targetDigit} in box ${targetDigit}! ✍️`;
+    statusEl.innerHTML = isId ? `Tulis angka ${targetDigit} di kotak ${targetDigit}! ✍️` : `Write ${targetDigit} in box ${targetDigit}! ✍️`;
   }
 }
 
@@ -5085,10 +5058,10 @@ function renderSpeedWritingArena() {
   activeSpeedDigitIndex = 0;
   speedTurnCompleted = false;
 
-  const isMl = (currentLang === 'ml' || currentLang === 'id');
+  const isId = (currentLang === 'id');
   const handTitle = speedHandMode === 'right'
-    ? (isMl ? '🖐️ വലത് കൈ പരിശീലനം (16 സെക്കൻഡ്)' : '🖐️ RIGHT HAND TURN (16s Timer)')
-    : (isMl ? '🖐️ ഇടത് കൈ പരിശീലനം (16 സെക്കൻഡ്)' : '🖐️ LEFT HAND TURN (16s Timer)');
+    ? (isId ? '🖐️ LATIHAN TANGAN KANAN (16 Detik)' : '🖐️ RIGHT HAND TURN (16s Timer)')
+    : (isId ? '🖐️ LATIHAN TANGAN KIRI (16 Detik)' : '🖐️ LEFT HAND TURN (16s Timer)');
 
   const turnsLeft = 12 - speedTurn + 1;
 
@@ -5112,10 +5085,10 @@ function renderSpeedWritingArena() {
         <div class="timer-16s-ring" id="speed-16s-display">16</div>
         <div style="text-align: left;">
           <div style="font-weight: 900; color: #4ade80; font-size: 1.1rem;">
-            ${isMl ? 'ആപ്പിൾ പെൻസിൽ അല്ലെങ്കിൽ വിരൽ ഉപയോഗിക്കുക' : 'Use Apple Pencil or Finger'}
+            ${isId ? 'Gunakan Apple Pencil atau Jari' : 'Use Apple Pencil or Finger'}
           </div>
           <div style="font-size: 0.85rem; color: #86efac; margin-top: 4px; line-height: 1.4;">
-            ${isMl ? 'പെട്ടി 1-ൽ എഴുതി തുടങ്ങൂ! പെട്ടി 1-ൽ എഴുതുമ്പോൾ ടൈമറും സംഗീതവും ആരംഭിക്കും, പെട്ടി 0-ൽ എഴുതുമ്പോൾ നിൽക്കും (1 മുതൽ 0 വരെയുള്ള പെട്ടികൾ പൂർത്തിയാക്കൂ).' : 'Start writing in box 1! Timer & music start when writing in box 1, and stop when writing in box 0 (fill boxes 1 to 0).'}
+            ${isId ? 'Mulai menulis di kotak 1! Timer & musik dimulai saat menulis di kotak 1, dan berhenti di kotak 0 (isi kotak 1 hingga 0).' : 'Start writing in box 1! Timer & music start when writing in box 1, and stop when writing in box 0 (fill boxes 1 to 0).'}
           </div>
         </div>
       </div>
@@ -5146,14 +5119,14 @@ function renderSpeedWritingArena() {
       <!-- Action Buttons: Clean & Simple (Removed Start Timer & Finish buttons) -->
       <div style="display: flex; gap: 12px; width: 100%; max-width: 480px; justify-content: center; flex-wrap: wrap;">
         <button class="btn-pink-pill btn-pink-reset" onclick="clearStylusCanvas()">
-          🧹 ${isMl ? 'തുടയ്ക്കുക' : 'Clear Pad'}
+          🧹 ${isId ? 'Hapus Papan' : 'Clear Pad'}
         </button>
         <button class="btn-nav-mini" onclick="toggleSpeedHand()" style="font-size: 0.95rem; padding: 10px 18px;">
-          🔄 ${speedHandMode === 'left' ? (isMl ? 'വലത് കൈ' : 'Switch Right') : (isMl ? 'ഇടത് കൈ' : 'Switch Left')}
+          🔄 ${speedHandMode === 'left' ? (isId ? 'Ganti Tangan Kanan' : 'Switch Right') : (isId ? 'Ganti Tangan Kiri' : 'Switch Left')}
         </button>
       </div>
       <div id="speed-writing-status" style="font-size: 0.9rem; font-weight: 700; color: #4ade80; margin-top: 6px; min-height: 22px;">
-        ${isMl ? 'തുടങ്ങാൻ പെട്ടി 1-ൽ 1 എഴുതൂ! ✍️' : 'Start by writing 1 in box 1! ✍️'}
+        ${isId ? 'Mulai dengan menulis 1 di kotak 1! ✍️' : 'Start by writing 1 in box 1! ✍️'}
       </div>
     </div>
   `;
@@ -5167,7 +5140,7 @@ function completeSpeedWritingTurn() {
 
   stopSpeedSessionTimers();
 
-  const isMl = (currentLang === 'ml' || currentLang === 'id');
+  const isId = (currentLang === 'id');
   const currentTurn = speedTurn;
 
   // Record practice progress in persistent score counters
@@ -5181,6 +5154,7 @@ function completeSpeedWritingTurn() {
     totalStars += 10;
     speedTurn = 1;
     speedHandMode = 'right';
+    safeStorage.set('freya_speed_turn', '1');
     safeStorage.set('kungi_speed_turn', '1');
     savePersistentStats();
     updateStatsUI();
@@ -5188,13 +5162,13 @@ function completeSpeedWritingTurn() {
     playSound('crown');
     launchConfetti();
 
-    const bannerTitle = isMl ? 'അത്യുജ്ജ്വലം കുഞ്ഞീ!' : 'Outstanding Kungi!';
-    const bannerSub = isMl ? '12 റൗണ്ട് പരിശീലനം പൂർത്തിയായി! സ്വർണ്ണ കിരീടം നേടി! 👑' : '12 Turns Speed Writing Level Completed! Golden Crown Won! 👑';
+    const bannerTitle = (currentLang === 'id') ? 'Luar Biasa Freya!' : 'Outstanding Freya!';
+    const bannerSub = isId ? '12 Putaran Menulis Cepat Selesai! Mahkota Emas Diraih! 👑' : '12 Turns Speed Writing Level Completed! Golden Crown Won! 👑';
     showCelebrationOverlay('👑', bannerTitle, bannerSub);
 
-    const voiceMsg = isMl
-      ? 'അത്യുജ്ജ്വലം കുഞ്ഞീ! രണ്ട് കൈകളും ഉപയോഗിച്ച് പന്ത്രണ്ട് റൗണ്ട് പരിശീലനം വിജയകരമായി പൂർത്തിയാക്കി! സ്വർണ്ണ കിരീടം സമ്മാനിക്കുന്നു!'
-      : 'Outstanding Kungi! You mastered 12 turns of speed writing with both hands! Golden Crown awarded!';
+    const voiceMsg = isId
+      ? 'Luar Biasa Freya! Kamu berhasil menyelesaikan 12 putaran latihan menulis cepat dengan kedua tangan! Memperoleh Mahkota Emas!'
+      : 'Outstanding Freya! You mastered 12 turns of speed writing with both hands! Golden Crown awarded!';
     speakPraiseCustom(voiceMsg);
 
     setTimeout(() => {
@@ -5206,20 +5180,21 @@ function completeSpeedWritingTurn() {
     const nextTurn = currentTurn + 1;
     speedTurn = nextTurn;
     speedHandMode = (nextTurn % 2 === 1) ? 'right' : 'left';
+    safeStorage.set('freya_speed_turn', speedTurn.toString());
     safeStorage.set('kungi_speed_turn', speedTurn.toString());
     savePersistentStats();
     updateStatsUI();
 
     playSound('star');
 
-    const nextHandName = speedHandMode === 'right' ? (isMl ? 'വലത് കൈ' : 'Right') : (isMl ? 'ഇടത് കൈ' : 'Left');
-    const msg = isMl
-      ? `മിടുക്കൻ കുഞ്ഞീ! റൗണ്ട് ${currentTurn} കഴിഞ്ഞു. അടുത്തത് ${nextHandName}!`
-      : `Great turn Kungi! Turn ${currentTurn} done. Get ready for ${nextHandName} hand! Turn ${nextTurn} of 12!`;
+    const nextHandName = speedHandMode === 'right' ? ((currentLang === 'id') ? 'Kanan' : 'Right') : ((currentLang === 'id') ? 'Kiri' : 'Left');
+    const msg = isId
+      ? `Hebat Freya! Putaran ${currentTurn} selesai. Berikutnya: Tangan ${nextHandName}!`
+      : `Great turn Freya! Turn ${currentTurn} done. Get ready for ${nextHandName} hand! Turn ${nextTurn} of 12!`;
 
     const statusEl = document.getElementById('speed-writing-status');
     if (statusEl) {
-      statusEl.innerHTML = `⭐ <strong>${isMl ? `റൗണ്ട് ${currentTurn} പൂർത്തിയായി! ഇനി ${nextHandName}!` : `Turn ${currentTurn} of 12 complete! Switched to ${nextHandName} Hand!`}</strong>`;
+      statusEl.innerHTML = `⭐ <strong>${isId ? `Putaran ${currentTurn} dari 12 selesai! Beralih ke Tangan ${nextHandName}!` : `Turn ${currentTurn} of 12 complete! Switched to ${nextHandName} Hand!`}</strong>`;
     }
 
     speakPraiseCustom(msg);
@@ -5347,11 +5322,11 @@ function initStylusCanvas() {
         if (nextBox) {
           nextBox.classList.add('active-box');
         }
-        const isMl = (currentLang === 'ml' || currentLang === 'id');
+        const isId = (currentLang === 'id');
         const statusEl = document.getElementById('speed-writing-status');
         if (statusEl) {
-          statusEl.innerHTML = isMl
-            ? `നന്നായി! ഇനി പെട്ടി ${nextDigit}-ൽ ${nextDigit} എഴുതൂ! ⭐`
+          statusEl.innerHTML = isId
+            ? `Bagus! Sekarang tulis angka ${nextDigit} di kotak ${nextDigit}! ⭐`
             : `Great! Now write ${nextDigit} in box ${nextDigit}! ⭐`;
         }
       }
@@ -5389,10 +5364,10 @@ function clearStylusCanvas() {
       if (idx === 0) el.classList.add('active-box');
     }
   });
-  const isMl = (currentLang === 'ml' || currentLang === 'id');
+  const isId = (currentLang === 'id');
   const statusEl = document.getElementById('speed-writing-status');
   if (statusEl) {
-    statusEl.innerHTML = isMl ? 'തുടങ്ങാൻ പെട്ടി 1-ൽ 1 എഴുതൂ! ✍️' : 'Start by writing 1 in box 1! ✍️';
+    statusEl.innerHTML = (currentLang === 'id') ? 'Mulai dengan menulis 1 di kotak 1! ✍️' : 'Start by writing 1 in box 1! ✍️';
   }
 }
 
@@ -5432,9 +5407,9 @@ function start16SecSpeedSession() {
     noteIdx++;
   }, 400);
 
-  const isMl = (currentLang === 'ml' || currentLang === 'id');
+  const isId = (currentLang === 'id');
   const statusEl = document.getElementById('speed-writing-status');
-  if (statusEl) statusEl.innerText = isMl ? '⏳ ടൈമർ ഓടുന്നു! 1 മുതൽ 0 വരെ പെട്ടികൾ പൂർത്തിയാക്കൂ!' : '⏳ Timer & music running! Write 1 to 0 in sequence!';
+  if (statusEl) statusEl.innerText = isId ? '⏳ Timer & musik berjalan! Tulis 1 sampai 0 secara berurutan!' : '⏳ Timer & music running! Write 1 to 0 in sequence!';
 
   speedTimerInterval = setInterval(() => {
     speedTimer16--;
@@ -5445,7 +5420,7 @@ function start16SecSpeedSession() {
       stopSpeedSessionTimers();
 
       if (statusEl) {
-        statusEl.innerHTML = `⏰ <strong>${isMl ? 'സമയം കഴിഞ്ഞു! പെട്ടികൾ പൂർത്തിയാക്കി തുടരൂ!' : "Time's up! Keep writing to finish the remaining boxes!"}</strong>`;
+        statusEl.innerHTML = `⏰ <strong>${isId ? 'Waktu habis! Lanjutkan menulis untuk menyelesaikan kotak yang tersisa!' : "Time's up! Keep writing to finish the remaining boxes!"}</strong>`;
       }
     }
   }, 1000);
@@ -5459,7 +5434,7 @@ let beadCountCurrentNum = 1;
 
 function verifyOrSetBeadDrawNumber(targetNum, idx) {
   const currentTotal = getCurrentSorobanTotal();
-  const isMl = (currentLang === 'ml' || currentLang === 'id');
+  const isId = (currentLang === 'id');
   if (currentTotal === targetNum) {
     if (!lessonSolvedMap[`sec-bead-draw_${idx}`]) {
       lessonSolvedMap[`sec-bead-draw_${idx}`] = true;
@@ -5473,10 +5448,10 @@ function verifyOrSetBeadDrawNumber(targetNum, idx) {
     playSound('star');
     showCelebrationOverlay(
       '⭐',
-      isMl ? 'നല്ല ശ്രമം കുഞ്ഞീ!' : 'Good job Kungi!',
-      isMl ? `✨ ${targetNum} അബാക്കസിൽ കൃത്യമായി ചെയ്തു! ✨` : `✨ ${targetNum} matched on the abacus! ✨`
+      isId ? 'Bagus sekali Freya!' : 'Good job Freya!',
+      isId ? `✨ Angka ${targetNum} berhasil dibuat di sempoa! ✨` : `✨ ${targetNum} matched on the abacus! ✨`
     );
-    speakPraiseCustom(isMl ? 'നല്ല ശ്രമം കുഞ്ഞീ!' : 'Good job Kungi!');
+    speakPraiseCustom((currentLang === 'id') ? 'Bagus sekali Freya!' : 'Good job Freya!');
     launchConfetti();
     const btn = document.getElementById(`btn-bead-draw-${idx}`);
     if (btn) {
@@ -5488,8 +5463,8 @@ function verifyOrSetBeadDrawNumber(targetNum, idx) {
     }
   } else {
     setSorobanNumber(targetNum);
-    const msg = isMl 
-      ? `അബാക്കസിൽ ${targetNum} കാണിക്കുന്നു. അടുത്ത സംഖ്യ ചെയ്തു നോക്കൂ!` 
+    const msg = isId 
+      ? `Menampilkan angka ${targetNum} di sempoa. Coba angka berikutnya!` 
       : `Showing ${targetNum} on the abacus. Now try another number!`;
     speakPraiseCustom(msg);
     const btn = document.getElementById(`btn-bead-draw-${idx}`);
@@ -5513,12 +5488,12 @@ function renderBeadLessonArena(lessonKey, autoFocus = true) {
   const end = lessonKey === 'sec-bead-count-2' ? 50 : 30;
 
   if (lessonKey === 'sec-bead-draw') {
-    const isMl = (currentLang === 'ml' || currentLang === 'id');
+    const isId = (currentLang === 'id');
     cardContainer.innerHTML = `
       <div style="width: 100%;">
-        <h3 style="color: #4ade80; margin-bottom: 8px;">✏️ ${isMl ? 'അബാക്കസിൽ മണികൾ വെക്കൂ!' : 'Build Beads on the Abacus!'}</h3>
+        <h3 style="color: #4ade80; margin-bottom: 8px;">✏️ ${(currentLang === 'id') ? 'Susun Manik di Sempoa!' : 'Build Beads on the Abacus!'}</h3>
         <p style="font-size: 0.98rem; font-weight: 700; color: #86efac; line-height: 1.5; margin-bottom: 14px;">
-          ${isMl ? 'പട്ടികയിലെ ഒരു സംഖ്യ അബാക്കസിൽ ചെയ്യുക, തുടർന്ന് നിങ്ങളുടെ ഉത്തരം പരിശോധിക്കാൻ ആ സംഖ്യയിൽ ക്ലിക്ക് ചെയ്യുക.' : 'Select a number from the list on the abacus, then click on that number to verify your answer.'}
+          ${isId ? 'Pilih angka dari daftar pada sempoa, lalu klik angka tersebut untuk memverifikasi jawabanmu.' : 'Select a number from the list on the abacus, then click on that number to verify your answer.'}
         </p>
         <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(70px, 1fr)); gap: 8px; max-height: 380px; overflow-y: auto;">
           ${[27, 45, 81, 66, 39, 13, 22, 74, 92, 53, 71, 80, 29, 50, 55, 78, 63, 47, 36, 99, 84, 57, 11, 10, 35, 80, 76, 44, 22, 19].map((n, i) => {
@@ -5556,11 +5531,11 @@ function renderBeadLessonArena(lessonKey, autoFocus = true) {
 
   start10SecChallengeTimer();
 
-  const isMl = (currentLang === 'ml' || currentLang === 'id');
+  const isId = (currentLang === 'id');
   cardContainer.innerHTML = `
     <div class="challenge-nav-bar">
       <span class="q-progress-badge">
-        🚗 ${isMl ? 'മണി കാർഡ്' : 'Bead Card'} #${beadCountCurrentNum} (${start} - ${end})
+        🚗 ${(currentLang === 'id') ? 'Kartu Manik' : 'Bead Card'} #${beadCountCurrentNum} (${start} - ${end})
       </span>
       <div class="timer-speed-badge" id="challenge-speed-badge" title="Solve within 10s for Crown!">
         ⏱️ <span id="challenge-timer-sec">${challengeTimerSeconds}</span>s
@@ -5573,7 +5548,7 @@ function renderBeadLessonArena(lessonKey, autoFocus = true) {
     </div>
 
     <div style="margin: 12px 0; display: flex; flex-direction: column; align-items: center;">
-      <!-- Authentic Kungi's Soroban Abacus Frame for Lesson 1 Graphic -->
+      <!-- Authentic Freya's Soroban Abacus Frame for Lesson 1 Graphic -->
       <div class="soroban-frame" style="padding: 6px 14px; border-width: 8px; box-shadow: inset 0 2px 6px rgba(255,255,255,0.1), 0 8px 24px rgba(0,0,0,0.35); border-radius: 14px; user-select: none;">
         <div class="soroban-inner" style="gap: 14px; padding: 4px 10px;">
           <!-- Left Rod: 10s (Tens - Green Cadbury Gems) -->
@@ -5605,14 +5580,14 @@ function renderBeadLessonArena(lessonKey, autoFocus = true) {
 
         <!-- Matching Rod Label Tags underneath (Left Green, Right Yellow) -->
         <div style="display: flex; justify-content: center; gap: 14px; margin-top: 6px;">
-          <div class="rod-name-tag" style="width: 48px; text-align: center; color: #00c853; font-weight: 900;">${isMl ? 'പത്തുകൾ' : '10s'}</div>
-          <div class="rod-name-tag" style="width: 48px; text-align: center; color: #ffd600; font-weight: 900;">${isMl ? 'ഒറ്റകൾ •' : '1s •'}</div>
+          <div class="rod-name-tag" style="width: 48px; text-align: center; color: #00c853; font-weight: 900;">${isId ? 'Puluhan' : '10s'}</div>
+          <div class="rod-name-tag" style="width: 48px; text-align: center; color: #ffd600; font-weight: 900;">${isId ? 'Satuan •' : '1s •'}</div>
         </div>
       </div>
     </div>
 
     <div style="font-size: 1.15rem; font-weight: 800; color: #4ade80; margin-bottom: 10px;">
-      ${isMl ? 'ഈ മണികളുടെ മൂല്യം എത്രയാണ്?' : 'What is the value of these beads?'}
+      ${(currentLang === 'id') ? 'Berapa nilai dari manik-manik ini?' : 'What is the value of these beads?'}
     </div>
 
     <!-- Hulk Number Scroll Wheel Picker for Bead Counting -->
@@ -5681,8 +5656,8 @@ function demoBeadCardAbacus(num) {
   setTimeout(() => {
     setSorobanNumber(num);
     playSound('crown');
-    const isMl = (currentLang === 'ml' || currentLang === 'id');
-    speakPraiseCustom(isMl ? `ഇതാണ് അബാക്കസിലെ ${num}!` : `Here is number ${num} matching on the abacus!`);
+    const isId = (currentLang === 'id');
+    speakPraiseCustom((currentLang === 'id') ? `Inilah angka ${num} pada sempoa!` : `Here is number ${num} matching on the abacus!`);
   }, 250);
 }
 
@@ -5739,29 +5714,29 @@ function checkBeadCountAnswer(target, start, end) {
 
     // Requirement 5: Check 10-second timer for crown
     const within10Sec = (challengeTimerSeconds > 0);
-    const isMl = (currentLang === 'ml' || currentLang === 'id');
+    const isId = (currentLang === 'id');
     if (within10Sec) {
       totalCrowns++;
       playSound('crown');
       showCelebrationOverlay(
         '👑',
-        isMl ? 'അത്യുജ്ജ്വലം കുഞ്ഞീ!' : 'Outstanding Kungi!',
-        isMl ? '✨ സ്വർണ്ണ കിരീടവും നക്ഷത്രവും നേടി! ✨' : '✨ Golden Crown & Star Won! ✨'
+        isId ? 'Luar Biasa Freya!' : 'Outstanding Freya!',
+        isId ? '✨ Mahkota Emas & Bintang Diraih! ✨' : '✨ Golden Crown & Star Won! ✨'
       );
-      speakPraiseCustom(isMl ? "അത്യുജ്ജ്വലം കുഞ്ഞീ!" : "Outstanding Kungi!");
+      speakPraiseCustom((currentLang === 'id') ? "Luar Biasa Freya!" : "Outstanding Freya!");
     } else {
       playSound('star');
-      const praisesList = isMl ? [
-        "മിടുക്കൻ കുഞ്ഞീ!",
-        "നല്ല ശ്രമം കുഞ്ഞീ!",
-        "അതിഗംഭീരം കുഞ്ഞീ!"
+      const praisesList = isId ? [
+        "Hebat Freya!",
+        "Bagus sekali Freya!",
+        "Keren sekali Freya!"
       ] : [
-        "Well done Kungi!",
-        "Good job Kungi!",
-        "Excellent Kungi!"
+        "Well done Freya!",
+        "Good job Freya!",
+        "Excellent Freya!"
       ];
       const p = praisesList[Math.floor(Math.random() * praisesList.length)];
-      showCelebrationOverlay('⭐', p, isMl ? '+1 സ്വർണ്ണ നക്ഷത്രം!' : '+1 Golden Star!');
+      showCelebrationOverlay('⭐', p, (currentLang === 'id') ? '+1 Bintang Emas!' : '+1 Golden Star!');
       speakPraiseCustom(p);
     }
 
@@ -5802,28 +5777,28 @@ function renderStaticLesson(lessonKey) {
   const cardContainer = document.getElementById('active-challenge-card');
   if (!cardContainer) return;
 
-  const isMl = (currentLang === 'ml' || currentLang === 'id');
+  const isId = (currentLang === 'id');
   if (lessonKey === 'sec-tool-intro') {
     cardContainer.innerHTML = `
       <div style="text-align: left; width: 100%;">
-        <h2 style="color: #4ade80; margin-bottom: 12px; text-shadow: 0 0 10px rgba(74,222,128,0.4);">🧮 ${isMl ? 'അബാക്കസിനെ പരിചയപ്പെടാം!' : 'Meet Your Soroban!'}</h2>
+        <h2 style="color: #4ade80; margin-bottom: 12px; text-shadow: 0 0 10px rgba(74,222,128,0.4);">🧮 ${isId ? 'Mengenal Sempoa Soroban!' : 'Meet Your Soroban!'}</h2>
         <p style="line-height: 1.5; color: #bbf7d0; margin-bottom: 14px;">
-          ${isMl ? 'വലതുവശത്ത് കുഞ്ഞിയുടെ സൂപ്പർ അബാക്കസ് കാണാം! മുകളിലെ മണി = 5, താഴത്തെ മണികൾ = 1.' : 'On your right is Kungi\'s super Soroban! Upper beads = 5, lower beads = 1.'}
+          ${isId ? 'Di sebelah kananmu ada Soroban super Freya! Manik atas = 5, manik bawah = 1.' : 'On your right is Freya\'s super Soroban! Upper beads = 5, lower beads = 1.'}
         </p>
-        <button class="btn-submit-arena" onclick="setSorobanNumber(5); totalStars++; savePersistentStats(); updateStatsUI(); showCelebrationOverlay('⭐', '${isMl ? 'അതിഗംഭീരം കുഞ്ഞീ!' : 'Awesome Kungi!'}', '+1 Star'); speakPraiseCustom('${isMl ? 'അതിഗംഭീരം കുഞ്ഞീ!' : 'Awesome Kungi!'}');">
-          ✨ ${isMl ? 'അബാക്കസിൽ 5 വെച്ചുനോക്കൂ!' : 'Try Setting 5 on the Abacus!'}
+        <button class="btn-submit-arena" onclick="setSorobanNumber(5); totalStars++; savePersistentStats(); updateStatsUI(); showCelebrationOverlay('⭐', '${isId ? 'Keren Sekali Freya!' : 'Awesome Freya!'}', '+1 Star'); speakPraiseCustom('${isId ? 'Keren Sekali Freya!' : 'Awesome Freya!'}');">
+          ✨ ${(currentLang === 'id') ? 'Coba Pasang Nilai 5 di Sempoa!' : 'Try Setting 5 on the Abacus!'}
         </button>
       </div>
     `;
   } else if (lessonKey === 'sec-finger-tech') {
     cardContainer.innerHTML = `
       <div style="text-align: left; width: 100%;">
-        <h2 style="color: #4ade80; margin-bottom: 12px; text-shadow: 0 0 10px rgba(74,222,128,0.4);">🖐️ ${isMl ? 'വിരലുകളുടെ ചലനങ്ങൾ' : 'Finger Moves'}</h2>
+        <h2 style="color: #4ade80; margin-bottom: 12px; text-shadow: 0 0 10px rgba(74,222,128,0.4);">🖐️ ${isId ? 'Gerakan Jari' : 'Finger Moves'}</h2>
         <p style="line-height: 1.5; color: #bbf7d0; margin-bottom: 14px;">
-          ${isMl ? '• വലതു തള്ളവിരൽ: താഴത്തെ മണികൾ കൂട്ടാൻ (+1, +2, +3, +4)<br>• വലതു ചൂണ്ടുവിരൽ: മുകളിലെ മണി (+5 / -5) കൂടാതെ താഴത്തെ കുറയ്ക്കൽ (-1)<br>• പിഞ്ച് മൂവ്: 6, 7, 8, 9 എന്നിവയ്ക്ക് 5-ഉം താഴത്തെ മണികളും ഒരുമിച്ച്!' : '• Right Thumb: Lower bead addition (+1, +2, +3, +4)<br>• Right Index: Upper bead (+5 / -5) & lower subtraction (-1)<br>• Pinch Move: 5 and lower beads together for 6, 7, 8, 9!'}
+          ${isId ? '• Jempol Kanan: Tambah manik bawah (+1, +2, +3, +4)<br>• Telunjuk Kanan: Manik atas (+5 / -5) & pengurangan bawah (-1)<br>• Gerakan Menjepit: Satukan manik 5 dan bawah untuk angka 6, 7, 8, 9!' : '• Right Thumb: Lower bead addition (+1, +2, +3, +4)<br>• Right Index: Upper bead (+5 / -5) & lower subtraction (-1)<br>• Pinch Move: 5 and lower beads together for 6, 7, 8, 9!'}
         </p>
-        <button class="btn-submit-arena" onclick="setSorobanNumber(8); totalStars++; savePersistentStats(); updateStatsUI(); showCelebrationOverlay('⭐', '${isMl ? 'മിടുക്കൻ കുഞ്ഞീ!' : 'Brilliant Kungi!'}', '+1 Star'); speakPraiseCustom('${isMl ? 'മിടുക്കൻ കുഞ്ഞീ!' : 'Brilliant Kungi!'}');">
-          ✨ ${isMl ? '8 (5 + 3) പിഞ്ച് ചെയ്തുനോക്കൂ!' : 'Try Pinching 8 (5 + 3)!'}
+        <button class="btn-submit-arena" onclick="setSorobanNumber(8); totalStars++; savePersistentStats(); updateStatsUI(); showCelebrationOverlay('⭐', '${isId ? 'Hebat Freya!' : 'Brilliant Freya!'}', '+1 Star'); speakPraiseCustom('${isId ? 'Hebat Freya!' : 'Brilliant Freya!'}');">
+          ✨ ${(currentLang === 'id') ? 'Coba Jepit Angka 8 (5 + 3)!' : 'Try Pinching 8 (5 + 3)!'}
         </button>
       </div>
     `;

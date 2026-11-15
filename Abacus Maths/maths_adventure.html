@@ -1,0 +1,4229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Freya's Magical Maths Adventure ✨💖 | Oxford Primary Maths Year 2</title>
+<style>
+  :root {
+    --bg-page-top: #ffd3e2;
+    --bg-page-bottom: #ffaec9;
+    --card-bg: #ffffff;
+    --primary-pink: #ff5e97;
+    --primary-dark: #d81b60;
+    --primary-light: #fff0f5;
+    --banner-gradient-start: #ff85ad;
+    --banner-gradient-end: #ffb6ce;
+    --border-pink: #ff85ad;
+    --border-card: #ffccd9;
+    --stat-gradient-start: #ffb3cb;
+    --stat-gradient-end: #ffcadc;
+    --text-white: #ffffff;
+    --text-pink-title: #d81b60;
+    --text-dark: #2d3436;
+    --radius-xl: 32px;
+    --radius-lg: 22px;
+    --radius-md: 16px;
+    --radius-sm: 10px;
+    --shadow-soft: 0 15px 40px rgba(255, 117, 160, 0.22);
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Comic Sans MS', 'Chalkboard SE', 'Fredoka', 'Quicksand', 'Nunito', -apple-system, sans-serif;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    background: linear-gradient(180deg, var(--bg-page-top) 0%, #ffc0d6 50%, var(--bg-page-bottom) 100%);
+    min-height: 100vh;
+    padding: 20px 16px 40px 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--text-dark);
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  /* Floating magical star sparkles */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: 
+      radial-gradient(2px 2px at 20px 30px, #ff99cc, rgba(0,0,0,0)),
+      radial-gradient(2px 2px at 80px 120px, #ffb6c1, rgba(0,0,0,0)),
+      radial-gradient(3px 3px at 150px 70px, #ffd700, rgba(0,0,0,0)),
+      radial-gradient(2px 2px at 220px 190px, #ff69b4, rgba(0,0,0,0)),
+      radial-gradient(3px 3px at 320px 90px, #ffb3cb, rgba(0,0,0,0)),
+      radial-gradient(2px 2px at 450px 220px, #ff80bf, rgba(0,0,0,0));
+    background-repeat: repeat;
+    background-size: 500px 300px;
+    opacity: 0.6;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Main Magical App Container */
+  .app-container {
+    max-width: 1140px;
+    width: 100%;
+    background: var(--card-bg);
+    border-radius: var(--radius-xl);
+    border: 4px solid var(--border-card);
+    box-shadow: var(--shadow-soft);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Top Navigation Bar */
+  .top-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .top-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .icon-btn {
+    background: white;
+    border: 2px solid var(--border-pink);
+    border-radius: 50px;
+    padding: 6px 14px;
+    color: var(--primary-dark);
+    font-weight: 700;
+    font-size: 0.88rem;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(255, 107, 139, 0.15);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s;
+    text-decoration: none;
+    user-select: none;
+  }
+
+  .icon-btn:hover {
+    transform: translateY(-2px);
+    background: #fff5f8;
+    border-color: #ff4081;
+    color: #d81b60;
+    box-shadow: 0 6px 14px rgba(255, 64, 129, 0.25);
+  }
+
+  .icon-btn:active {
+    transform: scale(0.96);
+  }
+
+  /* Language Switcher */
+  .lang-box {
+    display: flex;
+    gap: 6px;
+    background: rgba(255, 255, 255, 0.6);
+    padding: 4px;
+    border-radius: 50px;
+    border: 2px solid rgba(255, 255, 255, 0.9);
+    box-shadow: 0 4px 12px rgba(216, 27, 96, 0.12);
+  }
+
+  .lang-btn {
+    padding: 6px 16px;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    font-weight: 800;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .lang-btn.active {
+    background: linear-gradient(135deg, #ff4081 0%, #ff6b9d 100%);
+    color: white;
+    box-shadow: 0 4px 12px rgba(255, 64, 129, 0.35);
+    transform: scale(1.03);
+  }
+
+  .lang-btn:not(.active) {
+    background: white;
+    color: #ff4081;
+    border: 2px solid #ffccd9;
+  }
+
+  .lang-btn:not(.active):hover {
+    background: #fff0f5;
+  }
+
+  /* Stat Badges Row */
+  .stats-pill-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, var(--stat-gradient-start) 0%, var(--stat-gradient-end) 100%);
+    padding: 6px 16px;
+    border-radius: 50px;
+    border: 2px solid var(--border-pink);
+    box-shadow: 0 4px 14px rgba(255, 117, 160, 0.18);
+  }
+
+  .stat-badge {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-weight: 900;
+    font-size: 0.92rem;
+    color: white;
+    text-shadow: 0 1px 2px rgba(216, 27, 96, 0.3);
+  }
+  .stat-badge.stars { color: #fff; }
+  .stat-badge.crowns { color: #fff; }
+  .stat-badge.score { color: #fff; }
+
+  /* Hero Banner */
+  .hero-banner {
+    background: linear-gradient(135deg, var(--banner-gradient-start) 0%, var(--banner-gradient-end) 100%);
+    border: 3px solid var(--border-pink);
+    border-radius: var(--radius-lg);
+    padding: 22px 28px;
+    text-align: center;
+    color: var(--text-white);
+    position: relative;
+    box-shadow: 0 8px 24px rgba(255, 117, 160, 0.25);
+    overflow: hidden;
+    user-select: none;
+  }
+
+  .corner-decor {
+    font-size: 2.4rem;
+    position: absolute;
+    top: 14px;
+    animation: unicornBounce 2s infinite ease-in-out;
+  }
+  .corner-decor.left { left: 18px; }
+  .corner-decor.right { right: 18px; bottom: 12px; top: auto; animation-delay: 1s; }
+
+  @keyframes unicornBounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-7px); }
+  }
+
+  .hero-title {
+    font-size: clamp(1.4rem, 4vw, 2.1rem);
+    font-weight: 900;
+    letter-spacing: 1px;
+    text-shadow: 0 2px 8px rgba(216, 27, 96, 0.35);
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    color: white;
+  }
+
+  .hero-subtitle {
+    font-size: clamp(0.92rem, 2.4vw, 1.15rem);
+    font-weight: 700;
+    color: #ffffff;
+    opacity: 0.96;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.15);
+    margin-bottom: 12px;
+  }
+
+  .unit-progress-container {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #ffffff;
+    border: 2px solid var(--border-card);
+    border-radius: 50px;
+    padding: 6px 18px;
+    gap: 8px;
+    box-shadow: 0 4px 12px rgba(255, 107, 139, 0.12);
+  }
+
+  .unit-star-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .star-node {
+    font-size: 1.35rem;
+    cursor: pointer;
+    transition: all 0.25s;
+    user-select: none;
+  }
+  .star-node.earned {
+    color: #f59e0b;
+    filter: drop-shadow(0 0 5px rgba(245, 158, 11, 0.8));
+    transform: scale(1.1);
+  }
+  .star-node.locked {
+    opacity: 0.35;
+    filter: grayscale(1);
+    transform: scale(0.92);
+  }
+
+  /* Units Carousel / Tabs Card */
+  .units-carousel-card {
+    background: #fff8fa;
+    border: 2px solid var(--border-card);
+    border-radius: var(--radius-lg);
+    padding: 16px 20px;
+    box-shadow: 0 4px 15px rgba(255, 117, 160, 0.08);
+  }
+
+  .units-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    padding: 0 4px;
+  }
+
+  .units-header h2 {
+    font-size: 1.25rem;
+    font-weight: 900;
+    color: var(--text-pink-title);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .units-scroll-track {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding: 4px 2px 10px 2px;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+  }
+  .units-scroll-track::-webkit-scrollbar {
+    height: 8px;
+  }
+  .units-scroll-track::-webkit-scrollbar-track {
+    background: #fff0f5;
+    border-radius: 10px;
+  }
+  .units-scroll-track::-webkit-scrollbar-thumb {
+    background: var(--border-pink);
+    border-radius: 10px;
+  }
+
+  .unit-tab-pill {
+    flex: 0 0 auto;
+    background: white;
+    border: 2px solid #ffccd9;
+    border-radius: 50px;
+    padding: 7px 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--primary-dark);
+    font-weight: 800;
+    font-size: 0.88rem;
+    box-shadow: 0 3px 8px rgba(255, 107, 139, 0.1);
+    transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    user-select: none;
+  }
+
+  .unit-tab-pill:hover {
+    background: #fff0f5;
+    border-color: #ff85ad;
+    transform: translateY(-2px);
+  }
+
+  .unit-tab-pill.active {
+    background: linear-gradient(135deg, #ff4081 0%, #ff759d 100%);
+    border-color: #ff4081;
+    color: white;
+    box-shadow: 0 4px 12px rgba(255, 64, 129, 0.35);
+    transform: scale(1.03);
+  }
+
+  .unit-tab-pill .u-num {
+    background: rgba(255, 255, 255, 0.35);
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-weight: 900;
+    font-size: 0.76rem;
+  }
+  .unit-tab-pill:not(.active) .u-num {
+    background: #fff0f5;
+    color: var(--primary-dark);
+    border: 1px solid #ffccd9;
+  }
+
+  /* Main Game Card */
+  .game-main-card {
+    background: #fffafc;
+    border: 3px solid var(--border-pink);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    box-shadow: 0 8px 24px rgba(255, 117, 160, 0.15);
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    position: relative;
+  }
+
+  /* Question Bar */
+  .question-bar {
+    background: #fff0f5;
+    border: 2px solid #ffccd9;
+    border-radius: var(--radius-md);
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    box-shadow: 0 2px 8px rgba(255, 117, 160, 0.08);
+  }
+
+  .q-badge-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+    flex-wrap: wrap;
+  }
+
+  .q-badge {
+    background: linear-gradient(135deg, #ff4081 0%, #ff759d 100%);
+    color: white;
+    font-weight: 900;
+    font-size: 0.88rem;
+    padding: 5px 14px;
+    border-radius: 50px;
+    box-shadow: 0 3px 8px rgba(255, 64, 129, 0.25);
+    white-space: nowrap;
+  }
+
+  .q-title {
+    font-size: clamp(1.1rem, 2.5vw, 1.35rem);
+    font-weight: 900;
+    color: var(--primary-dark);
+    line-height: 1.35;
+  }
+
+  .q-audio-btn {
+    background: white;
+    border: 2px solid var(--border-pink);
+    color: var(--primary-dark);
+    border-radius: 50px;
+    padding: 7px 16px;
+    font-weight: 800;
+    font-size: 0.9rem;
+    cursor: pointer;
+    box-shadow: 0 3px 8px rgba(255, 107, 139, 0.15);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s;
+  }
+
+  .q-audio-btn:hover {
+    transform: translateY(-2px);
+    background: #fff5f8;
+  }
+
+  /* Interactive Stage - Clean Light & Pink */
+  .interactive-stage {
+    background: #ffffff;
+    border: 2.5px solid #ffccd9;
+    border-radius: var(--radius-md);
+    padding: 24px 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 250px;
+    position: relative;
+    box-shadow: inset 0 2px 6px rgba(255, 107, 139, 0.06);
+    color: var(--text-dark);
+  }
+
+  .hundred-grid {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    gap: 4px;
+    max-width: 500px;
+    width: 100%;
+    margin: 8px auto;
+  }
+
+  .hundred-cell {
+    aspect-ratio: 1;
+    background: #fff8fa;
+    border: 1.5px solid #ffccd9;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: clamp(0.72rem, 1.8vw, 0.95rem);
+    color: #d81b60;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    user-select: none;
+  }
+
+  .hundred-cell:hover {
+    transform: scale(1.1);
+    background: #ff4081;
+    color: white;
+    border-color: #ff4081;
+    z-index: 2;
+  }
+
+  .hundred-cell.highlight-pink {
+    background: #ff4081 !important;
+    color: white !important;
+    border-color: #d81b60 !important;
+    box-shadow: 0 0 10px rgba(255, 64, 129, 0.5);
+    transform: scale(1.05);
+  }
+
+  .hundred-cell.highlight-gold {
+    background: #f59e0b !important;
+    color: white !important;
+    border-color: #d97706 !important;
+    box-shadow: 0 0 10px rgba(245, 158, 11, 0.5);
+    font-weight: 900;
+  }
+
+  .number-line-container {
+    width: 100%;
+    max-width: 650px;
+    margin: 16px 0;
+    padding: 10px;
+    background: #fff0f5;
+    border-radius: 16px;
+    border: 2px solid var(--border-pink);
+    position: relative;
+  }
+
+  .number-line-svg {
+    width: 100%;
+    height: 90px;
+    overflow: visible;
+  }
+
+  /* Answer Options Grid */
+  .answer-arena {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+  }
+
+  .options-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 14px;
+    width: 100%;
+  }
+
+  .opt-btn {
+    background: white;
+    border: 3px solid #ff85ad;
+    border-radius: 20px;
+    padding: 16px 14px;
+    font-size: 1.25rem;
+    font-weight: 900;
+    color: #d81b60;
+    cursor: pointer;
+    box-shadow: 0 6px 16px rgba(255, 117, 160, 0.18);
+    transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    text-align: center;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .opt-btn:hover {
+    transform: translateY(-4px) scale(1.02);
+    background: #fff0f5;
+    border-color: #ff3377;
+    box-shadow: 0 10px 22px rgba(255, 117, 160, 0.3);
+  }
+
+  .opt-btn:active {
+    transform: scale(0.96);
+  }
+
+  .opt-btn.correct {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+    border-color: #10b981 !important;
+    color: white !important;
+    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4) !important;
+    animation: bounceCorrect 0.5s ease;
+  }
+
+  .opt-btn.wrong {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important;
+    border-color: #ef4444 !important;
+    color: white !important;
+    animation: shakeWrong 0.4s ease;
+  }
+
+  @keyframes bounceCorrect {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.08); }
+  }
+
+  @keyframes shakeWrong {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-6px); }
+    75% { transform: translateX(6px); }
+  }
+
+  /* Action Buttons Row */
+  .action-buttons-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 6px;
+    padding-top: 14px;
+    border-top: 2px solid #ffd3e2;
+  }
+
+  .pill-action-btn {
+    background: white;
+    border: 2px solid var(--border-pink);
+    border-radius: 50px;
+    padding: 8px 20px;
+    color: var(--primary-dark);
+    font-weight: 800;
+    font-size: 0.92rem;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(255, 107, 139, 0.12);
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .pill-action-btn:hover {
+    background: #fff5f8;
+    transform: translateY(-2px);
+    border-color: #ff4081;
+  }
+
+  .pill-action-btn.primary {
+    background: linear-gradient(135deg, #ff4081 0%, #ff6b9d 100%);
+    color: white;
+    border: none;
+    box-shadow: 0 6px 18px rgba(255, 64, 129, 0.35);
+  }
+
+  .pill-action-btn.primary:hover {
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 8px 24px rgba(255, 64, 129, 0.45);
+  }
+
+  .hint-popup-box {
+    background: #fff0f5;
+    border: 2px dashed #ff85ad;
+    border-radius: var(--radius-md);
+    padding: 12px 18px;
+    color: #d81b60;
+    font-size: 0.98rem;
+    font-weight: 800;
+    line-height: 1.4;
+    display: none;
+    animation: fadeIn 0.3s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Scratchpad Container */
+  .scratchpad-container {
+    background: #ffffff;
+    border: 3px solid var(--border-pink);
+    border-radius: var(--radius-lg);
+    padding: 14px;
+    margin-top: 10px;
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+    box-shadow: 0 8px 30px rgba(255, 117, 160, 0.2);
+  }
+
+  .scratchpad-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 4px;
+  }
+
+  .scratchpad-tools {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .color-dot {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 2px solid white;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    transition: transform 0.2s;
+  }
+  .color-dot:hover, .color-dot.active {
+    transform: scale(1.25);
+    box-shadow: 0 0 8px #ff4081;
+  }
+
+  #scratch-canvas {
+    background: #fffafc;
+    border: 2px solid #ffccd9;
+    border-radius: var(--radius-md);
+    width: 100%;
+    height: 180px;
+    touch-action: none;
+    cursor: crosshair;
+  }
+
+  #confetti-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  /* Modals & Popups */
+  .celebration-overlay {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.5);
+    background: linear-gradient(135deg, #fff0f5 0%, #ffffff 100%);
+    border: 4px solid var(--border-pink);
+    border-radius: 32px;
+    padding: 28px 36px;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(255, 117, 160, 0.35);
+    z-index: 10000;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    backdrop-filter: blur(8px);
+    transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    max-width: 90vw;
+  }
+
+  .celebration-overlay.show {
+    display: flex;
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  .crown-icon-animated {
+    font-size: 4rem;
+    animation: crownPop 1s infinite alternate cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    filter: drop-shadow(0 0 12px rgba(251, 191, 36, 0.6));
+  }
+
+  @keyframes crownPop {
+    0% { transform: translateY(0) rotate(-6deg) scale(1); }
+    100% { transform: translateY(-12px) rotate(6deg) scale(1.15); }
+  }
+
+  .celebration-praise {
+    font-size: 2rem;
+    font-weight: 900;
+    color: var(--primary-dark);
+  }
+
+  .celebration-sub {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #4b5563;
+  }
+
+  .modal-backdrop {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(216, 27, 96, 0.35);
+    z-index: 9998;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    backdrop-filter: blur(6px);
+  }
+
+  .cert-card {
+    background: #ffffff;
+    color: var(--text-dark);
+    border: 6px double var(--border-pink);
+    border-radius: 28px;
+    padding: 30px 26px;
+    max-width: 600px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(216, 27, 96, 0.25);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cert-ribbon {
+    position: absolute;
+    top: 15px;
+    right: -30px;
+    background: linear-gradient(135deg, #ff4081 0%, #ff6b9d 100%);
+    color: white;
+    padding: 5px 35px;
+    transform: rotate(45deg);
+    font-weight: 900;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  }
+
+  .settings-modal-card, .grid-modal-card {
+    background: #ffffff;
+    border: 4px solid var(--border-pink);
+    border-radius: var(--radius-xl);
+    padding: 24px;
+    max-width: 540px;
+    width: 100%;
+    color: var(--text-dark);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    box-shadow: 0 20px 50px rgba(216, 27, 96, 0.25);
+  }
+
+  .settings-option {
+    background: #fff8fa;
+    border: 2px solid #ffccd9;
+    border-radius: 14px;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .settings-option:hover, .settings-option.selected {
+    border-color: #ff4081;
+    background: #fff0f5;
+  }
+
+  .filter-btn-bar {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .filter-tag {
+    background: #fff0f5;
+    border: 1.5px solid var(--border-pink);
+    color: var(--primary-dark);
+    border-radius: 20px;
+    padding: 5px 14px;
+    font-size: 0.85rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .filter-tag:hover, .filter-tag.active {
+    background: #ff4081;
+    color: white;
+    border-color: #ff4081;
+  }
+
+  @media (max-width: 600px) {
+    .app-container { padding: 14px; }
+    .hero-banner { padding: 16px 14px; }
+    .corner-decor { display: none; }
+    .hundred-grid { gap: 2px; }
+    .hundred-cell { font-size: 0.72rem; }
+  }
+</style>
+</head>
+<body>
+
+<canvas id="confetti-canvas"></canvas>
+
+<div class="app-container">
+  <!-- Top Bar -->
+  <div class="top-nav">
+    <div class="top-actions">
+      <!-- Switch to Abacus App -->
+      <a href="index.html" class="icon-btn" title="Go to Super Abacus">
+        <span>🧮</span> <span id="t-abacus-link">Super Abacus</span>
+      </a>
+
+      <!-- Master Sound Toggle -->
+      <button class="icon-btn" id="btn-sound-toggle" onclick="toggleMasterSound()">
+        <span id="sound-icon">🔊</span>
+        <span id="sound-lbl">Sound ON</span>
+      </button>
+
+      <!-- 100-Square Explorer Tool -->
+      <button class="icon-btn" onclick="openHundredGridModal()">
+        <span>💯</span> <span id="t-grid-btn">100-Square</span>
+      </button>
+
+      <!-- Stylus Scratchpad Toggle -->
+      <button class="icon-btn" onclick="toggleScratchpad()">
+        <span>✏️</span> <span id="t-scratchpad-btn">Magic Pen</span>
+      </button>
+
+      <!-- Audio Vibes Settings -->
+      <button class="icon-btn" onclick="openAudioSettings()">
+        <span>🎵</span> <span id="t-audio-settings">Vibes</span>
+      </button>
+
+      <!-- Reset Scores Button -->
+      <button class="icon-btn" onclick="confirmResetScores()" title="Reset All Scores & Stars" style="color: #d81b60;">
+        <span>🔄</span> <span id="t-reset-btn">Reset</span>
+      </button>
+    </div>
+
+    <div class="top-actions">
+      <!-- Stats Pill -->
+      <div class="stats-pill-row">
+        <div class="stat-badge stars" title="Stars Earned / Bintang">
+          <span>⭐</span> <span id="stat-stars">0</span>
+        </div>
+        <div class="stat-badge crowns" title="Crowns Won / Mahkota">
+          <span>👑</span> <span id="stat-crowns">0</span>
+        </div>
+        <div class="stat-badge score" title="Correct Answers / Benar">
+          <span>🎯</span> <span id="stat-score">0</span>
+        </div>
+      </div>
+
+      <!-- Bilingual Language Switcher (ENGLISH & BAHASA INDONESIA) -->
+      <div class="lang-box">
+        <button class="lang-btn active" id="lang-en" onclick="setAppLanguage('en')">🇬🇧 EN</button>
+        <button class="lang-btn" id="lang-id" onclick="setAppLanguage('id')">🇮🇩 ID</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hero Banner -->
+  <div class="hero-banner" onclick="handleBannerClick()">
+    <div class="corner-decor left">🦄</div>
+    <div class="corner-decor right">🦄</div>
+    <h1 class="hero-title">
+      <span>✨💖 FREYA'S MAGICAL MATHS 💖✨</span>
+    </h1>
+    <p class="hero-subtitle" id="t-hero-sub">
+      Oxford International Primary Maths 2 • Play, Learn & Conquer! 🌟
+    </p>
+
+    <!-- Star track for current unit -->
+    <div class="unit-progress-container">
+      <span style="font-size: 0.88rem; font-weight: 800; color: #d81b60;" id="t-unit-prog-lbl">Unit Progress:</span>
+      <div class="unit-star-row" id="unit-star-track">
+        <!-- Stars rendered dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Units Carousel Tabs Bar -->
+  <div class="units-carousel-card">
+    <div class="units-header">
+      <h2><span>📚</span> <span id="t-units-title">Maths Units (Oxford Book 2)</span></h2>
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <span style="font-size: 0.85rem; color: var(--primary-dark); font-weight: 800;" id="unit-indicator-text">Unit 1 of 12</span>
+        <button class="pill-action-btn" onclick="scrollUnitsTrack(-240)" style="padding: 3px 10px; font-size: 0.85rem; border-radius: 50px;" title="Scroll Units Left">◀</button>
+        <button class="pill-action-btn" onclick="scrollUnitsTrack(240)" style="padding: 3px 10px; font-size: 0.85rem; border-radius: 50px;" title="Scroll Units Right">▶</button>
+      </div>
+    </div>
+    <div class="units-scroll-track" id="units-pill-track">
+      <!-- 12 unit pills generated by JS -->
+    </div>
+  </div>
+
+  <!-- Scratchpad Drawer (Canvas) -->
+  <div class="scratchpad-container" id="scratchpad-box">
+    <div class="scratchpad-header">
+      <div style="font-weight: 800; color: #ff80bf; display: flex; align-items: center; gap: 6px;">
+        <span>✏️</span> <span id="t-doodle-title">Freya's Magic Doodle Pad</span>
+      </div>
+      <div class="scratchpad-tools">
+        <div class="color-dot active" style="background: #ff2d87;" onclick="setPenColor('#ff2d87', this)"></div>
+        <div class="color-dot" style="background: #38bdf8;" onclick="setPenColor('#38bdf8', this)"></div>
+        <div class="color-dot" style="background: #fde047;" onclick="setPenColor('#fde047', this)"></div>
+        <div class="color-dot" style="background: #c084fc;" onclick="setPenColor('#c084fc', this)"></div>
+        <button class="pill-action-btn" onclick="clearScratchpad()" style="padding: 4px 10px; font-size: 0.8rem;" id="t-scratch-clear">🧹 Clear</button>
+        <button class="pill-action-btn" onclick="toggleScratchpad()" style="padding: 4px 10px; font-size: 0.8rem;" id="t-scratch-close">✖️ Close</button>
+      </div>
+    </div>
+    <canvas id="scratch-canvas"></canvas>
+  </div>
+
+  <!-- Main Game Card -->
+  <div class="game-main-card">
+    <!-- Question Header -->
+    <div class="question-bar">
+      <div class="q-badge-title">
+        <span class="q-badge" id="lesson-sub-badge">1A • Counting</span>
+        <div class="q-title" id="question-text">Count in tens and ones to complete the pattern:</div>
+      </div>
+      <button class="q-audio-btn" onclick="speakCurrentQuestion()">
+        <span>🔊</span> <span id="t-read-aloud">Listen</span>
+      </button>
+    </div>
+
+    <!-- Interactive Visual Stage -->
+    <div class="interactive-stage" id="game-stage">
+      <!-- Dynamic Visual Content injected here -->
+    </div>
+
+    <!-- Hint Alert Box -->
+    <div class="hint-popup-box" id="hint-box">
+      <!-- Hint text injected here -->
+    </div>
+
+    <!-- Answer Arena -->
+    <div class="answer-arena" id="answer-arena">
+      <!-- Buttons or inputs injected here -->
+    </div>
+
+    <!-- Bottom Controls -->
+    <div class="action-buttons-row">
+      <div style="display: flex; gap: 8px;">
+        <button class="pill-action-btn" id="btn-prev-q" onclick="navigateQuestion(-1)">
+          <span>◀️</span> <span id="t-prev-btn">Previous</span>
+        </button>
+        <button class="pill-action-btn" onclick="toggleHint()">
+          <span>💡</span> <span id="t-hint-btn">Hint</span>
+        </button>
+      </div>
+
+      <div style="display: flex; gap: 8px;">
+        <button class="pill-action-btn" onclick="openCertModal()">
+          <span>📜</span> <span id="t-cert-btn">Certificate</span>
+        </button>
+        <button class="pill-action-btn primary" id="btn-next-q" onclick="navigateQuestion(1)">
+          <span id="t-next-btn">Next Activity</span> <span>▶️</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 100-Square Explorer Modal -->
+<div class="modal-backdrop" id="grid-modal">
+  <div class="grid-modal-card">
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+      <h3 style="color: #ff80bf; font-size: 1.25rem;" id="t-grid-modal-title">💯 Interactive 100-Square Explorer</h3>
+      <button class="pill-action-btn" onclick="closeHundredGridModal()" style="padding: 4px 10px;">✖️</button>
+    </div>
+    <div class="filter-btn-bar">
+      <button class="filter-tag" onclick="filterGrid('evens')" id="btn-filter-evens">Twos (Evens)</button>
+      <button class="filter-tag" onclick="filterGrid('fives')" id="btn-filter-fives">Fives (5s)</button>
+      <button class="filter-tag" onclick="filterGrid('tens')" id="btn-filter-tens">Tens (10s)</button>
+      <button class="filter-tag" onclick="filterGrid('threes')" id="btn-filter-threes">Threes (Diagonals)</button>
+      <button class="filter-tag" onclick="filterGrid('clear')" id="btn-filter-clear">🧹 Clear</button>
+    </div>
+    <div class="hundred-grid" id="modal-hundred-grid"></div>
+  </div>
+</div>
+
+<!-- Crown Celebration Popup -->
+<div class="celebration-overlay" id="celebration-popup">
+  <div class="crown-icon-animated">👑</div>
+  <div class="celebration-praise" id="celebration-title">Outstanding Freya!</div>
+  <div class="celebration-sub" id="celebration-subtitle">✨ You earned a Golden Crown & Star! ✨</div>
+  <button class="submit-ans-btn" style="margin-top: 10px;" onclick="closeCelebrationPopup()" id="t-celebration-btn">Keep Going! 🚀</button>
+</div>
+
+<!-- Certificate of Excellence Modal -->
+<div class="modal-backdrop" id="cert-modal">
+  <div class="cert-card">
+    <div class="cert-ribbon" id="cert-ribbon-tag">HONOUR</div>
+    <div style="font-size: 3rem; margin-bottom: 4px;">👑💖⭐</div>
+    <h2 style="font-size: 1.8rem; font-weight: 900; color: #ff2d87; margin-bottom: 6px;" id="cert-main-title">CERTIFICATE OF EXCELLENCE</h2>
+    <p style="font-size: 1rem; color: #6d2085; font-weight: 700;" id="cert-award-to">This magical award is proudly presented to</p>
+    <div style="font-size: 2.4rem; font-weight: 900; color: #ec4899; margin: 10px 0; text-decoration: underline wavy #a855f7;">Freya</div>
+    <p style="font-size: 1rem; color: #3b0764; font-weight: 700; line-height: 1.5; margin: 12px auto; max-width: 480px;" id="cert-main-desc">
+      For outstanding mastery in <b>Oxford International Primary Maths (Year 2)</b>!
+      Brilliant skills in Numbers, Fact Families, Multiplication, Fractions, Geometry & Statistics! 🌟
+    </p>
+    <div style="display: flex; justify-content: space-around; margin-top: 20px; font-weight: 800; color: #86198f;">
+      <div><span id="cert-lbl-stars">⭐ Total Stars:</span> <span id="cert-stars">0</span></div>
+      <div><span id="cert-lbl-crowns">👑 Royal Crowns:</span> <span id="cert-crowns">0</span></div>
+    </div>
+    <div style="margin-top: 24px; display: flex; justify-content: center; gap: 12px;">
+      <button class="submit-ans-btn" onclick="window.print()" id="cert-print-btn">🖨️ Print Award</button>
+      <button class="pill-action-btn" onclick="closeCertModal()" id="cert-close-btn">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- Audio Vibes Settings Modal -->
+<div class="modal-backdrop" id="audio-settings-modal">
+  <div class="settings-modal-card">
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+      <h3 style="color: #ff80bf; font-size: 1.3rem;" id="t-audio-modal-title">🎵 Audio & Sound Theme</h3>
+      <button class="pill-action-btn" onclick="closeAudioSettings()" style="padding: 4px 10px;">✖️</button>
+    </div>
+    <p style="font-size: 0.9rem; color: #2d3436;" id="t-audio-modal-sub">Pick your favorite musical instrument tone for stars and correct answers:</p>
+    
+    <div class="settings-option selected" id="opt-sound-crystal" onclick="setSoundTheme('crystal')">
+      <span style="font-size: 1.5rem;">🔔</span>
+      <div>
+        <div style="font-weight: 800; color: #d81b60;" id="snd-crystal-title">Sweet Chimes & Bells</div>
+        <div style="font-size: 0.8rem; color: #2d3436;" id="snd-crystal-desc">Crystalline gentle chime tones</div>
+      </div>
+    </div>
+    <div class="settings-option" id="opt-sound-piano" onclick="setSoundTheme('piano')">
+      <span style="font-size: 1.5rem;">🎹</span>
+      <div>
+        <div style="font-weight: 800; color: #d81b60;" id="snd-piano-title">Grand Piano Chords</div>
+        <div style="font-size: 0.8rem; color: #2d3436;" id="snd-piano-desc">Warm harmonic piano chords</div>
+      </div>
+    </div>
+    <div class="settings-option" id="opt-sound-marimba" onclick="setSoundTheme('marimba')">
+      <span style="font-size: 1.5rem;">🪵</span>
+      <div>
+        <div style="font-weight: 800; color: #d81b60;" id="snd-marimba-title">Tropical Marimba</div>
+        <div style="font-size: 0.8rem; color: #2d3436;" id="snd-marimba-desc">Playful wooden mallet notes</div>
+      </div>
+    </div>
+    <div class="settings-option" id="opt-sound-arcade" onclick="setSoundTheme('arcade')">
+      <span style="font-size: 1.5rem;">👾</span>
+      <div>
+        <div style="font-weight: 800; color: #d81b60;" id="snd-arcade-title">Retro Arcade</div>
+        <div style="font-size: 0.8rem; color: #2d3436;" id="snd-arcade-desc">8-bit bouncy video game bleeps</div>
+      </div>
+    </div>
+    <div class="settings-option" id="opt-sound-celestial" onclick="setSoundTheme('celestial')">
+      <span style="font-size: 1.5rem;">🌌</span>
+      <div>
+        <div style="font-weight: 800; color: #d81b60;" id="snd-celestial-title">Celestial Dream</div>
+        <div style="font-size: 0.8rem; color: #2d3436;" id="snd-celestial-desc">Dreamy shimmering space pads</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* =========================================================================
+   FREYA'S MAGICAL MATHS - OXFORD PRIMARY MATHS YEAR 2 GAME ENGINE
+   ENGLISH & BAHASA INDONESIA BILINGUAL EDITION
+   ========================================================================= */
+
+const safeStore = {
+  get: (k) => { try { return localStorage.getItem(k); } catch(e) { return null; } },
+  set: (k, v) => { try { localStorage.setItem(k, v); } catch(e) {} }
+};
+
+let currentLang = safeStore.get('freya_maths_lang') || 'en';
+if (currentLang === 'ml') currentLang = 'id'; // Automatically upgrade any legacy key to Indonesian!
+
+let totalStars = parseInt(safeStore.get('freya_maths_stars') || '0', 10);
+let totalCrowns = parseInt(safeStore.get('freya_maths_crowns') || '0', 10);
+let totalCorrect = parseInt(safeStore.get('freya_maths_correct') || '0', 10);
+let soundEnabled = safeStore.get('freya_maths_muted') !== '1';
+let currentSoundTheme = safeStore.get('freya_maths_sound_theme') || 'crystal';
+let activeUnitIndex = 0;
+let activeQuestionIndex = 0;
+let userSolvedMap = {};
+try {
+  userSolvedMap = JSON.parse(safeStore.get('freya_maths_solved') || '{}');
+} catch(e) { userSolvedMap = {}; }
+
+const I18N = {
+  en: {
+    heroSub: "Oxford International Primary Maths 2 • Play, Learn & Conquer! 🌟",
+    unitsTitle: "Maths Units (Oxford Book 2)",
+    unitProg: "Unit Progress:",
+    readAloud: "Listen",
+    hintBtn: "Hint",
+    prevBtn: "Previous",
+    nextBtn: "Next Activity",
+    certBtn: "Certificate",
+    scratchBtn: "Magic Pen",
+    gridBtn: "100-Square",
+    audioSettings: "Vibes",
+    soundOn: "Sound ON",
+    soundOff: "Muted",
+    doodleTitle: "Freya's Magic Doodle Pad",
+    scratchClear: "🧹 Clear",
+    scratchClose: "✖️ Close",
+    gridModalTitle: "💯 Interactive 100-Square Explorer",
+    filterEvens: "Twos (Evens)",
+    filterFives: "Fives (5s)",
+    filterTens: "Tens (10s)",
+    filterThrees: "Threes (Diagonals)",
+    filterClear: "🧹 Clear",
+    audioModalTitle: "🎵 Audio & Sound Theme",
+    audioModalSub: "Pick your favorite musical instrument tone for stars and correct answers:",
+    sndCrystalTitle: "Sweet Chimes & Bells",
+    sndCrystalDesc: "Crystalline gentle chime tones",
+    sndPianoTitle: "Grand Piano Chords",
+    sndPianoDesc: "Warm harmonic piano chords",
+    sndMarimbaTitle: "Tropical Marimba",
+    sndMarimbaDesc: "Playful wooden mallet notes",
+    sndArcadeTitle: "Retro Arcade",
+    sndArcadeDesc: "8-bit bouncy video game bleeps",
+    sndCelestialTitle: "Celestial Dream",
+    sndCelestialDesc: "Dreamy shimmering space pads",
+    certRibbon: "HONOUR",
+    certTitle: "CERTIFICATE OF EXCELLENCE",
+    certAwardTo: "This magical award is proudly presented to",
+    certDesc: "For outstanding mastery in <b>Oxford International Primary Maths (Year 2)</b>! Brilliant skills in Numbers, Fact Families, Multiplication, Fractions, Geometry & Statistics! 🌟",
+    certStars: "⭐ Total Stars:",
+    certCrowns: "👑 Royal Crowns:",
+    certPrint: "🖨️ Print Award",
+    certClose: "Close",
+    outstanding: "Outstanding Freya!",
+    crownSubtitle: "✨ You earned a Golden Crown & Star! ✨",
+    keepGoing: "Keep Going! 🚀",
+    resetBtn: "Reset Scores"
+  },
+  id: {
+    heroSub: "Oxford International Primary Maths 2 • Bermain, Belajar & Berprestasi! 🌟",
+    unitsTitle: "Unit Matematika (Buku Oxford 2)",
+    unitProg: "Kemajuan Belajar:",
+    readAloud: "Dengarkan",
+    hintBtn: "Petunjuk",
+    prevBtn: "Sebelumnya",
+    nextBtn: "Aktivitas Lanjutan",
+    certBtn: "Sertifikat",
+    scratchBtn: "Pena Ajaib",
+    gridBtn: "Papan 100",
+    audioSettings: "Suara",
+    soundOn: "Suara AKTIF",
+    soundOff: "Suara MATI",
+    doodleTitle: "Papan Coretan Ajaib Freya",
+    scratchClear: "🧹 Hapus",
+    scratchClose: "✖️ Tutup",
+    gridModalTitle: "💯 Eksplorasi Papan Bilangan 100",
+    filterEvens: "Kelipatan 2 (Genap)",
+    filterFives: "Kelipatan 5 (5s)",
+    filterTens: "Kelipatan 10 (10s)",
+    filterThrees: "Kelipatan 3 (Diagonal)",
+    filterClear: "🧹 Bersihkan",
+    audioModalTitle: "🎵 Tema Suara & Nada Musik",
+    audioModalSub: "Pilih nada instrumen musik favoritmu untuk efek suara bintang dan jawaban benar:",
+    sndCrystalTitle: "Lonceng Kristal Manis",
+    sndCrystalDesc: "Nada lonceng kristal yang lembut dan merdu",
+    sndPianoTitle: "Harmoni Grand Piano",
+    sndPianoDesc: "Akord piano akustik yang hangat dan anggun",
+    sndMarimbaTitle: "Marimba Tropis",
+    sndMarimbaDesc: "Ketukan kayu marimba yang ceria",
+    sndArcadeTitle: "Arkade Retro 8-Bit",
+    sndArcadeDesc: "Bunyi permainan video game klasik",
+    sndCelestialTitle: "Mimpi Langit (Celestial)",
+    sndCelestialDesc: "Alunan atmosfer luar angkasa yang menenangkan",
+    certRibbon: "PRESTASI",
+    certTitle: "SERTIFIKAT PENGHARGAAN",
+    certAwardTo: "Penghargaan istimewa ini dengan bangga diberikan kepada",
+    certDesc: "Atas keberhasilan gemilang dalam menguasai materi <b>Oxford International Primary Maths (Kelas 2)</b>! Sangat mahir dalam Bilangan, Fakta Matematika, Perkalian, Pecahan, Geometri & Statistik! 🌟",
+    certStars: "⭐ Total Bintang:",
+    certCrowns: "👑 Mahkota Emas:",
+    certPrint: "🖨️ Cetak Penghargaan",
+    certClose: "Tutup",
+    outstanding: "Luar Biasa Freya!",
+    crownSubtitle: "✨ Kamu meraih Mahkota Emas & Bintang! ✨",
+    keepGoing: "Lanjutkan! 🚀",
+    resetBtn: "Reset Skor"
+  }
+};
+
+/* =========================================================================
+   COMPREHENSIVE 12 UNITS CURRICULUM (ENGLISH & BAHASA INDONESIA)
+   ========================================================================= */
+const MATH_UNITS = [
+  {
+    id: 'u1',
+    number: 1,
+    titleEn: 'Numbers & Counting',
+    titleId: 'Bilangan & Berhitung',
+    icon: '🔢',
+    activities: [
+      {
+        id: '1a_seq',
+        subBadge: '1A • Tens & Ones',
+        titleEn: 'Count on in tens: 17, 27, 37, 47, __, 67. What number is missing?',
+        titleId: 'Hitung maju dalam puluhan: 17, 27, 37, 47, __, 67. Berapakah angka yang hilang?',
+        hintEn: 'Look at the tens digit! Each jump adds 10 (+10).',
+        hintId: 'Perhatikan angka puluhan! Setiap langkah bertambah 10 (+10).',
+        options: [48, 57, 50, 60],
+        answer: 57,
+        renderStage: () => `
+          <div style="font-size: 1.8rem; font-weight: 900; color: #d81b60; letter-spacing: 2px;">
+            17 ➔ 27 ➔ 37 ➔ 47 ➔ <span style="background: #ff2d87; padding: 4px 16px; border-radius: 12px; border: 2px dashed #fff;">?</span> ➔ 67
+          </div>
+          <p style="margin-top: 12px; font-weight: 700; color: #d81b60;">+10 each jump! (+10 setiap langkah)</p>
+        `
+      },
+      {
+        id: '1a_seq_back',
+        subBadge: '1A • Counting Back in Tens',
+        titleEn: 'Count back in tens: 92, 82, 72, __, 52. What number is missing?',
+        titleId: 'Hitung mundur dalam puluhan: 92, 82, 72, __, 52. Angka berapa yang hilang?',
+        hintEn: 'Subtract 10 each step! 72 - 10 = ?',
+        hintId: 'Kurangi 10 setiap langkah! 72 - 10 = ?',
+        options: [60, 62, 65, 70],
+        answer: 62,
+        renderStage: () => `
+          <div style="font-size: 1.8rem; font-weight: 900; color: #d81b60; letter-spacing: 2px;">
+            92 ➔ 82 ➔ 72 ➔ <span style="background: #ec4899; padding: 4px 16px; border-radius: 12px; border: 2px dashed #fff;">?</span> ➔ 52
+          </div>
+          <p style="margin-top: 12px; font-weight: 700; color: #d81b60;">-10 each step backwards! (-10 setiap mundur!)</p>
+        `
+      },
+      {
+        id: '1b_line',
+        subBadge: '1B • Counting in Tens',
+        titleEn: 'Start at 0. Make 4 jumps of 10 on the number line. Where do you land?',
+        titleId: 'Mulai dari 0. Lakukan 4 lompatan kelipatan 10 pada garis bilangan. Di angka berapa kamu mendarat?',
+        hintEn: '0 ➔ 10 ➔ 20 ➔ 30 ➔ 40!',
+        hintId: '0 ➔ 10 ➔ 20 ➔ 30 ➔ 40!',
+        options: [30, 40, 50, 24],
+        answer: 40,
+        renderStage: () => `
+          <div class="number-line-container">
+            <svg class="number-line-svg" viewBox="0 0 600 80">
+              <line x1="20" y1="50" x2="580" y2="50" stroke="#ff80bf" stroke-width="4" stroke-linecap="round"/>
+              ${[0,10,20,30,40,50,60,70,80,90,100].map((n, i) => `
+                <line x1="${30 + i * 54}" y1="42" x2="${30 + i * 54}" y2="58" stroke="#ffffff" stroke-width="3"/>
+                <text x="${30 + i * 54}" y="74" fill="#fbcfe8" font-size="13" font-weight="800" text-anchor="middle">${n}</text>
+              `).join('')}
+              <path d="M 30 46 Q 57 15 84 46" fill="none" stroke="#fde047" stroke-width="3" stroke-dasharray="3,3"/>
+              <path d="M 84 46 Q 111 15 138 46" fill="none" stroke="#fde047" stroke-width="3" stroke-dasharray="3,3"/>
+              <path d="M 138 46 Q 165 15 192 46" fill="none" stroke="#fde047" stroke-width="3" stroke-dasharray="3,3"/>
+              <path d="M 192 46 Q 219 15 246 46" fill="none" stroke="#fde047" stroke-width="3" stroke-dasharray="3,3"/>
+              <circle cx="246" cy="48" r="8" fill="#ff2d87" stroke="#fff" stroke-width="2"/>
+            </svg>
+          </div>
+          <p style="font-weight: 700; color: #d81b60;">🐰 4 hops of 10 = ? (4 lompatan 10 = ?)</p>
+        `
+      },
+      {
+        id: '1b_line_back',
+        subBadge: '1B • Jumping Back',
+        titleEn: 'Start at 60 on the number line. Make 3 jumps of 10 backwards. Where do you land?',
+        titleId: 'Mulai dari 60 pada garis bilangan. Lakukan 3 lompatan mundur kelipatan 10. Di mana kamu berhenti?',
+        hintEn: '60 ➔ 50 ➔ 40 ➔ 30!',
+        hintId: '60 ➔ 50 ➔ 40 ➔ 30!',
+        options: [20, 30, 40, 50],
+        answer: 30,
+        renderStage: () => `
+          <div style="font-size: 1.8rem; font-weight: 900; color: #d81b60;">
+            60 ⟵ 50 ⟵ 40 ⟵ <span style="background: #ff2d87; padding: 4px 14px; border-radius: 12px; color: white;">?</span>
+          </div>
+          <p style="margin-top: 10px; font-weight: 700; color: #d81b60;">3 hops back of 10 (3 lompatan mundur 10)</p>
+        `
+      },
+      {
+        id: '1c_twos',
+        subBadge: '1C • Counting in Twos',
+        titleEn: 'Which of these numbers is an EVEN number (multiple of 2)?',
+        titleId: 'Manakah dari bilangan berikut yang merupakan BILANGAN GENAP (kelipatan 2)?',
+        hintEn: 'Even numbers always end in 0, 2, 4, 6, or 8!',
+        hintId: 'Bilangan genap selalu berakhiran 0, 2, 4, 6, atau 8!',
+        options: [15, 27, 34, 49],
+        answer: 34,
+        renderStage: () => `
+          <div style="background: #fff0f5; border: 2px solid #ff85ad; border: 2px solid #ff80bf; border-radius: 14px; padding: 14px 24px; text-align: center;">
+            <span style="font-size: 2.2rem;">🌸</span>
+            <div style="font-size: 1.1rem; font-weight: 800; color: #d81b60; margin-top: 4px;">Even Ends in / Genap Berakhiran:</div>
+            <div style="font-size: 1.5rem; font-weight: 900; color: #d81b60;">0, 2, 4, 6, 8</div>
+          </div>
+        `
+      },
+      {
+        id: '1c_odd',
+        subBadge: '1C • Odd Numbers',
+        titleEn: 'Which of these numbers is an ODD number?',
+        titleId: 'Manakah dari bilangan berikut yang merupakan BILANGAN GANJIL?',
+        hintEn: 'Odd numbers end in 1, 3, 5, 7, or 9!',
+        hintId: 'Bilangan ganjil selalu berakhiran 1, 3, 5, 7, atau 9!',
+        options: [24, 48, 57, 60],
+        answer: 57,
+        renderStage: () => `
+          <div style="background: #fff0f5; border: 2px solid #ff85ad; border: 2px solid #ff80bf; border-radius: 14px; padding: 14px 24px; text-align: center;">
+            <span style="font-size: 2.2rem;">🌟</span>
+            <div style="font-size: 1.1rem; font-weight: 800; color: #d81b60; margin-top: 4px;">Odd Ends in / Ganjil Berakhiran:</div>
+            <div style="font-size: 1.5rem; font-weight: 900; color: #d81b60;">1, 3, 5, 7, 9</div>
+          </div>
+        `
+      },
+      {
+        id: '1d_fives',
+        subBadge: '1D • Counting in Fives',
+        titleEn: 'Start at 0. Take 4 jumps of 5 on the number line. What number do you finish on?',
+        titleId: 'Mulai dari 0. Lakukan 4 lompatan kelipatan 5 pada garis bilangan. Kamu mendarat di angka berapa?',
+        hintEn: '5, 10, 15, 20! Multiples of 5 end in 0 or 5.',
+        hintId: '5, 10, 15, 20! Kelipatan 5 berakhiran 0 atau 5.',
+        options: [15, 20, 25, 30],
+        answer: 20,
+        renderStage: () => `
+          <div style="font-size: 2rem; font-weight: 900; color: #d81b60;">
+            0 ➔ 5 ➔ 10 ➔ 15 ➔ <span style="background: #ff2d87; padding: 4px 16px; border-radius: 12px; color: white;">?</span>
+          </div>
+          <p style="margin-top: 10px; font-weight: 700; color: #d81b60;">4 jumps of 5 (4 lompatan 5)</p>
+        `
+      },
+      {
+        id: '1d_fives_back',
+        subBadge: '1D • Counting Back in 5s',
+        titleEn: 'Count backwards in 5s: 50, 45, 40, __, 30. What number fits in the blank?',
+        titleId: 'Hitung mundur kelipatan 5: 50, 45, 40, __, 30. Bilangan berapa yang tepat?',
+        hintEn: '40 - 5 = 35!',
+        hintId: '40 - 5 = 35!',
+        options: [32, 35, 38, 25],
+        answer: 35,
+        renderStage: () => `
+          <div style="font-size: 2rem; font-weight: 900; color: #d81b60;">
+            50 ➔ 45 ➔ 40 ➔ <span style="background: #a855f7; padding: 4px 16px; border-radius: 12px; color: white;">?</span> ➔ 30
+          </div>
+        `
+      },
+      {
+        id: '1e_hundreds',
+        subBadge: '1E • Counting in Hundreds',
+        titleEn: 'Count on in hundreds: 200, 300, 400, __, 600. What is the missing number?',
+        titleId: 'Hitung maju dalam ratusan: 200, 300, 400, __, 600. Berapakah angka yang hilang?',
+        hintEn: 'Add 100 each time! 400 + 100 = ?',
+        hintId: 'Tambah 100 setiap kali! 400 + 100 = ?',
+        options: [450, 500, 550, 700],
+        answer: 500,
+        renderStage: () => `
+          <div style="font-size: 1.8rem; font-weight: 900; color: #d81b60;">
+            200 ➔ 300 ➔ 400 ➔ <span style="background: #ff2d87; padding: 4px 16px; border-radius: 12px; color: white;">?</span> ➔ 600
+          </div>
+          <p style="margin-top: 10px; font-weight: 700; color: #d81b60;">+100 each time! (+100 setiap langkah!)</p>
+        `
+      },
+      {
+        id: '1h_round',
+        subBadge: '1H • Rounding to Nearest 10',
+        titleEn: 'Round 62 to the nearest 10:',
+        titleId: 'Bulatkan 62 ke puluhan terdekat:',
+        hintEn: 'The ones digit is 2 (4 or less, round down to 60)!',
+        hintId: 'Angka satuannya adalah 2 (4 atau kurang, bulatkan ke bawah menjadi 60)!',
+        options: [60, 70, 65, 50],
+        answer: 60,
+        renderStage: () => `
+          <div style="text-align: center;">
+            <div style="font-size: 2.2rem; font-weight: 900; color: #ff80bf; margin-bottom: 8px;">Number: 62</div>
+            <div style="display: inline-flex; align-items: center; gap: 16px; background: rgba(0,0,0,0.3); padding: 8px 20px; border-radius: 50px; border: 2px solid #a855f7;">
+              <span style="color: #d81b60; font-weight: 900; font-size: 1.2rem;">60</span>
+              <span style="color: #2d3436;">⟵ 62 is closer to ⟶</span>
+              <span style="color: #2d3436; font-weight: 800;">70</span>
+            </div>
+          </div>
+        `
+      },
+      {
+        id: '1h_round_up',
+        subBadge: '1H • Rounding Up',
+        titleEn: 'Round 78 to the nearest 10:',
+        titleId: 'Bulatkan 78 ke puluhan terdekat:',
+        hintEn: 'The ones digit is 8 (5 or more, round up to 80)!',
+        hintId: 'Angka satuannya 8 (5 atau lebih, bulatkan ke atas menjadi 80)!',
+        options: [70, 75, 80, 90],
+        answer: 80,
+        renderStage: () => `
+          <div style="text-align: center;">
+            <div style="font-size: 2.2rem; font-weight: 900; color: #ff80bf; margin-bottom: 8px;">Number: 78</div>
+            <div style="display: inline-flex; align-items: center; gap: 16px; background: rgba(0,0,0,0.3); padding: 8px 20px; border-radius: 50px; border: 2px solid #ec4899;">
+              <span style="color: #2d3436; font-weight: 800;">70</span>
+              <span style="color: #2d3436;">⟵ 78 is closer to ⟶</span>
+              <span style="color: #d81b60; font-weight: 900; font-size: 1.2rem;">80</span>
+            </div>
+          </div>
+        `
+      },
+      {
+        id: '1i_comp',
+        subBadge: '1I • Greater & Less Than',
+        titleEn: 'Which symbol makes this true: 85 [ ? ] 58',
+        titleId: 'Simbol manakah yang benar: 85 [ ? ] 58',
+        hintEn: "The hungry crocodile's mouth always opens towards the BIGGER number!",
+        hintId: 'Mulut buaya yang lapar selalu terbuka ke arah bilangan yang LEBIH BESAR!',
+        options: ['>', '<', '=', '+'],
+        answer: '>',
+        renderStage: () => `
+          <div style="display: flex; justify-content: center; align-items: center; gap: 24px;">
+            <span style="font-size: 2.4rem; font-weight: 900; color: #d81b60;">85</span>
+            <div style="background: #ff2d87; padding: 10px 24px; border-radius: 16px; border: 2px dashed #fff; font-size: 2rem; font-weight: 900;">🐊 ?</div>
+            <span style="font-size: 2.4rem; font-weight: 900; color: #2d3436;">58</span>
+          </div>
+        `
+      },
+      {
+        id: '1i_comp_eq',
+        subBadge: '1I • Equal To',
+        titleEn: 'Which symbol makes this true: 43 [ ? ] 43',
+        titleId: 'Simbol manakah yang benar: 43 [ ? ] 43',
+        hintEn: 'Both sides have the exact same value!',
+        hintId: 'Kedua sisi memiliki nilai yang sama persis!',
+        options: ['=', '<', '>', '-'],
+        answer: '=',
+        renderStage: () => `
+          <div style="display: flex; justify-content: center; align-items: center; gap: 24px;">
+            <span style="font-size: 2.4rem; font-weight: 900; color: #d81b60;">43</span>
+            <div style="background: #a855f7; padding: 10px 24px; border-radius: 16px; border: 2px dashed #fff; font-size: 2rem; font-weight: 900;">?</div>
+            <span style="font-size: 2.4rem; font-weight: 900; color: #d81b60;">43</span>
+          </div>
+        `
+      },
+      {
+        id: '1j_ord',
+        subBadge: '1J • Ordinal Numbers',
+        titleEn: 'In the sports day race, Freya finishes after 2nd place. What position is Freya in?',
+        titleId: 'Dalam lomba lari, Freya selesai tepat setelah juara ke-2 (2nd). Posisi berapakah Freya?',
+        hintEn: '1st, 2nd, 3rd, 4th, 5th!',
+        hintId: 'Ke-1, ke-2, ke-3 (3rd), ke-4!',
+        options: ['1st', '3rd', '4th', '5th'],
+        answer: '3rd',
+        renderStage: () => `
+          <div style="display: flex; gap: 14px; justify-content: center; align-items: flex-end;">
+            <div style="background: #fff0f5; border: 2px solid #ff85ad; padding: 16px 20px; border-radius: 12px; font-weight: 900; color: white;">🥈 2nd</div>
+            <div style="background: #ff2d87; padding: 22px 24px; border-radius: 12px; font-weight: 900; color: #d81b60; border: 3px solid #fff; box-shadow: 0 0 15px rgba(255,45,135,0.6);">🌸 Freya (?)</div>
+            <div style="background: #6b21a8; padding: 12px 18px; border-radius: 12px; font-weight: 900; color: white;">4th</div>
+          </div>
+        `
+      }
+    ]
+  },
+  {
+    id: 'u2',
+    number: 2,
+    titleEn: 'Exploring Numbers',
+    titleId: 'Menjelajahi Bilangan',
+    icon: '🧱',
+    activities: [
+      {
+        id: '2a_val',
+        subBadge: '2A • Digit Values',
+        titleEn: 'In the number 85, what does the digit 8 stand for?',
+        titleId: 'Pada bilangan 85, apakah nilai dari angka 8?',
+        hintEn: '8 is in the tens place, so 8 tens = 80!',
+        hintId: '8 berada di tempat puluhan, jadi 8 puluhan = 80!',
+        options: [8, 80, 85, 50],
+        answer: 80,
+        renderStage: () => `
+          <div style="display: flex; gap: 20px; justify-content: center;">
+            <div style="background: #ff2d87; padding: 20px 28px; border-radius: 18px; border: 3px solid #fde047; text-align: center;">
+              <span style="font-size: 2.8rem; font-weight: 900; color: #d81b60;">8</span>
+              <div style="font-weight: 800; font-size: 0.9rem; color: #fff;">Tens (Puluhan)</div>
+            </div>
+            <div style="background: #fff0f5; border: 2px solid #ff85ad; padding: 20px 28px; border-radius: 18px; border: 2px solid #ff80bf; text-align: center;">
+              <span style="font-size: 2.8rem; font-weight: 900; color: #2d3436;">5</span>
+              <div style="font-weight: 800; font-size: 0.9rem; color: #2d3436;">Ones (Satuan)</div>
+            </div>
+          </div>
+        `
+      },
+      {
+        id: '2a_rods',
+        subBadge: '2A • Base-10 Blocks',
+        titleEn: 'Look at the blocks: 4 tens rods (40) and 7 ones cubes (7). What number is shown?',
+        titleId: 'Lihat balok berikut: 4 batang puluhan (40) dan 7 kubus satuan (7). Bilangan berapakah ini?',
+        hintEn: '40 + 7 = 47!',
+        hintId: '40 + 7 = 47!',
+        options: [37, 47, 74, 57],
+        answer: 47,
+        renderStage: () => `
+          <div style="display: flex; justify-content: center; align-items: center; gap: 24px;">
+            <div style="display: flex; gap: 6px;">
+              ${[1,2,3,4].map(() => '<div style="width: 14px; height: 60px; background: #fde047; border-radius: 4px; border: 1px solid #ca8a04;"></div>').join('')}
+            </div>
+            <span style="font-size: 1.5rem; color: #ff80bf; font-weight: 900;">+</span>
+            <div style="display: grid; grid-template-columns: repeat(4, 12px); gap: 4px;">
+              ${[1,2,3,4,5,6,7].map(() => '<div style="width: 12px; height: 12px; background: #ff2d87; border-radius: 2px;"></div>').join('')}
+            </div>
+          </div>
+          <p style="margin-top: 10px; font-weight: 700; color: #d81b60;">4 Tens + 7 Ones (4 Puluhan + 7 Satuan)</p>
+        `
+      },
+      {
+        id: '2a_cubes',
+        subBadge: '2A • Base-10 Blocks',
+        titleEn: 'What number is made by 6 tens rods and 3 unit cubes?',
+        titleId: 'Berapakah bilangan yang dibentuk oleh 6 batang puluhan dan 3 kubus satuan?',
+        hintEn: '6 tens = 60. Plus 3 ones = 63!',
+        hintId: '6 puluhan = 60. Ditambah 3 satuan = 63!',
+        options: [36, 63, 60, 66],
+        answer: 63,
+        renderStage: () => `
+          <div style="font-size: 1.8rem; font-weight: 900; color: #d81b60;">
+            6 Tens (60) + 3 Ones (3) = ?
+          </div>
+        `
+      },
+      {
+        id: '2b_10more',
+        subBadge: '2B • 10 More',
+        titleEn: 'What is 10 more than 54?',
+        titleId: 'Berapakah 10 lebihnya dari 54 (+10)?',
+        hintEn: '54 + 10 = ? The tens digit increases by 1!',
+        hintId: '54 + 10 = ? Angka puluhan bertambah 1!',
+        options: [44, 64, 60, 55],
+        answer: 64,
+        renderStage: () => `
+          <div style="font-size: 2.2rem; font-weight: 900; color: #d81b60;">
+            54 + 10 = <span style="background: #ff2d87; padding: 4px 18px; border-radius: 12px; color: white;">?</span>
+          </div>
+        `
+      },
+      {
+        id: '2b_10less',
+        subBadge: '2B • 10 Less',
+        titleEn: 'What is 10 less than 90?',
+        titleId: 'Berapakah 10 kurangnya dari 90 (-10)?',
+        hintEn: '90 - 10 = 80!',
+        hintId: '90 - 10 = 80!',
+        options: [70, 80, 85, 100],
+        answer: 80,
+        renderStage: () => `
+          <div style="font-size: 2.2rem; font-weight: 900; color: #d81b60;">
+            90 - 10 = <span style="background: #a855f7; padding: 4px 18px; border-radius: 12px; color: white;">?</span>
+          </div>
+        `
+      },
+      {
+        id: '2b_1more',
+        subBadge: '2B • 1 More',
+        titleEn: 'What is 1 more than 79?',
+        titleId: 'Berapakah 1 lebihnya dari 79 (+1)?',
+        hintEn: '79 + 1 = 80!',
+        hintId: '79 + 1 = 80!',
+        options: [78, 80, 89, 90],
+        answer: 80,
+        renderStage: () => `
+          <div style="font-size: 2.2rem; font-weight: 900; color: #d81b60;">
+            79 + 1 = <span style="background: #ff2d87; padding: 4px 18px; border-radius: 12px; color: white;">?</span>
+          </div>
+        `
+      },
+      {
+        id: '2b_1less',
+        subBadge: '2B • 1 Less',
+        titleEn: 'What is 1 less than 50?',
+        titleId: 'Berapakah 1 kurangnya dari 50 (-1)?',
+        hintEn: 'Count back one step from 50: 50 - 1 = 49!',
+        hintId: 'Hitung mundur 1 langkah dari 50: 50 - 1 = 49!',
+        options: [40, 48, 49, 51],
+        answer: 49,
+        renderStage: () => `
+          <div style="font-size: 2.2rem; font-weight: 900; color: #d81b60;">
+            50 - 1 = <span style="background: #ec4899; padding: 4px 18px; border-radius: 12px; color: white;">?</span>
+          </div>
+        `
+      },
+      {
+        id: '2c_part1',
+        subBadge: '2C • Partitioning',
+        titleEn: 'Partition into tens and ones: 59 = 50 + [ ? ]',
+        titleId: 'Pisahkan menjadi puluhan dan satuan: 59 = 50 + [ ? ]',
+        hintEn: '59 is 5 tens (50) and 9 ones (9)!',
+        hintId: '59 adalah 5 puluhan (50) dan 9 satuan (9)!',
+        options: [5, 9, 50, 19],
+        answer: 9,
+        renderStage: () => `
+          <div style="font-size: 2.2rem; font-weight: 900; color: #d81b60;">
+            59 = 50 + <span style="background: #ff2d87; padding: 4px 18px; border-radius: 12px; color: white;">?</span>
+          </div>
+        `
+      },
+      {
+        id: '2c_part2',
+        subBadge: '2C • Combining Parts',
+        titleEn: 'Combine the parts: 30 + 8 = [ ? ]',
+        titleId: 'Gabungkan bagian berikut: 30 + 8 = [ ? ]',
+        hintEn: '30 + 8 = 38!',
+        hintId: '30 + 8 = 38!',
+        options: [308, 38, 83, 40],
+        answer: 38,
+        renderStage: () => `
+          <div style="font-size: 2.2rem; font-weight: 900; color: #d81b60;">
+            30 + 8 = <span style="background: #a855f7; padding: 4px 18px; border-radius: 12px; color: white;">?</span>
+          </div>
+        `
+      },
+      {
+        id: '2c_part3',
+        subBadge: '2C • Tens Value',
+        titleEn: 'Complete the sentence: 84 = [ ? ] + 4',
+        titleId: 'Lengkapi kalimat matematika: 84 = [ ? ] + 4',
+        hintEn: 'The 8 stands for 8 tens, which is 80!',
+        hintId: 'Angka 8 mewakili 8 puluhan, yaitu 80!',
+        options: [8, 40, 80, 84],
+        answer: 80,
+        renderStage: () => `
+          <div style="font-size: 2.2rem; font-weight: 900; color: #d81b60;">
+            84 = <span style="background: #ff2d87; padding: 4px 18px; border-radius: 12px; color: white;">?</span> + 4
+          </div>
+        `
+      },
+      {
+        id: '2d_order',
+        subBadge: '2D • Ordering Numbers',
+        titleEn: 'Which list of numbers is in order from SMALLEST to GREATEST?',
+        titleId: 'Manakah urutan bilangan dari yang TERKECIL ke TERBESAR?',
+        hintEn: 'Compare tens: 14 < 28 < 45 < 62!',
+        hintId: 'Bandingkan puluhan: 14 < 28 < 45 < 62!',
+        options: ['62, 45, 28, 14', '14, 28, 45, 62', '28, 14, 45, 62', '14, 45, 28, 62'],
+        answer: '14, 28, 45, 62',
+        renderStage: () => `
+          <div style="font-size: 1.4rem; font-weight: 900; color: #ff80bf; text-align: center;">
+            Order / Urutkan: Smallest ➔ Greatest (Terkecil ➔ Terbesar)
+          </div>
+        `
+      }
+    ]
+  },
+  {
+    id: 'u3',
+    number: 3,
+    titleEn: 'Number Bonds & Fact Families',
+    titleId: 'Pasangan Bilangan & Keluarga Fakta',
+    icon: '🏡',
+    activities: [
+      {
+        id: '3a_bond10',
+        subBadge: '3A • Bonds for 10',
+        titleEn: 'What number pairs with 7 to make 10?',
+        titleId: 'Berapakah pasangan angka untuk 7 agar menjadi 10?',
+        hintEn: '7 + 3 = 10!',
+        hintId: '7 + 3 = 10!',
+        options: [2, 3, 4, 5],
+        answer: 3,
+        renderStage: () => `
+          <div style="font-size: 2.4rem; font-weight: 900; color: #d81b60;">
+            7 + <span style="background: #ff2d87; padding: 4px 20px; border-radius: 12px; color: white;">?</span> = 10
+          </div>
+        `
+      },
+      {
+        id: '3a_bond10_2',
+        subBadge: '3A • Bonds for 10',
+        titleEn: 'What number bonds with 4 to make 10?',
+        titleId: 'Berapakah pasangan angka untuk 4 agar menjadi 10?',
+        hintEn: '4 + 6 = 10!',
+        hintId: '4 + 6 = 10!',
+        options: [5, 6, 7, 8],
+        answer: 6,
+        renderStage: () => `
+          <div style="font-size: 2.4rem; font-weight: 900; color: #d81b60;">
+            4 + <span style="background: #a855f7; padding: 4px 20px; border-radius: 12px; color: white;">?</span> = 10
+          </div>
+        `
+      },
+      {
+        id: '3a_bond10_3',
+        subBadge: '3A • Bonds for 10',
+        titleEn: 'Complete the bond: 10 = 2 + [ ? ]',
+        titleId: 'Lengkapi pasangan: 10 = 2 + [ ? ]',
+        hintEn: '2 + 8 = 10!',
+        hintId: '2 + 8 = 10!',
+        options: [6, 7, 8, 9],
+        answer: 8,
+        renderStage: () => `
+          <div style="font-size: 2.4rem; font-weight: 900; color: #d81b60;">
+            10 = 2 + <span style="background: #ff2d87; padding: 4px 20px; border-radius: 12px; color: white;">?</span>
+          </div>
+        `
+      },
+      {
+        id: '3b_bond100',
+        subBadge: '3B • Bonds for 100',
+        titleEn: 'What number pairs with 70 to make 100?',
+        titleId: 'Berapakah pasangan angka untuk 70 agar menjadi 100?',
+        hintEn: 'Think of 7 + 3 = 10, so 70 + 30 = 100!',
+        hintId: 'Ingat 7 + 3 = 10, jadi 70 + 30 = 100!',
+        options: [20, 30, 40, 50],
+        answer: 30,
+        renderStage: () => `
+          <div style="font-size: 2.4rem; font-weight: 900; color: #d81b60;">
+            70 + <span style="background: #ff2d87; padding: 4px 20px; border-radius: 12px; color: white;">?</span> = 100
+          </div>
+        `
+      },
+      {
+        id: '3b_bond100_2',
+        subBadge: '3B • Bonds for 100',
+        titleEn: 'What number pairs with 40 to make 100?',
+        titleId: 'Berapakah pasangan angka untuk 40 agar menjadi 100?',
+        hintEn: '40 + 60 = 100!',
+        hintId: '40 + 60 = 100!',
+        options: [50, 60, 70, 40],
+        answer: 60,
+        renderStage: () => `
+          <div style="font-size: 2.4rem; font-weight: 900; color: #d81b60;">
+            40 + <span style="background: #a855f7; padding: 4px 20px; border-radius: 12px; color: white;">?</span> = 100
+          </div>
+        `
+      },
+      {
+        id: '3b_bond100_3',
+        subBadge: '3B • Bonds with 5s',
+        titleEn: 'Complete the bond to 100: 85 + [ ? ] = 100',
+        titleId: 'Lengkapi pasangan ke 100: 85 + [ ? ] = 100',
+        hintEn: '85 + 5 = 90, then 90 + 10 = 100. 5 + 10 = 15!',
+        hintId: '85 + 5 = 90, lalu 90 + 10 = 100. 5 + 10 = 15!',
+        options: [10, 15, 20, 25],
+        answer: 15,
+        renderStage: () => `
+          <div style="font-size: 2.4rem; font-weight: 900; color: #d81b60;">
+            85 + <span style="background: #ec4899; padding: 4px 20px; border-radius: 12px; color: white;">?</span> = 100
+          </div>
+        `
+      },
+      {
+        id: '3b_bond100_4',
+        subBadge: '3B • Bonds with 5s',
+        titleEn: 'Complete the bond to 100: 55 + [ ? ] = 100',
+        titleId: 'Lengkapi pasangan ke 100: 55 + [ ? ] = 100',
+        hintEn: '55 + 45 = 100!',
+        hintId: '55 + 45 = 100!',
+        options: [35, 40, 45, 50],
+        answer: 45,
+        renderStage: () => `
+          <div style="font-size: 2.4rem; font-weight: 900; color: #d81b60;">
+            55 + <span style="background: #ff2d87; padding: 4px 20px; border-radius: 12px; color: white;">?</span> = 100
+          </div>
+        `
+      },
+      {
+        id: '3c_fact1',
+        subBadge: '3C • Fact Families for 20',
+        titleEn: 'If 13 + 7 = 20, what is 20 - 7 = [ ? ]',
+        titleId: 'Jika 13 + 7 = 20, berapakah 20 - 7 = [ ? ]',
+        hintEn: 'They belong in the same Fact Family house!',
+        hintId: 'Keduanya tinggal di Rumah Keluarga Fakta yang sama!',
+        options: [7, 13, 14, 27],
+        answer: 13,
+        renderStage: () => `
+          <div style="background: #fff0f5; border: 2px solid #ff85ad; border: 2px solid #fde047; border-radius: 16px; padding: 16px 24px; text-align: center;">
+            <div style="font-size: 1.4rem; font-weight: 900; color: #d81b60;">🏠 Fact Family / Keluarga Fakta: 20</div>
+            <div style="font-size: 1.6rem; font-weight: 800; color: #d81b60; margin-top: 8px;">13 + 7 = 20</div>
+            <div style="font-size: 1.8rem; font-weight: 900; color: #fff; margin-top: 4px;">20 - 7 = ?</div>
+          </div>
+        `
+      },
+      {
+        id: '3c_fact2',
+        subBadge: '3C • Fact Families for 20',
+        titleEn: 'If 8 + 12 = 20, which subtraction sentence belongs to this fact family?',
+        titleId: 'Jika 8 + 12 = 20, manakah kalimat pengurangan yang termasuk keluarga fakta ini?',
+        hintEn: '20 - 8 = 12 or 20 - 12 = 8!',
+        hintId: '20 - 8 = 12 atau 20 - 12 = 8!',
+        options: ['20 - 8 = 12', '20 - 5 = 15', '12 - 8 = 4', '20 + 8 = 28'],
+        answer: '20 - 8 = 12',
+        renderStage: () => `
+          <div style="font-size: 1.8rem; font-weight: 900; color: #d81b60; text-align: center;">
+            Numbers: 8, 12, 20
+          </div>
+        `
+      },
+      {
+        id: '3d_bal',
+        subBadge: '3D • Balancing Scales',
+        titleEn: 'Left pan has 10 + 5 (15). Right pan has 8 + [ ? ]. What number balances the scale?',
+        titleId: 'Sisi kiri memiliki 10 + 5 (15). Sisi kanan memiliki 8 + [ ? ]. Bilangan berapa yang membuat timbangan seimbang?',
+        hintEn: '8 + 7 = 15!',
+        hintId: '8 + 7 = 15!',
+        options: [5, 6, 7, 8],
+        answer: 7,
+        renderStage: () => `
+          <div style="text-align: center;">
+            <div style="font-size: 1.8rem; font-weight: 900; color: #d81b60;">⚖️ Balance Scale (Timbangan Seimbang)</div>
+            <div style="display: flex; justify-content: center; gap: 30px; margin-top: 10px;">
+              <div style="background: #be185d; padding: 10px 20px; border-radius: 12px; font-weight: 900; color: white;">Left: 10 + 5 = 15</div>
+              <div style="background: #ff2d87; padding: 10px 20px; border-radius: 12px; font-weight: 900; color: #d81b60;">Right: 8 + ? = 15</div>
+            </div>
+          </div>
+        `
+      },
+      {
+        id: '3d_bal2',
+        subBadge: '3D • Balancing Scales',
+        titleEn: 'Left pan has 20. Right pan has 14 + [ ? ]. What number balances the scale?',
+        titleId: 'Sisi kiri memiliki 20. Sisi kanan memiliki 14 + [ ? ]. Bilangan berapa yang membuat timbangan seimbang?',
+        hintEn: '14 + 6 = 20!',
+        hintId: '14 + 6 = 20!',
+        options: [5, 6, 7, 8],
+        answer: 6,
+        renderStage: () => `
+          <div style="font-size: 2.2rem; font-weight: 900; color: #d81b60;">
+            20 = 14 + <span style="background: #a855f7; padding: 4px 18px; border-radius: 12px; color: white;">?</span>
+          </div>
+        `
+      }
+    ]
+  },
+  {
+    id: 'u4',
+    number: 4,
+    titleEn: 'Addition & Subtraction',
+    titleId: 'Penjumlahan & Pengurangan',
+    icon: '➕',
+    activities: [
+      {
+        id: '4a_add3',
+        subBadge: '4A • Adding 3 Numbers',
+        titleEn: 'Add by finding a 10 bond first: 8 + 5 + 2 = ?',
+        titleId: 'Jumlahkan dengan mencari pasangan 10 terlebih dahulu: 8 + 5 + 2 = ?',
+        hintEn: 'Bond 8 + 2 = 10 first! Then 10 + 5 = 15.',
+        hintId: 'Pasangkan 8 + 2 = 10 dulu! Lalu 10 + 5 = 15.',
+        options: [13, 15, 16, 17],
+        answer: 15,
+        renderStage: () => `
+          <div style="font-size: 2.2rem; font-weight: 900; color: #d81b60;">
+            (8 + 2) + 5 = 10 + 5 = <span style="background: #ff2d87; padding: 4px 18px; border-radius: 12px; color: white;">?</span>
+          </div>
+        `
+      },
+      {
+        id: '4a_add3_2',
+        subBadge: '4A • Adding 3 Numbers',
+        titleEn: 'Add using 10 bonds: 6 + 7 + 4 = ?',
+        titleId: 'Jumlahkan menggunakan pasangan 10: 6 + 7 + 4 = ?',
+        hintEn: '6 + 4 = 10. Then 10 + 7 = 17!',
+        hintId: '6 + 4 = 10. Lalu 10 + 7 = 17!',
+        options: [16, 17, 18, 19],
+        answer: 17,
+        renderStage: () => `
+          <div style="font-size: 2.2rem; font-weight: 900; color: #d81b60;">
+            (6 + 4) + 7 = 10 + 7 = <span style="background: #a855f7; padding: 4px 18px; border-radius: 12px; color: white;">?</span>
+          </div>
+        `
+      },
+      {
+        id: '4b_cross_add',
+        subBadge: '4B • Crossing 10 Addition',
+        titleEn: 'Add crossing the tens boundary: 27 + 6 = ?',
+        titleId: 'Penjumlahan melompati puluhan: 27 + 6 = ?',
+        hintEn: '27 + 3 = 30, then 30 + 3 = 33!',
+        hintId: '27 + 3 = 30, lalu 30 + 3 = 33!',
+        options: [31, 32, 33, 34],
+        answer: 33,
+        renderStage: () => `
+          <div style="font-size: 2.2rem; font-weight: 900; color: #d81b60;">
+            27 + 6 = <span style="background: #ff2d87; padding: 4px 18px; border-radius: 12px; color: white;">?</span>
+          </div>
+        `
+      },
+      {
+        id: '4b_cross_sub',
+        subBadge: '4B • Crossing 10 Subtraction',
+        titleEn: 'Subtract crossing the tens boundary: 34 - 7 = ?',
+        titleId: 'Pengurangan melompati puluhan: 34 - 7 = ?',
+        hintEn: '34 - 4 = 30, then 30 - 3 = 27!',
+        hintId: '34 - 4 = 30, lalu 30 - 3 = 27!',
+        options: [26, 27, 28, 29],
+        answer: 27,
+        renderStage: () => `
+          <div style="font-size: 2.2rem; font-weight: 900; color: #d81b60;">
+            34 - 7 = <span style="background: #ec4899; padding: 4px 18px; border-radius: 12px; color: white;">?</span>
+          </div>
+        `
+      },
+      {
+        id: '4c_part_add',
+        subBadge: '4C • 2-Digit Partitioning',
+        titleEn: 'Add 2-digit numbers: 32 + 25 = ?',
+        titleId: 'Jumlahkan bilangan 2-angka: 32 + 25 = ?',
+        hintEn: 'Tens: 30 + 20 = 50. Ones: 2 + 5 = 7. Total: 57!',
+        hintId: 'Puluhan: 30 + 20 = 50. Satuan: 2 + 5 = 7. Total: 57!',
+        options: [55, 57, 59, 67],
+        answer: 57,
+        renderStage: () => `
+          <div style="font-size: 2.2rem; font-weight: 900; color: #d81b60;">
+            32 + 25 = (30+20) + (2+5) = <span style="background: #ff2d87; padding: 4px 18px; border-radius: 12px; color: white;">?</span>
+          </div>
+        `
+      },
+      {
+        id: '4c_part_add2',
+        subBadge: '4C • 2-Digit Partitioning',
+        titleEn: 'Add 2-digit numbers: 43 + 34 = ?',
+        titleId: 'Jumlahkan bilangan 2-angka: 43 + 34 = ?',
+        hintEn: '40 + 30 = 70. 3 + 4 = 7. Total = 77!',
+        hintId: '40 + 30 = 70. 3 + 4 = 7. Total = 77!',
+        options: [76, 77, 78, 87],
+        answer: 77,
+        renderStage: () => `
+          <div style="font-size: 2.2rem; font-weight: 900; color: #d81b60;">
+            43 + 34 = <span style="background: #a855f7; padding: 4px 18px; border-radius: 12px; color: white;">?</span>
+          </div>
+        `
+      },
+      {
+        id: '4c_part_sub',
+        subBadge: '4C • 2-Digit Subtraction',
+        titleEn: 'Subtract 2-digit numbers: 58 - 24 = ?',
+        titleId: 'Kurangkan bilangan 2-angka: 58 - 24 = ?',
+        hintEn: '50 - 20 = 30. 8 - 4 = 4. 30 + 4 = 34!',
+        hintId: '50 - 20 = 30. 8 - 4 = 4. 30 + 4 = 34!',
+        options: [32, 34, 36, 44],
+        answer: 34,
+        renderStage: () => `
+          <div style="font-size: 2.2rem; font-weight: 900; color: #d81b60;">
+            58 - 24 = <span style="background: #ff2d87; padding: 4px 18px; border-radius: 12px; color: white;">?</span>
+          </div>
+        `
+      },
+      {
+        id: '4c_part_sub2',
+        subBadge: '4C • 2-Digit Subtraction',
+        titleEn: 'Subtract 2-digit numbers: 76 - 32 = ?',
+        titleId: 'Kurangkan bilangan 2-angka: 76 - 32 = ?',
+        hintEn: '70 - 30 = 40. 6 - 2 = 4. Total = 44!',
+        hintId: '70 - 30 = 40. 6 - 2 = 4. Total = 44!',
+        options: [42, 44, 46, 54],
+        answer: 44,
+        renderStage: () => `
+          <div style="font-size: 2.2rem; font-weight: 900; color: #d81b60;">
+            76 - 32 = <span style="background: #ec4899; padding: 4px 18px; border-radius: 12px; color: white;">?</span>
+          </div>
+        `
+      },
+      {
+        id: '4d_diff',
+        subBadge: '4D • Finding the Difference',
+        titleEn: 'Find the difference between 45 and 20:',
+        titleId: 'Cari selisih antara 45 dan 20:',
+        hintEn: 'Difference means subtract: 45 - 20 = 25!',
+        hintId: 'Selisih berarti kurangkan: 45 - 20 = 25!',
+        options: [15, 20, 25, 65],
+        answer: 25,
+        renderStage: () => `
+          <div style="font-size: 2.2rem; font-weight: 900; color: #d81b60;">
+            45 - 20 = <span style="background: #ff2d87; padding: 4px 18px; border-radius: 12px; color: white;">?</span>
+          </div>
+        `
+      },
+      {
+        id: '4d_story',
+        subBadge: '4D • Word Problem Difference',
+        titleEn: 'Freya has 38 star stickers. Leo has 15. How many more does Freya have?',
+        titleId: 'Freya memiliki 38 stiker bintang. Leo memiliki 15. Berapa lebih banyakkah stiker Freya?',
+        hintEn: '38 - 15 = 23 stickers!',
+        hintId: '38 - 15 = 23 stiker!',
+        options: [13, 23, 25, 53],
+        answer: 23,
+        renderStage: () => `
+          <div style="font-size: 1.8rem; font-weight: 900; color: #d81b60; text-align: center;">
+            ⭐ Freya: 38 &nbsp;|&nbsp; Leo: 15<br>
+            Difference / Selisih: 38 - 15 = ?
+          </div>
+        `
+      },
+      {
+        id: '4e_miss',
+        subBadge: '4E • Missing Number',
+        titleEn: 'Find the missing number: 50 - [ ? ] = 32',
+        titleId: 'Cari angka yang hilang: 50 - [ ? ] = 32',
+        hintEn: '50 - 32 = 18!',
+        hintId: '50 - 32 = 18!',
+        options: [16, 18, 22, 28],
+        answer: 18,
+        renderStage: () => `
+          <div style="font-size: 2.2rem; font-weight: 900; color: #d81b60;">
+            50 - <span style="background: #ff2d87; padding: 4px 18px; border-radius: 12px; color: white;">?</span> = 32
+          </div>
+        `
+      }
+    ]
+  },
+  {
+    id: 'u5',
+    number: 5,
+    titleEn: 'Multiplication & Division',
+    titleId: 'Perkalian & Pembagian',
+    icon: '✖️',
+    activities: [
+      {
+        id: '5a_rep_add',
+        subBadge: '5A • Repeated Addition',
+        titleEn: '4 groups of 2 strawberries: 2 + 2 + 2 + 2 = ?',
+        titleId: '4 kelompok isi 2 stroberi: 2 + 2 + 2 + 2 = ?',
+        hintEn: '4 x 2 = 8!',
+        hintId: '4 x 2 = 8!',
+        options: [6, 8, 10, 12],
+        answer: 8,
+        renderStage: () => `
+          <div style="font-size: 2.2rem; text-align: center;">
+            🍓🍓 &nbsp; 🍓🍓 &nbsp; 🍓🍓 &nbsp; 🍓🍓
+            <div style="font-size: 1.8rem; font-weight: 900; color: #d81b60; margin-top: 10px;">
+              4 × 2 = <span style="background: #ff2d87; padding: 4px 18px; border-radius: 12px; color: white;">?</span>
+            </div>
+          </div>
+        `
+      },
+      {
+        id: '5b_doub',
+        subBadge: '5B • Domino Doubles',
+        titleEn: 'Double 6: 6 + 6 = 2 x 6 = ?',
+        titleId: 'Ganda 6: 6 + 6 = 2 x 6 = ?',
+        hintEn: 'Count the dots on both halves of the domino: 12!',
+        hintId: 'Hitung titik pada kedua sisi domino: 12!',
+        options: [10, 12, 14, 16],
+        answer: 12,
+        renderStage: () => `
+          <div style="display: flex; justify-content: center; gap: 14px;">
+            <div style="background: white; border: 3px solid #ff2d87; border-radius: 12px; padding: 12px 18px; color: black; font-size: 1.8rem; font-weight: 900;">
+              ⚅ | ⚅
+            </div>
+          </div>
+          <p style="margin-top: 10px; font-weight: 800; color: #d81b60;">Double 6 (Ganda 6)</p>
+        `
+      },
+      {
+        id: '5b_near',
+        subBadge: '5B • Near Doubles',
+        titleEn: 'Near double: If 7 + 7 = 14, what is 7 + 8 = ?',
+        titleId: 'Hampir ganda: Jika 7 + 7 = 14, berapakah 7 + 8 = ?',
+        hintEn: '7 + 8 is just 1 more than 14: 15!',
+        hintId: '7 + 8 hanya 1 lebihnya dari 14: 15!',
+        options: [14, 15, 16, 17],
+        answer: 15,
+        renderStage: () => `
+          <div style="font-size: 2.2rem; font-weight: 900; color: #d81b60;">
+            (7 + 7) + 1 = 14 + 1 = <span style="background: #a855f7; padding: 4px 18px; border-radius: 12px; color: white;">?</span>
+          </div>
+        `
+      },
+      {
+        id: '5c_2x_table',
+        subBadge: '5C • 2 Times Table',
+        titleEn: 'Multiply: 7 x 2 = ?',
+        titleId: 'Perkalian: 7 x 2 = ?',
+        hintEn: 'Count in 2s seven times: 2, 4, 6, 8, 10, 12, 14!',
+        hintId: 'Hitung kelipatan 2 sebanyak 7 kali: 14!',
+        options: [12, 14, 16, 18],
+        answer: 14,
+        renderStage: () => `
+          <div style="font-size: 2.4rem; font-weight: 900; color: #d81b60;">
+            7 × 2 = <span style="background: #ff2d87; padding: 4px 18px; border-radius: 12px; color: white;">?</span>
+          </div>
+        `
+      },
+      {
+        id: '5c_2x_9',
+        subBadge: '5C • 2 Times Table',
+        titleEn: 'Multiply: 9 x 2 = ?',
+        titleId: 'Perkalian: 9 x 2 = ?',
+        hintEn: 'Double 9 is 18!',
+        hintId: 'Ganda dari 9 adalah 18!',
+        options: [16, 18, 19, 20],
+        answer: 18,
+        renderStage: () => `
+          <div style="font-size: 2.4rem; font-weight: 900; color: #d81b60;">
+            9 × 2 = <span style="background: #ec4899; padding: 4px 18px; border-radius: 12px; color: white;">?</span>
+          </div>
+        `
+      },
+      {
+        id: '5d_5x',
+        subBadge: '5D • 5 Times Table',
+        titleEn: 'Multiply: 6 x 5 = ?',
+        titleId: 'Perkalian: 6 x 5 = ?',
+        hintEn: 'Count in 5s: 5, 10, 15, 20, 25, 30!',
+        hintId: 'Hitung kelipatan 5: 5, 10, 15, 20, 25, 30!',
+        options: [25, 30, 35, 40],
+        answer: 30,
+        renderStage: () => `
+          <div style="font-size: 2.4rem; font-weight: 900; color: #d81b60;">
+            6 × 5 = <span style="background: #ff2d87; padding: 4px 18px; border-radius: 12px; color: white;">?</span>
+          </div>
+        `
+      },
+      {
+        id: '5d_5x_8',
+        subBadge: '5D • 5 Times Table',
+        titleEn: 'Multiply: 8 x 5 = ?',
+        titleId: 'Perkalian: 8 x 5 = ?',
+        hintEn: '8 x 5 = 40!',
+        hintId: '8 x 5 = 40!',
+        options: [35, 40, 45, 50],
+        answer: 40,
+        renderStage: () => `
+          <div style="font-size: 2.4rem; font-weight: 900; color: #d81b60;">
+            8 × 5 = <span style="background: #a855f7; padding: 4px 18px; border-radius: 12px; color: white;">?</span>
+          </div>
+        `
+      },
+      {
+        id: '5e_10x',
+        subBadge: '5E • 10 Times Table',
+        titleEn: 'Multiply: 7 x 10 = ?',
+        titleId: 'Perkalian: 7 x 10 = ?',
+        hintEn: 'Place a zero at the end of 7: 70!',
+        hintId: 'Tambahkan nol di belakang angka 7: 70!',
+        options: [60, 70, 80, 17],
+        answer: 70,
+        renderStage: () => `
+          <div style="font-size: 2.4rem; font-weight: 900; color: #d81b60;">
+            7 × 10 = <span style="background: #ff2d87; padding: 4px 18px; border-radius: 12px; color: white;">?</span>
+          </div>
+        `
+      },
+      {
+        id: '5f_3x',
+        subBadge: '5F • 3 Times Table',
+        titleEn: 'Multiply: 4 x 3 = ?',
+        titleId: 'Perkalian: 4 x 3 = ?',
+        hintEn: '3, 6, 9, 12!',
+        hintId: '3, 6, 9, 12!',
+        options: [9, 12, 14, 15],
+        answer: 12,
+        renderStage: () => `
+          <div style="font-size: 2.4rem; font-weight: 900; color: #d81b60;">
+            4 × 3 = <span style="background: #a855f7; padding: 4px 18px; border-radius: 12px; color: white;">?</span>
+          </div>
+        `
+      },
+      {
+        id: '5f_4x',
+        subBadge: '5F • 4 Times Table',
+        titleEn: 'Multiply: 5 x 4 = ?',
+        titleId: 'Perkalian: 5 x 4 = ?',
+        hintEn: '4, 8, 12, 16, 20!',
+        hintId: '4, 8, 12, 16, 20!',
+        options: [16, 18, 20, 24],
+        answer: 20,
+        renderStage: () => `
+          <div style="font-size: 2.4rem; font-weight: 900; color: #d81b60;">
+            5 × 4 = <span style="background: #ff2d87; padding: 4px 18px; border-radius: 12px; color: white;">?</span>
+          </div>
+        `
+      },
+      {
+        id: '5h_share',
+        subBadge: '5H • Equal Sharing Division',
+        titleEn: 'Share 18 strawberries equally among 3 friends. How many does each friend get?',
+        titleId: 'Bagi 18 stroberi sama rata kepada 3 teman. Berapa yang didapat setiap teman?',
+        hintEn: '18 ÷ 3 = 6!',
+        hintId: '18 ÷ 3 = 6!',
+        options: [4, 5, 6, 7],
+        answer: 6,
+        renderStage: () => `
+          <div style="font-size: 2rem; font-weight: 900; color: #d81b60;">
+            18 ÷ 3 = <span style="background: #ff2d87; padding: 4px 18px; border-radius: 12px; color: white;">?</span>
+          </div>
+        `
+      },
+      {
+        id: '5i_remain',
+        subBadge: '5I • Division with Remainder',
+        titleEn: 'Divide 14 by 3. You get 4 equal groups of 3 with how many left over?',
+        titleId: 'Bagi 14 dengan 3. Didapat 4 kelompok berisi 3 dengan sisa berapakah?',
+        hintEn: '4 x 3 = 12. 14 - 12 = 2 remainder!',
+        hintId: '4 x 3 = 12. 14 - 12 = sisa 2!',
+        options: [1, 2, 3, 0],
+        answer: 2,
+        renderStage: () => `
+          <div style="font-size: 2rem; font-weight: 900; color: #d81b60;">
+            14 ÷ 3 = 4 &nbsp; Remainder (Sisa): <span style="background: #a855f7; padding: 4px 18px; border-radius: 12px; color: white;">?</span>
+          </div>
+        `
+      }
+    ]
+  },
+  {
+    id: 'u6',
+    number: 6,
+    titleEn: 'Fractions',
+    titleId: 'Pecahan',
+    icon: '🍰',
+    activities: [
+      {
+        id: '6a_half_shape',
+        subBadge: '6A • Fractions of Shapes',
+        titleEn: 'What fraction of this circle is shaded pink?',
+        titleId: 'Berapakah pecahan lingkaran yang diarsir warna pink?',
+        hintEn: '1 out of 2 equal parts is shaded pink: 1/2!',
+        hintId: '1 dari 2 bagian yang sama diarsir pink: 1/2!',
+        options: ['1/2', '1/4', '3/4', '1/3'],
+        answer: '1/2',
+        renderStage: () => `
+          <div style="display: flex; justify-content: center;">
+            <svg width="120" height="120" viewBox="0 0 100 100">
+              <circle cx="50" cy="50" r="45" fill="#fff0f5" stroke="#ff80bf" stroke-width="4"/>
+              <path d="M 50 5 A 45 45 0 0 1 50 95 Z" fill="#ff2d87"/>
+            </svg>
+          </div>
+        `
+      },
+      {
+        id: '6a_quarter_shape',
+        subBadge: '6A • Fractions of Shapes',
+        titleEn: 'A square is split into 4 equal quarters. 1 quarter is shaded. What fraction is shaded?',
+        titleId: 'Sebuah persegi dibagi menjadi 4 bagian sama besar. 1 bagian diarsir. Berapakah pecahannya?',
+        hintEn: '1 out of 4 equal parts = 1/4 (one quarter)!',
+        hintId: '1 dari 4 bagian sama besar = 1/4 (satu perempat)!',
+        options: ['1/2', '1/4', '3/4', '2/3'],
+        answer: '1/4',
+        renderStage: () => `
+          <div style="display: flex; justify-content: center;">
+            <svg width="120" height="120" viewBox="0 0 100 100">
+              <rect x="10" y="10" width="80" height="80" fill="#fff0f5" stroke="#ff80bf" stroke-width="3"/>
+              <rect x="10" y="10" width="40" height="40" fill="#ff2d87"/>
+              <line x1="50" y1="10" x2="50" y2="90" stroke="#ff80bf" stroke-width="2"/>
+              <line x1="10" y1="50" x2="90" y2="50" stroke="#ff80bf" stroke-width="2"/>
+            </svg>
+          </div>
+        `
+      },
+      {
+        id: '6a_three_quarters',
+        subBadge: '6A • Fractions of Shapes',
+        titleEn: '3 out of 4 equal slices of cake are shaded. What fraction is shaded?',
+        titleId: '3 dari 4 potong kue yang sama diarsir. Berapakah pecahannya?',
+        hintEn: '3 out of 4 parts = 3/4 (three quarters)!',
+        hintId: '3 dari 4 bagian = 3/4 (tiga perempat)!',
+        options: ['1/4', '2/4', '3/4', '4/4'],
+        answer: '3/4',
+        renderStage: () => `
+          <div style="display: flex; justify-content: center;">
+            <svg width="120" height="120" viewBox="0 0 100 100">
+              <rect x="10" y="10" width="80" height="80" fill="#fff0f5" stroke="#ff80bf" stroke-width="3"/>
+              <rect x="10" y="10" width="40" height="40" fill="#ff2d87"/>
+              <rect x="50" y="10" width="40" height="40" fill="#ff2d87"/>
+              <rect x="10" y="50" width="40" height="40" fill="#ff2d87"/>
+              <line x1="50" y1="10" x2="50" y2="90" stroke="#ff80bf" stroke-width="2"/>
+              <line x1="10" y1="50" x2="90" y2="50" stroke="#ff80bf" stroke-width="2"/>
+            </svg>
+          </div>
+        `
+      },
+      {
+        id: '6b_half_amt',
+        subBadge: '6B • Fractions of Quantities',
+        titleEn: 'What is 1/2 of 24 strawberries?',
+        titleId: 'Berapakah 1/2 dari 24 buah stroberi?',
+        hintEn: 'Divide 24 by 2: 24 ÷ 2 = 12!',
+        hintId: 'Bagi 24 dengan 2: 24 ÷ 2 = 12!',
+        options: [10, 12, 14, 16],
+        answer: 12,
+        renderStage: () => `
+          <div style="font-size: 2.2rem; font-weight: 900; color: #d81b60;">
+            1/2 of 24 = 24 ÷ 2 = <span style="background: #ff2d87; padding: 4px 18px; border-radius: 12px; color: white;">?</span>
+          </div>
+        `
+      },
+      {
+        id: '6b_quarter_amt',
+        subBadge: '6B • Fractions of Quantities',
+        titleEn: 'What is 1/4 of 16 balloons?',
+        titleId: 'Berapakah 1/4 dari 16 balon?',
+        hintEn: 'Divide 16 into 4 equal groups: 16 ÷ 4 = 4!',
+        hintId: 'Bagi 16 menjadi 4 kelompok sama banyak: 16 ÷ 4 = 4!',
+        options: [3, 4, 5, 8],
+        answer: 4,
+        renderStage: () => `
+          <div style="font-size: 2.2rem; font-weight: 900; color: #d81b60;">
+            1/4 of 16 = 16 ÷ 4 = <span style="background: #a855f7; padding: 4px 18px; border-radius: 12px; color: white;">?</span>
+          </div>
+        `
+      },
+      {
+        id: '6b_three_quarter_amt',
+        subBadge: '6B • Fractions of Quantities',
+        titleEn: 'What is 3/4 of 12 apples?',
+        titleId: 'Berapakah 3/4 dari 12 apel?',
+        hintEn: '1/4 of 12 is 3. Then multiply by 3: 3 x 3 = 9!',
+        hintId: '1/4 dari 12 adalah 3. Lalu kalikan 3: 3 x 3 = 9!',
+        options: [6, 8, 9, 10],
+        answer: 9,
+        renderStage: () => `
+          <div style="font-size: 2.2rem; font-weight: 900; color: #d81b60;">
+            3/4 of 12 = <span style="background: #ff2d87; padding: 4px 18px; border-radius: 12px; color: white;">?</span>
+          </div>
+        `
+      },
+      {
+        id: '6b_half_50',
+        subBadge: '6B • Fractions of Amounts',
+        titleEn: 'What is 1/2 of 50?',
+        titleId: 'Berapakah 1/2 dari 50?',
+        hintEn: 'Half of 50 is 25!',
+        hintId: 'Setengah dari 50 adalah 25!',
+        options: [20, 25, 30, 35],
+        answer: 25,
+        renderStage: () => `
+          <div style="font-size: 2.2rem; font-weight: 900; color: #d81b60;">
+            1/2 of 50 = <span style="background: #ec4899; padding: 4px 18px; border-radius: 12px; color: white;">?</span>
+          </div>
+        `
+      },
+      {
+        id: '6c_equiv_wall',
+        subBadge: '6C • Equivalent Fractions',
+        titleEn: 'Look at the fraction wall: 1/2 is EQUAL to how many quarters?',
+        titleId: 'Lihat dinding pecahan: 1/2 SAMA DENGAN berapa perempat?',
+        hintEn: '1/2 = 2/4!',
+        hintId: '1/2 = 2/4!',
+        options: ['1/4', '2/4', '3/4', '4/4'],
+        answer: '2/4',
+        renderStage: () => `
+          <div style="max-width: 380px; margin: 0 auto; text-align: center;">
+            <div style="background: #ff2d87; padding: 10px; border-radius: 8px; font-weight: 900; color: white; margin-bottom: 6px;">1 Whole (1 Utuh)</div>
+            <div style="display: flex; gap: 6px; margin-bottom: 6px;">
+              <div style="flex: 1; background: #ec4899; padding: 10px; border-radius: 8px; font-weight: 900; color: white;">1/2</div>
+              <div style="flex: 1; background: #ec4899; padding: 10px; border-radius: 8px; font-weight: 900; color: white;">1/2</div>
+            </div>
+            <div style="display: flex; gap: 6px;">
+              <div style="flex: 1; background: #a855f7; padding: 8px; border-radius: 8px; font-weight: 900; color: white;">1/4</div>
+              <div style="flex: 1; background: #a855f7; padding: 8px; border-radius: 8px; font-weight: 900; color: white;">1/4</div>
+              <div style="flex: 1; background: #a855f7; padding: 8px; border-radius: 8px; font-weight: 900; color: white;">1/4</div>
+              <div style="flex: 1; background: #a855f7; padding: 8px; border-radius: 8px; font-weight: 900; color: white;">1/4</div>
+            </div>
+          </div>
+        `
+      },
+      {
+        id: '6c_whole',
+        subBadge: '6C • Whole from Fractions',
+        titleEn: 'How many quarters make 1 whole?',
+        titleId: 'Berapa perempat yang membentuk 1 bagian utuh?',
+        hintEn: '4 quarters make 1 whole: 4/4 = 1!',
+        hintId: '4 perempat membentuk 1 utuh: 4/4 = 1!',
+        options: ['2 quarters', '3 quarters', '4 quarters', '1 quarter'],
+        answer: '4 quarters',
+        renderStage: () => `
+          <div style="font-size: 2rem; font-weight: 900; color: #d81b60;">
+            4/4 = 1 Whole (1 Utuh)
+          </div>
+        `
+      },
+      {
+        id: '6c_equiv_half',
+        subBadge: '6C • Simplifying Fractions',
+        titleEn: '2/4 is equivalent to which simple fraction?',
+        titleId: '2/4 sama nilainya dengan pecahan sederhana manakah?',
+        hintEn: 'Two quarters is the exact same as one half (1/2)!',
+        hintId: 'Dua perempat sama persis nilainya dengan setengah (1/2)!',
+        options: ['1/3', '1/2', '3/4', '1/4'],
+        answer: '1/2',
+        renderStage: () => `
+          <div style="font-size: 2.2rem; font-weight: 900; color: #d81b60;">
+            2/4 = <span style="background: #ff2d87; padding: 4px 18px; border-radius: 12px; color: white;">?</span>
+          </div>
+        `
+      },
+      {
+        id: '6d_line',
+        subBadge: '6D • Fractions on Number Line',
+        titleEn: 'On a number line from 0 to 1, what fraction is halfway between them?',
+        titleId: 'Pada garis bilangan dari 0 hingga 1, pecahan berapakah yang tepat berada di tengah?',
+        hintEn: 'Halfway is 1/2!',
+        hintId: 'Tepat di tengah adalah 1/2!',
+        options: ['1/4', '1/2', '3/4', '0'],
+        answer: '1/2',
+        renderStage: () => `
+          <div style="font-size: 1.8rem; font-weight: 900; color: #d81b60;">
+            0 &nbsp; ────────── <span style="background: #ff2d87; padding: 4px 14px; border-radius: 10px; color: white;">?</span> ────────── &nbsp; 1
+          </div>
+        `
+      }
+    ]
+  },
+  {
+    id: 'u7',
+    number: 7,
+    titleEn: 'Length, Mass & Capacity',
+    titleId: 'Panjang, Massa & Kapasitas',
+    icon: '📏',
+    activities: [
+      {
+        id: '7a_ruler',
+        subBadge: '7A • Standard Units of Length',
+        titleEn: 'Which standard unit is best for measuring the length of a pencil?',
+        titleId: 'Satuan baku manakah yang paling tepat untuk mengukur panjang sebuah pensil?',
+        hintEn: 'Centimetres (cm) is ideal for small objects like pencils!',
+        hintId: 'Sentimeter (cm) sangat cocok untuk benda kecil seperti pensil!',
+        options: ['Metres (m)', 'Centimetres (cm)', 'Kilometres (km)', 'Litres (L)'],
+        answer: 'Centimetres (cm)',
+        renderStage: () => `
+          <div style="font-size: 2.2rem; text-align: center;">
+            ✏️ 📏 ➔ <span style="font-size: 1.8rem; font-weight: 900; color: #d81b60;">?</span>
+          </div>
+        `
+      },
+      {
+        id: '7b_compare_len',
+        subBadge: '7B • Comparing Lengths',
+        titleEn: 'Ribbon A is 45 cm long. Ribbon B is 80 cm long. How much longer is Ribbon B?',
+        titleId: 'Pita A panjangnya 45 cm. Pita B panjangnya 80 cm. Berapa cm lebih panjang pita B?',
+        hintEn: '80 - 45 = 35 cm!',
+        hintId: '80 - 45 = 35 cm!',
+        options: ['25 cm', '35 cm', '45 cm', '125 cm'],
+        answer: '35 cm',
+        renderStage: () => `
+          <div style="font-size: 1.8rem; font-weight: 900; color: #d81b60;">
+            80 cm - 45 cm = <span style="background: #ff2d87; padding: 4px 18px; border-radius: 12px; color: white;">?</span>
+          </div>
+        `
+      },
+      {
+        id: '7c_m_cm',
+        subBadge: '7C • Centimetres in a Metre',
+        titleEn: 'How many centimetres (cm) are in 1 metre (m)?',
+        titleId: 'Berapa sentimeter (cm) dalam 1 meter (m)?',
+        hintEn: 'Centi means 100: 1 m = 100 cm!',
+        hintId: 'Centi artinya 100: 1 m = 100 cm!',
+        options: ['10 cm', '100 cm', '500 cm', '1000 cm'],
+        answer: '100 cm',
+        renderStage: () => `
+          <div style="font-size: 2.2rem; font-weight: 900; color: #d81b60;">
+            1 m = <span style="background: #ff2d87; padding: 4px 18px; border-radius: 12px; color: white;">?</span> cm
+          </div>
+        `
+      },
+      {
+        id: '7c_m_cm2',
+        subBadge: '7C • Metres to Centimetres',
+        titleEn: '2 metres = how many centimetres?',
+        titleId: '2 meter = berapa sentimeter?',
+        hintEn: '2 x 100 cm = 200 cm!',
+        hintId: '2 x 100 cm = 200 cm!',
+        options: ['120 cm', '150 cm', '200 cm', '2000 cm'],
+        answer: '200 cm',
+        renderStage: () => `
+          <div style="font-size: 2.2rem; font-weight: 900; color: #d81b60;">
+            2 m = <span style="background: #a855f7; padding: 4px 18px; border-radius: 12px; color: white;">?</span> cm
+          </div>
+        `
+      },
+      {
+        id: '7c_half_m',
+        subBadge: '7C • Half a Metre',
+        titleEn: 'How many centimetres are in half a metre (1/2 m)?',
+        titleId: 'Berapa sentimeter dalam setengah meter (1/2 m)?',
+        hintEn: 'Half of 100 cm is 50 cm!',
+        hintId: 'Setengah dari 100 cm adalah 50 cm!',
+        options: ['25 cm', '50 cm', '75 cm', '10 cm'],
+        answer: '50 cm',
+        renderStage: () => `
+          <div style="font-size: 2.2rem; font-weight: 900; color: #d81b60;">
+            1/2 m = <span style="background: #ec4899; padding: 4px 18px; border-radius: 12px; color: white;">?</span> cm
+          </div>
+        `
+      },
+      {
+        id: '7d_capacity_l',
+        subBadge: '7D • Liquid Measures',
+        titleEn: 'How many millilitres (ml) are in 1 litre (1 L)?',
+        titleId: 'Berapa mililiter (ml) dalam 1 liter (1 L)?',
+        hintEn: 'Milli means thousandth: 1 L = 1000 ml!',
+        hintId: '1 Liter = 1000 mililiter!',
+        options: ['100 ml', '500 ml', '1000 ml', '10000 ml'],
+        answer: '1000 ml',
+        renderStage: () => `
+          <div style="font-size: 2.2rem; font-weight: 900; color: #d81b60;">
+            🧃 1 L = <span style="background: #ff2d87; padding: 4px 18px; border-radius: 12px; color: white;">?</span> ml
+          </div>
+        `
+      },
+      {
+        id: '7d_half_litre',
+        subBadge: '7D • Half a Litre',
+        titleEn: 'How many millilitres are in half a litre (1/2 L)?',
+        titleId: 'Berapa mililiter dalam setengah liter (1/2 L)?',
+        hintEn: 'Half of 1000 ml is 500 ml!',
+        hintId: 'Setengah dari 1000 ml adalah 500 ml!',
+        options: ['250 ml', '500 ml', '750 ml', '100 ml'],
+        answer: '500 ml',
+        renderStage: () => `
+          <div style="font-size: 2.2rem; font-weight: 900; color: #d81b60;">
+            1/2 L = <span style="background: #a855f7; padding: 4px 18px; border-radius: 12px; color: white;">?</span> ml
+          </div>
+        `
+      },
+      {
+        id: '7d_estimate',
+        subBadge: '7D • Estimating Capacity',
+        titleEn: 'What is the best estimate for the capacity of a standard mug of hot cocoa?',
+        titleId: 'Berapakah perkiraan kapasitas yang tepat untuk satu cangkir cokelat hangat?',
+        hintEn: 'A cup holds around 250 ml (250 litres would be a swimming pool)!',
+        hintId: 'Satu cangkir sekitar 250 ml (bukan 250 liter)!',
+        options: ['25 ml', '250 ml', '25 L', '250 L'],
+        answer: '250 ml',
+        renderStage: () => `
+          <div style="font-size: 2.4rem; text-align: center;">
+            ☕ Mug capacity / Kapasitas cangkir: <span style="color: #d81b60; font-weight: 900;">?</span>
+          </div>
+        `
+      },
+      {
+        id: '7e_mass_kg',
+        subBadge: '7E • Measuring Mass',
+        titleEn: 'How many grams (g) are in 1 kilogram (1 kg)?',
+        titleId: 'Berapa gram (g) dalam 1 kilogram (1 kg)?',
+        hintEn: 'Kilo means 1000: 1 kg = 1000 g!',
+        hintId: 'Kilo artinya 1000: 1 kg = 1000 g!',
+        options: ['10 g', '100 g', '1000 g', '10000 g'],
+        answer: '1000 g',
+        renderStage: () => `
+          <div style="font-size: 2.2rem; font-weight: 900; color: #d81b60;">
+            ⚖️ 1 kg = <span style="background: #ff2d87; padding: 4px 18px; border-radius: 12px; color: white;">?</span> g
+          </div>
+        `
+      },
+      {
+        id: '7e_compare_mass',
+        subBadge: '7E • Comparing Mass',
+        titleEn: 'Which is heavier: a 2 kg pumpkin or a 750 g pineapple?',
+        titleId: 'Manakah yang lebih berat: labu 2 kg atau nanas 750 g?',
+        hintEn: '2 kg is 2000 g, which is much more than 750 g!',
+        hintId: '2 kg sama dengan 2000 g, jauh lebih berat dari 750 g!',
+        options: ['2 kg pumpkin', '750 g pineapple', 'Both are equal', 'None'],
+        answer: '2 kg pumpkin',
+        renderStage: () => `
+          <div style="font-size: 1.8rem; font-weight: 900; color: #d81b60; text-align: center;">
+            🎃 2 kg (2000 g) &nbsp; vs &nbsp; 🍍 750 g
+          </div>
+        `
+      },
+      {
+        id: '7f_scale_read',
+        subBadge: '7F • Reading Scales',
+        titleEn: 'A scale pan shows 500 g. Freya adds another 200 g. What is the total mass?',
+        titleId: 'Sebuah timbangan menunjukkan 500 g. Freya menambahkan 200 g lagi. Berapakah massa totalnya?',
+        hintEn: '500 g + 200 g = 700 g!',
+        hintId: '500 g + 200 g = 700 g!',
+        options: ['600 g', '700 g', '800 g', '1000 g'],
+        answer: '700 g',
+        renderStage: () => `
+          <div style="font-size: 2.2rem; font-weight: 900; color: #d81b60;">
+            500 g + 200 g = <span style="background: #ff2d87; padding: 4px 18px; border-radius: 12px; color: white;">?</span> g
+          </div>
+        `
+      }
+    ]
+  },
+  {
+    id: 'u8',
+    number: 8,
+    titleEn: 'Money',
+    titleId: 'Uang',
+    icon: '🪙',
+    activities: [
+      {
+        id: '8a_penny',
+        subBadge: '8A • US Coins: Penny',
+        titleEn: 'How much is a Penny coin worth?',
+        titleId: 'Berapakah nilai koin 1 Penny?',
+        hintEn: 'A penny is copper-colored and worth 1 cent (1¢)!',
+        hintId: 'Penny bernilai 1 sen (1¢)!',
+        options: ['1¢', '5¢', '10¢', '25¢'],
+        answer: '1¢',
+        renderStage: () => `
+          <div style="font-size: 2.2rem; text-align: center;">
+            🪙 1 Penny = <span style="color: #d81b60; font-weight: 900;">?</span>
+          </div>
+        `
+      },
+      {
+        id: '8a_nickel',
+        subBadge: '8A • US Coins: Nickel',
+        titleEn: 'How much is a Nickel coin worth?',
+        titleId: 'Berapakah nilai koin 1 Nickel?',
+        hintEn: 'A nickel is worth 5 cents (5¢)!',
+        hintId: 'Nickel bernilai 5 sen (5¢)!',
+        options: ['1¢', '5¢', '10¢', '25¢'],
+        answer: '5¢',
+        renderStage: () => `
+          <div style="font-size: 2.2rem; text-align: center;">
+            🪙 1 Nickel = <span style="color: #d81b60; font-weight: 900;">?</span>
+          </div>
+        `
+      },
+      {
+        id: '8a_dime',
+        subBadge: '8A • US Coins: Dime',
+        titleEn: 'How much is a Dime coin worth?',
+        titleId: 'Berapakah nilai koin 1 Dime?',
+        hintEn: 'A dime is the small silver coin worth 10 cents (10¢)!',
+        hintId: 'Dime adalah koin perak kecil bernilai 10 sen (10¢)!',
+        options: ['5¢', '10¢', '20¢', '25¢'],
+        answer: '10¢',
+        renderStage: () => `
+          <div style="font-size: 2.2rem; text-align: center;">
+            🪙 1 Dime = <span style="color: #d81b60; font-weight: 900;">?</span>
+          </div>
+        `
+      },
+      {
+        id: '8a_quarter',
+        subBadge: '8A • US Coins: Quarter',
+        titleEn: 'How much is a Quarter coin worth?',
+        titleId: 'Berapakah nilai koin 1 Quarter?',
+        hintEn: 'A quarter is one fourth of a dollar: 25 cents (25¢)!',
+        hintId: 'Quarter bernilai seperempat dolar: 25 sen (25¢)!',
+        options: ['10¢', '20¢', '25¢', '50¢'],
+        answer: '25¢',
+        renderStage: () => `
+          <div style="font-size: 2.2rem; text-align: center;">
+            🪙 1 Quarter = <span style="color: #d81b60; font-weight: 900;">?</span>
+          </div>
+        `
+      },
+      {
+        id: '8a_total_coins',
+        subBadge: '8A • Adding Coins',
+        titleEn: 'What is the total of 2 dimes and 1 nickel (10¢ + 10¢ + 5¢)?',
+        titleId: 'Berapakah total dari 2 dime dan 1 nickel (10¢ + 10¢ + 5¢)?',
+        hintEn: '10¢ + 10¢ + 5¢ = 25¢!',
+        hintId: '10¢ + 10¢ + 5¢ = 25¢!',
+        options: ['20¢', '25¢', '30¢', '15¢'],
+        answer: '25¢',
+        renderStage: () => `
+          <div style="font-size: 2rem; font-weight: 900; color: #d81b60;">
+            10¢ + 10¢ + 5¢ = <span style="background: #ff2d87; padding: 4px 18px; border-radius: 12px; color: white;">?</span>
+          </div>
+        `
+      },
+      {
+        id: '8a_two_quarters',
+        subBadge: '8A • Two Quarters',
+        titleEn: 'What is the total value of 2 quarters (25¢ + 25¢)?',
+        titleId: 'Berapakah total nilai dari 2 koin quarter (25¢ + 25¢)?',
+        hintEn: '25 + 25 = 50 cents (50¢)!',
+        hintId: '25 + 25 = 50 sen (50¢)!',
+        options: ['40¢', '50¢', '75¢', '$1.00'],
+        answer: '50¢',
+        renderStage: () => `
+          <div style="font-size: 2.2rem; font-weight: 900; color: #d81b60;">
+            25¢ + 25¢ = <span style="background: #a855f7; padding: 4px 18px; border-radius: 12px; color: white;">?</span>
+          </div>
+        `
+      },
+      {
+        id: '8b_change_dollar',
+        subBadge: '8B • Giving Change from $1',
+        titleEn: 'You buy an ice cream for 65¢. You pay with $1.00 (100¢). How much change do you get?',
+        titleId: 'Kamu membeli es krim seharga 65¢. Kamu membayar dengan $1.00 (100¢). Berapa uang kembalianmu?',
+        hintEn: '100¢ - 65¢ = 35¢!',
+        hintId: '100¢ - 65¢ = 35¢!',
+        options: ['25¢', '35¢', '45¢', '55¢'],
+        answer: '35¢',
+        renderStage: () => `
+          <div style="font-size: 2rem; font-weight: 900; color: #d81b60;">
+            🍦 Cost: 65¢ &nbsp;|&nbsp; Paid: $1.00 (100¢)<br>
+            Change / Kembalian: 100 - 65 = <span style="background: #ff2d87; padding: 4px 14px; border-radius: 12px; color: white;">?</span>
+          </div>
+        `
+      },
+      {
+        id: '8b_quarters_dollar',
+        subBadge: '8B • Quarters in a Dollar',
+        titleEn: 'How many 25¢ quarters make $1.00 (100¢)?',
+        titleId: 'Berapa koin 25¢ quarter yang menghasilkan $1.00 (100¢)?',
+        hintEn: '4 x 25¢ = 100¢ ($1.00)!',
+        hintId: '4 x 25¢ = 100¢ ($1.00)!',
+        options: ['2 quarters', '4 quarters', '5 quarters', '10 quarters'],
+        answer: '4 quarters',
+        renderStage: () => `
+          <div style="font-size: 2rem; font-weight: 900; color: #d81b60;">
+            ? × 25¢ = 100¢ ($1.00)
+          </div>
+        `
+      },
+      {
+        id: '8b_dimes_dollar',
+        subBadge: '8B • Dimes in a Dollar',
+        titleEn: 'How many 10¢ dimes make $1.00 (100¢)?',
+        titleId: 'Berapa koin 10¢ dime yang menghasilkan $1.00 (100¢)?',
+        hintEn: '10 x 10¢ = 100¢ = $1.00!',
+        hintId: '10 x 10¢ = 100¢ = $1.00!',
+        options: ['5 dimes', '10 dimes', '20 dimes', '100 dimes'],
+        answer: '10 dimes',
+        renderStage: () => `
+          <div style="font-size: 2rem; font-weight: 900; color: #d81b60;">
+            ? × 10¢ = 100¢ ($1.00)
+          </div>
+        `
+      },
+      {
+        id: '8c_cart',
+        subBadge: '8C • Shopping Cart Total',
+        titleEn: 'An apple costs 35¢ and a banana costs 40¢. What is the total price?',
+        titleId: 'Apel berharga 35¢ dan pisang berharga 40¢. Berapakah harga totalnya?',
+        hintEn: '35¢ + 40¢ = 75¢!',
+        hintId: '35¢ + 40¢ = 75¢!',
+        options: ['65¢', '70¢', '75¢', '85¢'],
+        answer: '75¢',
+        renderStage: () => `
+          <div style="font-size: 2rem; font-weight: 900; color: #d81b60;">
+            🍎 35¢ + 🍌 40¢ = <span style="background: #ff2d87; padding: 4px 18px; border-radius: 12px; color: white;">?</span>
+          </div>
+        `
+      },
+      {
+        id: '8c_dollars',
+        subBadge: '8C • Dollar Amounts',
+        titleEn: 'A storybook costs $7 and a notebook costs $3. What is the total?',
+        titleId: 'Buku cerita berharga $7 dan buku catatan berharga $3. Berapa total harganya?',
+        hintEn: '$7 + $3 = $10!',
+        hintId: '$7 + $3 = $10!',
+        options: ['$9', '$10', '$11', '$12'],
+        answer: '$10',
+        renderStage: () => `
+          <div style="font-size: 2.2rem; font-weight: 900; color: #d81b60;">
+            $7 + $3 = <span style="background: #a855f7; padding: 4px 18px; border-radius: 12px; color: white;">?</span>
+          </div>
+        `
+      }
+    ]
+  },
+  {
+    id: 'u9',
+    number: 9,
+    titleEn: 'Time',
+    titleId: 'Waktu & Jam',
+    icon: '⏰',
+    activities: [
+      {
+        id: '9a_oclock',
+        subBadge: '9A • Analog Clock: O’Clock',
+        titleEn: 'The short hand points to 4 and the long hand points to 12. What time is it?',
+        titleId: 'Jarum pendek menunjuk ke angka 4 dan jarum panjang ke angka 12. Pukul berapakah ini?',
+        hintEn: 'When the minute hand is at 12, it is exactly o’clock (4:00)!',
+        hintId: 'Saat jarum menit di angka 12, waktu menunjukkan tepat pukul 4 (4:00)!',
+        options: ['12:00', '4:00', '4:30', '3:00'],
+        answer: '4:00',
+        renderStage: () => `
+          <div style="display: flex; justify-content: center;">
+            <svg width="130" height="130" viewBox="0 0 100 100">
+              <circle cx="50" cy="50" r="46" fill="#fff0f5" stroke="#ff80bf" stroke-width="4"/>
+              <text x="50" y="20" fill="#fde047" font-weight="900" font-size="12" text-anchor="middle">12</text>
+              <text x="86" y="54" fill="#fff" font-weight="800" font-size="11" text-anchor="middle">3</text>
+              <text x="50" y="90" fill="#fff" font-weight="800" font-size="11" text-anchor="middle">6</text>
+              <text x="16" y="54" fill="#fff" font-weight="800" font-size="11" text-anchor="middle">9</text>
+              <line x1="50" y1="50" x2="50" y2="24" stroke="#fde047" stroke-width="3" stroke-linecap="round"/>
+              <line x1="50" y1="50" x2="72" y2="65" stroke="#ff2d87" stroke-width="4" stroke-linecap="round"/>
+              <circle cx="50" cy="50" r="4" fill="#fff"/>
+            </svg>
+          </div>
+        `
+      },
+      {
+        id: '9a_half_past',
+        subBadge: '9A • Half-Past',
+        titleEn: 'The hour hand is halfway between 8 and 9, and the minute hand is at 6. What time is it?',
+        titleId: 'Jarum jam berada di tengah antara 8 dan 9, jarum menit di angka 6. Pukul berapa ini?',
+        hintEn: 'Half-past 8 is 8:30!',
+        hintId: 'Setengah 9 adalah pukul 8:30!',
+        options: ['6:40', '8:30', '9:30', '8:06'],
+        answer: '8:30',
+        renderStage: () => `
+          <div style="display: flex; justify-content: center;">
+            <svg width="130" height="130" viewBox="0 0 100 100">
+              <circle cx="50" cy="50" r="46" fill="#fff0f5" stroke="#ff80bf" stroke-width="4"/>
+              <text x="50" y="20" fill="#fde047" font-weight="900" font-size="12" text-anchor="middle">12</text>
+              <text x="86" y="54" fill="#fff" font-weight="800" font-size="11" text-anchor="middle">3</text>
+              <text x="50" y="90" fill="#fde047" font-weight="900" font-size="12" text-anchor="middle">6</text>
+              <text x="16" y="54" fill="#fff" font-weight="800" font-size="11" text-anchor="middle">9</text>
+              <line x1="50" y1="50" x2="28" y2="40" stroke="#ff2d87" stroke-width="4" stroke-linecap="round"/>
+              <line x1="50" y1="50" x2="50" y2="82" stroke="#fde047" stroke-width="3" stroke-linecap="round"/>
+              <circle cx="50" cy="50" r="4" fill="#fff"/>
+            </svg>
+          </div>
+        `
+      },
+      {
+        id: '9a_quarter_past',
+        subBadge: '9A • Quarter-Past',
+        titleEn: 'The minute hand points to 3 (quarter past), and the hour hand is just past 2. What time is it?',
+        titleId: 'Jarum menit menunjuk ke angka 3 (lewat 15 menit), dan jarum jam lewat sedikit dari 2. Pukul berapa ini?',
+        hintEn: 'Quarter past 2 is 2:15!',
+        hintId: 'Pukul 2 lewat seperempat adalah 2:15!',
+        options: ['2:03', '2:15', '3:10', '2:45'],
+        answer: '2:15',
+        renderStage: () => `
+          <div style="font-size: 2rem; font-weight: 900; color: #d81b60; text-align: center;">
+            Quarter Past 2 (Pukul 2 lewat 15) = 2:15
+          </div>
+        `
+      },
+      {
+        id: '9a_quarter_to',
+        subBadge: '9A • Quarter-To',
+        titleEn: 'The minute hand points to 9 (quarter to 7), and the hour hand is near 7. What time is it?',
+        titleId: 'Jarum menit menunjuk ke angka 9 (kurang 15 menit ke pukul 7), jarum jam mendekati 7. Pukul berapa ini?',
+        hintEn: 'Quarter to 7 is 6:45!',
+        hintId: 'Pukul 7 kurang 15 menit adalah 6:45!',
+        options: ['6:45', '7:45', '6:09', '7:15'],
+        answer: '6:45',
+        renderStage: () => `
+          <div style="font-size: 2rem; font-weight: 900; color: #d81b60; text-align: center;">
+            Quarter To 7 (Pukul 7 kurang 15 menit) = 6:45
+          </div>
+        `
+      },
+      {
+        id: '9b_days_week',
+        subBadge: '9B • Days of the Week',
+        titleEn: 'If today is Thursday, what day will it be tomorrow?',
+        titleId: 'Jika hari ini adalah Kamis, hari apakah besok?',
+        hintEn: 'Thursday ➔ Friday!',
+        hintId: 'Kamis ➔ Jumat!',
+        options: ['Wednesday (Rabu)', 'Friday (Jumat)', 'Saturday (Sabtu)', 'Sunday (Minggu)'],
+        answer: 'Friday (Jumat)',
+        renderStage: () => `
+          <div style="font-size: 2rem; font-weight: 900; color: #d81b60;">
+            Thursday (Kamis) ➔ <span style="background: #ff2d87; padding: 4px 18px; border-radius: 12px; color: white;">?</span>
+          </div>
+        `
+      },
+      {
+        id: '9b_yesterday',
+        subBadge: '9B • Days of the Week',
+        titleEn: 'If today is Wednesday, what day was yesterday?',
+        titleId: 'Jika hari ini adalah Rabu, hari apakah kemarin?',
+        hintEn: 'Yesterday was Tuesday!',
+        hintId: 'Kemarin adalah hari Selasa!',
+        options: ['Monday (Senin)', 'Tuesday (Selasa)', 'Thursday (Kamis)', 'Friday (Jumat)'],
+        answer: 'Tuesday (Selasa)',
+        renderStage: () => `
+          <div style="font-size: 2rem; font-weight: 900; color: #d81b60;">
+            <span style="background: #a855f7; padding: 4px 18px; border-radius: 12px; color: white;">?</span> ➔ Wednesday (Rabu)
+          </div>
+        `
+      },
+      {
+        id: '9b_months_year',
+        subBadge: '9B • Months in a Year',
+        titleEn: 'How many months are there in 1 whole year?',
+        titleId: 'Ada berapa bulan dalam 1 tahun penuh?',
+        hintEn: 'From January to December: 12 months!',
+        hintId: 'Dari Januari hingga Desember: 12 bulan!',
+        options: ['7 months', '10 months', '12 months', '52 months'],
+        answer: '12 months',
+        renderStage: () => `
+          <div style="font-size: 2.2rem; font-weight: 900; color: #d81b60;">
+            📅 1 Year (1 Tahun) = <span style="background: #ff2d87; padding: 4px 18px; border-radius: 12px; color: white;">?</span>
+          </div>
+        `
+      },
+      {
+        id: '9c_feb_days',
+        subBadge: '9C • Days in Months',
+        titleEn: 'How many days are in February in a common (standard) year?',
+        titleId: 'Berapa hari dalam bulan Februari pada tahun biasa?',
+        hintEn: '28 days in a standard year, 29 in a leap year!',
+        hintId: '28 hari pada tahun biasa, 29 pada tahun kabisat!',
+        options: ['28 days', '30 days', '31 days', '25 days'],
+        answer: '28 days',
+        renderStage: () => `
+          <div style="font-size: 2rem; font-weight: 900; color: #d81b60;">
+            February Days (Hari di Februari): <span style="background: #ff2d87; padding: 4px 18px; border-radius: 12px; color: white;">?</span>
+          </div>
+        `
+      },
+      {
+        id: '9d_elapsed',
+        subBadge: '9D • Time Intervals',
+        titleEn: 'A fun music lesson starts at 3:00 and lasts 45 minutes. What time does it end?',
+        titleId: 'Pelajaran musik dimulai pukul 3:00 dan berlangsung 45 menit. Pukul berapa pelajaran berakhir?',
+        hintEn: '3:00 + 45 minutes = 3:45!',
+        hintId: '3:00 + 45 menit = 3:45!',
+        options: ['3:15', '3:30', '3:45', '4:00'],
+        answer: '3:45',
+        renderStage: () => `
+          <div style="font-size: 2.2rem; font-weight: 900; color: #d81b60;">
+            3:00 + 45 min = <span style="background: #ff2d87; padding: 4px 18px; border-radius: 12px; color: white;">?</span>
+          </div>
+        `
+      },
+      {
+        id: '9e_min_hr',
+        subBadge: '9E • Minutes in an Hour',
+        titleEn: 'How many minutes are in 1 hour?',
+        titleId: 'Berapa menit dalam 1 jam?',
+        hintEn: 'The minute hand travels 60 minute marks around the clock!',
+        hintId: 'Jarum menit berputar 60 menit dalam 1 putaran penuh!',
+        options: ['12 min', '30 min', '60 min', '100 min'],
+        answer: '60 min',
+        renderStage: () => `
+          <div style="font-size: 2.2rem; font-weight: 900; color: #d81b60;">
+            1 Hour (1 Jam) = <span style="background: #ff2d87; padding: 4px 18px; border-radius: 12px; color: white;">?</span>
+          </div>
+        `
+      },
+      {
+        id: '9e_sec_min',
+        subBadge: '9E • Seconds in a Minute',
+        titleEn: 'How many seconds are in 1 minute?',
+        titleId: 'Berapa detik dalam 1 menit?',
+        hintEn: '60 seconds in 1 minute!',
+        hintId: '60 detik dalam 1 menit!',
+        options: ['30 sec', '50 sec', '60 sec', '100 sec'],
+        answer: '60 sec',
+        renderStage: () => `
+          <div style="font-size: 2.2rem; font-weight: 900; color: #d81b60;">
+            1 Minute (1 Menit) = <span style="background: #a855f7; padding: 4px 18px; border-radius: 12px; color: white;">?</span>
+          </div>
+        `
+      }
+    ]
+  },
+  {
+    id: 'u10',
+    number: 10,
+    titleEn: 'Geometry - Shapes & Symmetry',
+    titleId: 'Geometri - Bentuk & Simetri',
+    icon: '🔷',
+    activities: [
+      {
+        id: '10a_pent',
+        subBadge: '10A • 2D Shapes: Pentagon',
+        titleEn: 'How many straight sides and corners does a PENTAGON have?',
+        titleId: 'Berapa banyak sisi lurus dan sudut yang dimiliki sebuah PENTAGON (segi lima)?',
+        hintEn: 'Penta means 5: 5 sides and 5 corners!',
+        hintId: 'Penta artinya 5: 5 sisi dan 5 sudut!',
+        options: ['4 sides', '5 sides', '6 sides', '8 sides'],
+        answer: '5 sides',
+        renderStage: () => `
+          <div style="display: flex; justify-content: center;">
+            <svg width="120" height="120" viewBox="0 0 100 100">
+              <polygon points="50,10 90,40 75,90 25,90 10,40" fill="#fff0f5" stroke="#fde047" stroke-width="4"/>
+            </svg>
+          </div>
+          <p style="margin-top: 6px; font-weight: 800; color: #d81b60;">Pentagon (Segi Lima)</p>
+        `
+      },
+      {
+        id: '10a_hex',
+        subBadge: '10A • 2D Shapes: Hexagon',
+        titleEn: 'How many straight sides and corners does a HEXAGON have?',
+        titleId: 'Berapa banyak sisi lurus dan sudut yang dimiliki sebuah HEKSAGON (segi enam)?',
+        hintEn: 'Hex means 6: 6 sides and 6 corners!',
+        hintId: 'Heksagon memiliki 6 sisi dan 6 sudut!',
+        options: ['5 sides', '6 sides', '7 sides', '8 sides'],
+        answer: '6 sides',
+        renderStage: () => `
+          <div style="display: flex; justify-content: center;">
+            <svg width="120" height="120" viewBox="0 0 100 100">
+              <polygon points="50,10 85,30 85,70 50,90 15,70 15,30" fill="#fff0f5" stroke="#fde047" stroke-width="4"/>
+            </svg>
+          </div>
+          <p style="margin-top: 6px; font-weight: 800; color: #d81b60;">Hexagon (Segi Enam)</p>
+        `
+      },
+      {
+        id: '10a_tri',
+        subBadge: '10A • 2D Shapes: Triangle',
+        titleEn: 'How many straight sides does a triangle have?',
+        titleId: 'Berapa sisi lurus yang dimiliki segitiga?',
+        hintEn: 'Tri means 3: 3 sides!',
+        hintId: 'Tri artinya 3: 3 sisi!',
+        options: ['2 sides', '3 sides', '4 sides', '5 sides'],
+        answer: '3 sides',
+        renderStage: () => `
+          <div style="display: flex; justify-content: center;">
+            <svg width="120" height="120" viewBox="0 0 100 100">
+              <polygon points="50,15 88,85 12,85" fill="#ff85ad" stroke="#fde047" stroke-width="4"/>
+            </svg>
+          </div>
+        `
+      },
+      {
+        id: '10a_circle',
+        subBadge: '10A • 2D Shapes: Circle',
+        titleEn: 'How many corners (vertices) does a circle have?',
+        titleId: 'Berapa sudut yang dimiliki sebuah lingkaran?',
+        hintEn: 'A circle is completely smooth with 0 corners!',
+        hintId: 'Lingkaran melengkung mulus dan memiliki 0 sudut!',
+        options: ['0 corners', '1 corner', '2 corners', '4 corners'],
+        answer: '0 corners',
+        renderStage: () => `
+          <div style="display: flex; justify-content: center;">
+            <svg width="120" height="120" viewBox="0 0 100 100">
+              <circle cx="50" cy="50" r="40" fill="#fff0f5" stroke="#fde047" stroke-width="4"/>
+            </svg>
+          </div>
+        `
+      },
+      {
+        id: '10b_cube',
+        subBadge: '10B • 3D Shapes: Cube',
+        titleEn: 'How many flat square faces does a CUBE have?',
+        titleId: 'Berapa sisi datar berbentuk persegi yang dimiliki sebuah KUBUS?',
+        hintEn: 'Think of a game dice: it has 6 square faces (1 through 6)!',
+        hintId: 'Pikirkan sebuah dadu: memiliki 6 sisi persegi (1 sampai 6)!',
+        options: ['4 faces', '6 faces', '8 faces', '12 faces'],
+        answer: '6 faces',
+        renderStage: () => `
+          <div style="font-size: 3.2rem; text-align: center;">
+            🎲
+            <div style="font-size: 1.6rem; font-weight: 800; color: #d81b60; margin-top: 4px;">Cube (Kubus)</div>
+          </div>
+        `
+      },
+      {
+        id: '10b_cyl',
+        subBadge: '10B • 3D Shapes: Cylinder',
+        titleEn: 'How many flat circular faces does a cylinder have?',
+        titleId: 'Berapa sisi lingkaran datar yang dimiliki sebuah silinder (tabung)?',
+        hintEn: 'Top circle and bottom circle: 2 flat circular faces!',
+        hintId: 'Lingkaran atas dan lingkaran bawah: 2 sisi datar!',
+        options: ['1 face', '2 faces', '3 faces', '0 faces'],
+        answer: '2 faces',
+        renderStage: () => `
+          <div style="font-size: 3rem; text-align: center;">
+            🥫
+            <div style="font-size: 1.6rem; font-weight: 800; color: #d81b60; margin-top: 4px;">Cylinder (Tabung)</div>
+          </div>
+        `
+      },
+      {
+        id: '10b_sphere',
+        subBadge: '10B • 3D Shapes: Sphere',
+        titleEn: 'How many flat faces or corners does a SPHERE have?',
+        titleId: 'Berapa sisi datar atau sudut yang dimiliki sebuah BOLA (sphere)?',
+        hintEn: 'A sphere is round all over: 0 flat faces and 0 corners!',
+        hintId: 'Bola melengkung sempurna: 0 sisi datar dan 0 sudut!',
+        options: ['0', '1', '2', '4'],
+        answer: '0',
+        renderStage: () => `
+          <div style="font-size: 3.2rem; text-align: center;">
+            ⚽
+            <div style="font-size: 1.6rem; font-weight: 800; color: #d81b60; margin-top: 4px;">Sphere (Bola)</div>
+          </div>
+        `
+      },
+      {
+        id: '10c_square_prop',
+        subBadge: '10C • Sorting 2D Shapes',
+        titleEn: 'A 2D shape has 4 equal straight sides and 4 right angles. What is it?',
+        titleId: 'Bentuk 2D memiliki 4 sisi lurus sama panjang dan 4 sudut siku-siku. Apakah bentuk ini?',
+        hintEn: 'A square has 4 equal sides and 4 square corners (right angles)!',
+        hintId: 'Persegi memiliki 4 sisi sama panjang dan 4 sudut siku-siku!',
+        options: ['Triangle', 'Square', 'Rectangle', 'Pentagon'],
+        answer: 'Square',
+        renderStage: () => `
+          <div style="display: flex; justify-content: center;">
+            <svg width="110" height="110" viewBox="0 0 100 100">
+              <rect x="15" y="15" width="70" height="70" fill="#ff85ad" stroke="#fde047" stroke-width="4"/>
+            </svg>
+          </div>
+        `
+      },
+      {
+        id: '10e_sym_m',
+        subBadge: '10E • Line of Symmetry',
+        titleEn: 'What type of line of symmetry does the capital letter M have?',
+        titleId: 'Garis simetri jenis apakah yang dimiliki oleh huruf kapital M?',
+        hintEn: 'A vertical line splits M down the middle into two mirror halves!',
+        hintId: 'Garis vertikal membelah huruf M menjadi dua bagian cermin yang sama!',
+        options: ['Vertical line (Tegak)', 'Horizontal line (Mendatar)', 'Diagonal line (Miring)', 'No symmetry'],
+        answer: 'Vertical line (Tegak)',
+        renderStage: () => `
+          <div style="font-size: 3.6rem; font-weight: 900; color: #d81b60; position: relative; display: inline-block;">
+            M
+            <div style="position: absolute; left: 50%; top: 0; bottom: 0; width: 3px; background: #ff2d87; transform: translateX(-50%); border-radius: 2px;"></div>
+          </div>
+        `
+      },
+      {
+        id: '10e_sym_rect',
+        subBadge: '10E • Lines of Symmetry',
+        titleEn: 'How many lines of symmetry does a standard non-square rectangle have?',
+        titleId: 'Berapa garis simetri yang dimiliki persegi panjang biasa?',
+        hintEn: '1 horizontal and 1 vertical = 2 lines of symmetry!',
+        hintId: '1 mendatar dan 1 tegak = 2 garis simetri!',
+        options: ['1 line', '2 lines', '4 lines', '0 lines'],
+        answer: '2 lines',
+        renderStage: () => `
+          <div style="display: flex; justify-content: center;">
+            <svg width="140" height="90" viewBox="0 0 140 90">
+              <rect x="10" y="10" width="120" height="70" fill="#fff0f5" stroke="#ff80bf" stroke-width="3"/>
+              <line x1="70" y1="10" x2="70" y2="80" stroke="#fde047" stroke-width="2" stroke-dasharray="4,4"/>
+              <line x1="10" y1="45" x2="130" y2="45" stroke="#fde047" stroke-width="2" stroke-dasharray="4,4"/>
+            </svg>
+          </div>
+        `
+      },
+      {
+        id: '10e_sym_h',
+        subBadge: '10E • Alphabet Symmetry',
+        titleEn: 'Which letter has BOTH a vertical AND a horizontal line of symmetry?',
+        titleId: 'Huruf manakah yang memiliki garis simetri TEGAK DAN MENDATAR sekaligus?',
+        hintEn: 'Letter H can be folded vertically and horizontally!',
+        hintId: 'Huruf H dapat dilipat secara tegak maupun mendatar!',
+        options: ['A', 'C', 'H', 'L'],
+        answer: 'H',
+        renderStage: () => `
+          <div style="font-size: 3.2rem; font-weight: 900; color: #d81b60;">
+            A &nbsp; C &nbsp; H &nbsp; L
+          </div>
+        `
+      }
+    ]
+  },
+  {
+    id: 'u11',
+    number: 11,
+    titleEn: 'Geometry - Position & Direction',
+    titleId: 'Geometri - Posisi & Arah',
+    icon: '🧭',
+    activities: [
+      {
+        id: '11a_quarter',
+        subBadge: '11A • Quarter Turns',
+        titleEn: 'A quarter turn clockwise equals an angle of how many degrees?',
+        titleId: 'Satu putaran seperempat searah jarum jam sama dengan sudut berapa derajat?',
+        hintEn: 'A quarter turn is a right angle: 90 degrees (90°)!',
+        hintId: 'Satu putaran seperempat adalah sudut siku-siku: 90 derajat (90°)!',
+        options: ['45°', '90°', '180°', '360°'],
+        answer: '90°',
+        renderStage: () => `
+          <div style="font-size: 2.2rem; font-weight: 900; color: #d81b60;">
+            🔄 1/4 Turn Clockwise = <span style="background: #ff2d87; padding: 4px 18px; border-radius: 12px; color: white;">?</span>
+          </div>
+        `
+      },
+      {
+        id: '11a_half',
+        subBadge: '11A • Half Turns',
+        titleEn: 'An arrow pointing UP makes a half turn (180°). Which way does it point now?',
+        titleId: 'Sebuah panah menunjuk ke ATAS melakukan setengah putaran (180°). Ke arah manakah panah menunjuk sekarang?',
+        hintEn: 'A half turn turns you upside down: Down!',
+        hintId: 'Setengah putaran membalikkan arah ke bawah: Down!',
+        options: ['Left', 'Right', 'Down', 'Up'],
+        answer: 'Down',
+        renderStage: () => `
+          <div style="font-size: 3rem; text-align: center;">
+            ⬆️ &nbsp; ➔ &nbsp; 🔄 180° &nbsp; ➔ &nbsp; <span style="font-size: 2.5rem; color: #d81b60;">?</span>
+          </div>
+        `
+      },
+      {
+        id: '11a_three_quarters',
+        subBadge: '11A • Three-Quarter Turn',
+        titleEn: 'A three-quarter turn clockwise (3/4 turn) equals how many degrees?',
+        titleId: 'Putaran tiga perempat (3/4 putaran) searah jarum jam sama dengan berapa derajat?',
+        hintEn: '3 x 90° = 270°!',
+        hintId: '3 x 90° = 270°!',
+        options: ['90°', '180°', '270°', '360°'],
+        answer: '270°',
+        renderStage: () => `
+          <div style="font-size: 2.2rem; font-weight: 900; color: #d81b60;">
+            3/4 Turn = 3 × 90° = <span style="background: #a855f7; padding: 4px 18px; border-radius: 12px; color: white;">?</span>
+          </div>
+        `
+      },
+      {
+        id: '11a_full_turn',
+        subBadge: '11A • Full Turn',
+        titleEn: 'A full complete turn (360°) brings an object to where?',
+        titleId: 'Satu putaran penuh (360°) membawa sebuah benda ke mana?',
+        hintEn: 'A complete rotation brings you back to your starting position!',
+        hintId: 'Satu putaran penuh mengembalikan ke posisi semula!',
+        options: ['Facing backwards', 'Upside down', 'Starting position', 'Quarter turn'],
+        answer: 'Starting position',
+        renderStage: () => `
+          <div style="font-size: 2.4rem; text-align: center;">
+            🔄 360° Full Turn (Putaran Penuh)
+          </div>
+        `
+      },
+      {
+        id: '11b_clock_dir',
+        subBadge: '11B • Movement Direction',
+        titleEn: 'In which direction do hands on a standard clock rotate?',
+        titleId: 'Ke arah manakah jarum pada jam biasa berputar?',
+        hintEn: 'Clockwise direction!',
+        hintId: 'Searah jarum jam (Clockwise)!',
+        options: ['Clockwise (Searah jam)', 'Anti-clockwise (Berlawanan jam)', 'Backwards', 'Sideways'],
+        answer: 'Clockwise (Searah jam)',
+        renderStage: () => `
+          <div style="font-size: 2.4rem; text-align: center;">
+            ⏰ ↷ <span style="font-size: 1.8rem; font-weight: 900; color: #d81b60;">?</span>
+          </div>
+        `
+      },
+      {
+        id: '11c_grid_coords',
+        subBadge: '11C • Grid Map Coordinates',
+        titleEn: 'A treasure star is located at Column B and Row 3. What is its coordinate?',
+        titleId: 'Bintang harta karun berada di Kolom B dan Baris 3. Apakah koordinatnya?',
+        hintEn: 'Column letter first, then row number: B3!',
+        hintId: 'Huruf kolom terlebih dahulu, lalu angka baris: B3!',
+        options: ['A3', 'B2', 'B3', '3B'],
+        answer: 'B3',
+        renderStage: () => `
+          <div style="font-size: 2rem; font-weight: 900; color: #d81b60; text-align: center;">
+            Column B + Row 3 = <span style="background: #ff2d87; padding: 4px 18px; border-radius: 12px; color: white;">?</span>
+          </div>
+        `
+      },
+      {
+        id: '11d_compass_east',
+        subBadge: '11D • Compass Directions',
+        titleEn: 'If you face North and turn a quarter turn clockwise, which direction do you face?',
+        titleId: 'Jika kamu menghadap ke Utara (North) lalu berputar seperempat searah jarum jam, kamu menghadap ke mana?',
+        hintEn: 'North ➔ East (Timur)!',
+        hintId: 'Utara ➔ Timur (East)!',
+        options: ['East (Timur)', 'South (Selatan)', 'West (Barat)', 'North (Utara)'],
+        answer: 'East (Timur)',
+        renderStage: () => `
+          <div style="font-size: 2.2rem; text-align: center;">
+            🧭 North (Utara) ➔ 90° Clockwise ➔ <span style="color: #d81b60; font-weight: 900;">?</span>
+          </div>
+        `
+      },
+      {
+        id: '11d_compass_south',
+        subBadge: '11D • Compass Directions',
+        titleEn: 'If you face North and make a half turn (180°), which direction do you face?',
+        titleId: 'Jika kamu menghadap ke Utara lalu melakukan setengah putaran (180°), kamu menghadap ke mana?',
+        hintEn: 'Opposite of North is South (Selatan)!',
+        hintId: 'Lawan dari Utara adalah Selatan (South)!',
+        options: ['South (Selatan)', 'East (Timur)', 'West (Barat)', 'North (Utara)'],
+        answer: 'South (Selatan)',
+        renderStage: () => `
+          <div style="font-size: 2.2rem; text-align: center;">
+            🧭 North (Utara) ➔ 180° Half Turn ➔ <span style="color: #d81b60; font-weight: 900;">?</span>
+          </div>
+        `
+      },
+      {
+        id: '11e_between',
+        subBadge: '11E • Positional Words',
+        titleEn: 'A kitten is BETWEEN the armchair and the sofa. Where is the kitten?',
+        titleId: 'Anak kucing berada DI ANTARA kursi dan sofa. Di manakah anak kucing?',
+        hintEn: 'Between means in the middle of the two objects!',
+        hintId: 'Di antara artinya di tengah-tengah kedua benda!',
+        options: ['In the middle', 'On top', 'Underneath', 'Behind'],
+        answer: 'In the middle',
+        renderStage: () => `
+          <div style="font-size: 2.2rem; text-align: center;">
+            🛋️ &nbsp; 🐱 (?) &nbsp; 🪑
+          </div>
+        `
+      },
+      {
+        id: '11f_right_angles',
+        subBadge: '11F • Right Angles',
+        titleEn: 'How many right angles (90° square corners) does a rectangle have?',
+        titleId: 'Berapa banyak sudut siku-siku (sudut 90°) yang dimiliki sebuah persegi panjang?',
+        hintEn: 'Every rectangle has 4 right angles!',
+        hintId: 'Setiap persegi panjang memiliki 4 sudut siku-siku!',
+        options: ['2', '3', '4', '8'],
+        answer: '4',
+        renderStage: () => `
+          <div style="display: flex; justify-content: center;">
+            <svg width="130" height="80" viewBox="0 0 130 80">
+              <rect x="15" y="10" width="100" height="60" fill="#fff0f5" stroke="#fde047" stroke-width="3"/>
+              <path d="M 15 22 L 27 22 L 27 10" fill="none" stroke="#ff2d87" stroke-width="2"/>
+              <path d="M 115 22 L 103 22 L 103 10" fill="none" stroke="#ff2d87" stroke-width="2"/>
+              <path d="M 15 58 L 27 58 L 27 70" fill="none" stroke="#ff2d87" stroke-width="2"/>
+              <path d="M 115 58 L 103 58 L 103 70" fill="none" stroke="#ff2d87" stroke-width="2"/>
+            </svg>
+          </div>
+        `
+      }
+    ]
+  },
+  {
+    id: 'u12',
+    number: 12,
+    titleEn: 'Statistics & Graphs',
+    titleId: 'Statistika & Grafik',
+    icon: '📊',
+    activities: [
+      {
+        id: '12a_picto',
+        subBadge: '12A • Pictograms',
+        titleEn: 'In a pictogram, the key states that 1 star = 2 children. How many children do 4 stars represent?',
+        titleId: 'Pada piktogram, keterangan menyatakan 1 bintang = 2 anak. Berapa anak yang diwakili oleh 4 bintang?',
+        hintEn: '4 x 2 = 8 children!',
+        hintId: '4 x 2 = 8 anak!',
+        options: [4, 6, 8, 10],
+        answer: 8,
+        renderStage: () => `
+          <div style="font-size: 2rem; font-weight: 900; color: #d81b60; text-align: center;">
+            ⭐ ⭐ ⭐ ⭐<br>
+            <span style="font-size: 1.1rem; color: #d81b60;">Key (Keterangan): ⭐ = 2 children (2 anak)</span>
+          </div>
+        `
+      },
+      {
+        id: '12a_half_sym',
+        subBadge: '12A • Pictogram Half Symbols',
+        titleEn: 'In a pictogram, 1 apple symbol = 4 fruits. What does half an apple represent?',
+        titleId: 'Pada piktogram, 1 simbol apel = 4 buah. Apakah yang diwakili oleh setengah apel?',
+        hintEn: 'Half of 4 is 2 fruits!',
+        hintId: 'Setengah dari 4 adalah 2 buah!',
+        options: ['1 fruit', '2 fruits', '3 fruits', '4 fruits'],
+        answer: '2 fruits',
+        renderStage: () => `
+          <div style="font-size: 2rem; font-weight: 900; color: #d81b60; text-align: center;">
+            🍎 = 4 fruits &nbsp;|&nbsp; 🌓 (Half) = <span style="background: #ff2d87; padding: 4px 14px; border-radius: 10px; color: white;">?</span>
+          </div>
+        `
+      },
+      {
+        id: '12a_calc_picto',
+        subBadge: '12A • Calculating Pictograms',
+        titleEn: '3 full stars and 1 half star are shown. If 1 star = 2 children, how many children total?',
+        titleId: 'Ditampilkan 3 bintang penuh dan 1 setengah bintang. Jika 1 bintang = 2 anak, berapa total anak?',
+        hintEn: '(3 x 2) + 1 = 6 + 1 = 7 children!',
+        hintId: '(3 x 2) + 1 = 6 + 1 = 7 anak!',
+        options: [5, 6, 7, 8],
+        answer: 7,
+        renderStage: () => `
+          <div style="font-size: 1.8rem; font-weight: 900; color: #d81b60; text-align: center;">
+            ⭐⭐⭐✨ &nbsp; (1 ⭐ = 2 children, 1 ✨ = 1 child)<br>
+            Total = (3 × 2) + 1 = ?
+          </div>
+        `
+      },
+      {
+        id: '12b_tally',
+        subBadge: '12B • Tally Marks',
+        titleEn: 'What number does this tally mark represent: 卌 卌 II ?',
+        titleId: 'Bilangan berapakah yang diwakili oleh turus berikut: 卌 卌 II ?',
+        hintEn: 'Each 卌 is 5: 5 + 5 + 2 = 12!',
+        hintId: 'Setiap 卌 bernilai 5: 5 + 5 + 2 = 12!',
+        options: [10, 11, 12, 14],
+        answer: 12,
+        renderStage: () => `
+          <div style="font-size: 2.8rem; font-weight: 900; color: #d81b60; letter-spacing: 8px; text-align: center;">
+            卌 卌 II
+          </div>
+        `
+      },
+      {
+        id: '12b_tally_16',
+        subBadge: '12B • Tally Marks',
+        titleEn: 'What number does this tally mark represent: 卌 卌 卌 I ?',
+        titleId: 'Bilangan berapakah yang diwakili oleh turus berikut: 卌 卌 卌 I ?',
+        hintEn: '5 + 5 + 5 + 1 = 16!',
+        hintId: '5 + 5 + 5 + 1 = 16!',
+        options: [14, 15, 16, 17],
+        answer: 16,
+        renderStage: () => `
+          <div style="font-size: 2.8rem; font-weight: 900; color: #d81b60; letter-spacing: 8px; text-align: center;">
+            卌 卌 卌 I
+          </div>
+        `
+      },
+      {
+        id: '12b_write_tally',
+        subBadge: '12B • Writing Tallies',
+        titleEn: 'How is the number 8 correctly represented using tally marks?',
+        titleId: 'Bagaimana penulisan turus yang benar untuk bilangan 8?',
+        hintEn: 'One group of 5 (卌) plus 3 singles (III)!',
+        hintId: 'Satu kelompok 5 (卌) ditambah 3 garis (III)!',
+        options: ['卌 III', '卌 II', '卌 IIII', 'IIIIIIII'],
+        answer: '卌 III',
+        renderStage: () => `
+          <div style="font-size: 2.2rem; font-weight: 900; color: #d81b60;">
+            Number 8 = <span style="background: #ff2d87; padding: 4px 18px; border-radius: 12px; color: white;">?</span>
+          </div>
+        `
+      },
+      {
+        id: '12c_bar_chart',
+        subBadge: '12C • Bar Charts',
+        titleEn: 'On a favorite pet chart: Cats = 8 children, Dogs = 5 children. How many more children chose Cats?',
+        titleId: 'Pada grafik hewan favorit: Kucing = 8 anak, Anjing = 5 anak. Berapa lebih banyakkah anak yang memilih Kucing?',
+        hintEn: '8 - 5 = 3 more children!',
+        hintId: '8 - 5 = 3 anak lebih banyak!',
+        options: [2, 3, 4, 13],
+        answer: 3,
+        renderStage: () => `
+          <div style="font-size: 1.8rem; font-weight: 900; color: #d81b60; text-align: center;">
+            🐱 Cats (8) - 🐶 Dogs (5) = <span style="background: #ff2d87; padding: 4px 14px; border-radius: 10px; color: white;">?</span>
+          </div>
+        `
+      },
+      {
+        id: '12d_carroll',
+        subBadge: '12D • Carroll Diagram',
+        titleEn: 'In a Carroll diagram sorting numbers into Even/Odd and >20 / <20, where does 24 go?',
+        titleId: 'Pada diagram Carroll untuk bilangan Genap/Ganjil dan >20 / <20, di manakah posisi 24?',
+        hintEn: '24 is an EVEN number and it is GREATER than 20!',
+        hintId: '24 adalah bilangan GENAP dan LEBIH BESAR dari 20!',
+        options: ['Even & Greater than 20', 'Even & Less than 20', 'Odd & Greater than 20', 'Odd & Less than 20'],
+        answer: 'Even & Greater than 20',
+        renderStage: () => `
+          <div style="font-size: 2rem; font-weight: 900; color: #d81b60; text-align: center;">
+            Number: 24 ➔ Even or Odd? &gt;20 or &lt;20?
+          </div>
+        `
+      },
+      {
+        id: '12e_venn_overlap',
+        subBadge: '12E • Venn Diagram Overlap',
+        titleEn: 'In a Venn diagram with a circle for Multiples of 2 and a circle for Multiples of 5, which number goes in the overlap?',
+        titleId: 'Pada diagram Venn dengan lingkaran Kelipatan 2 dan lingkaran Kelipatan 5, bilangan manakah yang berada di irisan tengah?',
+        hintEn: '10 is a multiple of both 2 (2x5=10) and 5 (5x2=10)!',
+        hintId: '10 adalah kelipatan 2 dan sekaligus kelipatan 5!',
+        options: [4, 10, 15, 25],
+        answer: 10,
+        renderStage: () => `
+          <div style="font-size: 2rem; font-weight: 900; color: #d81b60; text-align: center;">
+            Multiples of 2 &nbsp; ∩ &nbsp; Multiples of 5 = <span style="background: #a855f7; padding: 4px 14px; border-radius: 10px; color: white;">?</span>
+          </div>
+        `
+      },
+      {
+        id: '12f_survey',
+        subBadge: '12F • Survey Totals',
+        titleEn: 'Freya surveys 10 classmates: 6 love Pink, 4 love Purple. How many children did Freya survey?',
+        titleId: 'Freya menyurvei teman sekelasnya: 6 suka Pink, 4 suka Ungu. Berapa total teman yang disurvei?',
+        hintEn: '6 + 4 = 10 children!',
+        hintId: '6 + 4 = 10 anak!',
+        options: [8, 9, 10, 14],
+        answer: 10,
+        renderStage: () => `
+          <div style="font-size: 2.2rem; font-weight: 900; color: #d81b60;">
+            6 + 4 = <span style="background: #ff2d87; padding: 4px 18px; border-radius: 12px; color: white;">?</span>
+          </div>
+        `
+      }
+    ]
+  }
+];
+
+/* =========================================================================
+   SYNTHESIZER (WEB AUDIO API)
+   ========================================================================= */
+let audioCtx = null;
+let masterGain = null;
+
+function initAudio() {
+  try {
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    if (!AudioCtx) return;
+    if (!audioCtx) {
+      audioCtx = new AudioCtx();
+      masterGain = audioCtx.createGain();
+      masterGain.gain.setValueAtTime(soundEnabled ? 1.0 : 0, audioCtx.currentTime);
+      masterGain.connect(audioCtx.destination);
+    }
+    if (audioCtx.state === 'suspended' || audioCtx.state === 'interrupted') {
+      audioCtx.resume();
+    }
+  } catch(e) {}
+}
+
+function playTone(freq, type = 'sine', duration = 0.2, delay = 0, gainVal = 0.25) {
+  if (!soundEnabled) return;
+  try {
+    initAudio();
+    if (!audioCtx) return;
+    const now = audioCtx.currentTime + delay;
+    const osc = audioCtx.createOscillator();
+    const g = audioCtx.createGain();
+    osc.type = type;
+    osc.frequency.setValueAtTime(freq, now);
+
+    g.gain.setValueAtTime(0.001, now);
+    g.gain.linearRampToValueAtTime(gainVal, now + 0.02);
+    g.gain.linearRampToValueAtTime(0.0001, now + duration);
+
+    osc.connect(g);
+    g.connect(masterGain || audioCtx.destination);
+    osc.start(now);
+    osc.stop(now + duration + 0.02);
+    osc.onended = () => { try { osc.disconnect(); g.disconnect(); } catch(e) {} };
+  } catch(e) {}
+}
+
+function playSound(name) {
+  if (!soundEnabled) return;
+  initAudio();
+
+  const waveType = currentSoundTheme === 'arcade' ? 'square' :
+                   currentSoundTheme === 'marimba' ? 'triangle' : 'sine';
+
+  if (name === 'correct') {
+    [523.25, 659.25, 783.99, 1046.50].forEach((freq, idx) => {
+      playTone(freq, waveType, 0.4, idx * 0.07, 0.22);
+    });
+  } else if (name === 'wrong') {
+    playTone(330, 'sine', 0.25, 0, 0.15);
+    playTone(280, 'sine', 0.35, 0.08, 0.15);
+  } else if (name === 'crown') {
+    [523.25, 659.25, 783.99, 1046.50, 1318.51, 1567.98].forEach((f, idx) => {
+      playTone(f, waveType, 0.55, idx * 0.09, 0.26);
+    });
+  } else if (name === 'click') {
+    playTone(880, 'sine', 0.06, 0, 0.1);
+  } else if (name === 'clear') {
+    [659.25, 523.25, 392.00, 261.63].forEach((f, idx) => {
+      playTone(f, waveType, 0.35, idx * 0.08, 0.2);
+    });
+  }
+}
+
+function toggleMasterSound() {
+  soundEnabled = !soundEnabled;
+  safeStore.set('freya_maths_muted', soundEnabled ? '0' : '1');
+  const icon = document.getElementById('sound-icon');
+  const lbl = document.getElementById('sound-lbl');
+  if (icon) icon.innerText = soundEnabled ? '🔊' : '🔇';
+  if (lbl) lbl.innerText = soundEnabled ? I18N[currentLang].soundOn : I18N[currentLang].soundOff;
+  if (masterGain && audioCtx) {
+    masterGain.gain.setValueAtTime(soundEnabled ? 1.0 : 0, audioCtx.currentTime);
+  }
+  if (soundEnabled) playSound('click');
+}
+
+function setSoundTheme(theme) {
+  currentSoundTheme = theme;
+  safeStore.set('freya_maths_sound_theme', theme);
+  document.querySelectorAll('.settings-option').forEach(el => el.classList.remove('selected'));
+  const target = document.getElementById('opt-sound-' + theme);
+  if (target) target.classList.add('selected');
+  playSound('correct');
+}
+
+/* =========================================================================
+   SPEECH SYNTHESIS (ENGLISH & BAHASA INDONESIA)
+   ========================================================================= */
+let currentAudioTTS = null;
+
+function sanitizeText(str) {
+  if (!str) return '';
+  return str.replace(/[\u{1F300}-\u{1F9FF}]/gu, ' ')
+            .replace(/[✨💖⭐👑🌸🦄🦋🍒🍎🛍️🥛🫗🎲⏱️📏⚖️➕✖️🐛🪑]/g, ' ')
+            .replace(/[!?:;,."`~()\[\]{}—\-_\\/#%&*+<>]/g, ' ')
+            .replace(/\s+/g, ' ')
+            .trim();
+}
+
+function speakText(text, lang = 'en') {
+  if (!soundEnabled) return;
+  const clean = sanitizeText(text);
+  if (!clean) return;
+
+  if (lang === 'id') {
+    try {
+      if (currentAudioTTS) {
+        currentAudioTTS.pause();
+        currentAudioTTS.currentTime = 0;
+      }
+      const url = 'https://translate.google.com/translate_tts?ie=UTF-8&q=' + encodeURIComponent(clean) + '&tl=id&client=tw-ob';
+      const audio = new Audio(url);
+      currentAudioTTS = audio;
+      const p = audio.play();
+      if (p !== undefined) {
+        p.catch(() => speakBrowserWebSpeech(clean, 'id-ID'));
+      }
+    } catch(e) {
+      speakBrowserWebSpeech(clean, 'id-ID');
+    }
+  } else {
+    speakBrowserWebSpeech(clean, 'en-GB');
+  }
+}
+
+function speakBrowserWebSpeech(text, langTag) {
+  if (!('speechSynthesis' in window)) return;
+  window.speechSynthesis.cancel();
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.rate = 0.9;
+  utter.pitch = 1.1;
+  utter.lang = langTag;
+  window.speechSynthesis.speak(utter);
+}
+
+function speakCurrentQuestion() {
+  const unit = MATH_UNITS[activeUnitIndex];
+  const act = unit.activities[activeQuestionIndex];
+  const text = currentLang === 'id' ? act.titleId : act.titleEn;
+  speakText(text, currentLang);
+}
+
+/* =========================================================================
+   UI RENDERING & GAME ENGINE
+   ========================================================================= */
+function setAppLanguage(lang) {
+  currentLang = lang;
+  safeStore.set('freya_maths_lang', lang);
+  document.getElementById('lang-en').classList.toggle('active', lang === 'en');
+  document.getElementById('lang-id').classList.toggle('active', lang === 'id');
+
+  const dict = I18N[lang];
+  document.getElementById('t-hero-sub').innerText = dict.heroSub;
+  document.getElementById('t-units-title').innerText = dict.unitsTitle;
+  document.getElementById('t-unit-prog-lbl').innerText = dict.unitProg;
+  document.getElementById('t-read-aloud').innerText = dict.readAloud;
+  document.getElementById('t-hint-btn').innerText = dict.hintBtn;
+  document.getElementById('t-prev-btn').innerText = dict.prevBtn;
+  document.getElementById('t-next-btn').innerText = dict.nextBtn;
+  document.getElementById('t-cert-btn').innerText = dict.certBtn;
+  document.getElementById('t-scratchpad-btn').innerText = dict.scratchBtn;
+  document.getElementById('t-grid-btn').innerText = dict.gridBtn;
+  document.getElementById('t-audio-settings').innerText = dict.audioSettings;
+  const resetBtnEl = document.getElementById('t-reset-btn');
+  if (resetBtnEl) resetBtnEl.innerText = dict.resetBtn || (lang === 'id' ? 'Reset Skor' : 'Reset');
+  document.getElementById('sound-lbl').innerText = soundEnabled ? dict.soundOn : dict.soundOff;
+
+  document.getElementById('t-doodle-title').innerText = dict.doodleTitle;
+  document.getElementById('t-scratch-clear').innerText = dict.scratchClear;
+  document.getElementById('t-scratch-close').innerText = dict.scratchClose;
+
+  document.getElementById('t-grid-modal-title').innerText = dict.gridModalTitle;
+  document.getElementById('btn-filter-evens').innerText = dict.filterEvens;
+  document.getElementById('btn-filter-fives').innerText = dict.filterFives;
+  document.getElementById('btn-filter-tens').innerText = dict.filterTens;
+  document.getElementById('btn-filter-threes').innerText = dict.filterThrees;
+  document.getElementById('btn-filter-clear').innerText = dict.filterClear;
+
+  document.getElementById('t-audio-modal-title').innerText = dict.audioModalTitle;
+  document.getElementById('t-audio-modal-sub').innerText = dict.audioModalSub;
+  document.getElementById('snd-crystal-title').innerText = dict.sndCrystalTitle;
+  document.getElementById('snd-crystal-desc').innerText = dict.sndCrystalDesc;
+  document.getElementById('snd-piano-title').innerText = dict.sndPianoTitle;
+  document.getElementById('snd-piano-desc').innerText = dict.sndPianoDesc;
+  document.getElementById('snd-marimba-title').innerText = dict.sndMarimbaTitle;
+  document.getElementById('snd-marimba-desc').innerText = dict.sndMarimbaDesc;
+  document.getElementById('snd-arcade-title').innerText = dict.sndArcadeTitle;
+  document.getElementById('snd-arcade-desc').innerText = dict.sndArcadeDesc;
+  document.getElementById('snd-celestial-title').innerText = dict.sndCelestialTitle;
+  document.getElementById('snd-celestial-desc').innerText = dict.sndCelestialDesc;
+
+  document.getElementById('cert-ribbon-tag').innerText = dict.certRibbon;
+  document.getElementById('cert-main-title').innerText = dict.certTitle;
+  document.getElementById('cert-award-to').innerText = dict.certAwardTo;
+  document.getElementById('cert-main-desc').innerHTML = dict.certDesc;
+  document.getElementById('cert-lbl-stars').innerText = dict.certStars;
+  document.getElementById('cert-lbl-crowns').innerText = dict.certCrowns;
+  document.getElementById('cert-print-btn').innerText = dict.certPrint;
+  document.getElementById('cert-close-btn').innerText = dict.certClose;
+  document.getElementById('t-celebration-btn').innerText = dict.keepGoing;
+
+  renderUnitsTabs();
+  loadCurrentActivity();
+}
+
+function renderUnitsTabs() {
+  const track = document.getElementById('units-pill-track');
+  if (!track) return;
+  track.innerHTML = MATH_UNITS.map((u, idx) => `
+    <div class="unit-tab-pill ${idx === activeUnitIndex ? 'active' : ''}" onclick="selectUnit(${idx})">
+      <span class="u-num">U${u.number}</span>
+      <span>${u.icon} ${currentLang === 'id' ? u.titleId : u.titleEn}</span>
+    </div>
+  `).join('');
+
+  document.getElementById('unit-indicator-text').innerText = `Unit ${activeUnitIndex + 1} of ${MATH_UNITS.length}`;
+}
+
+function scrollUnitsTrack(delta) {
+  const track = document.getElementById('units-pill-track');
+  if (track) track.scrollBy({ left: delta, behavior: 'smooth' });
+}
+
+function selectUnit(idx) {
+  activeUnitIndex = idx;
+  activeQuestionIndex = 0;
+  playSound('click');
+  renderUnitsTabs();
+  renderUnitStars();
+  loadCurrentActivity();
+
+  // Smoothly center the active unit tab in view
+  setTimeout(() => {
+    const track = document.getElementById('units-pill-track');
+    if (track && track.children[idx]) {
+      track.children[idx].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    }
+  }, 50);
+}
+
+function renderUnitStars() {
+  const starTrack = document.getElementById('unit-star-track');
+  const unit = MATH_UNITS[activeUnitIndex];
+  if (!starTrack || !unit) return;
+
+  starTrack.innerHTML = unit.activities.map((act, i) => {
+    const isEarned = userSolvedMap[act.id];
+    const isCurrent = (i === activeQuestionIndex);
+    return `<span class="star-node ${isEarned ? 'earned' : 'locked'}" 
+                  onclick="jumpToActivity(${i})" 
+                  title="Question ${i+1}: ${act.subBadge} (${isEarned ? 'Solved ⭐' : 'Click to Play'})"
+                  style="cursor: pointer; transition: all 0.2s ease; ${isCurrent ? 'box-shadow: 0 0 10px #fde047; transform: scale(1.3); border-radius: 50%;' : ''}">⭐</span>`;
+  }).join('');
+}
+
+function jumpToActivity(idx) {
+  const unit = MATH_UNITS[activeUnitIndex];
+  if (!unit || idx < 0 || idx >= unit.activities.length) return;
+  activeQuestionIndex = idx;
+  playSound('click');
+  loadCurrentActivity();
+}
+
+function loadCurrentActivity() {
+  const unit = MATH_UNITS[activeUnitIndex];
+  const act = unit.activities[activeQuestionIndex];
+  if (!unit || !act) return;
+
+  const qLabel = currentLang === 'id' ? 'Soal' : 'Question';
+  const uLabel = currentLang === 'id' ? 'Unit' : 'Unit';
+  const indEl = document.getElementById('unit-indicator-text');
+  if (indEl) indEl.innerText = `${uLabel} ${unit.number} / ${MATH_UNITS.length} • ${qLabel} ${activeQuestionIndex + 1} / ${unit.activities.length}`;
+
+  document.getElementById('lesson-sub-badge').innerText = `${unit.number}.${activeQuestionIndex + 1} • ${act.subBadge}`;
+  document.getElementById('question-text').innerText = currentLang === 'id' ? act.titleId : act.titleEn;
+
+  const stage = document.getElementById('game-stage');
+  if (stage) {
+    stage.innerHTML = act.renderStage();
+  }
+
+  const hintBox = document.getElementById('hint-box');
+  if (hintBox) {
+    hintBox.style.display = 'none';
+    hintBox.innerText = currentLang === 'id' ? act.hintId : act.hintEn;
+  }
+
+  const arena = document.getElementById('answer-arena');
+  if (arena) {
+    arena.innerHTML = `
+      <div class="options-grid">
+        ${act.options.map(opt => `
+          <button class="opt-btn" onclick="checkAnswer('${opt}', this)">
+            ${opt}
+          </button>
+        `).join('')}
+      </div>
+    `;
+  }
+
+  const prevBtn = document.getElementById('btn-prev-q');
+  if (prevBtn) {
+    prevBtn.disabled = (activeUnitIndex === 0 && activeQuestionIndex === 0);
+    prevBtn.style.opacity = prevBtn.disabled ? '0.4' : '1';
+  }
+
+  renderUnitStars();
+  updateStatsDisplay();
+}
+
+function checkAnswer(chosenVal, btnElement) {
+  const unit = MATH_UNITS[activeUnitIndex];
+  const act = unit.activities[activeQuestionIndex];
+  const isCorrect = (String(chosenVal).trim() === String(act.answer).trim());
+
+  if (isCorrect) {
+    playSound('correct');
+    if (btnElement) btnElement.classList.add('correct');
+
+    if (!userSolvedMap[act.id]) {
+      userSolvedMap[act.id] = true;
+      totalStars += 1;
+      totalCorrect += 1;
+      safeStore.set('freya_maths_stars', totalStars);
+      safeStore.set('freya_maths_correct', totalCorrect);
+      safeStore.set('freya_maths_solved', JSON.stringify(userSolvedMap));
+    }
+
+    updateStatsDisplay();
+    renderUnitStars();
+
+    const allUnitSolved = unit.activities.every(a => userSolvedMap[a.id]);
+    if (allUnitSolved && !userSolvedMap['unit_crown_' + unit.id]) {
+      userSolvedMap['unit_crown_' + unit.id] = true;
+      totalCrowns += 1;
+      safeStore.set('freya_maths_crowns', totalCrowns);
+      safeStore.set('freya_maths_solved', JSON.stringify(userSolvedMap));
+      setTimeout(() => triggerCelebration(unit), 500);
+    } else {
+      setTimeout(() => {
+        navigateQuestion(1);
+      }, 900);
+    }
+  } else {
+    playSound('wrong');
+    if (btnElement) {
+      btnElement.classList.add('wrong');
+      setTimeout(() => btnElement.classList.remove('wrong'), 700);
+    }
+    toggleHint(true);
+  }
+}
+
+function navigateQuestion(delta) {
+  playSound('click');
+  const unit = MATH_UNITS[activeUnitIndex];
+  let nextQ = activeQuestionIndex + delta;
+
+  if (nextQ >= unit.activities.length) {
+    if (activeUnitIndex < MATH_UNITS.length - 1) {
+      activeUnitIndex++;
+      activeQuestionIndex = 0;
+      renderUnitsTabs();
+    } else {
+      openCertModal();
+      return;
+    }
+  } else if (nextQ < 0) {
+    if (activeUnitIndex > 0) {
+      activeUnitIndex--;
+      activeQuestionIndex = MATH_UNITS[activeUnitIndex].activities.length - 1;
+      renderUnitsTabs();
+    } else {
+      activeQuestionIndex = 0;
+    }
+  } else {
+    activeQuestionIndex = nextQ;
+  }
+
+  loadCurrentActivity();
+}
+
+function toggleHint(forceOpen = false) {
+  const hintBox = document.getElementById('hint-box');
+  if (!hintBox) return;
+  if (forceOpen || hintBox.style.display !== 'block') {
+    hintBox.style.display = 'block';
+    playSound('click');
+    const act = MATH_UNITS[activeUnitIndex].activities[activeQuestionIndex];
+    speakText(currentLang === 'id' ? act.hintId : act.hintEn, currentLang);
+  } else {
+    hintBox.style.display = 'none';
+  }
+}
+
+function updateStatsDisplay() {
+  const starEl = document.getElementById('stat-stars');
+  const crownEl = document.getElementById('stat-crowns');
+  const scoreEl = document.getElementById('stat-score');
+  if (starEl) starEl.innerText = totalStars;
+  if (crownEl) crownEl.innerText = totalCrowns;
+  if (scoreEl) scoreEl.innerText = totalCorrect;
+}
+
+function fireConfetti() {
+  const canvas = document.getElementById('confetti-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  const pieces = [];
+  const colors = ['#ff2d87', '#fde047', '#a855f7', '#38bdf8', '#4ade80', '#ffffff', '#fb7185'];
+
+  for (let i = 0; i < 120; i++) {
+    pieces.push({
+      x: canvas.width / 2,
+      y: canvas.height / 2,
+      vx: (Math.random() - 0.5) * 18,
+      vy: (Math.random() - 0.7) * 22,
+      size: Math.random() * 9 + 5,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      rot: Math.random() * 360,
+      vRot: (Math.random() - 0.5) * 12,
+      alpha: 1
+    });
+  }
+
+  let startTime = performance.now();
+  function loop(now) {
+    const elapsed = now - startTime;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    pieces.forEach(p => {
+      p.x += p.vx;
+      p.y += p.vy;
+      p.vy += 0.45;
+      p.rot += p.vRot;
+      p.alpha = Math.max(0, 1 - elapsed / 2500);
+
+      ctx.save();
+      ctx.globalAlpha = p.alpha;
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.rot * Math.PI / 180);
+      ctx.fillStyle = p.color;
+      ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size * 0.7);
+      ctx.restore();
+    });
+
+    if (elapsed < 2500) {
+      requestAnimationFrame(loop);
+    } else {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+  }
+  requestAnimationFrame(loop);
+}
+
+function triggerCelebration(unit) {
+  playSound('crown');
+  fireConfetti();
+  const pop = document.getElementById('celebration-popup');
+  const title = document.getElementById('celebration-title');
+  const sub = document.getElementById('celebration-subtitle');
+
+  if (title) title.innerText = currentLang === 'id' ? 'Luar Biasa Freya!' : 'Outstanding Freya!';
+  if (sub) sub.innerText = currentLang === 'id' ? 
+    `✨ ${unit.titleId} Berhasil Ditaklukkan! Kamu Meraih Mahkota Emas! ✨` : 
+    `✨ Unit ${unit.number} Conquered! You Won a Golden Crown! ✨`;
+
+  if (pop) pop.classList.add('show');
+
+  const voiceMsg = currentLang === 'id' ? 
+    `Luar biasa Freya! Kamu berhasil menyelesaikan ${unit.titleId}! Kamu adalah juara matematika sejati!` : 
+    `Outstanding Freya! You conquered ${unit.titleEn}! You are a true maths superstar!`;
+  speakText(voiceMsg, currentLang);
+}
+
+function closeCelebrationPopup() {
+  const pop = document.getElementById('celebration-popup');
+  if (pop) pop.classList.remove('show');
+  navigateQuestion(1);
+}
+
+function openCertModal() {
+  playSound('click');
+  document.getElementById('cert-stars').innerText = totalStars;
+  document.getElementById('cert-crowns').innerText = totalCrowns;
+  const modal = document.getElementById('cert-modal');
+  if (modal) modal.style.display = 'flex';
+}
+
+function closeCertModal() {
+  const modal = document.getElementById('cert-modal');
+  if (modal) modal.style.display = 'none';
+}
+
+function openAudioSettings() {
+  playSound('click');
+  const m = document.getElementById('audio-settings-modal');
+  if (m) m.style.display = 'flex';
+}
+
+function closeAudioSettings() {
+  const m = document.getElementById('audio-settings-modal');
+  if (m) m.style.display = 'none';
+}
+
+function openHundredGridModal() {
+  playSound('click');
+  const grid = document.getElementById('modal-hundred-grid');
+  if (grid && grid.children.length === 0) {
+    grid.innerHTML = Array.from({length: 100}, (_, i) => {
+      const num = i + 1;
+      return `<div class="hundred-cell" id="h-cell-${num}" onclick="sayNumber(${num})">${num}</div>`;
+    }).join('');
+  }
+  const m = document.getElementById('grid-modal');
+  if (m) m.style.display = 'flex';
+}
+
+function closeHundredGridModal() {
+  const m = document.getElementById('grid-modal');
+  if (m) m.style.display = 'none';
+}
+
+function filterGrid(type) {
+  playSound('click');
+  for (let i = 1; i <= 100; i++) {
+    const el = document.getElementById('h-cell-' + i);
+    if (!el) continue;
+    el.classList.remove('highlight-pink', 'highlight-gold');
+
+    if (type === 'evens' && i % 2 === 0) {
+      el.classList.add('highlight-pink');
+    } else if (type === 'fives' && i % 5 === 0) {
+      el.classList.add('highlight-gold');
+    } else if (type === 'tens' && i % 10 === 0) {
+      el.classList.add('highlight-pink');
+    } else if (type === 'threes' && i % 3 === 0) {
+      el.classList.add('highlight-pink');
+    }
+  }
+}
+
+function sayNumber(num) {
+  playSound('click');
+  speakText(String(num), currentLang);
+}
+
+let padCanvas = null;
+let padCtx = null;
+let isDrawing = false;
+let penColor = '#ff2d87';
+
+function initScratchpad() {
+  padCanvas = document.getElementById('scratch-canvas');
+  if (!padCanvas) return;
+  padCtx = padCanvas.getContext('2d');
+
+  function resizeCanvas() {
+    const rect = padCanvas.getBoundingClientRect();
+    padCanvas.width = rect.width;
+    padCanvas.height = rect.height;
+  }
+  resizeCanvas();
+  window.addEventListener('resize', resizeCanvas);
+
+  function getPos(e) {
+    const rect = padCanvas.getBoundingClientRect();
+    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+    return {
+      x: clientX - rect.left,
+      y: clientY - rect.top
+    };
+  }
+
+  function start(e) {
+    isDrawing = true;
+    const p = getPos(e);
+    padCtx.beginPath();
+    padCtx.moveTo(p.x, p.y);
+  }
+
+  function move(e) {
+    if (!isDrawing) return;
+    const p = getPos(e);
+    padCtx.lineWidth = 3.5;
+    padCtx.lineCap = 'round';
+    padCtx.strokeStyle = penColor;
+    padCtx.shadowColor = penColor;
+    padCtx.shadowBlur = 8;
+    padCtx.lineTo(p.x, p.y);
+    padCtx.stroke();
+  }
+
+  function end() {
+    isDrawing = false;
+  }
+
+  padCanvas.addEventListener('mousedown', start);
+  padCanvas.addEventListener('mousemove', move);
+  window.addEventListener('mouseup', end);
+
+  padCanvas.addEventListener('touchstart', start, { passive: false });
+  padCanvas.addEventListener('touchmove', (e) => { e.preventDefault(); move(e); }, { passive: false });
+  window.addEventListener('touchend', end);
+}
+
+function toggleScratchpad() {
+  const box = document.getElementById('scratchpad-box');
+  if (!box) return;
+  const isVisible = (box.style.display === 'flex');
+  box.style.display = isVisible ? 'none' : 'flex';
+  playSound('click');
+  if (!isVisible && !padCtx) {
+    initScratchpad();
+  }
+}
+
+function setPenColor(col, elem) {
+  penColor = col;
+  document.querySelectorAll('.color-dot').forEach(d => d.classList.remove('active'));
+  if (elem) elem.classList.add('active');
+  playSound('click');
+}
+
+function clearScratchpad() {
+  if (padCtx && padCanvas) {
+    padCtx.clearRect(0, 0, padCanvas.width, padCanvas.height);
+    playSound('click');
+  }
+}
+
+let bannerClickCount = 0;
+let bannerClickTimer = null;
+
+function handleBannerClick() {
+  playSound('click');
+  bannerClickCount++;
+  clearTimeout(bannerClickTimer);
+  bannerClickTimer = setTimeout(() => {
+    bannerClickCount = 0;
+  }, 3000);
+
+  if (bannerClickCount >= 5) {
+    bannerClickCount = 0;
+    confirmResetScores();
+  }
+}
+
+function confirmResetScores() {
+  const isId = (currentLang === 'id');
+  const msg = isId 
+    ? 'Apakah kamu yakin ingin mereset semua bintang, mahkota, dan skor untuk Freya? (Mulai dari awal)' 
+    : 'Are you sure you want to reset all stars, crowns, and progress for Freya? (Fresh start)';
+  if (confirm(msg)) {
+    resetAllScores();
+  }
+}
+
+function resetAllScores() {
+  totalStars = 0;
+  totalCrowns = 0;
+  totalCorrect = 0;
+  userSolvedMap = {};
+  safeStore.set('freya_maths_stars', 0);
+  safeStore.set('freya_maths_crowns', 0);
+  safeStore.set('freya_maths_correct', 0);
+  safeStore.set('freya_maths_solved', JSON.stringify({}));
+  activeQuestionIndex = 0;
+  playSound('clear');
+  updateStatsDisplay();
+  renderUnitStars();
+  loadCurrentActivity();
+  const alertMsg = (currentLang === 'id') 
+    ? '✨ Semua skor, bintang, dan kemajuan telah direset! Selamat belajar kembali Freya! 🌸' 
+    : '✨ All scores, stars, and progress have been reset! Fresh start for Freya! 🌸';
+  alert(alertMsg);
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  setAppLanguage(currentLang);
+  initAudio();
+  updateStatsDisplay();
+  setSoundTheme(currentSoundTheme);
+});
+</script>
+</body>
+</html>
